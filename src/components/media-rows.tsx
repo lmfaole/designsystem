@@ -26,11 +26,14 @@ export function details(parts: readonly (ReactNode | null | undefined | false)[]
   ))
 }
 
-const AREAS = "grid grid-cols-[auto_1fr_auto] items-center gap-x-3 [grid-template-areas:'cover_title_when'_'cover_subtitle_when']"
+// The title has the whole width; the date ends the line under it, so a long title never squeezes it into a narrow column.
+const AREAS = "grid grid-cols-[auto_minmax(0,max-content)_auto_1fr] items-center gap-x-1 [grid-template-areas:'cover_title_title_title'_'cover_subtitle_when_.']"
+/** « · » before the date, as between the other parts of the line. */
+const AFTER_SUBTITLE = "before:content-['·_']"
 
 /**
- * The rows of every log, the front pages' latest and the history alike: the picture, the title, a line under it and the
- * date. A table for a screen reader, which hears each cell with its column; the layout is a grid.
+ * The rows of every log, the front pages' latest and the history alike: the picture, the title, and under it a line that
+ * ends with the date. A table for a screen reader, which hears each cell with its column; the layout is a grid.
  */
 export function MediaRows({ rows, coverRatio }: { rows: readonly MediaRow[]; coverRatio: "poster" | "square" }) {
   return (
@@ -39,7 +42,7 @@ export function MediaRows({ rows, coverRatio }: { rows: readonly MediaRow[]; cov
       <tbody role="rowgroup" className="grid gap-2">
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
-            <td role="cell" className="[grid-area:cover]">
+            <td role="cell" className="mr-2 [grid-area:cover]">
               <Cover ratio={coverRatio} url={row.cover} />
             </td>
             <td role="rowheader" className="min-w-0 truncate font-medium [grid-area:title]">
@@ -48,7 +51,7 @@ export function MediaRows({ rows, coverRatio }: { rows: readonly MediaRow[]; cov
             <td role="cell" className="min-w-0 truncate text-sm text-muted-foreground [grid-area:subtitle]">
               {row.subtitle}
             </td>
-            <td role="cell" className="text-sm whitespace-nowrap text-muted-foreground [grid-area:when]">
+            <td role="cell" className={`text-sm whitespace-nowrap text-muted-foreground [grid-area:when] ${AFTER_SUBTITLE}`}>
               {row.when}
             </td>
           </tr>
