@@ -7,7 +7,6 @@
  */
 export {
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
   CircleHelp,
   Download,

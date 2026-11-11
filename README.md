@@ -57,7 +57,11 @@ repository does (`scripts/design-tokens.ts` there).
 4. **Motion comes from the tokens** (`--motion-*` in `motion.css`): entrances move and never fade text, and everything is off
    under `prefers-reduced-motion`.
 5. **Tokens only.** No colour, radius or font outside `theme.css`.
-6. English for code and comments; on-screen text in a component is Norwegian (bokmål).
+6. **A select is a native `<select>`.** Every list of choices, short or long (a filter, a period, a month), is `NativeSelect`, so a
+   phone shows its own picker and a desktop its own menu. Never a menu drawn in the page: no Radix `Select`, no listbox or
+   combobox, no popover or sheet of buttons or links standing in for one. Choosing a value does what the page needs:
+   a form submit, or going to an address (`select[data-navigates]`, `enableNavigatingSelects`).
+7. English for code and comments; on-screen text in a component is Norwegian (bokmål).
 
 ## Work on it
 
