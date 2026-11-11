@@ -120,35 +120,6 @@
 }
 }
 
-/*
- * A stage that is dark whatever the device says: the review pages are a screening room, not a document. It restates the dark
- * tokens for what stands inside it, so every component and chart there follows without a class of its own.
- */
-.theme-night {
-  color-scheme: dark;
-  --background: oklch(0.13 0.025 275);
-  --foreground: oklch(0.97 0.005 275);
-  --card: oklch(0.2 0.03 275 / 70%);
-  --card-foreground: oklch(0.97 0.005 275);
-  --popover: oklch(0.2 0.03 275);
-  --popover-foreground: oklch(0.97 0.005 275);
-  --primary: oklch(0.82 0.13 285);
-  --primary-foreground: oklch(0.15 0.03 275);
-  --secondary: oklch(0.26 0.03 275);
-  --secondary-foreground: oklch(0.97 0.005 275);
-  --muted: oklch(0.24 0.03 275);
-  --muted-foreground: oklch(0.76 0.02 275);
-  --accent: oklch(0.3 0.04 275);
-  --accent-foreground: oklch(0.97 0.005 275);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.7 0.12 285);
-  --good: oklch(0.82 0.15 160);
-  --bad: oklch(0.78 0.14 25);
-  background: var(--background);
-  color: var(--foreground);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
