@@ -1,0 +1,57 @@
+{
+  "name": "@lmfaole/designsystem",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
+  "repository": "github:lmfaole/designsystem",
+  "scripts": {
+    "lint": "oxlint -c oxlintrc.json src",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "verify": "npm run -s typecheck && npm run -s lint && npm test"
+  },
+  "exports": {
+    "./theme.css": "./src/theme.css",
+    "./motion.css": "./src/motion.css",
+    "./shell.css": "./src/shell.css",
+    "./overlay.css": "./src/overlay.css",
+    "./components/button": "./src/components/ui/button.tsx",
+    "./components/button-group": "./src/components/ui/button-group.tsx",
+    "./components/card": "./src/components/ui/card.tsx",
+    "./components/native-select": "./src/components/ui/native-select.tsx",
+    "./components/separator": "./src/components/ui/separator.tsx",
+    "./components/skeleton": "./src/components/ui/skeleton.tsx",
+    "./components/table": "./src/components/ui/table.tsx",
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts"
+  },
+  "files": ["src"],
+  "dependencies": {
+    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@tanstack/charts": "^1.0.0",
+    "@tanstack/react-virtual": "^3.14.24",
+    "class-variance-authority": "^0.7.1",
+    "cn": "^0.4.0",
+    "lucide-react": "^1.48.0",
+    "radix-ui": "^1.6.7"
+  },
+  "peerDependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "oxlint": "^1.81.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.0"
+  },
+  "engines": { "node": ">=24" }
+}

@@ -1,0 +1,48 @@
+/*
+ * The app shell: what makes a page feel installed rather than like a web
+ * page. Safe-area insets as tokens (the notch, the home indicator, rounded
+ * corners in landscape) and the touch and scroll defaults of a native app.
+ * The viewport meta has `viewport-fit=cover`, so without these the header
+ * would sit under the notch.
+ *
+ * A change of page is a view transition, the browser's own cross-fade, with no script: it works on a
+ * full page load and on every same-origin link, and is off under reduced motion (below).
+ */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* A pull past the end of the page must not drag the shell or reload it. */
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  /* No double-tap zoom delay on controls, and no accidental text selection when pressing them. */
+  :where(a, button, summary, [role="button"], [role="tab"], [role="menuitem"]) {
+    touch-action: manipulation;
+  }
+  :where(button, [role="button"], [role="tab"], nav a) {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}

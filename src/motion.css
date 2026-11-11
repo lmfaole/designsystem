@@ -1,0 +1,214 @@
+/*
+ * The motion system: tokens, the small shared movements and the reduced-motion
+ * safety net. Imported by `theme.css`, so every app has it. The rules for when
+ * to animate and when not to are in `docs/MOTION.md`; app code takes durations
+ * and easings from the tokens below and never writes its own.
+ *
+ * Entrances move and never fade: a fade hands a contrast checker
+ * half-transparent text.
+ */
+
+:root {
+  --motion-duration-instant: 100ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 250ms;
+  --motion-duration-slow: 450ms;
+  --motion-duration-live: 2400ms;
+
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --motion-distance: 0.75rem;
+  --motion-stagger: 60ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-instant: 0.01ms;
+    --motion-duration-fast: 0.01ms;
+    --motion-duration-base: 0.01ms;
+    --motion-duration-slow: 0.01ms;
+    --motion-duration-live: 0.01ms;
+    --motion-stagger: 0ms;
+  }
+}
+
+/* Registered so a bar or a ring can grow from nothing: a gradient stop is only animatable as a typed number. */
+@property --share {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes motion-rise {
+  from {
+    transform: translateY(var(--motion-distance));
+  }
+}
+
+@keyframes motion-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes motion-grow {
+  from {
+    --share: 0;
+  }
+}
+
+@layer components {
+  /* One element rising into place on arrival. */
+  .motion-reveal {
+    animation: motion-rise var(--motion-duration-slow) var(--motion-ease-out) both;
+  }
+
+  /* The children of a list or grid rising in one after the other, six steps at most. */
+  .motion-stagger > * {
+    animation: motion-rise var(--motion-duration-slow) var(--motion-ease-out) both;
+  }
+
+  .motion-stagger > :nth-child(2) { animation-delay: calc(var(--motion-stagger) * 1); }
+  .motion-stagger > :nth-child(3) { animation-delay: calc(var(--motion-stagger) * 2); }
+  .motion-stagger > :nth-child(4) { animation-delay: calc(var(--motion-stagger) * 3); }
+  .motion-stagger > :nth-child(5) { animation-delay: calc(var(--motion-stagger) * 4); }
+  .motion-stagger > :nth-child(6) { animation-delay: calc(var(--motion-stagger) * 5); }
+  .motion-stagger > :nth-child(n + 7) { animation-delay: calc(var(--motion-stagger) * 6); }
+
+  /* A bar or ring whose `--share` (0 to 1) grows from nothing. */
+  .motion-grow {
+    animation: motion-grow calc(var(--motion-duration-slow) * 1.5) var(--motion-ease-out) both;
+  }
+
+  /* The pulse of something live. The only loop the system allows. */
+  .motion-live {
+    animation: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) infinite;
+  }
+
+  /* A container that is refetching: dimmed while `aria-busy`, back when it settles. */
+  .motion-pending {
+    transition: opacity var(--motion-duration-fast) var(--motion-ease-in-out);
+  }
+
+  .motion-pending[aria-busy='true'] {
+    opacity: 0.5;
+  }
+
+  /* Pressed feedback for anything clickable that is not already a Button. */
+  .motion-press {
+    transition: transform var(--motion-duration-instant) var(--motion-ease-out);
+  }
+
+  .motion-press:active {
+    transform: translateY(1px);
+  }
+
+  /* A card that lifts under a real pointer, never on touch where hover sticks. */
+  .motion-lift {
+    transition:
+      translate var(--motion-duration-base) var(--motion-ease-out),
+      box-shadow var(--motion-duration-base) var(--motion-ease-out);
+  }
+
+  @media (hover: hover) {
+    .motion-lift:hover {
+      translate: 0 -2px;
+      box-shadow: 0 0.5rem 1rem -0.5rem color-mix(in oklch, currentColor 30%, transparent);
+    }
+  }
+
+  /* Open and close of a block without measuring it: wrap the content in one child with `overflow: hidden`. */
+  .motion-collapse {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--motion-duration-base) var(--motion-ease-in-out);
+  }
+
+  .motion-collapse[data-state='closed'] {
+    grid-template-rows: 0fr;
+  }
+
+  .motion-collapse > * {
+    min-block-size: 0;
+    overflow: hidden;
+  }
+}
+
+/*
+ * The safety net. Loops stop, movement and fades land at once, and that also
+ * covers any shadcn component added later (sheet, dialog, menus), which animate
+ * with their own durations. A spinner is feedback that something is working,
+ * not decoration, so `data-motion="essential"` keeps it turning.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .motion-reveal,
+  .motion-stagger > *,
+  .motion-grow,
+  .motion-live {
+    animation: none;
+  }
+
+  *:not([data-motion='essential']),
+  *:not([data-motion='essential'])::before,
+  *:not([data-motion='essential'])::after,
+  *::backdrop {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * `CountUp`: the climb is a counter printing a registered integer that animates from 0 to `--count`, and shows only
+ * while it runs (no fill: when it ends it is hidden again); the formatted text is hidden for the same time.
+ * Where animations or `@property` are missing, the text is simply there.
+ */
+@property --count-now {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.count-up {
+  display: inline-grid;
+  justify-items: start;
+}
+
+.count-up > * {
+  grid-area: 1 / 1;
+}
+
+.count-up-climb {
+  visibility: hidden;
+  counter-reset: climb var(--count-now);
+  animation: count-climb calc(var(--motion-duration-slow) * 2) var(--motion-ease-out);
+}
+
+.count-up-climb::before {
+  content: counter(climb);
+}
+
+.count-up-final {
+  animation: count-final calc(var(--motion-duration-slow) * 2) steps(1, end);
+}
+
+@keyframes count-climb {
+  from {
+    --count-now: 0;
+    visibility: visible;
+  }
+  to {
+    --count-now: var(--count);
+    visibility: visible;
+  }
+}
+
+@keyframes count-final {
+  from,
+  to {
+    visibility: hidden;
+  }
+}

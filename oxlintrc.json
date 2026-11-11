@@ -1,0 +1,89 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  // `plugins` replaces oxlint's default list, it does not extend it. The
+  // list below is therefore the whole set: dropping a name here silently
+  // switches off every rule that plugin owns. `unicorn` was missing until
+  // 2026-10-05, which is why `no-array-sort` never fired.
+  "plugins": ["react", "typescript", "oxc", "unicorn"],
+  "categories": {
+    // `correctness` is oxlint's default and stays. `suspicious` is the
+    // next one up: it is where the mutation and shadowing bugs live.
+    "suspicious": "error"
+  },
+  "rules": {
+    // The automatic JSX runtime is on (`"jsx": "react-jsx"` in every
+    // tsconfig), so `React` is not in scope and never was. oxlint 1.85 has
+    // no `settings.react.runtime` to say so, which is why this one rule is
+    // turned off by hand instead of by configuration.
+    "react/react-in-jsx-scope": "off",
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": [
+      "warn",
+      {
+        "allowConstantExport": true
+      }
+    ],
+
+    // The typing rules. `strict` in the tsconfigs covers null and implicit
+    // any; these stop the three escapes it leaves open.
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-empty-object-type": "error",
+    "typescript/no-wrapper-object-types": "error",
+    "typescript/no-unsafe-declaration-merging": "error",
+    "typescript/no-duplicate-type-constituents": "error",
+    // No `@ts-ignore`, `@ts-expect-error` or `@ts-nocheck`. A type that
+    // needs silencing is a type to fix, and the fix belongs in the commit
+    // that needed it rather than in a later cleanup.
+    "typescript/ban-ts-comment": "error",
+    // `as` asserts a type the compiler cannot check. Narrow, parse with a
+    // schema, or annotate instead; `as const` stays allowed. The few places
+    // that cannot are listed in `overrides`, each with its reason.
+    "typescript/consistent-type-assertions": ["error", { "assertionStyle": "never" }],
+
+    // `console.error` and `console.warn` stay: Workers Logs collects them,
+    // so they are how a Worker reports a failure. `console.log` and `console.debug` are the
+    // debugging noise this repository does not keep.
+    "eslint/no-console": ["error", { "allow": ["error", "warn"] }],
+    "eslint/no-shadow": "error",
+    "eslint/no-implicit-coercion": "error",
+
+    // `sort`, `reverse`, `splice` mutate the array they are called on. On
+    // a Query cache or a props array that is a bug that only shows up as
+    // the wrong row order somewhere else.
+    "unicorn/no-array-sort": "error",
+    "unicorn/no-array-reverse": "error",
+    "unicorn/no-useless-spread": "error",
+    "unicorn/no-useless-fallback-in-spread": "error",
+    "unicorn/prefer-spread": "error",
+    // Off: it fires on every test fixture and stub factory that closes over
+    // nothing, which is most of a test file, and the "fix" is hoisting a
+    // helper to module scope for no measurable gain. It also has real false
+    // positives on React components that take everything as props.
+    "unicorn/consistent-function-scoping": "off",
+    // `process.exit` in a Worker, a script or a test is always the wrong
+    // tool; the script wrappers in `scripts/` are the only exit points and
+    // they say why.
+    "unicorn/no-process-exit": "error"
+  },
+  "overrides": [
+    {
+      // Generated shadcn/ui. This directory is
+      // regenerated with `npx shadcn@latest add <component>` and never
+      // hand-edited, so a rule that wants an edit here cannot be obeyed
+      // without breaking that. These stay on as warnings: they are visible
+      // in the lint output, and they are upstream's to fix.
+      "files": ["**/components/ui/**"],
+      "rules": {
+        "eslint/no-shadow": "warn",
+        "typescript/no-explicit-any": "warn",
+        "typescript/no-non-null-assertion": "warn",
+        "typescript/consistent-type-assertions": "warn",
+        "unicorn/no-array-sort": "warn",
+        "unicorn/no-array-reverse": "warn",
+        "eslint/no-implicit-coercion": "warn"
+      }
+    }
+  ]
+}

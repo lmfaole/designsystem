@@ -1,0 +1,243 @@
+/*
+ * Dialog, sheet and popover: the browser's own `<dialog>` and `popover`, opened by invoker commands (`CommandButton`).
+ * They sit in the top layer, so no z-index. Motion is a transition from `@starting-style`, and `display` and `overlay`
+ * transition discretely so the closing one stays until it has left; everything runs on the `--motion-*` tokens and
+ * lands at once under reduced motion (motion.css).
+ */
+dialog[data-overlay],
+[popover][data-overlay] {
+  padding: 0;
+  border: 1px solid var(--border);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  max-inline-size: none;
+  max-block-size: none;
+  overflow: visible;
+}
+
+/* The preflight zeroes `margin`, which is what centres a modal dialog by default. */
+dialog[data-overlay='dialog'] {
+  inset: 0;
+  margin: auto;
+  block-size: fit-content;
+  inline-size: min(90vw, 24rem);
+  border-radius: var(--radius-2xl);
+}
+
+dialog[data-overlay='sheet'],
+[popover][data-overlay='sheet'] {
+  inset: auto 0 0 0;
+  margin: 0 auto;
+  inline-size: 100%;
+  max-inline-size: 28rem;
+  max-block-size: 80dvh;
+  border-block-end: 0;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  padding-block-end: var(--safe-bottom);
+}
+
+[data-overlay-body] {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  max-block-size: inherit;
+  overflow-y: auto;
+  padding: 1rem;
+  padding-block-start: 3.5rem;
+}
+
+[data-overlay-body] > h2 {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 1rem;
+  block-size: 3rem;
+  display: grid;
+  align-items: center;
+}
+
+[data-overlay-close] {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  display: grid;
+  place-items: center;
+  min-block-size: 3rem;
+  min-inline-size: 3rem;
+  z-index: 1;
+}
+
+/* A card over a list (`DetailHost`): the whole screen on a phone, a tall box on a wide screen. */
+dialog[data-overlay='page'] {
+  inset: 0;
+  margin: 0;
+  inline-size: 100%;
+  block-size: 100dvh;
+  border: 0;
+  border-radius: 0;
+}
+
+/* The body scrolls and the close button stays: it is the dialog's, not the body's. The hero bleeds out to the edges of
+   the card, so everything under it carries the gutter itself. The hero's own info button is at the end, so the close
+   button is at the start. */
+dialog[data-overlay='page'] {
+  overflow: hidden;
+}
+
+dialog[data-overlay='page'] [data-overlay-body] {
+  block-size: 100%;
+  max-block-size: none;
+  /* Rows as tall as their content: in a grid of a set height they would shrink to it and clip the hero. */
+  grid-auto-rows: max-content;
+  align-content: start;
+  /* The hero pulls itself up by the column's padding (`-mt-10`), so the card has that padding on top. */
+  padding: 2.5rem 0 calc(1rem + var(--safe-bottom));
+  overscroll-behavior: contain;
+}
+
+dialog[data-overlay='page'] [data-overlay-body] > :not(header) {
+  margin-inline: 1rem;
+}
+
+dialog[data-overlay='page'] > [data-overlay-close] {
+  inset-inline: 0.5rem auto;
+  inset-block-start: 0.5rem;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--background) 70%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 48rem) {
+  dialog[data-overlay='page'] {
+    margin: auto;
+    inline-size: min(56rem, 94vw);
+    block-size: min(92dvh, 60rem);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2xl);
+  }
+}
+
+[data-overlay-list] {
+  display: grid;
+  margin-inline: -1rem;
+}
+
+[data-overlay-list] button,
+[data-overlay-list] a {
+  min-block-size: 3rem;
+  inline-size: 100%;
+  padding-inline: 1rem;
+  text-align: start;
+}
+
+[data-overlay-list] button:hover,
+[data-overlay-list] a:hover {
+  background: var(--muted);
+}
+
+[data-overlay-list] button[aria-current='true'],
+[data-overlay-list] a[aria-current='page'] {
+  font-weight: 600;
+}
+
+/* Motion: open is the end state, closed (and the first frame of opening) is off screen or a little small. */
+dialog[data-overlay],
+[popover][data-overlay] {
+  transition:
+    translate var(--motion-duration-base) var(--motion-ease-in),
+    scale var(--motion-duration-fast) var(--motion-ease-in),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+dialog[data-overlay][open],
+[popover][data-overlay]:popover-open {
+  transition-timing-function: var(--motion-ease-out);
+}
+
+dialog[data-overlay='sheet']:not([open]),
+dialog[data-overlay='page']:not([open]),
+[popover][data-overlay='sheet']:not(:popover-open) {
+  translate: 0 100%;
+}
+
+dialog[data-overlay='dialog']:not([open]) {
+  scale: 0.96;
+}
+
+@starting-style {
+  dialog[data-overlay='sheet'][open],
+  dialog[data-overlay='page'][open],
+  [popover][data-overlay='sheet']:popover-open {
+    translate: 0 100%;
+  }
+
+  dialog[data-overlay='dialog'][open] {
+    scale: 0.96;
+  }
+}
+
+dialog[data-overlay]::backdrop,
+[popover][data-overlay]::backdrop {
+  background: rgb(0 0 0 / 0.2);
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-base) var(--motion-ease-in),
+    overlay var(--motion-duration-base) allow-discrete,
+    display var(--motion-duration-base) allow-discrete;
+}
+
+dialog[data-overlay][open]::backdrop,
+[popover][data-overlay]:popover-open::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  dialog[data-overlay][open]::backdrop,
+  [popover][data-overlay]:popover-open::backdrop {
+    opacity: 0;
+  }
+}
+
+/* A wide screen gets a popover as a list under its button, where anchor positioning is there to do it. */
+@media (min-width: 40rem) {
+  @supports (position-area: block-end) {
+    [popover][data-overlay='sheet'] {
+      inset: auto;
+      margin: 0.25rem 0 0;
+      inline-size: 14rem;
+      max-block-size: 24rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding-block-end: 0;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block;
+    }
+
+    [popover][data-overlay='sheet']:not(:popover-open) {
+      translate: 0 -0.5rem;
+    }
+
+    @starting-style {
+      [popover][data-overlay='sheet']:popover-open {
+        translate: 0 -0.5rem;
+      }
+    }
+
+    [popover][data-overlay='sheet']::backdrop {
+      background: transparent;
+    }
+
+    [popover][data-overlay='sheet'] [data-overlay-body] {
+      padding: 0.25rem;
+    }
+
+    [popover][data-overlay='sheet'] [data-overlay-body] > h2,
+    [popover][data-overlay='sheet'] [data-overlay-close] {
+      display: none;
+    }
+
+    [popover][data-overlay='sheet'] [data-overlay-list] {
+      margin-inline: 0;
+    }
+  }
+}
