@@ -32,7 +32,6 @@ interface ChartFrameProps<TDatum> {
   height: number
   /** Whether the height follows the width, up to 480px (a fifth of a wide chart, not a flat strip); off for a chart whose height is its rows. */
   grow?: boolean
-  className?: string
   /** The colour of the series, for a chart of one thing that has a colour of its own (an album's cover); the theme's primary by default. */
   color?: string | undefined
 }
@@ -43,7 +42,7 @@ interface ChartFrameProps<TDatum> {
  * dark mode with the rest of the page and no colour is written down here. A chart is not a control, so it does not take
  * keyboard focus (`keyboard: false`); the pointer's tooltip stays.
  */
-export function ChartFrame<TDatum>({ definition, ariaLabel, height, grow = true, className, color }: ChartFrameProps<TDatum>) {
+export function ChartFrame<TDatum>({ definition, ariaLabel, height, grow = true, color }: ChartFrameProps<TDatum>) {
   const box = useRef<HTMLDivElement>(null)
   // 0 until measured, so the server and the first browser render agree on the numeric height.
   const [width, setWidth] = useState(0)
@@ -67,7 +66,6 @@ export function ChartFrame<TDatum>({ definition, ariaLabel, height, grow = true,
         "text-muted-foreground w-full text-xs",
         "[--ts-chart-1:var(--chart-accent,var(--primary))] [--ts-chart-tooltip-background:var(--popover)] [--ts-chart-tooltip-color:var(--popover-foreground)]",
         "[--ts-chart-tooltip-border:1px_solid_var(--border)] [--ts-chart-tooltip-border-radius:var(--radius)]",
-        className,
       )}
     />
   )

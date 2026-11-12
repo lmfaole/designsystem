@@ -20,10 +20,10 @@ const SIZES: Record<Ratio, Record<Size, [number, number]>> = {
  * a list stay level when there is no picture or it fails to load: it is then just not drawn in it, with no script to find out.
  * Decorative: the name beside it says what it is. One component for every app, so a cover looks the same wherever it is.
  */
-export function Cover({ url, ratio = 'poster', size = 'row', rooted = false, className }: { url: string | null | undefined; ratio?: Ratio; size?: Size; /** The address is a path of the host (another app's picture), not one under this app's base. */ rooted?: boolean; className?: string }) {
+export function Cover({ url, ratio = 'poster', size = 'row', rooted = false }: { url: string | null | undefined; ratio?: Ratio; size?: Size; /** The address is a path of the host (another app's picture), not one under this app's base. */ rooted?: boolean }) {
   const [width, height] = SIZES[ratio][size]
   return (
-    <div aria-hidden="true" className={cn('shrink-0 overflow-hidden rounded-md bg-muted', FRAMES[ratio][size], size === 'hero' && 'shadow-md', className)}>
+    <div aria-hidden="true" className={cn('shrink-0 overflow-hidden rounded-md bg-muted', FRAMES[ratio][size], size === 'hero' && 'shadow-md')}>
       {url ? <img src={rooted ? url : appUrl(url)} alt="" loading="lazy" decoding="async" width={width} height={height} className="size-full object-cover" /> : null}
     </div>
   )

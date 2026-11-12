@@ -11,7 +11,7 @@ const SIZES = { xs: "text-xs", sm: "text-sm", base: "text-base", lg: "text-lg" }
 const TONES = { default: "", muted: "text-muted-foreground", destructive: "text-destructive" } as const
 const WEIGHTS = { normal: "", medium: "font-medium", semibold: "font-semibold" } as const
 const HEADINGS = {
-  page: "font-heading text-3xl font-medium text-balance",
+  page: "font-heading text-3xl font-medium text-balance 2xl:text-4xl",
   section: "text-lg font-semibold",
   label: "text-sm font-semibold tracking-widest text-muted-foreground uppercase",
   item: "font-heading text-base font-medium",
@@ -52,9 +52,9 @@ export function Heading({ level, look = level === 1 ? "page" : level === 2 ? "se
  * A link in or beside text, with the look every name that has a page shares (`ENTITY_LINK`). `external` is a link out
  * to another site, opened without handing the new page a `window.opener`.
  */
-export function TextLink({ href, size = "base", weight = "normal", external = false, children }: { href: string; size?: keyof typeof SIZES; weight?: keyof typeof WEIGHTS; external?: boolean; children: ReactNode }) {
+export function TextLink({ href, external = false, children }: { href: string; external?: boolean; children: ReactNode }) {
   return (
-    <a href={href} className={`${ENTITY_LINK} ${SIZES[size]} ${WEIGHTS[weight]}`} {...(external ? { rel: "noopener noreferrer" } : {})}>
+    <a href={href} className={ENTITY_LINK} {...(external ? { rel: "noopener noreferrer" } : {})}>
       {children}
     </a>
   )

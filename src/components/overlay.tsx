@@ -27,7 +27,7 @@ export function Overlay({ id, variant, title, hideTitle = false, children }: Ove
         <h2 id={titleId} className={hideTitle ? "sr-only" : "font-medium"}>
           {title}
         </h2>
-        <CommandButton command="close" commandFor={id} data-overlay-close="" aria-label="Lukk">
+        <CommandButton command="close" commandFor={id} look="close" label="Lukk">
           <X aria-hidden="true" />
         </CommandButton>
         {children}

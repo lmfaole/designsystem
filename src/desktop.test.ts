@@ -24,11 +24,9 @@ const read = (path: string): string => readFileSync(join(src, path), "utf8")
 
 /** The `max-w-*` classes that are left, per file: a measure for text, the size of a mark. */
 const ALLOWED_MAX_W: Readonly<Record<string, readonly string[]>> = {
-  "components/cv-list.tsx": ["max-w-prose"],
   "components/error-page.tsx": ["max-w-prose"],
   "components/creator-marks.tsx": ["max-w-36", "max-w-44"],
   "components/layout.tsx": ["max-w-prose"],
-  "components/page-header.tsx": ["max-w-2xl"],
 }
 
 test("the page column has no maximum width", () => {

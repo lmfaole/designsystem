@@ -1,5 +1,3 @@
-import { cn } from "cn"
-
 import { type DonutInput, donutGradient, donutSlices, sliceColor } from "../lib/donut"
 
 interface DonutChartProps {
@@ -10,7 +8,6 @@ interface DonutChartProps {
   keep?: number
   /** How a value reads in the legend, e.g. "12 plays"; the share is always shown. */
   formatValue?: (value: number) => string
-  className?: string
 }
 
 const SHARE = new Intl.NumberFormat("nb-NO", { style: "percent", maximumFractionDigits: 0 })
@@ -21,20 +18,17 @@ const SHARE = new Intl.NumberFormat("nb-NO", { style: "percent", maximumFraction
  * `--donut-base` on an ancestor to change the base colour) without a chart
  * library. The legend is the data, so no share is only readable from the colour.
  */
-export function DonutChart({ data, ariaLabel, keep = 5, formatValue, className }: DonutChartProps) {
+export function DonutChart({ data, ariaLabel, keep = 5, formatValue }: DonutChartProps) {
   const slices = donutSlices(data, keep)
 
   return (
     <figure
       aria-label={ariaLabel}
-      className={cn(
-        "@container grid items-center gap-x-8 gap-y-4 [grid-template-areas:'ring'_'legend'] sm:grid-cols-[auto_minmax(0,28rem)] sm:justify-center sm:[grid-template-areas:'ring_legend']",
-        className,
-      )}
+      className="@container grid items-center gap-x-8 gap-y-4 [grid-template-areas:'ring'_'legend'] sm:grid-cols-[auto_minmax(0,28rem)] sm:justify-center sm:[grid-template-areas:'ring_legend']"
     >
       <div
         aria-hidden="true"
-        className="mx-auto aspect-square w-40 rounded-full @2xl:w-56 @4xl:w-72 [grid-area:ring] [mask:radial-gradient(farthest-side,transparent_58%,#000_59%)]"
+        className="mx-auto aspect-square w-40 rounded-full @2xl:w-56 @4xl:w-72 [grid-area:ring] [mask:radial-gradient(farthest-side,transparent_58%,black_59%)]"
         style={{ background: donutGradient(slices) }}
       />
       <ul className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-1.5 text-sm [grid-area:legend]">

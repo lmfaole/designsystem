@@ -13,12 +13,9 @@ export interface RowData {
   trailing: ReactNode
 }
 
-const GAPS = { small: "gap-y-1", medium: "gap-y-2", large: "gap-y-3" } as const
-
 interface RowsProps {
   rows: readonly RowData[]
   lead?: "rank" | "poster"
-  gap?: keyof typeof GAPS
   /** What the columns are called for a screen reader, which hears them with every cell: the name, and what each row has. */
   columns?: { name?: string; value?: string }
 }
@@ -31,12 +28,12 @@ interface RowsProps {
  * It is a table, since a row is a name and what it has: the headers are for a screen reader only. The layout is a grid
  * and the roles are written out, so the table stays a table when `display` is not `table`.
  */
-export function Rows({ rows, lead, gap = "medium", columns }: RowsProps) {
+export function Rows({ rows, lead, columns }: RowsProps) {
   const layout = lead === "rank" ? "grid-cols-[2rem_1fr_auto] items-baseline" : lead === "poster" ? "grid-cols-[auto_1fr_auto] items-center" : "grid-cols-[1fr_auto] items-baseline"
   return (
     <table role="table" className="block">
       <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : "Omslag"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
-      <tbody role="rowgroup" className={`grid ${LIST_COLUMNS} ${GAPS[gap]}`}>
+      <tbody role="rowgroup" className={`grid ${LIST_COLUMNS} gap-y-2`}>
         {rows.map((row, index) => (
           <tr role="row" key={row.key} className={`grid gap-x-3 ${layout}`}>
             {lead === "rank" ? (

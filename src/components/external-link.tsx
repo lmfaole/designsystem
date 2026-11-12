@@ -1,27 +1,16 @@
-import type { ComponentProps } from "react"
+import type { ReactNode } from "react"
 
 import { cn } from "cn"
 
-// `rel` is not in the props: it is a safety property, not a preference, so a
-// call site cannot opt out of it by accident.
-type ExternalLinkProps = Omit<ComponentProps<"a">, "rel"> & {
-  /** `medium` for a link that is the title of a row. */
-  weight?: "normal" | "medium"
-}
-
 /**
- * A link out to another site: underlined, and opened without handing the new
- * page a `window.opener` reference.
- *
- * Six call sites across five apps wrote this markup by hand, which is how the
- * underline and the `rel` came to differ per app without anyone noticing. The
- * difference between the copies was never anything a reader could see, only
- * code, so there was nothing to keep.
- *
- * An app chooses `weight`; `className` stays for other components of
- * a design-system package (a pill link in a hero). For a link inside running
- * text, leave both out: the underline is enough.
+ * A link out to another site: underlined, and opened without handing the new page a `window.opener` reference.
+ * `rel` is not a prop: it is a safety property, not a preference. For a link inside running text the underline is enough;
+ * `look="pill"` is the bordered form a row of links to a thing's other sites takes.
  */
-export function ExternalLink({ className, weight = "normal", ...props }: ExternalLinkProps) {
-  return <a className={cn("underline underline-offset-4", weight === "medium" && "font-medium", className)} {...props} rel="noopener noreferrer" />
+export function ExternalLink({ href, look = "text", children }: { href: string; look?: "text" | "pill"; children: ReactNode }) {
+  return (
+    <a href={href} className={cn(look === "pill" ? "rounded-full border px-3 py-1 no-underline hover:bg-muted" : "underline underline-offset-4")} rel="noopener noreferrer">
+      {children}
+    </a>
+  )
 }

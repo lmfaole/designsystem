@@ -1,11 +1,11 @@
 import type { ReactNode } from "react"
 
-import { PAGE_COLUMN } from "../lib/page-width"
+import { PAGE_COLUMN, PAGE_PADDING_Y } from "../lib/page-width"
 
 /** The id of the page area, which the skip link points at. */
 export const MAIN_ID = "main-content"
 
-const FOOT = { none: "py-10", bar: "pt-10 pb-[calc(--spacing(24)+var(--safe-bottom))]" } as const
+const FOOT = { none: PAGE_PADDING_Y, bar: "pt-10 pb-[calc(--spacing(24)+var(--safe-bottom))]" } as const
 
 /**
  * The frame of a page: the skip link, and the page in `<main>`, in the one column every page stands in. It has no

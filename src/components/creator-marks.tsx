@@ -1,7 +1,7 @@
 import { appUrl } from "../lib/base-url"
 
 /** Most logos are dark or coloured (the register's: 54 dark and 44 in between of 110, 12 light), so the head gives them a light plate. */
-const LOGO = "h-12 w-auto max-w-44 rounded-md bg-white/85 object-contain p-1.5 backdrop-blur"
+const LOGO = "h-12 w-auto max-w-44 rounded-md bg-logo-plate object-contain p-1.5 backdrop-blur"
 /** In a list, on the card's own ground, with no plate. */
 const BARE = "h-9 w-auto max-w-36 object-contain"
 

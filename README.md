@@ -68,7 +68,16 @@ repository does (`scripts/design-tokens.ts` there).
    (`tiles`, `cards`, `sections`, `charts`) or keeps growing past `lg` (`2xl:`), a facts-and-content page is a `Split`
    with a sticky rail, a chart's height follows its width. Do not bring back a page cap, a one-column list or a grid
    that stops at four; `src/desktop.test.ts` fails on it. Check a page at 1920 and 2560 px as well as on a phone.
-8. English for code and comments; on-screen text in a component is Norwegian (bokmål).
+8. **Closed by default: data decides.** A component takes no `className` and no `style`, and spreads no `ComponentProps<...>`:
+   the look is the component's, not the caller's. Props are closed unions (`tone: "muted"`), never a string of classes. What a
+   kind of data implies is derived from the data, not passed: a poster or a square from the picture's kind, a link's look from
+   being a name that has a page. A `ReactNode` slot is only for content that is truly free text or another component of this
+   package. `src/strict.test.ts` fails on a new open prop; its `ALLOWED` list may only shrink.
+   **Cards.** A card (`Card`, `Panel`) is only for one self-contained item that is comparable with its siblings of the same kind
+   or clickable as a whole, or a frame around a chart. It needs real content of its own (a picture, figures, facts, a chart)
+   and at least two of its kind on the page, or the page's one chart. Everything else is a `PageSection` (a short noun title)
+   with a list, a table, a `dl` or `Text`. Cards are not nested. A title is a short noun phrase, not a sentence.
+9. English for code and comments; on-screen text in a component is Norwegian (bokmål).
 
 ## Work on it
 

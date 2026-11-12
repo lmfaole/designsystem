@@ -4,11 +4,10 @@
 import type { ReactNode } from 'react'
 
 import { ENTITY_LINK } from '../lib/link-style.ts'
-import { cn } from '../lib/utils.ts'
 
 /** The app's own link to a slug of something (an item, a person, a place). */
 export type SlugLink = (props: { slug: string; children: ReactNode; className?: string; /** `block`: the link fills its line and is not underlined (it holds a picture and a text). */ look?: "block" }) => ReactNode
 
-export function ItemLink({ as: Link, slug, children, className }: { as: SlugLink; slug: string; children: string; className?: string }) {
-  return <Link slug={slug} className={cn(ENTITY_LINK, className)}>{children}</Link>
+export function ItemLink({ as: Link, slug, children }: { as: SlugLink; slug: string; children: string }) {
+  return <Link slug={slug} className={ENTITY_LINK}>{children}</Link>
 }

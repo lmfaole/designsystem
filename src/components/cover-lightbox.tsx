@@ -9,7 +9,7 @@ export function CoverLightbox({ url, name, children }: { url: string; name: stri
   const id = `cover-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`
   return (
     <>
-      <CommandButton command="show-modal" commandFor={id} aria-label={`Vis ${name} større`} className="cursor-zoom-in rounded-md">
+      <CommandButton command="show-modal" commandFor={id} look="zoom" label={`Vis ${name} større`}>
         {children}
       </CommandButton>
       <Overlay id={id} variant="dialog" title={name} hideTitle>

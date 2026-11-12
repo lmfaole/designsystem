@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 
+import { Text } from "./text"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 
 interface ChartCardProps {
@@ -9,19 +10,18 @@ interface ChartCardProps {
   /** True when there is nothing to chart: `emptyMessage` shows in place of the chart. */
   empty?: boolean
   emptyMessage?: string
-  className?: string
   children: ReactNode
 }
 
 /** A card around one chart: a title, a line under it and the chart, or a sentence when there is nothing to chart. */
-export function ChartCard({ title, description, empty = false, emptyMessage = "", className, children }: ChartCardProps) {
+export function ChartCard({ title, description, empty = false, emptyMessage = "", children }: ChartCardProps) {
   return (
-    <Card className={className}>
+    <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         {description ? <CardDescription>{description}</CardDescription> : null}
       </CardHeader>
-      <CardContent>{empty ? <p className="text-sm text-muted-foreground">{emptyMessage}</p> : children}</CardContent>
+      <CardContent>{empty ? <Text size="sm" tone="muted">{emptyMessage}</Text> : children}</CardContent>
     </Card>
   )
 }

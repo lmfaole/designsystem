@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 
-import { PAGE_COLUMN } from "../lib/page-width"
+import { PAGE_COLUMN, PAGE_PADDING_Y } from "../lib/page-width"
 
 /**
  * How an app puts things next to and under each other without a class of its own (`docs/UI-COMPONENTS.md`): every choice
@@ -8,8 +8,8 @@ import { PAGE_COLUMN } from "../lib/page-width"
  * whole, since Tailwind reads them as text.
  */
 const GAPS = { none: "gap-0", xs: "gap-1", sm: "gap-2", md: "gap-4", lg: "gap-6", xl: "gap-8" } as const
-const ALIGN = { start: "items-start", center: "items-center", baseline: "items-baseline", end: "items-end" } as const
-const JUSTIFY = { start: "justify-start", between: "justify-between", end: "justify-end" } as const
+const ALIGN = { center: "items-center", baseline: "items-baseline" } as const
+const JUSTIFY = { start: "justify-start", between: "justify-between" } as const
 const COLUMNS = {
   1: "grid-cols-1",
   2: "grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3",
@@ -47,9 +47,9 @@ export function Stack({ as: Tag = "div", gap = "md", width = "full", children, .
 }
 
 /** Things next to each other, wrapping to a new line when the row is full. */
-export function Inline({ as: Tag = "div", gap = "sm", align = "center", justify = "start", wrap = true, children, ...rest }: BoxProps & { align?: keyof typeof ALIGN; justify?: keyof typeof JUSTIFY; wrap?: boolean }) {
+export function Inline({ as: Tag = "div", gap = "sm", align = "center", justify = "start", children, ...rest }: BoxProps & { align?: keyof typeof ALIGN; justify?: keyof typeof JUSTIFY }) {
   return (
-    <Tag className={`flex min-w-0 ${wrap ? "flex-wrap" : ""} ${GAPS[gap]} ${ALIGN[align]} ${JUSTIFY[justify]}`} {...rest}>
+    <Tag className={`flex min-w-0 flex-wrap ${GAPS[gap]} ${ALIGN[align]} ${JUSTIFY[justify]}`} {...rest}>
       {children}
     </Tag>
   )
@@ -67,7 +67,7 @@ export function Grid({ as: Tag = "div", gap = "md", columns = 2, children, ...re
 /** The column every page stands in (`PAGE_COLUMN`), with the page's parts under each other. */
 export function PageColumn({ as: Tag = "div", gap = "lg", children, ...rest }: BoxProps) {
   return (
-    <Tag className={`${PAGE_COLUMN} grid content-start py-8 ${GAPS[gap]}`} {...rest}>
+    <Tag className={`${PAGE_COLUMN} grid content-start ${PAGE_PADDING_Y} ${GAPS[gap]}`} {...rest}>
       {children}
     </Tag>
   )

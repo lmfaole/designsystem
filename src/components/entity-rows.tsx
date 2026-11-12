@@ -72,7 +72,7 @@ export function EntityRow({ picture, name, label, detail, count, muted = false, 
             <button type="button" popoverTarget={infoId} aria-label={`Om ${label}`} className="grid size-6 cursor-pointer place-items-center rounded-full border text-xs font-semibold text-muted-foreground">
               i
             </button>
-            <div id={infoId} popover="auto" className="m-auto w-[min(24rem,calc(100vw-2rem))] rounded-xl border bg-popover p-4 text-sm text-popover-foreground backdrop:bg-black/30">
+            <div id={infoId} popover="auto" className="m-auto w-[min(24rem,calc(100vw-2rem))] rounded-xl border bg-popover p-4 text-sm text-popover-foreground backdrop:bg-foreground/30">
               <p className="mb-3 font-medium">{label}</p>
               {info}
             </div>
