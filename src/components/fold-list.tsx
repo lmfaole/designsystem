@@ -5,7 +5,7 @@ export function FoldList({ summary, items }: { summary: string; items: readonly 
   return (
     <details className="mt-4 text-xs text-muted-foreground">
       <summary className="cursor-pointer">{summary}</summary>
-      <ul className="mt-2 grid gap-1">
+      <ul className="mt-2 grid gap-1 xl:block xl:columns-2 2xl:columns-3 xl:gap-x-8 xl:[&>li]:break-inside-avoid">
         {items.map((item) => (
           <li key={item.key}>{item.text}</li>
         ))}

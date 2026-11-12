@@ -23,12 +23,12 @@ export type TileLink<Item extends GalleryItem = GalleryItem> = (item: Item & { s
 const TILE = "group grid content-start gap-2 no-underline"
 
 /**
- * Works as a gallery: pictures in a grid, three across on a phone, five on a desktop, seven on a wide one and nine on a very wide one, each tile one link. Many more fit
+ * Works as a gallery: pictures in a grid, three across on a phone, then as many as fit at least 9rem each, each tile one link. Many more fit
  * on a line than in a list of rows, so a long list is shorter to look through.
  */
 export function Gallery<Item extends GalleryItem>({ items, link }: { items: readonly Item[]; link: TileLink<Item> }) {
   return (
-    <ul className="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9">
+    <ul className="grid grid-cols-3 gap-x-3 gap-y-5 sm:grid-cols-[repeat(auto-fill,minmax(9rem,1fr))]">
       {items.map((item) => {
         const tile = (
           <>

@@ -37,7 +37,7 @@ export function RankedBarChart({ data, ariaLabel, valueLabel }: RankedBarChartPr
   })
   return (
     <>
-      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={data.length * ROW_HEIGHT_PX + 8} />
+      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={data.length * ROW_HEIGHT_PX + 8} grow={false} />
       <ChartTable caption={ariaLabel} columns={["Kategori", valueLabel]} rows={datumRows(data)} />
     </>
   )

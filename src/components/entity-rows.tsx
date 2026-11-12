@@ -3,6 +3,7 @@ import { Children, type ReactNode, useId } from "react"
 import { useProgressiveCount } from "../lib/use-progressive-count"
 import { SrTableHead } from "./sr-table-head"
 import { VIRTUAL_FROM, VirtualTbody } from "./virtual-rows"
+import { LIST_COLUMNS } from "../lib/page-width"
 
 /** The lines of a list on the page of a thing (an artist's albums, an album's tracks), as a table: a screen reader hears the count and the extra with the name they belong to. */
 export function EntityRows({ caption, children }: { caption: string; children: ReactNode }) {
@@ -16,7 +17,7 @@ export function EntityRows({ caption, children }: { caption: string; children: R
       {virtual ? (
         <VirtualTbody rows={rows} />
       ) : (
-        <tbody role="rowgroup" className="grid gap-2">
+        <tbody role="rowgroup" className={`grid gap-y-2 ${LIST_COLUMNS}`}>
           {rows.slice(0, drawn)}
         </tbody>
       )}

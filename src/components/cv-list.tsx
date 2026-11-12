@@ -15,7 +15,7 @@ export function CvSection({ title, children }: { title: string; children: ReactN
 
 /** A list of entries under each other, with room between them (`none` where each entry has its own rule and padding). */
 export function CvList({ gap = "lg", children }: { gap?: "none" | "lg"; children: ReactNode }) {
-  return <ul className={gap === "none" ? "grid" : "grid gap-6"}>{children}</ul>
+  return <ul className={gap === "none" ? "grid" : "grid gap-6 xl:grid-cols-[repeat(auto-fill,minmax(min(100%,30rem),1fr))] xl:gap-x-10"}>{children}</ul>
 }
 
 /** One dated line of a section (a degree): the period on the left, what it was and where under it. */

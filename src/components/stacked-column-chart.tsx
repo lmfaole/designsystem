@@ -51,17 +51,21 @@ export function StackedColumnChart({ data, series, ariaLabel, height, colors = [
     tooltip: { use: tooltip, content: stackedTooltip },
   })
   return (
-    <div className="grid gap-3">
-      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} />
-      <ChartTable caption={ariaLabel} columns={["Kategori", ...series]} rows={stackedRows(data, series)} />
-      <ul className="text-muted-foreground grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-x-4 gap-y-1 text-xs">
-        {series.map((name, index) => (
-          <li key={name} className="grid grid-cols-[auto_1fr] items-center gap-2">
-            <span aria-hidden className="size-2.5 rounded-full" style={{ background: colourOf(index) }} />
-            {name}
-          </li>
-        ))}
-      </ul>
+    <div className="@container">
+      <div className="grid gap-3 @3xl:grid-cols-[1fr_auto] @3xl:items-start @3xl:gap-x-8">
+        <div className="min-w-0">
+          <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} />
+          <ChartTable caption={ariaLabel} columns={["Kategori", ...series]} rows={stackedRows(data, series)} />
+        </div>
+        <ul className="text-muted-foreground grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-x-4 gap-y-1 text-xs @3xl:grid-cols-1 @3xl:content-start @3xl:pt-2">
+          {series.map((name, index) => (
+            <li key={name} className="grid grid-cols-[auto_1fr] items-center gap-2">
+              <span aria-hidden className="size-2.5 rounded-full" style={{ background: colourOf(index) }} />
+              {name}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

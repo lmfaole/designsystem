@@ -13,7 +13,7 @@ export interface Headline {
 /** A list of headlines, each a link out to another site with a muted note after it. */
 export function HeadlineList({ headlines }: { headlines: readonly Headline[] }) {
   return (
-    <ol className="grid gap-2 text-sm">
+    <ol className="grid gap-2 text-sm 2xl:block 2xl:columns-2 2xl:gap-x-10 2xl:[&>li]:mb-2 2xl:[&>li]:break-inside-avoid">
       {headlines.map((headline) => (
         <li key={headline.key}>
           <ExternalLink href={headline.href}>{headline.title}</ExternalLink>

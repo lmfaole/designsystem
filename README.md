@@ -45,7 +45,7 @@ repository does (`scripts/design-tokens.ts` there).
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
-| `src/lib/` | What the components share: `cn` (`utils`), icons, the page column, link style, small pure helpers with tests. |
+| `src/lib/` | What the components share: `cn` (`utils`), icons, the page column and the columns of a list (`page-width`), link style, small pure helpers with tests. |
 
 ## The rules
 
@@ -61,7 +61,14 @@ repository does (`scripts/design-tokens.ts` there).
    phone shows its own picker and a desktop its own menu. Never a menu drawn in the page: no Radix `Select`, no listbox or
    combobox, no popover or sheet of buttons or links standing in for one. Choosing a value does what the page needs:
    a form submit, or going to an address (`select[data-navigates]`, `enableNavigatingSelects`).
-7. English for code and comments; on-screen text in a component is Norwegian (bokmål).
+7. **Wide screens are used, not left empty.** The page column (`PAGE_COLUMN`) has no maximum width: it is the whole page area with
+   gutters that grow (`px-4 sm:px-6 2xl:px-10`). A `max-w-*` is only the measure of a line of text (`max-w-prose`) or the size
+   of a small mark, never a layout. Content gets wider by being laid out in more columns, by the room it has (container
+   queries, `auto-fill`/`auto-fit`), not by the width of the window: lists of rows use `LIST_COLUMNS`, a `Grid` fits
+   (`tiles`, `cards`, `sections`, `charts`) or keeps growing past `lg` (`2xl:`), a facts-and-content page is a `Split`
+   with a sticky rail, a chart's height follows its width. Do not bring back a page cap, a one-column list or a grid
+   that stops at four; `src/desktop.test.ts` fails on it. Check a page at 1920 and 2560 px as well as on a phone.
+8. English for code and comments; on-screen text in a component is Norwegian (bokmål).
 
 ## Work on it
 

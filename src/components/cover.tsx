@@ -7,8 +7,8 @@ type Ratio = 'poster' | 'square'
 type Size = 'row' | 'hero' | 'fill'
 
 const FRAMES: Record<Ratio, Record<Size, string>> = {
-  poster: { row: 'aspect-[2/3] w-10', hero: 'aspect-[2/3] w-24 sm:w-28', fill: 'aspect-[2/3] w-full' },
-  square: { row: 'size-10', hero: 'size-28 sm:size-32', fill: 'aspect-square w-full' },
+  poster: { row: 'aspect-[2/3] w-10', hero: 'aspect-[2/3] w-24 sm:w-28 @3xl:w-40 @5xl:w-48', fill: 'aspect-[2/3] w-full' },
+  square: { row: 'size-10', hero: 'size-28 sm:size-32 @3xl:size-44 @5xl:size-56', fill: 'aspect-square w-full' },
 }
 const SIZES: Record<Ratio, Record<Size, [number, number]>> = {
   poster: { row: [40, 60], hero: [96, 144], fill: [200, 300] },

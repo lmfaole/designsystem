@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 
+import { LIST_COLUMNS } from "../lib/page-width"
 import { SrTableHead } from "./sr-table-head"
 
 export interface RowData {
@@ -12,7 +13,7 @@ export interface RowData {
   trailing: ReactNode
 }
 
-const GAPS = { small: "gap-1", medium: "gap-2", large: "gap-3" } as const
+const GAPS = { small: "gap-y-1", medium: "gap-y-2", large: "gap-y-3" } as const
 
 interface RowsProps {
   rows: readonly RowData[]
@@ -35,7 +36,7 @@ export function Rows({ rows, lead, gap = "medium", columns }: RowsProps) {
   return (
     <table role="table" className="block">
       <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : "Omslag"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
-      <tbody role="rowgroup" className={`grid ${GAPS[gap]}`}>
+      <tbody role="rowgroup" className={`grid ${LIST_COLUMNS} ${GAPS[gap]}`}>
         {rows.map((row, index) => (
           <tr role="row" key={row.key} className={`grid gap-x-3 ${layout}`}>
             {lead === "rank" ? (

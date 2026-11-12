@@ -34,7 +34,7 @@ export function PageLinks({ links, label }: PageLinksProps) {
   if (pages.length === 0) return null
 
   return (
-    <nav aria-label={label} className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+    <nav aria-label={label} className="grid grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] gap-2">
       {pages.map((page) => (
         <a key={page.to} href={appUrl(page.to)} data-astro-prefetch="" className="rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
           <Card className="motion-press h-full gap-0 py-3 transition-colors hover:bg-muted/50">

@@ -2,6 +2,7 @@ import { Fragment, type ReactNode } from "react"
 
 import { Cover } from "./cover"
 import { SrTableHead } from "./sr-table-head"
+import { LIST_COLUMNS } from "../lib/page-width"
 
 /** One row of a list of what the owner played, watched or read, the same in every app: the picture, what it was, who or what it was by, and when. */
 export interface MediaRow {
@@ -39,7 +40,7 @@ export function MediaRows({ rows, coverRatio }: { rows: readonly MediaRow[]; cov
   return (
     <table role="table" className="block">
       <SrTableHead columns={["Omslag", "Tittel", "Detaljer", "Dato"]} />
-      <tbody role="rowgroup" className="grid gap-2">
+      <tbody role="rowgroup" className={`grid gap-y-2 ${LIST_COLUMNS}`}>
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
             <td role="cell" className="mr-2 [grid-area:cover]">

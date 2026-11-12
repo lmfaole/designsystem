@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 
 import { Cover } from "./cover"
 import { SrTableHead } from "./sr-table-head"
+import { LIST_COLUMNS } from "../lib/page-width"
 
 /** One listen or one loved track: the cover, then the track, the artist (with when it happened at the end of its line) and the album each on a line. */
 export interface TrackRow {
@@ -25,7 +26,7 @@ export function TrackRows({ rows, whenHead }: { rows: readonly TrackRow[]; whenH
   return (
     <table role="table" className="block">
       <SrTableHead columns={["Omslag", "Låt", "Artist", "Album", whenHead]} />
-      <tbody role="rowgroup" className="grid gap-2">
+      <tbody role="rowgroup" className={`grid gap-y-2 ${LIST_COLUMNS}`}>
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
             <td role="cell" className="mr-2 [grid-area:cover]">

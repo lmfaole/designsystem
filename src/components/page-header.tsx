@@ -10,10 +10,10 @@ export function PageHeader({ title, lead, actions, space = "default" }: { title:
   return (
     <header className={SPACE[space]}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-balance">{title}</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-balance 2xl:text-4xl">{title}</h1>
         {actions}
       </div>
-      {lead ? <p className="text-muted-foreground mt-2 max-w-2xl text-sm">{lead}</p> : null}
+      {lead ? <p className="text-muted-foreground mt-2 max-w-2xl text-sm 2xl:text-base">{lead}</p> : null}
     </header>
   )
 }

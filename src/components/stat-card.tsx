@@ -12,12 +12,12 @@ interface StatCardProps {
 /** One headline number in a `Card`, e.g. "Total listens: 12,480" or "Net pay this month: 45 000 kr". Purely presentational. */
 export function StatCard({ label, value, detail }: StatCardProps) {
   return (
-    <Card>
+    <Card className="@container/stat">
       <CardHeader>
         <CardTitle className="text-sm text-muted-foreground">{label}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-3xl font-semibold tracking-tight">{value}</p>
+        <p className="text-3xl font-semibold @xs/stat:text-4xl @sm/stat:text-5xl tracking-tight">{value}</p>
         {detail ? <p className="mt-1 text-sm text-muted-foreground">{detail}</p> : null}
       </CardContent>
     </Card>

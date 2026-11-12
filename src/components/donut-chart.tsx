@@ -28,13 +28,13 @@ export function DonutChart({ data, ariaLabel, keep = 5, formatValue, className }
     <figure
       aria-label={ariaLabel}
       className={cn(
-        "grid items-center gap-x-8 gap-y-4 [grid-template-areas:'ring'_'legend'] sm:grid-cols-[auto_1fr] sm:[grid-template-areas:'ring_legend']",
+        "@container grid items-center gap-x-8 gap-y-4 [grid-template-areas:'ring'_'legend'] sm:grid-cols-[auto_minmax(0,28rem)] sm:justify-center sm:[grid-template-areas:'ring_legend']",
         className,
       )}
     >
       <div
         aria-hidden="true"
-        className="mx-auto aspect-square w-40 rounded-full [grid-area:ring] [mask:radial-gradient(farthest-side,transparent_58%,#000_59%)]"
+        className="mx-auto aspect-square w-40 rounded-full @2xl:w-56 @4xl:w-72 [grid-area:ring] [mask:radial-gradient(farthest-side,transparent_58%,#000_59%)]"
         style={{ background: donutGradient(slices) }}
       />
       <ul className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-1.5 text-sm [grid-area:legend]">
