@@ -26,8 +26,8 @@ export function EntityRows({ caption, children }: { caption: string; children: R
 }
 
 interface EntityRowProps {
-  /** The picture, already in its frame. */
-  picture: ReactNode
+  /** The picture, already in its frame; none where the list has no pictures, so no empty box stands in front of the names. */
+  picture?: ReactNode
   /** The name, usually a link to the page of the thing. */
   name: ReactNode
   /** The name as plain text, for what the info button is called. */
@@ -48,11 +48,13 @@ interface EntityRowProps {
 export function EntityRow({ picture, name, label, detail, count, muted = false, loved = false, info }: EntityRowProps) {
   const infoId = useId()
   return (
-    <tr role="row" className="grid grid-cols-[auto_1fr_auto_auto] items-center gap-x-3">
+    <tr role="row" className={`grid items-center gap-x-3 ${picture === undefined ? "grid-cols-[1fr_auto_auto]" : "grid-cols-[auto_1fr_auto_auto]"}`}>
       {/* Never played: the picture is dimmed and the name is the muted colour. Dimming the whole row would drop the text under the contrast it needs. */}
-      <td role="cell" className={muted ? "opacity-60" : undefined}>
-        {picture}
-      </td>
+      {picture === undefined ? null : (
+        <td role="cell" className={muted ? "opacity-60" : undefined}>
+          {picture}
+        </td>
+      )}
       <td role="rowheader" className={`min-w-0 font-medium ${muted ? "text-muted-foreground" : ""}`}>
         <span className="block truncate">{name}</span>
         {detail ? <span className="block truncate text-sm font-normal text-muted-foreground">{detail}</span> : null}

@@ -1,6 +1,6 @@
 {
   "name": "@lmfaole/designsystem",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "private": true,
   "type": "module",
   "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
