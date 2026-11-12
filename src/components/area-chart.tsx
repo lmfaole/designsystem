@@ -16,10 +16,12 @@ interface AreaChartProps {
   height: number
   /** How a category reads on the axis; the label as it is by default. */
   formatLabel?: (label: string) => string
+  /** The series' colour, as CSS; the theme's primary by default. */
+  color?: string | undefined
 }
 
 /** One filled area for a trend: the shape over time, not an exact comparison of two points. */
-export function AreaChart({ data, ariaLabel, valueLabel, height, formatLabel = (label) => label }: AreaChartProps) {
+export function AreaChart({ data, ariaLabel, valueLabel, height, color, formatLabel = (label) => label }: AreaChartProps) {
   const labels = data.map((datum) => datum.label)
   const definition = defineChart({
     marks: [
@@ -39,7 +41,7 @@ export function AreaChart({ data, ariaLabel, valueLabel, height, formatLabel = (
   })
   return (
     <>
-      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} />
+      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} color={color} />
       <ChartTable caption={ariaLabel} columns={["Tidspunkt", valueLabel]} rows={datumRows(data, formatLabel)} />
     </>
   )

@@ -20,6 +20,8 @@ interface StackedColumnChartProps {
   series: string[]
   ariaLabel: string
   height: number
+  /** A colour as CSS for each series, in the order of `series`; a series with none (or `null`) has the grey step of its place. */
+  colors?: readonly (string | null | undefined)[]
 }
 
 const stackedTooltip: ChartTooltipOptions<StackedDatum>["content"] = (points) => {
@@ -32,7 +34,8 @@ const stackedTooltip: ChartTooltipOptions<StackedDatum>["content"] = (points) =>
 const SEGMENT_COLORS = [100, 72, 52, 36, 24].map((share) => `color-mix(in oklab, var(--foreground) ${share}%, transparent)`)
 
 /** Columns divided into the parts that make each up, for how a total splits: plays per year by album. */
-export function StackedColumnChart({ data, series, ariaLabel, height }: StackedColumnChartProps) {
+export function StackedColumnChart({ data, series, ariaLabel, height, colors = [] }: StackedColumnChartProps) {
+  const colourOf = (index: number): string => colors[index] ?? SEGMENT_COLORS[index] ?? SEGMENT_COLORS.at(-1) ?? "currentColor"
   const labels = [...new Set(data.map((datum) => datum.label))]
   const padding = Math.max(0.12, 1 - 0.1 * labels.length)
   const definition = defineChart({
@@ -44,7 +47,7 @@ export function StackedColumnChart({ data, series, ariaLabel, height }: StackedC
       },
       y: { scale: scaleLinear, nice: true, grid: true, axis: false },
     },
-    color: { domain: series, range: SEGMENT_COLORS.slice(0, series.length) },
+    color: { domain: series, range: series.map((_, index) => colourOf(index)) },
     tooltip: { use: tooltip, content: stackedTooltip },
   })
   return (
@@ -54,7 +57,7 @@ export function StackedColumnChart({ data, series, ariaLabel, height }: StackedC
       <ul className="text-muted-foreground grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-x-4 gap-y-1 text-xs">
         {series.map((name, index) => (
           <li key={name} className="grid grid-cols-[auto_1fr] items-center gap-2">
-            <span aria-hidden className="size-2.5 rounded-full" style={{ background: SEGMENT_COLORS[index] }} />
+            <span aria-hidden className="size-2.5 rounded-full" style={{ background: colourOf(index) }} />
             {name}
           </li>
         ))}

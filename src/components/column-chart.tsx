@@ -16,12 +16,14 @@ interface ColumnChartProps {
   height: number
   /** How a category reads under its column; the label as it is by default. */
   formatLabel?: (label: string) => string
+  /** The series' colour, as CSS; the theme's primary by default. */
+  color?: string | undefined
   /** Label every nth column only, for a crowded axis (24 hours: every 3rd). */
   labelEvery?: number
 }
 
 /** Columns in the data's own order, for a shape across categories: decades, hours of the day. */
-export function ColumnChart({ data, ariaLabel, valueLabel, height, formatLabel = (label) => label, labelEvery = 1 }: ColumnChartProps) {
+export function ColumnChart({ data, ariaLabel, valueLabel, height, color, formatLabel = (label) => label, labelEvery = 1 }: ColumnChartProps) {
   const labels = data.map((datum) => datum.label)
   // A column is at most a tenth of the width, so one year or three days do not become slabs.
   const padding = Math.max(0.12, 1 - 0.1 * labels.length)
@@ -44,7 +46,7 @@ export function ColumnChart({ data, ariaLabel, valueLabel, height, formatLabel =
   })
   return (
     <>
-      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} />
+      <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} color={color} />
       <ChartTable caption={ariaLabel} columns={["Kategori", valueLabel]} rows={datumRows(data, formatLabel)} />
     </>
   )
