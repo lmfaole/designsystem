@@ -1,0 +1,20 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Welcome" />
+
+# designsystem
+
+The design system of lmfaole's apps: the **tokens** (colours, radius, fonts, motion), the **building blocks** a page is put
+together from, and the **components** built on them. React 19 and Tailwind 4, shipped as source.
+
+- **Tokens** shows every colour, series colour, radius, font and motion token, live from `theme.css`.
+- **Building blocks** is layout and text: `Stack`, `Inline`, `Grid`, `Split`, `Text`, `Heading`.
+- **Components** is everything else, one page per component with its props.
+- **Charts** are the TanStack Charts components, themed through `chart-frame`.
+- **Pages** are the frame and the parts of a whole page.
+
+The colour scheme follows your system (`prefers-color-scheme`): switch your OS to dark to see the dark tokens.
+Every story is also checked by the **Accessibility** panel at the bottom.
+
+The rules a project follows (no styling of its own, closed props, tokens only, a select is a native `<select>`)
+are in the repository's README.
