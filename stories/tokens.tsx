@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 /** The value of a custom property on `:root`, re-read when the colour scheme changes. */
-function useToken(name: string): string {
+export function useToken(name: string): string {
   const [value, setValue] = useState("")
   useEffect(() => {
     const read = () => setValue(getComputedStyle(document.documentElement).getPropertyValue(`--${name}`).trim())
@@ -13,80 +13,42 @@ function useToken(name: string): string {
   return value
 }
 
-function Swatch({ name }: { name: string }) {
+export function ColorToken({ name }: { name: string }) {
   const value = useToken(name)
   return (
-    <li className="grid gap-1.5 text-xs">
-      <div className="h-14 rounded-lg border" style={{ background: `var(--${name})` }} />
+    <div className="grid w-56 gap-1.5 text-xs">
+      <div className="h-16 rounded-lg border" style={{ background: `var(--${name})` }} />
       <code className="font-mono font-medium">--{name}</code>
       <span className="font-mono text-muted-foreground">{value}</span>
-    </li>
+    </div>
   )
 }
 
-export function Colors({ names }: { names: string[] }) {
-  return (
-    <ul className="not-prose grid grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] gap-4 bg-background p-4 text-foreground">
-      {names.map((name) => (
-        <Swatch key={name} name={name} />
-      ))}
-    </ul>
-  )
-}
-
-const RADII = ["sm", "md", "lg", "xl", "2xl", "3xl", "4xl"]
-
-export function Radii() {
+export function RadiusToken({ name }: { name: string }) {
   const base = useToken("radius")
   return (
-    <div className="not-prose grid gap-3 bg-background p-4 text-foreground">
-      <p className="text-sm text-muted-foreground">
-        <code>--radius</code>: {base}. The others are fractions of it.
-      </p>
-      <ul className="flex flex-wrap gap-4">
-        {RADII.map((name) => (
-          <li key={name} className="grid gap-1.5 text-xs">
-            <div className="size-20 border bg-muted" style={{ borderRadius: `var(--radius-${name})` }} />
-            <code className="font-mono">rounded-{name}</code>
-          </li>
-        ))}
-      </ul>
+    <div className="grid gap-1.5 text-xs">
+      <div className="size-24 border bg-muted" style={{ borderRadius: name === "radius" ? "var(--radius)" : `var(--radius-${name})` }} />
+      <code className="font-mono">{name === "radius" ? "--radius" : `rounded-${name}`}</code>
+      {name === "radius" ? <span className="font-mono text-muted-foreground">{base}</span> : null}
     </div>
   )
 }
 
-export function Fonts() {
+export function FontToken({ family, token }: { family: string; token: string }) {
   return (
-    <div className="not-prose grid gap-4 bg-background p-4 text-foreground">
-      <div>
-        <code className="text-xs text-muted-foreground">font-sans: Geist Variable</code>
-        <p className="font-sans text-2xl">Blåbærsyltetøy på skiva, 0123456789</p>
-      </div>
-      <div>
-        <code className="text-xs text-muted-foreground">font-heading: JetBrains Mono Variable</code>
-        <p className="font-heading text-2xl">Blåbærsyltetøy på skiva, 0123456789</p>
-      </div>
+    <div>
+      <code className="text-xs text-muted-foreground">{token}: {family}</code>
+      <p className={`${token} text-3xl`}>Blåbærsyltetøy på skiva, 0123456789</p>
     </div>
   )
 }
 
-const MOTION = ["duration-instant", "duration-fast", "duration-base", "duration-slow", "duration-live", "ease-out", "ease-in", "ease-in-out", "distance", "stagger"]
-
-function MotionToken({ name }: { name: string }) {
-  const value = useToken(`motion-${name}`)
+export function ValueToken({ name }: { name: string }) {
+  const value = useToken(name)
   return (
-    <li>
-      <strong>--motion-{name}</strong>: <span className="text-muted-foreground">{value}</span>
-    </li>
-  )
-}
-
-export function Motion() {
-  return (
-    <ul className="not-prose grid gap-1 bg-background p-4 font-mono text-xs text-foreground">
-      {MOTION.map((name) => (
-        <MotionToken key={name} name={name} />
-      ))}
-    </ul>
+    <code className="font-mono text-sm">
+      --{name}: <span className="text-muted-foreground">{value}</span>
+    </code>
   )
 }

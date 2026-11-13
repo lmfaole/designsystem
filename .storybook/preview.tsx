@@ -5,10 +5,11 @@ import type { Preview } from "@storybook/react-vite"
 import "../src/theme.css"
 
 const preview: Preview = {
+  tags: ["autodocs"],
   parameters: {
     layout: "padded",
     controls: { matchers: { color: /(background|color)$/i } },
-    options: { storySort: { order: ["Welcome", "Tokens", "Building blocks", "Components", "Charts", "Pages"] } },
+    options: { storySort: { order: ["Welcome", "Tokens", "Layout", "Typography", "Primitives", "Navigation", "Lists", "Media", "Charts", "Tables", "Feedback", "Overlays", "Motion", "CV"] } },
   },
 }
 
