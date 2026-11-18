@@ -62,6 +62,13 @@ test("a counted Grid keeps growing on a very wide screen, and fitting grids exis
   assert.match(layout, /export function Split\b/, "Split: a rail beside the content on a wide screen")
 })
 
+test("a group of sections can take the whole row and lays its parts out by the room it has", () => {
+  const section = read("components/page-section.tsx")
+  assert.match(section, /export function SectionGroup\b/)
+  assert.match(section, /row:\s*"[^"]*col-span-full[^"]*auto-fit/, "SectionGroup width=\"row\" spans the grid and fits its subsections")
+  assert.doesNotMatch(section, /2xl:grid-cols-\d/, "a fixed count stops growing")
+})
+
 test("galleries and link grids fit by room, not by a fixed count", () => {
   assert.match(read("components/tiles.tsx"), /auto-fill/)
   assert.match(read("components/nav-cards.tsx"), /auto-fill/)

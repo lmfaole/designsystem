@@ -42,7 +42,7 @@ repository does (`scripts/design-tokens.ts` there).
 | --- | --- |
 | `src/theme.css` | The tokens (`--background`, `--primary`, `--radius`, `--series-*` …), light and dark, the fonts and the base styles. Imports `motion.css`, `shell.css` and `overlay.css`. |
 | `src/components/layout.tsx`, `text.tsx` | The building blocks: `Stack`, `Inline`, `Grid`, `PageColumn`; `Text`, `Heading`, `TextLink`. |
-| `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx`, `page-links.tsx` | The frame and the parts of a page. |
+| `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx`, `nav-cards.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
@@ -90,6 +90,24 @@ npm run verify      # typecheck, lint and the tests
 A change is released as a tag: bump `version` in `package.json`, commit, `git tag v<version>`, `git push --follow-tags`, and
 raise the tag in the projects that use it (`npm install @lmfaole/designsystem@github:lmfaole/designsystem#v<version>`).
 A change that removes or renames a component, a prop or a token is a new major version.
+
+## Grouping sections
+
+A page's grid places each part as one cell. Things that belong together (everything about pull requests) are a
+`SectionGroup` with `SubSection`s inside, so the grid places the group as one part, not its pieces scattered:
+
+```tsx
+<Grid columns="sections" gap="xl">
+  <SectionGroup id="pulls" title="Pull requests" width="row">
+    <SubSection id="blocked" title="Blokkert">…</SubSection>
+    <SubSection id="ready" title="Klar til merge">…</SubSection>
+  </SectionGroup>
+  <PageSection id="weather" title="Vær">…</PageSection>
+</Grid>
+```
+
+`width="cell"` (the default) is one cell with the subsections under each other; `width="row"` takes the whole row and lays the
+subsections out in columns by the room it has. The group's title is an `<h2>`, the subsections' `<h3>`s.
 
 ## Migrating to 5.0
 
