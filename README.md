@@ -120,6 +120,25 @@ A page's grid places each part as one cell. Things that belong together (everyth
 `width="cell"` (the default) is one cell with the subsections under each other; `width="row"` takes the whole row and lays the
 subsections out in columns by the room it has. The group's title is an `<h2>`, the subsections' `<h3>`s.
 
+## Skills
+
+The rules are also written as **Claude Code skills** (`.claude/skills/`), so a session that builds or changes a page follows them
+without being reminded:
+
+| Skill | For |
+| --- | --- |
+| `designsystem-ux` | The structure of pages: levels, the front page as a digest, lists and details, links, navigation, states |
+| `designsystem-ui` | The look: layout, type, colour and state, cards, icons, density, wide screens, motion |
+| `designsystem-accessibility` | WCAG 2.2 AA: semantics, keyboard, contrast, icons, tables, live updates, how to check |
+| `designsystem-content` | The words: Norwegian bokmål, titles, controls, states, dates and numbers |
+| `designsystem-components` | Which component for what, and how to add or release one |
+| `designsystem-review` | A checklist across all of them, run before work is called done |
+
+They are used in this repository as they are. **In a project that uses the design system**, install them with
+`npx designsystem-skills` (copies the `designsystem-*` folders into the project's `.claude/skills/`, never touching its own;
+commit the result) and keep them current with `npx designsystem-skills --check` after upgrading the design system.
+`src/skills.test.ts` fails if a skill's header is wrong or it names a component that no longer exists.
+
 ## Pages and navigation
 
 The full guide, with live examples, is in Storybook (**Guides / Pages and navigation**). The rules:
@@ -205,6 +224,10 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
   A status never relies on colour alone.
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
+
+## Migrating to 5.4
+
+Additive: the skills (above) and the `designsystem-skills` command.
 
 ## Migrating to 5.3
 
