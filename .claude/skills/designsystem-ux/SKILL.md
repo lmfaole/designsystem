@@ -51,7 +51,7 @@ that to decide. A thing that is one line (an hour of the forecast) has none. A d
   list it belongs to).
 - **Navigation is not tabs.** Tabs switch views of the same content on one page; navigation goes to another page. Never build navigation
   as a row of tabs under the title, and never hide content in tabs: the design system has no tabs component.
-- **Breadcrumbs on every page below the top level** (`Breadcrumbs`): the whole trail from tablet width, the parent alone as a way back on a
+- **Breadcrumbs on every page that has a parent** (`Breadcrumbs`; a subpage, a detail, a page of an app in a group): the whole trail from tablet width, the parent alone as a way back on a
   phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading. The first crumb is the group
   (`Hjem`, `Medier`) and links to the page that lists its apps: that is how the reader moves between apps.
 - **A page with subpages shows them with `SubPages`** under the title: a list in ONE column (icon, name, one line of what is on it), never

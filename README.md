@@ -207,7 +207,7 @@ a subpage or a detail.
 | Where | What |
 | --- | --- |
 | An app's top-level pages (front page, Status, AdGuard …) | `NavBar` (bar at the foot on a phone, rail from tablet width); at most five |
-| Every page below the top level (a subpage, a detail) | `Breadcrumbs` at the top: the whole trail from tablet width, the parent alone as a way back on a phone |
+| Every page that has a parent (a subpage, a detail, and a page of an app that belongs to a group) | `Breadcrumbs` at the top: the whole trail from tablet width, the parent alone as a way back on a phone. A page with nothing above it (a standalone app's front page) has none |
 | A page that has subpages | `SubPages` under the title: a list in ONE column (icon, name, one line of what is on it), never cards or buttons |
 | Moving between apps | The first crumb is the group (`Hjem`, `Medier`) and links to the page that lists its apps |
 
