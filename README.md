@@ -44,7 +44,7 @@ repository does (`scripts/design-tokens.ts` there).
 | `src/components/layout.tsx`, `text.tsx` | The building blocks: `Stack`, `Inline`, `Grid`, `PageColumn`; `Text`, `Heading`, `TextLink`. |
 | `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx`, `nav-cards.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
-| `src/components/page-tabs.tsx`, `back-link.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
+| `src/components/nav-bar.tsx`, `back-link.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
 | `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings. See «Icons» below. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
@@ -194,13 +194,18 @@ It is never only a dialog.
 `LinkButton external`) carries the external symbol, is read as external, names the place («Åpne på GitHub», never «Les mer»), and
 comes last, once for each place. A credit in running text («Værdata fra Yr») is an `ExternalLink`. Links open in the same window.
 
-**Navigation.** `PageTabs` between sibling pages, in the same order on every page of the set, the current one marked, a count
-after a name where there is something to count; at most six. `BackLink` one level up on every detail page.
+**Navigation.** `NavBar` between the top-level places of an app, given to `PageLayout` as `nav`: a **bar at the foot of the screen on a
+phone** (an icon over a one-word label, in the reach of the thumb) and a **rail down the left side from tablet width up**. Three to
+five places, the same order on every page, the current one marked (`aria-current="page"`); on a detail page the list it belongs to
+is the current place. It is **navigation, not tabs**: tabs switch between views of the *same content on one page* (GOV.UK: tabs
+"switch views within a page", service navigation "links across a service"; Material 3: a navigation bar and a rail for top-level
+places, tabs for secondary content), and the design system hides no content in tabs, so there is no tabs component. `BackLink`
+one level up on every detail page.
 
 | Component | For |
 | --- | --- |
 | `SummaryBar` | The state of a place in counts that are links; first on a front page |
-| `PageTabs` | The way between sibling pages |
+| `NavBar` | The way between the top-level places: a bar at the foot on a phone, a rail at the left from tablet width |
 | `BackLink` | One level up, naming where |
 | `more` on `PageSection`, `SubSection`, `SectionGroup` | «Se alle 14» in a section's title row |
 | `LinkButton` | An action that goes somewhere; `external` for a link out |
@@ -251,6 +256,16 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
 
+## Migrating to 7.0
+
+**Breaking:** `PageTabs` (5.3) is gone, replaced by `NavBar`. A row of links under the title looked like tabs, which switch views of one
+page, when it goes to other pages; on a phone it also wrapped onto two lines. `NavBar` is a bar at the foot of the screen on a phone and
+a rail at the left from tablet width, and is given to `PageLayout` as `nav` (the page leaves room for it).
+
+| 6.x | 7.0 |
+| --- | --- |
+| `<PageTabs label tabs={[{ key, label, href, icon, current, count }]} />` under the title | `<PageLayout nav={<NavBar label title items={[{ key, label, href, icon, current }]} />}>` (no `count`; one-word labels) |
+
 ## Migrating to 6.0
 
 6.0 makes the reading direction «down» the rule (rule 7). **Breaking:**
@@ -271,7 +286,7 @@ Additive: the skills (above) and the `designsystem-skills` command.
 ## Migrating to 5.3
 
 5.3 is additive, with one visible change: **`ExternalLink` now always carries the external symbol** and is read as external
-(it left the reader to guess before). New: `PageTabs`, `BackLink`, `SummaryBar`, `LinkButton`, `more` on the section
+(it left the reader to guess before). New: `NavBar`, `BackLink`, `SummaryBar`, `LinkButton`, `more` on the section
 components, the `back` icon, and the rules above.
 
 ## Migrating to 5.2

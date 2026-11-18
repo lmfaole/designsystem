@@ -5,7 +5,7 @@
  */
 
 import { strict as assert } from "node:assert"
-import { readFileSync } from "node:fs"
+import { readFileSync, readdirSync } from "node:fs"
 import { join } from "node:path"
 import { test } from "node:test"
 
@@ -20,8 +20,17 @@ test("a link out to another site is marked with the external symbol and read as 
   }
 })
 
-test("the tabs say which page you are on", () => {
-  assert.match(read("components/page-tabs.tsx"), /"aria-current": "page"/)
+test("the navigation says which place you are in, and is a bar at the foot on a phone and a rail at the left from tablet width, not tabs", () => {
+  const nav = read("components/nav-bar.tsx")
+  assert.match(nav, /"aria-current": "page"/)
+  assert.match(nav, /fixed inset-x-0 bottom-0/, "a bar at the foot of the screen on a phone")
+  assert.match(nav, /md:inset-y-0 md:left-0/, "a rail down the left side from tablet width")
+  assert.doesNotMatch(nav, /role="tab(?:list)?"/, "navigation goes to other pages; tabs switch views of one page")
+  assert.match(read("components/page-layout.tsx"), /nav\?: ReactNode/, "PageLayout leaves room for it")
+})
+
+test("there is no tabs component: tabs switch views of the same content, and the design system does not hide content in tabs", () => {
+  assert.equal(readdirSync(join(import.meta.dirname, "components")).some((file) => /tabs/.test(file)), false)
 })
 
 test("a section, a group and a subsection can link to the page with all of it", () => {

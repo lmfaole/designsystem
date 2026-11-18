@@ -19,7 +19,7 @@ and a detail page, not only the front page.
 - [ ] At most three levels; the front page is a digest (counts first, 3–5 items per section, «Se alle»).
 - [ ] A thing with more to say has a detail page with an address; the link out to another site is last and named.
 - [ ] A row links to the app's own page, not out.
-- [ ] `PageTabs` in the same order on every sibling page; `BackLink` on details, naming the list.
+- [ ] `NavBar` (as `nav` on `PageLayout`) in the same order on every page, the current place marked, never tabs for navigation; `BackLink` on details, naming the list.
 - [ ] Loading, empty, error and not-found are designed; one failing source does not take the page down.
 
 **Reading and hierarchy (designsystem-hierarchy)**

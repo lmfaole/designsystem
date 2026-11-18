@@ -15,7 +15,7 @@ A place has at most **three levels**: front page → list → detail. A fourth m
 | Level | It is | It answers | Built from |
 | --- | --- | --- | --- |
 | Front page | A **digest** | Do I have to do something now? | `SummaryBar`, `PageSection` with `more`, `Rows` |
-| List | **Everything** of one kind, in groups | What is there? | `SectionGroup`, `SubSection`, `Rows`, `PageTabs` |
+| List | **Everything** of one kind, in groups | What is there? | `SectionGroup`, `SubSection`, `Rows`, `NavBar` |
 | Detail | **One thing**, enough to decide | What is this, what do I do? | `BackLink`, `PageHeader`, `StatusLine`, `FactList`, `LinkButton` |
 
 A thing needs a **detail page** when it has more to say than a row can (a description, a history, checks) *and* the reader needs
@@ -46,10 +46,13 @@ that to decide. A thing that is one line (an hour of the forecast) has none. A d
 
 ## 4. Navigation
 
-- `PageTabs` between sibling pages: same order on every page of the set, the current one marked, at most six, one noun each, a
-  count where there is something to count. No menu behind a button.
+- **`NavBar`** between the top-level places, as `nav` on `PageLayout`: a bar at the foot of the screen on a phone, a rail at the left from
+  tablet width. Three to five places, one-word labels, the same order on every page, the current one marked (on a detail page: the
+  list it belongs to).
+- **Navigation is not tabs.** Tabs switch views of the same content on one page; navigation goes to another page. Never build navigation
+  as a row of tabs under the title, and never hide content in tabs: the design system has no tabs component.
 - `BackLink` on every detail page, **naming** the list («Pull requests»), never «Tilbake».
-- A count in `SummaryBar` or `PageTabs` is a link to what it counts.
+- A count in `SummaryBar` is a link to what it counts.
 
 ## 5. States
 

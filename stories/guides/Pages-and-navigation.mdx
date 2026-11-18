@@ -2,7 +2,7 @@ import { Meta } from "@storybook/addon-docs/blocks"
 
 import { BackLink } from "../../src/components/back-link"
 import { LinkButton } from "../../src/components/link-button"
-import { PageTabs } from "../../src/components/page-tabs"
+import { NavBar } from "../../src/components/nav-bar"
 import { PageSection } from "../../src/components/page-section"
 import { StatusLine } from "../../src/components/status-line"
 import { SummaryBar } from "../../src/components/summary-bar"
@@ -100,18 +100,15 @@ notification. It never lives only in a dialog.
 
 ## 6. Navigation
 
-- `PageTabs` between the sibling pages of a place, **in the same order on every page of the set**, the current one marked, with a
-  count after a name where there is something to count. At most six, one noun each. No menu behind a button.
+- **`NavBar`** between the top-level places of the app, given to `PageLayout` as `nav`: a **bar at the foot of the screen on a phone**
+  (an icon over a one-word label, in the reach of the thumb) and a **rail down the left side from tablet width up**. Three to five
+  places, the same order on every page, the current one marked. On a detail page the list it belongs to is the current place.
+- **It is navigation, not tabs.** Tabs switch between views of the *same content on one page*; navigation goes to *another page*.
+  GOV.UK separates them the same way (tabs «switch views within a page», service navigation «links across a service»), and Material 3
+  uses a navigation bar and a rail for top-level places and keeps tabs for secondary content. The design system hides no content in
+  tabs (see **Reading and hierarchy**), so it has no tabs component.
 - `BackLink` one level up, on every detail page.
-- Counts in `SummaryBar` and `PageTabs` are links to what they count.
-
-<div className="sb-unstyled">
-<PageTabs label="Sider" tabs={[
-  { key: "f", label: "Forside", href: "#", current: true, icon: "home" },
-  { key: "p", label: "Pull requests", href: "#", current: false, icon: "pull-request", count: 14 },
-  { key: "i", label: "Issues", href: "#", current: false, icon: "issue", count: 9 },
-]} />
-</div>
+- A count in `SummaryBar` is a link to what it counts.
 
 ## 7. Words
 

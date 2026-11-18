@@ -17,7 +17,7 @@ description: Use when choosing which design system component to use for somethin
 | A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
 | Label and value pairs | `FactList`; links on a line `LinkList` |
 | A status | `StatusLine`; a count that links `SummaryBar` |
-| The way between pages | `PageTabs`; up one level `BackLink`; a set of places `NavCards`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
+| The way between pages | `NavBar` (bar at the foot on a phone, rail at the left from tablet width; given to `PageLayout` as `nav`); up one level `BackLink`; a set of places `NavCards`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos` |
 | A card | `Card` (see the cards rule), `ChartCard` for a chart |

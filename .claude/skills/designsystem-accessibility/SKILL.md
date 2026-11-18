@@ -13,7 +13,7 @@ component to fix accessibility: fix the component (see **designsystem-components
 - A **skip link** and `<main id="main-content">` (`PageLayout`).
 - **Headings:** `PageHeader` is the one `<h1>`; `PageSection`/`SectionGroup` are `<h2>`, `SubSection` is `<h3>`, each section is
   `aria-labelledby` its heading.
-- **Navigation:** `PageTabs`, `SummaryBar`, `NavCards` are `<nav aria-label>`; the current page is `aria-current="page"`.
+- **Navigation:** `NavBar`, `SummaryBar`, `NavCards` are `<nav aria-label>`; the current page is `aria-current="page"`.
 - **Icons are hidden** from a screen reader unless given a `label`; a status always has words beside its symbol (`StatusLine`).
 - **External links** carry the external symbol and a hidden «(eksternt nettsted)» (`ExternalLink`, `LinkButton external`).
 - **Tables** keep their roles; `SrTableHead` gives a header row that is read, never drawn; `Rows` is a table for a screen reader.

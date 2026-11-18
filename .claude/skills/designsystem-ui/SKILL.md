@@ -43,7 +43,7 @@ with a list, a table, a `dl` or `Text`. Cards are not nested (rule 8).
 ## Icons (rule 10)
 
 Use an icon wherever it makes something **quicker to find or to understand**: a section title (`icon`), the kind of a row
-(`Rows lead="icon"`), a status (`StatusLine`), an action (`<Icon slot="start" />` in a `Button`), a page to go to (`PageTabs`,
+(`Rows lead="icon"`), a status (`StatusLine`), an action (`<Icon slot="start" />` in a `Button`), a page to go to (`NavBar`,
 `NavCards`). Ask for a **meaning** (`<Icon name="failure" />`), never a glyph, never `lucide-react` in a page. Not for
 decoration, and not the same icon on every row (use it to tell kinds and states apart). See Storybook **Icons / Guide**.
 
@@ -51,7 +51,7 @@ decoration, and not the same icon on every row (use it to tell kinds and states 
 
 - Lists of rows use `Rows`, `PictureRows`, `EntityRows` (always one column, under each other); a gallery of pictures is `Tiles`.
 - A row is: kind icon, a name that links, one line of where it is from, a `StatusLine`, when it moved at the end.
-- Controls are at least **24 px** targets (WCAG 2.5.8; `ENTITY_LINK` is `min-h-6`). The navigation controls (`PageTabs`, `SummaryBar`,
+- Controls are at least **24 px** targets (WCAG 2.5.8; `ENTITY_LINK` is `min-h-6`). The navigation controls (`NavBar`, `SummaryBar`,
   `BackLink`) are 36–40 px; on touch prefer them, and `size="lg"` on a `Button`, over small ones.
 - A select is a native `<select>` (`NativeSelect`), always (rule 6).
 
