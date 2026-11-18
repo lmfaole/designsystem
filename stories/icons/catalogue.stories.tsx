@@ -10,6 +10,7 @@ const GROUPS = [
   ["How it stands", ["success", "failure", "warning", "info", "pending", "waiting", "blocked"]],
   ["People and time", ["person", "people", "view", "time", "calendar", "notification"]],
   ["Place and weather", ["place", "sun", "moon", "weather", "clouds", "rain", "snow", "fog", "thunder", "wind", "temperature", "rain-drop"]],
+  ["Getting around", ["walk", "bus", "tram", "metro"]],
   ["What you can do", ["refresh", "search", "add", "remove", "edit", "delete", "download", "upload", "link", "external", "close", "done", "settings", "favorite", "bookmark", "locked", "unlocked", "idea", "inbox", "home"]],
   ["Direction", ["back", "chevron-down", "chevron-right"]],
 ] as const satisfies readonly (readonly [string, readonly IconName[]])[]
