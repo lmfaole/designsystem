@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { BackdropCard } from "../../src/components/backdrop-card"
+import { PictureCard } from "../../src/components/picture-card"
 import { poster } from "../sample"
 
 const meta = {
-  title: "Media/BackdropCard",
-  component: BackdropCard,
+  title: "Media/PictureCard",
+  component: PictureCard,
   tags: ["autodocs"],
-  args: { title: "A franchise", picture: poster(220, "F"), children: "Text over a picture." },
-} satisfies Meta<typeof BackdropCard>
+  args: { title: "A collection", picture: poster(220, "F"), children: "Text over a picture." },
+} satisfies Meta<typeof PictureCard>
 export default meta
 type Story = StoryObj<typeof meta>
 

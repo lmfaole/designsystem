@@ -24,12 +24,12 @@ const name = (path: string): string => relative(src, path)
 
 /** Open props that are left, per file, with the reason: the consumer's use that blocks removing them. */
 const ALLOWED: Readonly<Record<string, readonly string[]>> = {
-  // implemented by the consumer's links (packages/watch/src/links.tsx, packages/shelf/src/links.tsx): the entity look is handed to the app's link
+  // implemented by a project's own links: the entity look is handed to the project's link
   "components/item-link.tsx": ["className?:"],
 }
 
 /** The components that draw a `Card`: a card is one item among its kind, or a frame around a chart. */
-const CARD_USERS: readonly string[] = ["components/backdrop-card.tsx", "components/chart-card.tsx", "components/page-links.tsx"]
+const CARD_USERS: readonly string[] = ["components/picture-card.tsx", "components/chart-card.tsx", "components/nav-cards.tsx"]
 
 test("no component has an open className, style or ComponentProps prop beyond ALLOWED", () => {
   const found: Record<string, string[]> = {}

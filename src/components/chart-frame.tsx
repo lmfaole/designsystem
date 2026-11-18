@@ -32,7 +32,7 @@ interface ChartFrameProps<TDatum> {
   height: number
   /** Whether the height follows the width, up to 480px (a fifth of a wide chart, not a flat strip); off for a chart whose height is its rows. */
   grow?: boolean
-  /** The colour of the series, for a chart of one thing that has a colour of its own (an album's cover); the theme's primary by default. */
+  /** The colour of the series, for a chart of one thing that has a colour of its own (a thing with a picture); the theme's primary by default. */
   color?: string | undefined
 }
 

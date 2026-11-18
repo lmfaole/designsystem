@@ -1,6 +1,6 @@
 # designsystem
 
-The design system of lmfaole's apps, in a repository of its own: the theme (colours, radius, fonts, motion), the building
+The design system of lmfaole's apps and pages, in a repository of its own: the theme (colours, radius, fonts, motion), the building
 blocks a page is put together from, and the components built on them. React 19 and Tailwind 4, **shipped as source**
 (`src/`, TypeScript and CSS): there is no build step and no published package.
 
@@ -26,6 +26,7 @@ import { Heading, Text } from "@lmfaole/designsystem/components/text"
 
 Because it is source inside `node_modules`:
 
+- **Next.js**: add the package to `transpilePackages`.
 - **Vite / Astro** must bundle it on the server instead of leaving it external: `vite.ssr.noExternal: ["@lmfaole/designsystem"]`.
 - **Tailwind** finds the classes through the `@source` lines of `theme.css`; a project needs none of its own for this package.
 - **Node's test runner** does not strip types under `node_modules`, so a test cannot import a module of this package directly.
@@ -89,3 +90,21 @@ npm run verify      # typecheck, lint and the tests
 A change is released as a tag: bump `version` in `package.json`, commit, `git tag v<version>`, `git push --follow-tags`, and
 raise the tag in the projects that use it (`npm install @lmfaole/designsystem@github:lmfaole/designsystem#v<version>`).
 A change that removes or renames a component, a prop or a token is a new major version.
+
+## Migrating to 5.0
+
+5.0 removes what was specific to one kind of content (music, film, CVs) or to one framework, and leaves general building blocks.
+Pictures and links are plain addresses: resolving a base path is the project's, not a component's.
+
+| 4.x | 5.0 |
+| --- | --- |
+| `Cover` (`url`) | `Picture` (`src`) |
+| `MediaRows` (`cover`, `subtitle`, `when`), `TrackRows` | `PictureRows` (`picture`, `detail`, `aside`); a track is a title with a `detail` of artist and album |
+| `Gallery` (`slug`, `link` render prop, `year`, `meta`) | `Tiles` (`href`, `detail`, `lines`) |
+| `CreatorLogo`, `CreatorLogos` (`names` + `logos` map) | `Logo` (`src`), `Logos` (`logos: {name, src}[]`) |
+| `BackdropCard` | `PictureCard` |
+| `CoverLightbox` | `ImageLightbox` |
+| `PageLinks` (`to`, app base, Astro prefetch, left-out pages) | `NavCards` (`href`; leave out the current page yourself) |
+| `CvSection`, `CvList`, `CvEntry`, `CvEmployer`, `CvRole`, `CvProjects`, `CvProject`, `CvLinkList`; `CvNote` | `EntrySection`, `EntryList`, `DatedEntry`, `EntryGroup`, `GroupItem`, `SubItems`, `SubItem`, `LinkItems`; `Text size="sm" tone="muted"` |
+| `EntityRow` `loved` | removed |
+| `EntityPage`, `lib/base-url` (`appUrl`) | removed |

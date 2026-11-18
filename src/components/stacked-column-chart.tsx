@@ -33,7 +33,7 @@ const stackedTooltip: ChartTooltipOptions<StackedDatum>["content"] = (points) =>
 // The foreground in falling strength, first series strongest: the chart tokens' darkest steps are too close to tell apart.
 const SEGMENT_COLORS = [100, 72, 52, 36, 24].map((share) => `color-mix(in oklab, var(--foreground) ${share}%, transparent)`)
 
-/** Columns divided into the parts that make each up, for how a total splits: plays per year by album. */
+/** Columns divided into the parts that make each up, for how a total splits: a count per year by category. */
 export function StackedColumnChart({ data, series, ariaLabel, height, colors = [] }: StackedColumnChartProps) {
   const colourOf = (index: number): string => colors[index] ?? SEGMENT_COLORS[index] ?? SEGMENT_COLORS.at(-1) ?? "currentColor"
   const labels = [...new Set(data.map((datum) => datum.label))]

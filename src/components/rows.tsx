@@ -32,7 +32,7 @@ export function Rows({ rows, lead, columns }: RowsProps) {
   const layout = lead === "rank" ? "grid-cols-[2rem_1fr_auto] items-baseline" : lead === "poster" ? "grid-cols-[auto_1fr_auto] items-center" : "grid-cols-[1fr_auto] items-baseline"
   return (
     <table role="table" className="block">
-      <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : "Omslag"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
+      <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : "Bilde"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
       <tbody role="rowgroup" className={`grid ${LIST_COLUMNS} gap-y-2`}>
         {rows.map((row, index) => (
           <tr role="row" key={row.key} className={`grid gap-x-3 ${layout}`}>

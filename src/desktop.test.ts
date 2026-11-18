@@ -25,7 +25,7 @@ const read = (path: string): string => readFileSync(join(src, path), "utf8")
 /** The `max-w-*` classes that are left, per file: a measure for text, the size of a mark. */
 const ALLOWED_MAX_W: Readonly<Record<string, readonly string[]>> = {
   "components/error-page.tsx": ["max-w-prose"],
-  "components/creator-marks.tsx": ["max-w-36", "max-w-44"],
+  "components/logos.tsx": ["max-w-36", "max-w-44"],
   "components/layout.tsx": ["max-w-prose"],
 }
 
@@ -46,7 +46,7 @@ test("a max-width is only a measure for text or the size of a mark, and only whe
 })
 
 test("every list of rows flows into as many columns as there is room for", () => {
-  for (const file of ["rows", "media-rows", "track-rows", "entity-rows"]) {
+  for (const file of ["rows", "picture-rows", "entity-rows"]) {
     assert.match(read(`components/${file}.tsx`), /LIST_COLUMNS/, `${file}: the rows are one thin column with the count far from the name`)
   }
   assert.match(read("lib/page-width.ts"), /LIST_COLUMNS\s*=\s*"[^"]*auto-fill[^"]*"/)
@@ -63,7 +63,7 @@ test("a counted Grid keeps growing on a very wide screen, and fitting grids exis
 })
 
 test("galleries and link grids fit by room, not by a fixed count", () => {
-  assert.match(read("components/gallery.tsx"), /auto-fill/)
-  assert.match(read("components/page-links.tsx"), /auto-fill/)
-  assert.doesNotMatch(read("components/gallery.tsx"), /2xl:grid-cols-\d/, "a fixed count stops growing")
+  assert.match(read("components/tiles.tsx"), /auto-fill/)
+  assert.match(read("components/nav-cards.tsx"), /auto-fill/)
+  assert.doesNotMatch(read("components/tiles.tsx"), /2xl:grid-cols-\d/, "a fixed count stops growing")
 })

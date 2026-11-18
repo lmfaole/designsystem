@@ -5,7 +5,7 @@ import { SrTableHead } from "./sr-table-head"
 import { VIRTUAL_FROM, VirtualTbody } from "./virtual-rows"
 import { LIST_COLUMNS } from "../lib/page-width"
 
-/** The lines of a list on the page of a thing (an artist's albums, an album's tracks), as a table: a screen reader hears the count and the extra with the name they belong to. */
+/** The lines of a list on the page of a thing, as a table: a screen reader hears the count and the extra with the name they belong to. */
 export function EntityRows({ caption, children }: { caption: string; children: ReactNode }) {
   const rows = Children.toArray(children)
   const virtual = rows.length >= VIRTUAL_FROM
@@ -13,7 +13,7 @@ export function EntityRows({ caption, children }: { caption: string; children: R
   return (
     <table role="table" aria-rowcount={virtual ? rows.length + 1 : undefined} className="block">
       <caption className="sr-only">{caption}</caption>
-      <SrTableHead columns={["Omslag", "Navn", "Antall", "Mer"]} />
+      <SrTableHead columns={["Bilde", "Navn", "Antall", "Mer"]} />
       {virtual ? (
         <VirtualTbody rows={rows} />
       ) : (
@@ -32,24 +32,22 @@ interface EntityRowProps {
   name: ReactNode
   /** The name as plain text, for what the info button is called. */
   label: string
-  /** A line under the name: a track number, who it was with. */
+  /** A line under the name: a number, who it was with. */
   detail?: ReactNode
-  /** How often it was played, as the page words it, shown at the end. */
+  /** How many, as the page words it, shown at the end. */
   count: string
-  /** Shown dimmer: a track of the album that was never played. */
+  /** Shown dimmer: an item that has no count. */
   muted?: boolean
-  /** Marked with a heart: a track that was loved. */
-  loved?: boolean
   /** What is said of it at more length, in a popover from an «i» at the end of the line; none, no button. */
   info?: ReactNode
 }
 
 /** A picture, a name, a count and maybe an info button: one line of `EntityRows`. */
-export function EntityRow({ picture, name, label, detail, count, muted = false, loved = false, info }: EntityRowProps) {
+export function EntityRow({ picture, name, label, detail, count, muted = false, info }: EntityRowProps) {
   const infoId = useId()
   return (
     <tr role="row" className={`grid items-center gap-x-3 ${picture === undefined ? "grid-cols-[1fr_auto_auto]" : "grid-cols-[auto_1fr_auto_auto]"}`}>
-      {/* Never played: the picture is dimmed and the name is the muted colour. Dimming the whole row would drop the text under the contrast it needs. */}
+      {/* Muted: the picture is dimmed and the name is the muted colour. Dimming the whole row would drop the text under the contrast it needs. */}
       {picture === undefined ? null : (
         <td role="cell" className={muted ? "opacity-60" : undefined}>
           {picture}
@@ -60,11 +58,6 @@ export function EntityRow({ picture, name, label, detail, count, muted = false, 
         {detail ? <span className="block truncate text-sm font-normal text-muted-foreground">{detail}</span> : null}
       </td>
       <td role="cell" className="text-sm whitespace-nowrap text-muted-foreground">
-        {loved ? (
-          <span role="img" aria-label="Elsket">
-            ♥{" "}
-          </span>
-        ) : null}
         {count}
       </td>
       <td role="cell">
