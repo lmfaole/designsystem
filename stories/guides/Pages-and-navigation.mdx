@@ -1,6 +1,8 @@
 import { Meta } from "@storybook/addon-docs/blocks"
 
-import { BackLink } from "../../src/components/back-link"
+import { Breadcrumbs } from "../../src/components/breadcrumbs"
+import { SubPages } from "../../src/components/sub-pages"
+import { FactList } from "../../src/components/fact-list"
 import { LinkButton } from "../../src/components/link-button"
 import { NavBar } from "../../src/components/nav-bar"
 import { PageSection } from "../../src/components/page-section"
@@ -69,10 +71,10 @@ decide. A thing that is a line (an hour of the forecast) has no detail page.
 
 **Anatomy, in this order:**
 
-1. `BackLink`, naming the list («Pull requests»).
+1. `Breadcrumbs` (on a phone the parent alone, naming the list).
 2. `PageHeader`: the title, and one line of where it is from and when.
 3. `StatusLine`: how it stands.
-4. What it is: an excerpt of its text, and the facts as a `FactList`.
+4. What it is: its text (`Markdown`, cut), and the facts as a `FactList`: one term each, several values stacked under it.
 5. What happened last: the latest few items of its history.
 6. The actions, and **last, the link out** («Åpne på GitHub»).
 
@@ -80,7 +82,7 @@ A detail page has an address of its own (`/pull-requests/owner/repo/12`), so it 
 notification. It never lives only in a dialog.
 
 <div className="sb-unstyled">
-<BackLink href="#" label="Pull requests" />
+<Breadcrumbs items={[{ label: "Startside", href: "#" }, { label: "Pull requests", href: "#pulls" }, { label: "Fiks tidssone", href: "#pr" }]} />
 
 <StatusLine items={[{ text: "Tester feilet", icon: "failure", tone: "destructive" }, { text: "Endringer ønskes", icon: "changes", tone: "destructive" }, { text: "Stille i 3 dager", icon: "time", tone: "muted" }]} />
 
@@ -100,15 +102,28 @@ notification. It never lives only in a dialog.
 
 ## 6. Navigation
 
-- **`NavBar`** between the top-level places of the app, given to `PageLayout` as `nav`: a **bar at the foot of the screen on a phone**
-  (an icon over a one-word label, in the reach of the thumb) and a **rail down the left side from tablet width up**. Three to five
-  places, the same order on every page, the current one marked. On a detail page the list it belongs to is the current place.
-- **It is navigation, not tabs.** Tabs switch between views of the *same content on one page*; navigation goes to *another page*.
-  GOV.UK separates them the same way (tabs «switch views within a page», service navigation «links across a service»), and Material 3
-  uses a navigation bar and a rail for top-level places and keeps tabs for secondary content. The design system hides no content in
-  tabs (see **Reading and hierarchy**), so it has no tabs component.
-- `BackLink` one level up, on every detail page.
+Under the hub there are three levels: the app's front page → a page → a subpage or a detail. One model for every app:
+
+- **An app's top-level pages** are in the **`NavBar`**, given to `PageLayout` as `nav`: a bar at the foot of the screen on a phone (an icon
+  over a one-word label, in the reach of the thumb) and a rail down the left side from tablet width. At most five, the same order on
+  every page, the current one marked. A detail page marks the section it belongs to.
+- **Every page below the top level** has **`Breadcrumbs`** at the top: the whole trail from tablet width, and only the parent, as a way
+  back, on a phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading.
+- **A page that has subpages** shows them with **`SubPages`** under the title: a list in one column (an icon, the name, one line of
+  what is on the page). Not cards, not buttons, not a second menu.
+- **Moving between apps:** the first crumb is the group («Hjem», «Medier») and links to the page that lists its apps.
+- **It is navigation, not tabs.** Tabs switch views of the *same content on one page*; navigation goes to *another page*. GOV.UK
+  separates them the same way (tabs «switch views within a page», service navigation «links across a service»), and Material 3 uses a
+  navigation bar and a rail for top-level places and keeps tabs for secondary content. The design system hides no content in tabs.
 - A count in `SummaryBar` is a link to what it counts.
+
+<div className="sb-unstyled">
+<Breadcrumbs items={[{ label: "Hjem", href: "#" }, { label: "AdGuard", href: "#a" }, { label: "Enheter", href: "#e" }]} />
+<SubPages label="Sider i AdGuard" pages={[
+  { href: "#e", label: "Enheter", icon: "settings", description: "Hver enhet som bruker AdGuard." },
+  { href: "#h", label: "Historikk", icon: "calendar", description: "Hva som ble blokkert, en dag om gangen." },
+]} />
+</div>
 
 ## 7. Words
 
@@ -122,3 +137,17 @@ the screen: name things by what they recognise («Venter på din review»), not 
 - Don't make a tap on a row leave the app when the app has a page for it.
 - Don't put a modal where a page with an address would do.
 - Don't mark everything urgent: `destructive` is for what stops something.
+
+## Facts about one thing
+
+Facts about one thing are a **description list** (`FactList`): a term, written once, and under it its value or **several values, each
+on its own line**. Several things of one kind (reviewers, labels, assignees) are several values of one term, never `a, b, c` in one
+line. A term with nothing under it is left out.
+
+<div className="sb-unstyled">
+<FactList facts={[
+  ["Gren", "refactor/textarea-forenkling → main"],
+  ["Venter på review fra", ["zenabii", "kristianulv23", "Stormoen"]],
+  ["Reviews", ["copilot: kommenterte", "piofinn: godkjent"]],
+]} />
+</div>

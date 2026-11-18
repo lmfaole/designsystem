@@ -41,7 +41,29 @@ test("a section, a group and a subsection can link to the page with all of it", 
   }
 })
 
-test("the back link and the counts are links, not buttons: they go somewhere", () => {
-  for (const file of ["components/back-link.tsx", "components/summary-bar.tsx"]) assert.match(read(file), /<a href=/, file)
+test("the breadcrumbs, the list of subpages and the counts are links, not buttons: they go somewhere", () => {
+  for (const file of ["components/breadcrumbs.tsx", "components/sub-pages.tsx", "components/summary-bar.tsx"]) assert.match(read(file), /<a\s+href=/, file)
   assert.doesNotMatch(read("components/summary-bar.tsx"), /onClick|<button/)
+})
+
+test("the breadcrumbs are a labelled nav with an ordered list, the current page marked and not a link, and only the parent on a phone", () => {
+  const crumbs = read("components/breadcrumbs.tsx")
+  assert.match(crumbs, /<nav aria-label="Brødsmuler"/)
+  assert.match(crumbs, /<ol\b/)
+  assert.match(crumbs, /aria-current="page"/)
+  assert.match(crumbs, /md:hidden/, "the parent alone, as a way back, on a phone")
+  assert.match(crumbs, /hidden[^"]*md:flex/, "the whole trail from tablet width")
+  assert.match(crumbs, /items\.length < 2\) return null/, "a page with no parent has none")
+})
+
+test("subpages are a list in ONE column, never a grid of cards or buttons", () => {
+  const list = read("components/sub-pages.tsx")
+  assert.match(list, /<ul className="grid gap-1">/)
+  assert.doesNotMatch(list, /grid-cols-\[repeat|columns-\d|Card\b/)
+})
+
+test("the components this replaced are gone: no BackLink (the breadcrumbs are the way back) and no NavCards (SubPages is the list of pages)", () => {
+  const files = readdirSync(join(import.meta.dirname, "components"))
+  assert.equal(files.includes("back-link.tsx"), false)
+  assert.equal(files.includes("nav-cards.tsx"), false)
 })

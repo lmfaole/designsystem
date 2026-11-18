@@ -33,7 +33,7 @@ const ALLOWED_MAX_W: Readonly<Record<string, readonly string[]>> = {
 }
 
 /** The components whose columns hold things that are looked at (pictures, charts, small cards, figures), not read. */
-const VISUAL: readonly string[] = ["components/layout.tsx", "components/nav-cards.tsx", "components/stacked-column-chart.tsx", "components/tiles.tsx"]
+const VISUAL: readonly string[] = ["components/layout.tsx", "components/stacked-column-chart.tsx", "components/tiles.tsx"]
 
 test("the page frame has no maximum width, and what is read stands in a reading column of 48rem, centred", () => {
   const widths = read("lib/page-width.ts")
@@ -91,8 +91,7 @@ test("a counted Grid keeps growing on a very wide screen, and fitting grids exis
   assert.match(layout, /export function Split\b/, "Split: a rail of reference beside the content on a wide screen")
 })
 
-test("galleries and link grids fit by room, not by a fixed count", () => {
+test("galleries fit by room, not by a fixed count", () => {
   assert.match(read("components/tiles.tsx"), /auto-fill/)
-  assert.match(read("components/nav-cards.tsx"), /auto-fill/)
   assert.doesNotMatch(read("components/tiles.tsx"), /2xl:grid-cols-\d/, "a fixed count stops growing")
 })

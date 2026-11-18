@@ -141,7 +141,7 @@ export const ICONS = {
 /** What an icon can mean: a key of `ICONS`. */
 export type IconName = keyof typeof ICONS
 
-/** The type of an icon component, for the few places that still take one (`NavCards`). Prefer an `IconName`. */
+/** The type of an icon component, for the few places that still take one. Prefer an `IconName`. */
 export type { LucideIcon } from "lucide-react"
 
 /**

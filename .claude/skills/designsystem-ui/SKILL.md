@@ -14,7 +14,7 @@ fits, the markup becomes a component in the design system, named for what it is,
   `PageColumn`/`PageLayout` (the page's frame and **reading column**). Gaps are named steps: `none | xs | sm | md | lg | xl`.
 - **One reading direction: down** (rule 7). What is read (text, lists, the sections of a page) stands under each other in the reading
   column (`width="reading"`, 48rem, centred). On a wide screen the rest is margin. See **designsystem-hierarchy**.
-- **Columns are for what is looked at:** `Grid columns="tiles" | "cards" | "charts"` or a number, `Tiles`, `NavCards`, and a `Split`
+- **Columns are for what is looked at:** `Grid columns="tiles" | "cards" | "charts"` or a number, `Tiles`, and a `Split`
   rail of reference. A page that is mostly such things is `width="wide"`. Never `Grid` for text, lists or sections.
 - **Groups:** several parts that belong together are a `SectionGroup` with `SubSection`s, under each other.
 - Check at **400, 1440 and 2560** px.
@@ -44,7 +44,7 @@ with a list, a table, a `dl` or `Text`. Cards are not nested (rule 8).
 
 Use an icon wherever it makes something **quicker to find or to understand**: a section title (`icon`), the kind of a row
 (`Rows lead="icon"`), a status (`StatusLine`), an action (`<Icon slot="start" />` in a `Button`), a page to go to (`NavBar`,
-`NavCards`). Ask for a **meaning** (`<Icon name="failure" />`), never a glyph, never `lucide-react` in a page. Not for
+`SubPages`). Ask for a **meaning** (`<Icon name="failure" />`), never a glyph, never `lucide-react` in a page. Not for
 decoration, and not the same icon on every row (use it to tell kinds and states apart). See Storybook **Icons / Guide**.
 
 ## Density and rows
@@ -52,7 +52,7 @@ decoration, and not the same icon on every row (use it to tell kinds and states 
 - Lists of rows use `Rows`, `PictureRows`, `EntityRows` (always one column, under each other); a gallery of pictures is `Tiles`.
 - A row is: kind icon, a name that links, one line of where it is from, a `StatusLine`, when it moved at the end.
 - Controls are at least **24 px** targets (WCAG 2.5.8; `ENTITY_LINK` is `min-h-6`). The navigation controls (`NavBar`, `SummaryBar`,
-  `BackLink`) are 36–40 px; on touch prefer them, and `size="lg"` on a `Button`, over small ones.
+  `Breadcrumbs`) are 36–40 px; on touch prefer them, and `size="lg"` on a `Button`, over small ones.
 - A select is a native `<select>` (`NativeSelect`), always (rule 6).
 
 ## Motion

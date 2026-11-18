@@ -17,7 +17,7 @@ reading direction, down.** What is read stands under each other, in one column, 
   are always under each other. A test fails if they come back.
 - On a wide screen the rest is **margin, not more columns**.
 - **Columns are for what is looked at, not read:** pictures (`Tiles`), charts (`Grid columns="charts"`), cards of equal weight
-  (`Grid columns="cards"`, `NavCards`), a few figures or chips (`SummaryBar`), and a `Split` rail of *reference* (a cover and its facts)
+  (`Grid columns="cards"`), a few figures or chips (`SummaryBar`), and a `Split` rail of *reference* (a cover and its facts)
   beside the main content. A page that is mostly such things is `width="wide"`.
 - Ask before you use `Grid` or `Split`: «is this read, or looked at?» If read, stack it.
 
@@ -53,11 +53,17 @@ Each differs in size, weight or case. **No fourth level of emphasis.** `destruct
 Every row of a list starts with the same thing (the kind icon, then the name). The **name is the strongest part**; everything else
 is `Text tone="muted"` and small. All rows of a list have one structure (`Rows`, `PictureRows`).
 
-## 8. Do not make the reader choose a path
+## 8. Several of a kind stack
+
+Several things of one kind (reviewers, labels, assignees) are **under each other**, never `a, b, c` in one line. In a `FactList` they are
+several values of one term, which is written once (`["Reviewere", ["zenabii", "Stormoen"]]`). A list is scanned down; a sentence
+is read along.
+
+## 9. Do not make the reader choose a path
 
 One column is one path. Do not put two lists side by side to compare (that is a table). Do not hide what fits under behind tabs.
 
-## 9. Check it
+## 10. Check it
 
 1. Look at **400, 1440 and 2560 px**. At each width the reader can read straight down.
 2. Cover all but the first screen: is it clear what matters most?

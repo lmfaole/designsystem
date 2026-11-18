@@ -10,13 +10,13 @@ working version: decide the structure first, then build it from the components n
 
 ## 1. Decide the levels first
 
-A place has at most **three levels**: front page → list → detail. A fourth means the structure is wrong.
+A place has at most **three levels**: front page → list → detail (in an app with subpages: front page → page → subpage or detail). A fourth means the structure is wrong.
 
 | Level | It is | It answers | Built from |
 | --- | --- | --- | --- |
 | Front page | A **digest** | Do I have to do something now? | `SummaryBar`, `PageSection` with `more`, `Rows` |
 | List | **Everything** of one kind, in groups | What is there? | `SectionGroup`, `SubSection`, `Rows`, `NavBar` |
-| Detail | **One thing**, enough to decide | What is this, what do I do? | `BackLink`, `PageHeader`, `StatusLine`, `FactList`, `LinkButton` |
+| Detail | **One thing**, enough to decide | What is this, what do I do? | `Breadcrumbs`, `PageHeader`, `StatusLine`, `FactList`, `LinkButton` |
 
 A thing needs a **detail page** when it has more to say than a row can (a description, a history, checks) *and* the reader needs
 that to decide. A thing that is one line (an hour of the forecast) has none. A detail page has an **address of its own**
@@ -51,7 +51,11 @@ that to decide. A thing that is one line (an hour of the forecast) has none. A d
   list it belongs to).
 - **Navigation is not tabs.** Tabs switch views of the same content on one page; navigation goes to another page. Never build navigation
   as a row of tabs under the title, and never hide content in tabs: the design system has no tabs component.
-- `BackLink` on every detail page, **naming** the list («Pull requests»), never «Tilbake».
+- **Breadcrumbs on every page below the top level** (`Breadcrumbs`): the whole trail from tablet width, the parent alone as a way back on a
+  phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading. The first crumb is the group
+  (`Hjem`, `Medier`) and links to the page that lists its apps: that is how the reader moves between apps.
+- **A page with subpages shows them with `SubPages`** under the title: a list in ONE column (icon, name, one line of what is on it), never
+  cards, buttons or a second menu. Top-level pages are in the `NavBar` (at most five); everything else is a subpage or a detail.
 - A count in `SummaryBar` is a link to what it counts.
 
 ## 5. States

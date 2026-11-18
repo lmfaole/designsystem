@@ -42,9 +42,9 @@ repository does (`scripts/design-tokens.ts` there).
 | --- | --- |
 | `src/theme.css` | The tokens (`--background`, `--primary`, `--radius`, `--series-*` …), light and dark, the fonts and the base styles. Imports `motion.css`, `shell.css` and `overlay.css`. |
 | `src/components/layout.tsx`, `text.tsx` | The building blocks: `Stack`, `Inline`, `Grid`, `PageColumn`; `Text`, `Heading`, `TextLink`. |
-| `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx`, `nav-cards.tsx` | The frame and the parts of a page. |
+| `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
-| `src/components/nav-bar.tsx`, `back-link.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
+| `src/components/nav-bar.tsx`, `breadcrumbs.tsx`, `sub-pages.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
 | `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings. See «Icons» below. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
@@ -186,7 +186,7 @@ The full guide, with live examples, is in Storybook (**Guides / Pages and naviga
 4. **Complete at rest:** what matters is visible without a click; «Se alle» is navigation, never a «vis mer» that opens in place.
 5. **State in form:** a symbol and words; `destructive` only for what stops something.
 
-**A detail page** has an address of its own and this anatomy: `BackLink` (names the list) → `PageHeader` (title, one line of
+**A detail page** has an address of its own and this anatomy: `Breadcrumbs` (the parent is the way back on a phone) → `PageHeader` (title, one line of
 where it is from) → `StatusLine` → what it is (an excerpt, a `FactList`) → what happened last → actions → **the link out, last**.
 It is never only a dialog.
 
@@ -199,17 +199,55 @@ phone** (an icon over a one-word label, in the reach of the thumb) and a **rail 
 five places, the same order on every page, the current one marked (`aria-current="page"`); on a detail page the list it belongs to
 is the current place. It is **navigation, not tabs**: tabs switch between views of the *same content on one page* (GOV.UK: tabs
 "switch views within a page", service navigation "links across a service"; Material 3: a navigation bar and a rail for top-level
-places, tabs for secondary content), and the design system hides no content in tabs, so there is no tabs component. `BackLink`
-one level up on every detail page.
+places, tabs for secondary content), and the design system hides no content in tabs, so there is no tabs component.
+
+**Where an app's pages are shown (one model for every app).** Under the hub there are three levels: the app's front page → a page →
+a subpage or a detail.
+
+| Where | What |
+| --- | --- |
+| An app's top-level pages (front page, Status, AdGuard …) | `NavBar` (bar at the foot on a phone, rail from tablet width); at most five |
+| Every page below the top level (a subpage, a detail) | `Breadcrumbs` at the top: the whole trail from tablet width, the parent alone as a way back on a phone |
+| A page that has subpages | `SubPages` under the title: a list in ONE column (icon, name, one line of what is on it), never cards or buttons |
+| Moving between apps | The first crumb is the group (`Hjem`, `Medier`) and links to the page that lists its apps |
+
+The breadcrumbs say *where*, the title says *what*: do not repeat a page's title in a second heading. There is no side menu and no
+grid of cards for pages.
 
 | Component | For |
 | --- | --- |
 | `SummaryBar` | The state of a place in counts that are links; first on a front page |
 | `NavBar` | The way between the top-level places: a bar at the foot on a phone, a rail at the left from tablet width |
-| `BackLink` | One level up, naming where |
+| `Breadcrumbs` | Where the page is, on every page below the top level; the parent alone as a way back on a phone |
+| `SubPages` | The pages under this page, as a list (icon, name, one line) under the title |
 | `more` on `PageSection`, `SubSection`, `SectionGroup` | «Se alle 14» in a section's title row |
 | `LinkButton` | An action that goes somewhere; `external` for a link out |
 | `ExternalLink` | A link out in running text, always marked |
+
+## Description lists
+
+`FactList` is a description list (`<dl>`): a **term** and what belongs to it. A term has **one value or several**, and several things
+of one kind are several values of *one* term, each on a line of its own, under the term, which is written once:
+
+```tsx
+<FactList
+  facts={[
+    ["Gren", "refactor/textarea-forenkling → main"],
+    ["Venter på review fra", ["zenabii", "kristianulv23", "Stormoen"]], // three lines under one term
+    ["Reviews", ["copilot: kommenterte", "piofinn: godkjent"]],
+    ["Tildelt", []], // nothing: the term is left out
+  ]}
+/>
+```
+
+- **Several of a kind stack.** Reviewers, assignees, labels, branches, tags, authors: each a value of its term, under each other. Never
+  `"a, b, c"` in one line: a list is scanned down, a sentence is read along, and a long name wraps in the middle of the line.
+- **One term, written once.** Do not repeat the label on every line, and do not make several terms of one kind («Reviewer», «Reviewer»).
+- **Terms without a value are left out**, and so is the list when none is left. Do not write «Ingen» or «–».
+- **Short terms, short values.** A term is a noun (`Gren`, `Størrelse`); a value that is long text is not a fact but a section.
+- **When to use it:** facts about *one thing* (a detail page's «Fakta»). Facts that compare *many things* are a table; things that are
+  the content of the page are a `PageSection` with `Rows`.
+- Semantics: `<dl>` with a `<div>` per term holding its `<dt>` and every `<dd>`; a screen reader reads «term: value, value».
 
 ## Markdown
 
@@ -261,7 +299,7 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
 | The kind of a row | `Rows` with `lead="icon"`; `icon`, `iconLabel`, `iconTone` per row |
 | A status | `StatusLine`, an `icon` per item; `destructive` is for what stops something |
 | An action | `<Icon name="…" slot="start" />` (or `"end"`) inside a `Button`; an icon-only button needs an `aria-label` |
-| A page to go to | `icon` on a `NavCards` link |
+| A page to go to | `icon` on a `NavBar` item or a `SubPages` page |
 | An error | `ErrorMessage` has one |
 
 - **Meanings, not glyphs.** `ICONS` in `src/lib/icons.ts` names icons for what they *mean* (`merge`, `waiting`, `failure`,
@@ -275,6 +313,17 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
   A status never relies on colour alone.
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
+
+## Migrating to 8.0
+
+**Breaking:**
+
+| 7.x | 8.0 |
+| --- | --- |
+| `BackLink` | Removed. `Breadcrumbs` is the way back (the parent alone on a phone, the whole trail from tablet width) |
+| `NavCards` | Removed. `SubPages`: the pages under a page as a list (icon, name, one line), in one column |
+
+New: `Breadcrumbs`, `SubPages`, and `FactList` takes several values per term (additive).
 
 ## Migrating to 7.1
 
@@ -301,7 +350,7 @@ a rail at the left from tablet width, and is given to `PageLayout` as `nav` (the
 | `SectionGroup width="row"` / `"cell"` | `width` is gone: the subsections always stand under each other |
 | A page filled the whole page area | `PageLayout` and `PageColumn` have `width="reading"` (the default: 48rem, centred); use `width="wide"` for a page that is mostly pictures or charts |
 
-Pictures (`Tiles`), charts, `Grid` counts, `NavCards` and `Split` are unchanged: they are looked at, not read.
+Pictures (`Tiles`), charts, `Grid` counts and `Split` are unchanged: they are looked at, not read.
 
 ## Migrating to 5.4
 

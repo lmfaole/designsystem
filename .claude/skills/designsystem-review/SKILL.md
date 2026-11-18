@@ -19,7 +19,8 @@ and a detail page, not only the front page.
 - [ ] At most three levels; the front page is a digest (counts first, 3–5 items per section, «Se alle»).
 - [ ] A thing with more to say has a detail page with an address; the link out to another site is last and named.
 - [ ] A row links to the app's own page, not out.
-- [ ] `NavBar` (as `nav` on `PageLayout`) in the same order on every page, the current place marked, never tabs for navigation; `BackLink` on details, naming the list.
+- [ ] `NavBar` (as `nav` on `PageLayout`) in the same order on every page, the current place marked, never tabs for navigation; `Breadcrumbs` on every page below the top level (the title is not repeated in a second heading); `SubPages` (one column, not cards) where a page has subpages.
+- [ ] Several things of one kind (reviewers, labels) are several values of one `FactList` term, stacked, never `a, b, c` in one line.
 - [ ] Loading, empty, error and not-found are designed; one failing source does not take the page down.
 
 **Reading and hierarchy (designsystem-hierarchy)**

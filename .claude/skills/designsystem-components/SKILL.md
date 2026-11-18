@@ -16,9 +16,9 @@ description: Use when choosing which design system component to use for somethin
 | Text, a heading, a link | `Text`, `Heading`, `TextLink`; out to another site `ExternalLink`, `LinkButton external` |
 | Text written in Markdown (a description, a comment) | `Markdown`, never HTML inserted; `size="sm"` for a comment |
 | A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
-| Label and value pairs | `FactList`; links on a line `LinkList` |
+| Terms and their values (facts about one thing) | `FactList`: one value or several stacked under one term; links on a line `LinkList` |
 | A status | `StatusLine`; a count that links `SummaryBar` |
-| The way between pages | `NavBar` (bar at the foot on a phone, rail at the left from tablet width; given to `PageLayout` as `nav`); up one level `BackLink`; a set of places `NavCards`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
+| The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos` |
 | A card | `Card` (see the cards rule), `ChartCard` for a chart |
