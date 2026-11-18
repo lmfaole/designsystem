@@ -44,6 +44,7 @@ repository does (`scripts/design-tokens.ts` there).
 | `src/components/layout.tsx`, `text.tsx` | The building blocks: `Stack`, `Inline`, `Grid`, `PageColumn`; `Text`, `Heading`, `TextLink`. |
 | `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx`, `nav-cards.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
+| `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings. See «Icons» below. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
 | `src/lib/` | What the components share: `cn` (`utils`), icons, the page column and the columns of a list (`page-width`), link style, small pure helpers with tests. |
@@ -79,6 +80,11 @@ repository does (`scripts/design-tokens.ts` there).
    and at least two of its kind on the page, or the page's one chart. Everything else is a `PageSection` (a short noun title)
    with a list, a table, a `dl` or `Text`. Cards are not nested. A title is a short noun phrase, not a sentence.
 9. English for code and comments; on-screen text in a component is Norwegian (bokmål).
+10. **Use icons where they carry meaning, and use them freely there.** A section's title, the kind of a row, a status, an
+    action on a button, a page to go to: each is found and understood faster with a symbol beside its words, and the
+    components take one (`icon`, `lead="icon"`, `StatusLine`). An icon is a **meaning** from `ICONS` (`lib/icons.ts`), asked
+    for with `<Icon name="…" />`; never a `lucide-react` import in a page, never decoration, and never the colour alone
+    (a status has a symbol and words). See «Icons» below.
 
 ## Work on it
 
@@ -108,6 +114,58 @@ A page's grid places each part as one cell. Things that belong together (everyth
 
 `width="cell"` (the default) is one cell with the subsections under each other; `width="row"` takes the whole row and lays the
 subsections out in columns by the room it has. The group's title is an `<h2>`, the subsections' `<h3>`s.
+
+## Icons
+
+**Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
+icon is a *meaning* you ask for, and the components that show titles, rows, statuses, actions and errors take one.
+The full guide, with the catalogue of every meaning, is in Storybook (**Icons / Guide** and **Icons / Catalogue**).
+
+```tsx
+import { Icon } from "@lmfaole/designsystem/components/icon"
+import { StatusLine } from "@lmfaole/designsystem/components/status-line"
+
+// A section's title, and the kind of each row
+<SectionGroup id="pulls" title="Pull requests" icon="pull-request" width="row">
+  <SubSection id="blocked" title="Blokkert" icon="warning">
+    <Rows lead="icon" rows={[{ key: "1", icon: "pull-request", iconLabel: "Pull request", body: "…", trailing: "i dag" }]} />
+  </SubSection>
+</SectionGroup>
+
+// A status: a symbol and its words, so it reads the same without colour
+<StatusLine items={[{ text: "Tester feilet", icon: "failure", tone: "destructive" }, { text: "Godkjent", icon: "success" }]} />
+
+// An action
+<Button variant="outline"><Icon name="refresh" slot="start" />Oppdater</Button>
+```
+
+| Where | How |
+| --- | --- |
+| A section's title | `icon` on `PageSection`, `SectionGroup`, `SubSection` |
+| The kind of a row | `Rows` with `lead="icon"`; `icon`, `iconLabel`, `iconTone` per row |
+| A status | `StatusLine`, an `icon` per item; `destructive` is for what stops something |
+| An action | `<Icon name="…" slot="start" />` (or `"end"`) inside a `Button`; an icon-only button needs an `aria-label` |
+| A page to go to | `icon` on a `NavCards` link |
+| An error | `ErrorMessage` has one |
+
+- **Meanings, not glyphs.** `ICONS` in `src/lib/icons.ts` names icons for what they *mean* (`merge`, `waiting`, `failure`,
+  `place`, `weather`), so two pages that mean the same thing show the same symbol and changing a glyph is one line. Look for
+  the meaning there first; add one (under its group, and to the Catalogue story, which does not compile until it is there)
+  only when a page needs one that is not.
+- **Where not:** decoration (an icon that means nothing), the same icon on every row of a list (use it to tell kinds and
+  states apart), and an unlabelled icon where it is ambiguous. There is no green: a good status is plain, one that stops
+  something is `destructive`.
+- **Accessibility.** Decorative by default (`aria-hidden`); give `label` where an icon stands alone and carries the meaning.
+  A status never relies on colour alone.
+- **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
+  sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
+
+## Migrating to 5.2
+
+5.2 is additive: `Icon`, `StatusLine`, the `ICONS` register, `icon` on `PageSection`/`SectionGroup`/`SubSection`,
+`Rows` `lead="icon"`, and an icon in `ErrorMessage` (a warning symbol in front of its text). `NavCards` links take an
+`IconName` as well as an icon component (prefer the name). A page that imports from `lucide-react` should import from
+`lib/icons` instead, or better ask for a meaning with `<Icon name="…" />`.
 
 ## Migrating to 5.0
 

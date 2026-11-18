@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 
+import { Icon } from "./icon"
+import type { IconName } from "../lib/icons"
 import { LIST_COLUMNS } from "../lib/page-width"
 import { SrTableHead } from "./sr-table-head"
 
@@ -11,11 +13,17 @@ export interface RowData {
   body: ReactNode
   /** What it has: a count, a rating, a time. */
   trailing: ReactNode
+  /** The kind of the row, for `lead="icon"`: a pull request, an issue, a kind of weather. */
+  icon?: IconName
+  /** What the icon means to a screen reader (`Pull request`); without it the icon is hidden, so give it where the kind is not in the words. */
+  iconLabel?: string
+  /** `destructive` for a kind that stops something; `muted` is the default. */
+  iconTone?: "muted" | "destructive" | "primary"
 }
 
 interface RowsProps {
   rows: readonly RowData[]
-  lead?: "rank" | "poster"
+  lead?: "rank" | "poster" | "icon"
   /** What the columns are called for a screen reader, which hears them with every cell: the name, and what each row has. */
   columns?: { name?: string; value?: string }
 }
@@ -29,10 +37,10 @@ interface RowsProps {
  * and the roles are written out, so the table stays a table when `display` is not `table`.
  */
 export function Rows({ rows, lead, columns }: RowsProps) {
-  const layout = lead === "rank" ? "grid-cols-[2rem_1fr_auto] items-baseline" : lead === "poster" ? "grid-cols-[auto_1fr_auto] items-center" : "grid-cols-[1fr_auto] items-baseline"
+  const layout = lead === "rank" ? "grid-cols-[2rem_1fr_auto] items-baseline" : lead === "poster" ? "grid-cols-[auto_1fr_auto] items-center" : lead === "icon" ? "grid-cols-[1rem_1fr_auto] items-start" : "grid-cols-[1fr_auto] items-baseline"
   return (
     <table role="table" className="block">
-      <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : "Bilde"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
+      <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : lead === "icon" ? "Type" : "Bilde"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
       <tbody role="rowgroup" className={`grid ${LIST_COLUMNS} gap-y-2`}>
         {rows.map((row, index) => (
           <tr role="row" key={row.key} className={`grid gap-x-3 ${layout}`}>
@@ -42,6 +50,10 @@ export function Rows({ rows, lead, columns }: RowsProps) {
               </td>
             ) : lead === "poster" ? (
               <td role="cell">{row.lead}</td>
+            ) : lead === "icon" ? (
+              <td role="cell" className="pt-0.5">
+                {row.icon === undefined ? null : <Icon name={row.icon} tone={row.iconTone ?? "muted"} {...(row.iconLabel === undefined ? {} : { label: row.iconLabel })} />}
+              </td>
             ) : null}
             <td role="rowheader" className="min-w-0 [overflow-wrap:anywhere]">
               {row.body}

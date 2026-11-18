@@ -1,9 +1,151 @@
+import {
+  Ban,
+  Bell,
+  Bookmark,
+  Bug,
+  Calendar,
+  Check,
+  ChevronDown,
+  ChevronRight,
+  CircleCheck,
+  CircleDot,
+  CircleHelp,
+  CircleX,
+  Clock,
+  Cloud,
+  CloudFog,
+  CloudLightning,
+  CloudRain,
+  CloudSnow,
+  CloudSun,
+  Code,
+  Download,
+  Droplets,
+  ExternalLink,
+  Eye,
+  FileDiff,
+  GitBranch,
+  GitMerge,
+  GitPullRequest,
+  GitPullRequestDraft,
+  Hourglass,
+  House,
+  Inbox,
+  Info,
+  Lightbulb,
+  Link,
+  ListChecks,
+  Loader,
+  Lock,
+  LockOpen,
+  MapPin,
+  MessagesSquare,
+  Minus,
+  Moon,
+  Package,
+  Pencil,
+  Plus,
+  RefreshCw,
+  Search,
+  Settings,
+  Star,
+  Sun,
+  Tag,
+  Thermometer,
+  Trash2,
+  TriangleAlert,
+  Upload,
+  User,
+  Users,
+  Wind,
+  X,
+} from "lucide-react"
+
 /**
- * The design system's icon surface. Apps import the icons they need from
- * here instead of from `lucide-react` directly (a project.s
- * `no-restricted-imports` lint rule can block that), so the icon dependency stays inside
- * this package and changing one icon is one place. Add an icon here when
- * an app needs one.
+ * The icons a page uses, named for what they MEAN, not for how they look: `merge`, not `git-merge`; `waiting`, not
+ * `hourglass`. A page asks for a meaning (`<Icon name="failure" />`), so changing the glyph for a meaning is one line here,
+ * and two pages that mean the same thing show the same icon. Add a name here when a page needs a meaning that is not
+ * here (and not before: a glyph with no meaning is decoration). See «Icons» in the README for when to use one.
+ */
+export const ICONS = {
+  // The work: code, reviews, tickets, conversations
+  "pull-request": GitPullRequest,
+  "pull-request-draft": GitPullRequestDraft,
+  merge: GitMerge,
+  branch: GitBranch,
+  issue: CircleDot,
+  discussion: MessagesSquare,
+  question: CircleHelp,
+  changes: FileDiff,
+  code: Code,
+  bug: Bug,
+  package: Package,
+  tag: Tag,
+  tasks: ListChecks,
+  // How it stands: done, failed, in doubt, on its way, held up
+  success: CircleCheck,
+  failure: CircleX,
+  warning: TriangleAlert,
+  info: Info,
+  pending: Loader,
+  waiting: Hourglass,
+  blocked: Ban,
+  // People and time
+  person: User,
+  people: Users,
+  view: Eye,
+  time: Clock,
+  calendar: Calendar,
+  notification: Bell,
+  // Place and weather
+  place: MapPin,
+  sun: Sun,
+  moon: Moon,
+  weather: CloudSun,
+  clouds: Cloud,
+  rain: CloudRain,
+  snow: CloudSnow,
+  fog: CloudFog,
+  thunder: CloudLightning,
+  wind: Wind,
+  temperature: Thermometer,
+  "rain-drop": Droplets,
+  // What you can do
+  refresh: RefreshCw,
+  search: Search,
+  add: Plus,
+  remove: Minus,
+  edit: Pencil,
+  delete: Trash2,
+  download: Download,
+  upload: Upload,
+  link: Link,
+  external: ExternalLink,
+  close: X,
+  done: Check,
+  settings: Settings,
+  favorite: Star,
+  bookmark: Bookmark,
+  locked: Lock,
+  unlocked: LockOpen,
+  idea: Lightbulb,
+  inbox: Inbox,
+  home: House,
+  // Direction
+  "chevron-down": ChevronDown,
+  "chevron-right": ChevronRight,
+} as const
+
+/** What an icon can mean: a key of `ICONS`. */
+export type IconName = keyof typeof ICONS
+
+/** The type of an icon component, for the few places that still take one (`NavCards`). Prefer an `IconName`. */
+export type { LucideIcon } from "lucide-react"
+
+/**
+ * The design system's icon surface. Pages import icons from here and never from `lucide-react` directly, so the icon
+ * dependency stays inside this package and changing one icon is one place. These named exports are the glyphs themselves,
+ * for the few places that need one as a child (a `Button`); prefer `<Icon name="…" />` and a meaning from `ICONS`.
  */
 export {
   ChevronDown,

@@ -1,0 +1,68 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Icon } from "../../src/components/icon"
+import { StatusLine } from "../../src/components/status-line"
+
+<Meta title="Icons/Guide" />
+
+# Icons: use them
+
+**Use an icon wherever it makes something quicker to find or to understand.** A page of words is slow to scan; a page
+where the kind of a thing, its status and its actions are also drawn is read at a glance. The design system makes this the
+easy way: icons are a meaning you ask for (`<Icon name="failure" />`), the components that show titles, rows, statuses and
+errors take one, and a status with a symbol never depends on its colour.
+
+## Where to use them
+
+| Where | How | Why it helps |
+| --- | --- | --- |
+| **A section's title** | `icon` on `PageSection`, `SectionGroup`, `SubSection` | The page is found by its shapes before it is read |
+| **The kind of a row** | `Rows` with `lead="icon"`, `icon` and `iconLabel` per row | A pull request, an issue and a discussion in one list tell themselves apart |
+| **A status** | `StatusLine`, an `icon` per item | `Tester feilet` with a cross is seen; the colour is a second signal, never the only one |
+| **An action** | `<Icon name="refresh" slot="start" />` in a `Button` | The verb is recognised without reading it |
+| **A page to go to** | `icon` on `NavCards` | The same place always has the same symbol |
+| **An error** | `ErrorMessage` has one already | An error is told from a message at once |
+
+<div style={{ display: "grid", gap: "1rem", margin: "1.5rem 0" }}>
+  <StatusLine items={[{ text: "Tester feilet", icon: "failure", tone: "destructive" }, { text: "Godkjent", icon: "success" }, { text: "Venter 3 dager", icon: "time", tone: "muted" }]} />
+</div>
+
+## Where not
+
+- **Decoration.** An icon that means nothing is noise. If you cannot say what it means, leave it out.
+- **The same icon on every row.** Twenty pull requests with the same pull-request icon say nothing; use the icon to tell
+  *kinds* and *states* apart (a draft, an open one, a merged one), not to repeat the list's title.
+- **An icon in place of a word** where the word is short and the icon is ambiguous. An icon next to its word is the point;
+  an icon alone must be unmistakable and have a label.
+- **A new colour.** An icon takes the text's colour, or `muted`, `destructive`, `primary`. There is no green: a status that
+  is good is plain, one that stops something is `destructive`.
+
+## Meanings, not glyphs
+
+Icons are named for what they **mean**: `merge`, not `git-merge`; `waiting`, not `hourglass`. A page asks for a meaning,
+so two pages that mean the same thing show the same symbol, and changing the glyph for a meaning is one line in
+`src/lib/icons.ts`. See the **Catalogue** for every meaning.
+
+<p>
+  <Icon name="success" /> done &nbsp; <Icon name="failure" /> failed &nbsp; <Icon name="warning" /> in doubt &nbsp; <Icon name="pending" /> on its way &nbsp; <Icon name="waiting" /> held up
+</p>
+
+## Sizes and tones
+
+`size`: `sm` in a line of small text (a `StatusLine`), `md` (the default) beside normal text, `lg` where an icon stands
+by itself (an empty state). `tone`: the text's own colour by default; `muted` for a quiet kind; `destructive` for what
+stops something; `primary` for the one thing to look at.
+
+## Accessibility
+
+- An icon is **decorative by default** and hidden from a screen reader (`aria-hidden`): the words beside it say the same.
+- Where an icon **stands alone and carries the meaning** (the kind of a row), give it a `label` (`iconLabel` on a row).
+- An **icon-only button** needs an `aria-label`.
+- A status must read the same **without colour**: that is why `StatusLine` pairs a symbol with its words.
+
+## Adding a meaning
+
+1. Look in the Catalogue: the meaning may be there already. Use it.
+2. If not, add it to `ICONS` in `src/lib/icons.ts`, named for the meaning, under the group it belongs to, and add it to the
+   Catalogue story (it fails to compile until it is there).
+3. Never import from `lucide-react` in a page: a test fails on it. Two meanings may not share a glyph: that test fails too.

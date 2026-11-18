@@ -15,10 +15,11 @@ const meta = {
   args: {
     id: "pulls",
     title: "Pull requests",
+    icon: "pull-request",
     children: [
-      <SubSection key="a" id="blocked" title="Blokkert">{rows(["Fiks tidssone", "Ny knapp"])}</SubSection>,
-      <SubSection key="b" id="ready" title="Klar til merge">{rows(["Tiles-komponent"])}</SubSection>,
-      <SubSection key="c" id="waiting" title="Venter på andre"><Text size="sm" tone="muted">Ingen.</Text></SubSection>,
+      <SubSection key="a" id="blocked" title="Blokkert" icon="warning">{rows(["Fiks tidssone", "Ny knapp"])}</SubSection>,
+      <SubSection key="b" id="ready" title="Klar til merge" icon="merge">{rows(["Tiles-komponent"])}</SubSection>,
+      <SubSection key="c" id="waiting" title="Venter på andre" icon="waiting"><Text size="sm" tone="muted">Ingen.</Text></SubSection>,
     ],
   },
 } satisfies Meta<typeof SectionGroup>

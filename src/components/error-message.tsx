@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 
+import { Icon } from "./icon"
+
 /**
  * A plain error box for a page or section whose query failed. Pass
  * `children` to override the lead-in text, e.g. for an app whose
@@ -15,9 +17,14 @@ export function ErrorMessage({
   return (
     <div
       role="alert"
-      className="border-destructive/40 bg-background text-destructive rounded-lg border p-4 text-sm"
+      className="border-destructive/40 bg-background text-destructive flex items-start gap-2 rounded-lg border p-4 text-sm"
     >
-      {children}: {error.message}
+      <span className="pt-0.5">
+        <Icon name="warning" tone="destructive" />
+      </span>
+      <span className="min-w-0 [overflow-wrap:anywhere]">
+        {children}: {error.message}
+      </span>
     </div>
   )
 }

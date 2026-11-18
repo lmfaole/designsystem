@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Button } from "../../src/components/ui/button"
-import { Download } from "../../src/lib/icons"
+import { Icon as IconGlyph } from "../../src/components/icon"
 
 const meta = {
   title: "Primitives/Button",
@@ -20,6 +20,6 @@ export const Destructive: Story = { args: { variant: "destructive" } }
 export const Link: Story = { args: { variant: "link" } }
 export const Small: Story = { args: { size: "sm" } }
 export const Large: Story = { args: { size: "lg" } }
-export const Icon: Story = { args: { size: "icon", "aria-label": "Last ned", children: <Download /> } }
-export const WithIcon: Story = { args: { children: <><Download data-icon="inline-start" />Last ned</> } }
+export const Icon: Story = { args: { size: "icon", "aria-label": "Last ned", children: <IconGlyph name="download" /> } }
+export const WithIcon: Story = { args: { children: <><IconGlyph name="download" slot="start" />Last ned</> } }
 export const Disabled: Story = { args: { disabled: true } }

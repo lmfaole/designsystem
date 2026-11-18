@@ -1,12 +1,13 @@
-import type { LucideIcon } from "lucide-react"
-
+import { Icon } from "./icon"
+import type { IconName, LucideIcon } from "../lib/icons"
 import { Card, CardContent } from "./ui/card"
 
 /** A page to link to: its address, name and icon, and a line that is read by a screen reader only. */
 export interface NavCardLink {
   href: string
   label: string
-  icon: LucideIcon
+  /** What the page is, as a meaning from `ICONS` (`lib/icons.ts`). An icon component still works, but a meaning is the way. */
+  icon: IconName | LucideIcon
   description: string
 }
 
@@ -20,7 +21,7 @@ export function NavCards({ links, label }: { links: readonly NavCardLink[]; /** 
         <a key={page.href} href={page.href} className="rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
           <Card className="motion-press h-full gap-0 py-3 transition-colors hover:bg-muted/50">
             <CardContent className="grid min-h-8 grid-cols-[auto_1fr] items-center gap-x-2 px-3">
-              <page.icon aria-hidden="true" className="size-4 text-muted-foreground" />
+              {typeof page.icon === "string" ? <Icon name={page.icon} tone="muted" /> : <page.icon aria-hidden="true" className="size-4 text-muted-foreground" />}
               <span className="text-sm font-medium">{page.label}</span>
               <span className="sr-only">{page.description}</span>
             </CardContent>

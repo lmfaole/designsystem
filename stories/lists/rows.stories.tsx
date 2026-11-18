@@ -17,3 +17,16 @@ type Story = StoryObj<typeof meta>
 export const Plain: Story = {}
 export const Ranked: Story = { args: { lead: "rank", rows: ["Alfa", "Beta", "Gamma", "Delta"].map((name, i) => ({ key: name, body: <CardLink href="#" look="strong">{name}</CardLink>, trailing: `${40 - i * 7} avspillinger` })) } }
 export const WithPoster: Story = { args: { lead: "poster", rows: ["Alfa", "Beta", "Gamma"].map((name, i) => ({ key: name, lead: <Picture src={poster(i * 70, name[0])} />, body: name, trailing: "★ 4,5" })) } }
+
+/** The kind of each row as an icon in front of it; `iconLabel` where the kind is not in the words. */
+export const WithIcon: Story = {
+  args: {
+    lead: "icon",
+    rows: [
+      { key: "a", icon: "pull-request", iconLabel: "Pull request", body: "Fiks tidssone i værmeldingen", trailing: "i dag" },
+      { key: "b", icon: "pull-request-draft", iconLabel: "Utkast", body: "Utkast: tidslinje", trailing: "10. nov." },
+      { key: "c", icon: "issue", iconLabel: "Issue", body: "Feil: TextArea får scroll", trailing: "18. nov." },
+      { key: "d", icon: "discussion", iconLabel: "Discussion", iconTone: "primary", body: "Hvordan bør vi navngi tokens?", trailing: "30. sep." },
+    ],
+  },
+}

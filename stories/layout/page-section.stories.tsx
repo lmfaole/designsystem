@@ -13,3 +13,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = { args: { id: "latest", title: "Siste", children: <Text>Content of the section.</Text> } }
+
+/** An icon in front of the title says at a glance what the section is about. */
+export const WithIcon: Story = { args: { id: "pulls", title: "Pull requests", icon: "pull-request", children: <Text>Content of the section.</Text> } }
