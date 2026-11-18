@@ -21,6 +21,7 @@ description: Use when choosing which design system component to use for somethin
 | The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos` |
+| A person named (reviewers, authors, who wrote last) | `Person`: the name with their round picture beside it |
 | A card | `Card` (see the cards rule), `ChartCard` for a chart |
 | A chart | `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart`, `RankedBarChart`, in a `ChartFrame` |
 | An error, not found | `ErrorMessage`, `ErrorPage`, `NotFoundPage`, `ServerErrorPage` |

@@ -220,6 +220,7 @@ grid of cards for pages.
 | `NavBar` | The way between the top-level places: a bar at the foot on a phone, a rail at the left from tablet width |
 | `Breadcrumbs` | Where the page is, on every page below the top level; the parent alone as a way back on a phone |
 | `SubPages` | The pages under this page, as a list (icon, name, one line) under the title |
+| `Person` | A person's name with their round picture beside it: in a list of facts (several reviewers), a comment, a row |
 | `more` on `PageSection`, `SubSection`, `SectionGroup` | «Se alle 14» in a section's title row |
 | `LinkButton` | An action that goes somewhere; `external` for a link out |
 | `ExternalLink` | A link out in running text, always marked |
