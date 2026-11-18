@@ -13,10 +13,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/**
+ * Columns are for what is LOOKED AT: pictures, charts, cards of equal weight, a few figures. Text, lists and the sections of a
+ * page stand under each other in the reading column (README, rule 7).
+ */
 export const Columns2: Story = { args: { columns: 2 }, render: (args) => <Grid {...args}>{boxes(6)}</Grid> }
 export const Columns3: Story = { args: { columns: 3 }, render: (args) => <Grid {...args}>{boxes(6)}</Grid> }
 export const Columns4: Story = { args: { columns: 4 }, render: (args) => <Grid {...args}>{boxes(8)}</Grid> }
 export const Tiles: Story = { args: { columns: "tiles" }, render: (args) => <Grid {...args}>{boxes(10)}</Grid> }
 export const Cards: Story = { args: { columns: "cards" }, render: (args) => <Grid {...args}>{boxes(6)}</Grid> }
-export const Sections: Story = { args: { columns: "sections" }, render: (args) => <Grid {...args}>{boxes(3)}</Grid> }
 export const Charts: Story = { args: { columns: "charts" }, render: (args) => <Grid {...args}>{boxes(3)}</Grid> }

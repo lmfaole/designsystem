@@ -9,7 +9,8 @@ description: Use when choosing which design system component to use for somethin
 
 | You need | Use |
 | --- | --- |
-| Things under / next to each other | `Stack`, `Inline`; columns `Grid`; a rail beside content `Split` |
+| Things under each other (text, lists, sections) | `Stack`; short things in a line `Inline` |
+| Things that are LOOKED AT in columns | `Grid` (`tiles`, `cards`, `charts`, a count), `Tiles`; a rail of reference `Split` |
 | The page frame, its title | `PageLayout`, `PageColumn`, `PageHeader` |
 | A titled part of a page | `PageSection`; a set that belongs together `SectionGroup` + `SubSection`; a link to all of it: `more` |
 | Text, a heading, a link | `Text`, `Heading`, `TextLink`; out to another site `ExternalLink`, `LinkButton external` |
@@ -38,7 +39,7 @@ If the thing is not here, **add a component**; do not style in the project.
 4. **Server-renderable** unless it needs state: no hook, no `"use client"` in a component that can be plain.
 5. **Icons** come from `src/lib/icons.ts` by meaning; no `lucide-react` import outside it and `ui/`.
 6. **Accessible** (see **designsystem-accessibility**) and **content-checked** (see **designsystem-content**).
-7. **Wide screens:** fit by room, never a layout `max-w-*`; `src/desktop.test.ts` pins this.
+7. **One reading direction: down.** Text, lists and sections stand under each other in the reading column; columns only for what is looked at. `src/desktop.test.ts` pins this (see **designsystem-hierarchy**).
 
 ## Add or change a component
 

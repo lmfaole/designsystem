@@ -2,7 +2,6 @@ import { Fragment, type ReactNode } from "react"
 
 import { Picture } from "./picture"
 import { SrTableHead } from "./sr-table-head"
-import { LIST_COLUMNS } from "../lib/page-width"
 
 /** One row of a list of things with a picture: the picture, what it is, a line under it, and a short note (a date, a count) at the end of that line. */
 export interface PictureRow {
@@ -38,7 +37,7 @@ export function PictureRows({ rows, ratio }: { rows: readonly PictureRow[]; rati
   return (
     <table role="table" className="block">
       <SrTableHead columns={["Bilde", "Tittel", "Detaljer", "Notat"]} />
-      <tbody role="rowgroup" className={`grid gap-y-2 ${LIST_COLUMNS}`}>
+      <tbody role="rowgroup" className="grid gap-y-2">
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
             <td role="cell" className="mr-2 [grid-area:picture]">

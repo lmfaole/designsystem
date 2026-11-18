@@ -64,13 +64,15 @@ repository does (`scripts/design-tokens.ts` there).
    phone shows its own picker and a desktop its own menu. Never a menu drawn in the page: no Radix `Select`, no listbox or
    combobox, no popover or sheet of buttons or links standing in for one. Choosing a value does what the page needs:
    a form submit, or going to an address (`select[data-navigates]`, `enableNavigatingSelects`).
-7. **Wide screens are used, not left empty.** The page column (`PAGE_COLUMN`) has no maximum width: it is the whole page area with
-   gutters that grow (`px-4 sm:px-6 2xl:px-10`). A `max-w-*` is only the measure of a line of text (`max-w-prose`) or the size
-   of a small mark, never a layout. Content gets wider by being laid out in more columns, by the room it has (container
-   queries, `auto-fill`/`auto-fit`), not by the width of the window: lists of rows use `LIST_COLUMNS`, a `Grid` fits
-   (`tiles`, `cards`, `sections`, `charts`) or keeps growing past `lg` (`2xl:`), a facts-and-content page is a `Split`
-   with a sticky rail, a chart's height follows its width. Do not bring back a page cap, a one-column list or a grid
-   that stops at four; `src/desktop.test.ts` fails on it. Check a page at 1920 and 2560 px as well as on a phone.
+7. **One reading direction: down.** What is read (titles, lists of text, the sections of a page) stands in **one column, under
+   each other, in the order it matters**: first the thing that matters most, the rest by priority below it. Never a grid that
+   makes the reader read across and then down (a Z-pattern): a row of equal columns puts the order in doubt, hides what comes
+   first and gives the eye more to do. The page has a **reading column** (`PageLayout` `width="reading"`, the default: 48rem,
+   centred); on a wide screen the rest is **margin, not more columns**. Columns are for what is **looked at and not read**:
+   pictures (`Tiles`), charts (`Grid columns="charts"`), cards of equal weight, a few figures and chips, and a `Split` rail of
+   *reference* (a cover and its facts) beside the main content; such a page can be `width="wide"`. Do not bring back a list
+   in columns, `Grid columns="sections"` or a group that spreads its parts: `src/desktop.test.ts` fails on it. Check a page at
+   400, 1440 and 2560 px. See «Reading and hierarchy» below.
 8. **Closed by default: data decides.** A component takes no `className` and no `style`, and spreads no `ComponentProps<...>`:
    the look is the component's, not the caller's. Props are closed unions (`tone: "muted"`), never a string of classes. What a
    kind of data implies is derived from the data, not passed: a poster or a square from the picture's kind, a link's look from
@@ -104,21 +106,44 @@ A change that removes or renames a component, a prop or a token is a new major v
 
 ## Grouping sections
 
-A page's grid places each part as one cell. Things that belong together (everything about pull requests) are a
-`SectionGroup` with `SubSection`s inside, so the grid places the group as one part, not its pieces scattered:
+Things that belong together (everything about pull requests) are a `SectionGroup` with `SubSection`s inside, so the reader meets them
+as one part with one title. The subsections stand **under each other**, in the order they matter (rule 7):
 
 ```tsx
-<Grid columns="sections" gap="xl">
-  <SectionGroup id="pulls" title="Pull requests" width="row">
+<Stack gap="xl">
+  <SectionGroup id="pulls" title="Pull requests" icon="pull-request">
     <SubSection id="blocked" title="Blokkert">…</SubSection>
     <SubSection id="ready" title="Klar til merge">…</SubSection>
   </SectionGroup>
   <PageSection id="weather" title="Vær">…</PageSection>
-</Grid>
+</Stack>
 ```
 
-`width="cell"` (the default) is one cell with the subsections under each other; `width="row"` takes the whole row and lays the
-subsections out in columns by the room it has. The group's title is an `<h2>`, the subsections' `<h3>`s.
+The group's title is an `<h2>`, the subsections' `<h3>`s. A section or group that shows only the first of a list has `more`
+(«Se alle 14») in its title row.
+
+## Reading and hierarchy
+
+The full guide, with examples, is in Storybook (**Guides / Reading and hierarchy**). The rules:
+
+1. **One direction: down.** Everything that is read stands under each other in one column (`width="reading"`, 48rem, centred).
+   Extra width is margin. Columns only for what is *looked at*: pictures, charts, cards of equal weight, a few figures, a
+   reference rail (`Split`).
+2. **Order is priority.** Top to bottom is most to least important, the same on a phone and a desktop. The layout never reorders
+   by convenience; if two things matter equally, one still goes first.
+3. **One thing first.** The first thing the eye lands on is the one that matters most on the screen. Not two.
+4. **Three levels, visibly different.** Page title, section title, item: each differs in size, weight or case. Add no fourth
+   level of emphasis; `destructive` and bold are for what stops something.
+5. **Space groups, lines and boxes do not.** Things that belong together are close (`xs`, `sm`); groups are further apart (`lg`,
+   `xl`). The gap between sections is always greater than the gap inside one. Rules and cards are for the rare thing that must
+   be set apart (see rule 8).
+6. **One left edge, a short eye path.** Everything starts at the same left edge; a row's date or count is at the end of the *same
+   row*, within a measure the eye can cross (48rem). Prose is 45–75 characters (`max-w-prose`).
+7. **Rows are scanned down the left.** Each row starts with the same thing (the kind, then the name); the name is the strongest
+   part, the rest is `muted` and small. Rows of one list have one structure.
+8. **Do not make the reader choose a path.** One column is one path. Do not put two lists side by side to be compared (that is a
+   table); do not hide the rest behind tabs when it fits under.
+9. **Short before long.** A summary and the few that matter first; the long list after (the front page and the list page).
 
 ## Skills
 
@@ -128,7 +153,8 @@ without being reminded:
 | Skill | For |
 | --- | --- |
 | `designsystem-ux` | The structure of pages: levels, the front page as a digest, lists and details, links, navigation, states |
-| `designsystem-ui` | The look: layout, type, colour and state, cards, icons, density, wide screens, motion |
+| `designsystem-ui` | The look: layout, type, colour and state, cards, icons, density, motion |
+| `designsystem-hierarchy` | Reading and hierarchy: one column, order is priority, one thing first, space not boxes |
 | `designsystem-accessibility` | WCAG 2.2 AA: semantics, keyboard, contrast, icons, tables, live updates, how to check |
 | `designsystem-content` | The words: Norwegian bokmål, titles, controls, states, dates and numbers |
 | `designsystem-components` | Which component for what, and how to add or release one |
@@ -191,7 +217,7 @@ import { Icon } from "@lmfaole/designsystem/components/icon"
 import { StatusLine } from "@lmfaole/designsystem/components/status-line"
 
 // A section's title, and the kind of each row
-<SectionGroup id="pulls" title="Pull requests" icon="pull-request" width="row">
+<SectionGroup id="pulls" title="Pull requests" icon="pull-request">
   <SubSection id="blocked" title="Blokkert" icon="warning">
     <Rows lead="icon" rows={[{ key: "1", icon: "pull-request", iconLabel: "Pull request", body: "…", trailing: "i dag" }]} />
   </SubSection>
@@ -224,6 +250,19 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
   A status never relies on colour alone.
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
+
+## Migrating to 6.0
+
+6.0 makes the reading direction «down» the rule (rule 7). **Breaking:**
+
+| 5.x | 6.0 |
+| --- | --- |
+| Lists of rows (`Rows`, `PictureRows`, `EntityRows`), `HeadlineList`, `StoryList`, `FoldList` and `EntryList` flowed into several columns on a wide screen | One column, under each other. `LIST_COLUMNS` (`lib/page-width`) is gone |
+| `Grid columns="sections"` | Removed: stack the sections (`Stack`); put what belongs together in a `SectionGroup` |
+| `SectionGroup width="row"` / `"cell"` | `width` is gone: the subsections always stand under each other |
+| A page filled the whole page area | `PageLayout` and `PageColumn` have `width="reading"` (the default: 48rem, centred); use `width="wide"` for a page that is mostly pictures or charts |
+
+Pictures (`Tiles`), charts, `Grid` counts, `NavCards` and `Split` are unchanged: they are looked at, not read.
 
 ## Migrating to 5.4
 

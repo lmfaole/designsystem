@@ -34,8 +34,8 @@ const exported = new Set(
 /** Words in backticks that look like a component but are not one of ours. */
 const NOT_OURS = new Set(["Skeleton", "ComponentProps", "Intl"])
 
-test("there are skills for ux, ui, accessibility, content, components and review", () => {
-  assert.deepEqual(skills.toSorted(), ["designsystem-accessibility", "designsystem-components", "designsystem-content", "designsystem-review", "designsystem-ui", "designsystem-ux"])
+test("there are skills for ux, ui, hierarchy, accessibility, content, components and review", () => {
+  assert.deepEqual(skills.toSorted(), ["designsystem-accessibility", "designsystem-components", "designsystem-content", "designsystem-hierarchy", "designsystem-review", "designsystem-ui", "designsystem-ux"])
 })
 
 test("each skill has a header with its name and a description that says when to use it", () => {

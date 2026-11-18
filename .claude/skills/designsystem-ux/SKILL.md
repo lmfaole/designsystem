@@ -33,6 +33,7 @@ that to decide. A thing that is one line (an hour of the forecast) has none. A d
 5. **Complete at rest.** What matters is visible without a click. «Se alle» is navigation to a page, never a «vis mer» that opens
    in place.
 6. Things that belong together are one `SectionGroup`, with an icon on its title.
+7. **The sections stand under each other** in the order of what needs the reader (never side by side); the order is the priority.
 
 ## 3. Links
 
@@ -76,4 +77,4 @@ last built («oppdatert 19:27»). Pause when the window is hidden or offline.
 - Don't put a modal where a page with an address would do.
 - Don't mark everything urgent.
 
-Before finishing, run **designsystem-review**.
+Layout and order: see **designsystem-hierarchy**. Before finishing, run **designsystem-review**.

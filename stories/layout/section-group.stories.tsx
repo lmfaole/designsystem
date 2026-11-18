@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { Grid } from "../../src/components/layout"
-import { PageSection, SectionGroup, SubSection } from "../../src/components/page-section"
+import { SectionGroup, SubSection } from "../../src/components/page-section"
 import { Rows } from "../../src/components/rows"
 import { Text } from "../../src/components/text"
 
@@ -26,23 +25,5 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** One cell of the grid, the subsections under each other, beside another section. */
-export const Cell: Story = {
-  render: (args) => (
-    <Grid columns="sections" gap="xl">
-      <SectionGroup {...args} />
-      <PageSection id="weather" title="Vær">{rows(["09:00 Skyet", "12:00 Klarvær"])}</PageSection>
-    </Grid>
-  ),
-}
-
-/** The whole row, the subsections side by side as far as there is room. */
-export const Row: Story = {
-  args: { width: "row" },
-  render: (args) => (
-    <Grid columns="sections" gap="xl">
-      <SectionGroup {...args} />
-      <PageSection id="weather" title="Vær">{rows(["09:00 Skyet", "12:00 Klarvær"])}</PageSection>
-    </Grid>
-  ),
-}
+/** The subsections stand under each other, in the order they matter. Never side by side. */
+export const Default: Story = {}

@@ -2,7 +2,6 @@ import type { ReactNode } from "react"
 
 import { Icon } from "./icon"
 import type { IconName } from "../lib/icons"
-import { LIST_COLUMNS } from "../lib/page-width"
 import { SrTableHead } from "./sr-table-head"
 
 export interface RowData {
@@ -41,7 +40,7 @@ export function Rows({ rows, lead, columns }: RowsProps) {
   return (
     <table role="table" className="block">
       <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : lead === "icon" ? "Type" : "Bilde"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
-      <tbody role="rowgroup" className={`grid ${LIST_COLUMNS} gap-y-2`}>
+      <tbody role="rowgroup" className="grid gap-y-2">
         {rows.map((row, index) => (
           <tr role="row" key={row.key} className={`grid gap-x-3 ${layout}`}>
             {lead === "rank" ? (

@@ -10,14 +10,14 @@ fits, the markup becomes a component in the design system, named for what it is,
 
 ## Layout
 
-- **Stacks and rows:** `Stack` (things under each other), `Inline` (next to each other, wraps), `Grid` (columns), `Split` (a rail
-  beside content), `PageColumn`/`PageLayout` (the page's one column). Gaps are named steps: `none | xs | sm | md | lg | xl`.
-- **Grids fit by room:** `Grid columns="sections"` (parts of a page, at least 28rem each), `"cards"`, `"tiles"`, `"charts"`, or a
-  number that keeps growing past `lg`. Never a fixed count that stops at four.
-- **Wide screens are used, not left empty** (rule 7). The page column has no maximum width; a `max-w-*` is only the measure of
-  text (`max-w-prose`) or the size of a small mark. Check at **400, 1440 and 2560** px.
-- **Groups:** several parts that belong together are a `SectionGroup` with `SubSection`s, not loose sections. `width="row"`
-  takes the whole row and lays the parts out by room.
+- **Stacks and rows:** `Stack` (things under each other: the default for a page), `Inline` (short things next to each other, wraps),
+  `PageColumn`/`PageLayout` (the page's frame and **reading column**). Gaps are named steps: `none | xs | sm | md | lg | xl`.
+- **One reading direction: down** (rule 7). What is read (text, lists, the sections of a page) stands under each other in the reading
+  column (`width="reading"`, 48rem, centred). On a wide screen the rest is margin. See **designsystem-hierarchy**.
+- **Columns are for what is looked at:** `Grid columns="tiles" | "cards" | "charts"` or a number, `Tiles`, `NavCards`, and a `Split`
+  rail of reference. A page that is mostly such things is `width="wide"`. Never `Grid` for text, lists or sections.
+- **Groups:** several parts that belong together are a `SectionGroup` with `SubSection`s, under each other.
+- Check at **400, 1440 and 2560** px.
 
 ## Type
 
@@ -49,7 +49,7 @@ decoration, and not the same icon on every row (use it to tell kinds and states 
 
 ## Density and rows
 
-- Lists of rows use `Rows` (flows into as many columns as fit, `LIST_COLUMNS`), `PictureRows`, `EntityRows`, `Tiles`.
+- Lists of rows use `Rows`, `PictureRows`, `EntityRows` (always one column, under each other); a gallery of pictures is `Tiles`.
 - A row is: kind icon, a name that links, one line of where it is from, a `StatusLine`, when it moved at the end.
 - Controls are at least **24 px** targets (WCAG 2.5.8; `ENTITY_LINK` is `min-h-6`). The navigation controls (`PageTabs`, `SummaryBar`,
   `BackLink`) are 36–40 px; on touch prefer them, and `size="lg"` on a `Button`, over small ones.
@@ -63,7 +63,7 @@ Durations and easings come from the `--motion-*` tokens. Entrances **move and ne
 ## Before you write markup
 
 1. Is there a component? Check **designsystem-components**.
-2. Is it one of: layout, text, a list, a status, a section, navigation? Use that.
+2. Is it one of: layout, text, a list, a status, a section, navigation? Use that. Is it read, or looked at? Read: stack it.
 3. Still nothing? Add a component to the design system (see **designsystem-components**), do not style in the project.
 
 Before finishing, run **designsystem-review**.

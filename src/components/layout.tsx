@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 
-import { PAGE_COLUMN, PAGE_PADDING_Y } from "../lib/page-width"
+import { PAGE_COLUMN, PAGE_PADDING_Y, READING_COLUMN } from "../lib/page-width"
 
 /**
  * How an app puts things next to and under each other without a class of its own (`docs/UI-COMPONENTS.md`): every choice
@@ -15,8 +15,6 @@ const COLUMNS = {
   2: "grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3",
   3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4",
   4: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6",
-  /** Parts of a page side by side: as many as fit at least 28rem each, the rest under. */
-  sections: "grid-cols-[repeat(auto-fit,minmax(min(100%,28rem),1fr))]",
   /** Charts: two or three across on a desktop. */
   charts: "grid-cols-[repeat(auto-fit,minmax(min(100%,24rem),1fr))]",
   tiles: "grid-cols-[repeat(auto-fill,minmax(9rem,1fr))]",
@@ -55,7 +53,11 @@ export function Inline({ as: Tag = "div", gap = "sm", align = "center", justify 
   )
 }
 
-/** Things in columns: a number is the count on a desktop and grows on a very wide screen, `tiles`, `cards`, `sections` and `charts` fit as many as there is room for. */
+/**
+ * Things in columns, for what is LOOKED AT and not read: pictures (`tiles`), cards of equal weight (`cards`), charts (`charts`),
+ * a few figures. A number is the count on a desktop and grows on a very wide screen; the named ones fit as many as there is
+ * room for. Never for text, lists or the sections of a page: those stand under each other in the reading column (README, rule 7).
+ */
 export function Grid({ as: Tag = "div", gap = "md", columns = 2, children, ...rest }: BoxProps & { columns?: keyof typeof COLUMNS }) {
   return (
     <Tag className={`grid min-w-0 ${GAPS[gap]} ${COLUMNS[columns]}`} {...rest}>
@@ -64,17 +66,18 @@ export function Grid({ as: Tag = "div", gap = "md", columns = 2, children, ...re
   )
 }
 
-/** The column every page stands in (`PAGE_COLUMN`), with the page's parts under each other. */
-export function PageColumn({ as: Tag = "div", gap = "lg", children, ...rest }: BoxProps) {
+/** The column every page stands in (`PAGE_COLUMN`), with the page's parts under each other, in the reading column (`width="reading"`, the default) or across the page area (`"wide"`). */
+export function PageColumn({ as: Tag = "div", gap = "lg", width = "reading", children, ...rest }: BoxProps & { width?: "reading" | "wide" }) {
   return (
-    <Tag className={`${PAGE_COLUMN} grid content-start ${PAGE_PADDING_Y} ${GAPS[gap]}`} {...rest}>
-      {children}
+    <Tag className={`${PAGE_COLUMN} ${PAGE_PADDING_Y}`} {...rest}>
+      <div className={`grid content-start ${GAPS[gap]} ${width === "reading" ? READING_COLUMN : ""}`}>{children}</div>
     </Tag>
   )
 }
 
 /**
- * A rail beside the main content on a wide screen (facts, a cover, the numbers) and above it on a narrow one. The rail
+ * A rail of REFERENCE beside the main content on a wide screen (a cover and its facts, the numbers) and above it on a narrow one;
+ * never a second list to read: the main content is read from top to bottom, the rail is looked up. The rail
  * comes first in the document and stays in view while the main content scrolls. The container query follows the room
  * the page has, not the screen.
  */

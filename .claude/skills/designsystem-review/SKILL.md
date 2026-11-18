@@ -22,9 +22,16 @@ and a detail page, not only the front page.
 - [ ] `PageTabs` in the same order on every sibling page; `BackLink` on details, naming the list.
 - [ ] Loading, empty, error and not-found are designed; one failing source does not take the page down.
 
+**Reading and hierarchy (designsystem-hierarchy)**
+- [ ] Everything that is read is in **one column, under each other**; no `Grid` for text, lists or sections; the rest of a wide screen is margin.
+- [ ] The order top to bottom is the priority, the same at every width; one thing is first.
+- [ ] Three levels of type, visibly different; `destructive` and bold only for what stops something.
+- [ ] Space groups (the gap between sections is larger than inside one); no boxes or lines to group.
+- [ ] One left edge; a row's date is at the end of the same row; the first thing in every row is the same kind of thing.
+
 **Look (designsystem-ui)**
 - [ ] No `className`, `style`, raw colour, or stylesheet in the project; only components and tokens.
-- [ ] Spacing is a named step; grids fit by room; nothing stops at four columns on a wide screen.
+- [ ] Spacing is a named step; columns only for pictures, charts, cards of equal weight and figures.
 - [ ] One `<h1>`; headings in order; type only through `Text`/`Heading`.
 - [ ] Cards only where a card is right; `destructive` only for what stops something.
 - [ ] Icons where they carry meaning (section titles, row kind, statuses, actions), none as decoration, none repeated without reason.
