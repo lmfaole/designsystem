@@ -1,6 +1,6 @@
 {
   "name": "@lmfaole/designsystem",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "private": true,
   "type": "module",
   "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
@@ -41,7 +41,9 @@
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
     "lucide-react": "^1.48.0",
-    "radix-ui": "^1.6.7"
+    "radix-ui": "^1.6.7",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "peerDependencies": {
     "react": "^19.2.8",

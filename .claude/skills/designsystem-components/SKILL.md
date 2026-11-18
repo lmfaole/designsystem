@@ -14,6 +14,7 @@ description: Use when choosing which design system component to use for somethin
 | The page frame, its title | `PageLayout`, `PageColumn`, `PageHeader` |
 | A titled part of a page | `PageSection`; a set that belongs together `SectionGroup` + `SubSection`; a link to all of it: `more` |
 | Text, a heading, a link | `Text`, `Heading`, `TextLink`; out to another site `ExternalLink`, `LinkButton external` |
+| Text written in Markdown (a description, a comment) | `Markdown`, never HTML inserted; `size="sm"` for a comment |
 | A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
 | Label and value pairs | `FactList`; links on a line `LinkList` |
 | A status | `StatusLine`; a count that links `SummaryBar` |

@@ -211,6 +211,26 @@ one level up on every detail page.
 | `LinkButton` | An action that goes somewhere; `external` for a link out |
 | `ExternalLink` | A link out in running text, always marked |
 
+## Markdown
+
+`Markdown` (`components/markdown`) shows text written in Markdown (a pull request's description, a comment, a README) in the
+design system's own forms: headings, lists, task lists, code, quotes, tables, links and pictures are drawn by the design system,
+never by the text. It is the one way to show Markdown: **do not convert it to HTML and insert it.**
+
+```tsx
+<PageSection id="about" title="Beskrivelse" icon="info">
+  <Markdown source={pull.body} />
+</PageSection>
+```
+
+- **GitHub-flavoured and safe.** Tables, task lists, strike-through and bare links work; raw HTML in the text is *ignored*, not
+  inserted, and unsafe addresses (`javascript:`) are dropped.
+- **Headings are demoted** (`from="h3"`, the default; `"h4"` inside a subsection) so the text never breaks the page's outline.
+- **Links out are marked** as external (`ExternalLink`); a link to an anchor or inside the app is a plain link.
+- **Code scrolls in its own box**, tables in theirs: never the page.
+- `size="sm"` for a comment. Not for text the app writes itself: that is `Text`.
+- Cut a long text at a paragraph, not in the middle of a construct, and say where the rest is.
+
 ## Icons
 
 **Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
@@ -255,6 +275,10 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
   A status never relies on colour alone.
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
+
+## Migrating to 7.1
+
+Additive: `Markdown`.
 
 ## Migrating to 7.0
 

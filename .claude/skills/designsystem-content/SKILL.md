@@ -26,6 +26,11 @@ Code and comments are English; **on-screen text is Norwegian bokmål** (rule 9).
 | Waiting | «Venter på review», «Tester kjører»: the state, not «Vennligst vent». |
 | Done | Say what happened: «Lagret». |
 
+## Text that people wrote
+
+A description or a comment written in Markdown is shown with `Markdown`, never as flat text and never as inserted HTML. Show enough to
+decide, cut at a paragraph and not in the middle of a construct, and say where the rest is («Åpne på GitHub» last).
+
 ## Counts, dates and numbers
 
 - Counts are numbers: «Se alle 14», «2 åpne kommentarer», «1 åpen kommentar» (singular is a separate string).

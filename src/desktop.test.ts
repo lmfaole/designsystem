@@ -28,6 +28,7 @@ const read = (path: string): string => readFileSync(join(src, path), "utf8")
 const ALLOWED_MAX_W: Readonly<Record<string, readonly string[]>> = {
   "components/error-page.tsx": ["max-w-prose"],
   "components/logos.tsx": ["max-w-36", "max-w-44"],
+  "components/markdown.tsx": ["max-w-full"],
   "components/layout.tsx": ["max-w-prose"],
 }
 
