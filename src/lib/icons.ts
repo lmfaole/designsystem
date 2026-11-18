@@ -6,6 +6,7 @@ import {
   Calendar,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   CircleCheck,
   CircleDot,
@@ -132,6 +133,7 @@ export const ICONS = {
   inbox: Inbox,
   home: House,
   // Direction
+  back: ChevronLeft,
   "chevron-down": ChevronDown,
   "chevron-right": ChevronRight,
 } as const

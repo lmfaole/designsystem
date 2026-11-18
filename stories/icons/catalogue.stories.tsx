@@ -11,7 +11,7 @@ const GROUPS = [
   ["People and time", ["person", "people", "view", "time", "calendar", "notification"]],
   ["Place and weather", ["place", "sun", "moon", "weather", "clouds", "rain", "snow", "fog", "thunder", "wind", "temperature", "rain-drop"]],
   ["What you can do", ["refresh", "search", "add", "remove", "edit", "delete", "download", "upload", "link", "external", "close", "done", "settings", "favorite", "bookmark", "locked", "unlocked", "idea", "inbox", "home"]],
-  ["Direction", ["chevron-down", "chevron-right"]],
+  ["Direction", ["back", "chevron-down", "chevron-right"]],
 ] as const satisfies readonly (readonly [string, readonly IconName[]])[]
 
 const meta = {

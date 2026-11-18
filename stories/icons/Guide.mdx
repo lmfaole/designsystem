@@ -14,16 +14,14 @@ errors take one, and a status with a symbol never depends on its colour.
 
 ## Where to use them
 
-| Where | How | Why it helps |
-| --- | --- | --- |
-| **A section's title** | `icon` on `PageSection`, `SectionGroup`, `SubSection` | The page is found by its shapes before it is read |
-| **The kind of a row** | `Rows` with `lead="icon"`, `icon` and `iconLabel` per row | A pull request, an issue and a discussion in one list tell themselves apart |
-| **A status** | `StatusLine`, an `icon` per item | `Tester feilet` with a cross is seen; the colour is a second signal, never the only one |
-| **An action** | `<Icon name="refresh" slot="start" />` in a `Button` | The verb is recognised without reading it |
-| **A page to go to** | `icon` on `NavCards` | The same place always has the same symbol |
-| **An error** | `ErrorMessage` has one already | An error is told from a message at once |
+- **A section's title**: `icon` on `PageSection`, `SectionGroup`, `SubSection`. The page is found by its shapes before it is read.
+- **The kind of a row**: `Rows` with `lead="icon"`, `icon` and `iconLabel` per row. A pull request, an issue and a discussion in one list tell themselves apart.
+- **A status**: `StatusLine`, an `icon` per item. `Tester feilet` with a cross is seen; the colour is a second signal, never the only one.
+- **An action**: `<Icon name="refresh" slot="start" />` in a `Button`. The verb is recognised without reading it.
+- **A page to go to**: `icon` on `NavCards` and `PageTabs`. The same place always has the same symbol.
+- **An error**: `ErrorMessage` has one already. An error is told from a message at once.
 
-<div style={{ display: "grid", gap: "1rem", margin: "1.5rem 0" }}>
+<div className="sb-unstyled" style={{ display: "grid", gap: "1rem", margin: "1.5rem 0" }}>
   <StatusLine items={[{ text: "Tester feilet", icon: "failure", tone: "destructive" }, { text: "Godkjent", icon: "success" }, { text: "Venter 3 dager", icon: "time", tone: "muted" }]} />
 </div>
 
@@ -43,7 +41,7 @@ Icons are named for what they **mean**: `merge`, not `git-merge`; `waiting`, not
 so two pages that mean the same thing show the same symbol, and changing the glyph for a meaning is one line in
 `src/lib/icons.ts`. See the **Catalogue** for every meaning.
 
-<p>
+<p className="sb-unstyled">
   <Icon name="success" /> done &nbsp; <Icon name="failure" /> failed &nbsp; <Icon name="warning" /> in doubt &nbsp; <Icon name="pending" /> on its way &nbsp; <Icon name="waiting" /> held up
 </p>
 

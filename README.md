@@ -44,6 +44,7 @@ repository does (`scripts/design-tokens.ts` there).
 | `src/components/layout.tsx`, `text.tsx` | The building blocks: `Stack`, `Inline`, `Grid`, `PageColumn`; `Text`, `Heading`, `TextLink`. |
 | `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx`, `nav-cards.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
+| `src/components/page-tabs.tsx`, `back-link.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
 | `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings. See «Icons» below. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
@@ -85,6 +86,10 @@ repository does (`scripts/design-tokens.ts` there).
     components take one (`icon`, `lead="icon"`, `StatusLine`). An icon is a **meaning** from `ICONS` (`lib/icons.ts`), asked
     for with `<Icon name="…" />`; never a `lucide-react` import in a page, never decoration, and never the colour alone
     (a status has a symbol and words). See «Icons» below.
+11. **A place is three levels: front page, list, detail, and the front page is a digest.** A front page shows the state in
+    counts and the few things that need the reader most, with a link to all of it; a list page holds everything of one kind;
+    a detail page one thing, with its own address. **Internal first:** a tap on a row opens the app's own page for it; a link
+    out to another site is marked, says where it goes, and comes last. See «Pages and navigation» below.
 
 ## Work on it
 
@@ -114,6 +119,47 @@ A page's grid places each part as one cell. Things that belong together (everyth
 
 `width="cell"` (the default) is one cell with the subsections under each other; `width="row"` takes the whole row and lays the
 subsections out in columns by the room it has. The group's title is an `<h2>`, the subsections' `<h3>`s.
+
+## Pages and navigation
+
+The full guide, with live examples, is in Storybook (**Guides / Pages and navigation**). The rules:
+
+**Three levels, no more.** Front page → list → detail. A fourth level means the structure is wrong.
+
+| Level | It is | It answers |
+| --- | --- | --- |
+| Front page | A **digest**: the state in counts, then the few things that need you most | Do I have to do something now? |
+| List | **Everything** of one kind, in groups by what needs you most | What is there? |
+| Detail | **One thing**, enough to decide what to do without leaving | What is this, and what do I do? |
+
+**The front page is a digest.**
+1. **Summary first:** a `SummaryBar` of counts, each a link to what it counts, before any list.
+2. **A few, by need:** three to five items per section, in the order of what needs the reader (blocked before waiting), then
+   `more` («Se alle 14») on the section. Never the whole list.
+3. **One screen of what matters**, two at most on a phone. A section with nothing for the reader shows one quiet line, never an
+   empty box.
+4. **Complete at rest:** what matters is visible without a click; «Se alle» is navigation, never a «vis mer» that opens in place.
+5. **State in form:** a symbol and words; `destructive` only for what stops something.
+
+**A detail page** has an address of its own and this anatomy: `BackLink` (names the list) → `PageHeader` (title, one line of
+where it is from) → `StatusLine` → what it is (an excerpt, a `FactList`) → what happened last → actions → **the link out, last**.
+It is never only a dialog.
+
+**Links.** Internal first: a row's name links to the app's own page when there is one. A link out (`ExternalLink`,
+`LinkButton external`) carries the external symbol, is read as external, names the place («Åpne på GitHub», never «Les mer»), and
+comes last, once for each place. A credit in running text («Værdata fra Yr») is an `ExternalLink`. Links open in the same window.
+
+**Navigation.** `PageTabs` between sibling pages, in the same order on every page of the set, the current one marked, a count
+after a name where there is something to count; at most six. `BackLink` one level up on every detail page.
+
+| Component | For |
+| --- | --- |
+| `SummaryBar` | The state of a place in counts that are links; first on a front page |
+| `PageTabs` | The way between sibling pages |
+| `BackLink` | One level up, naming where |
+| `more` on `PageSection`, `SubSection`, `SectionGroup` | «Se alle 14» in a section's title row |
+| `LinkButton` | An action that goes somewhere; `external` for a link out |
+| `ExternalLink` | A link out in running text, always marked |
 
 ## Icons
 
@@ -159,6 +205,12 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
   A status never relies on colour alone.
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
+
+## Migrating to 5.3
+
+5.3 is additive, with one visible change: **`ExternalLink` now always carries the external symbol** and is read as external
+(it left the reader to guess before). New: `PageTabs`, `BackLink`, `SummaryBar`, `LinkButton`, `more` on the section
+components, the `back` icon, and the rules above.
 
 ## Migrating to 5.2
 
