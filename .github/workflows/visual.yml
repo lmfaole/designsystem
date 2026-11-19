@@ -1,8 +1,9 @@
 name: Visual
 
 # Every story's picture against the reference CI keeps in `stories/**/__screenshots__` (`npm run test:visual`, `.storybook/visual.setup.ts`).
-# The references are made here and only here, from a run by hand with «update» on (Actions → Visual → Run workflow): a picture from another
-# machine differs by a few pixels of font rendering. A failed run keeps the actual pictures and the differences as an artifact.
+# The references are made here and only here: a new story gets its picture from the push to main that adds it (committed by the bot),
+# and changed pictures from a run by hand with «update» on (Actions → Visual → Run workflow). A picture from another machine differs by a
+# few pixels of font rendering. A failed run keeps the actual pictures and the differences as an artifact.
 on:
   push:
     branches: [main]
@@ -41,7 +42,20 @@ jobs:
             echo "::notice::No reference pictures yet: run this workflow by hand with «update» on to make them."
             exit 0
           fi
+          # A story without a reference fails even under --update=new, which makes the picture: so a failed first pass is run again,
+          # and only a difference from an existing reference (or a story that will not settle) fails the job.
+          if npm run test:visual -- --update=new; then exit 0; fi
+          made=$(git ls-files --others --exclude-standard 'stories/**/__screenshots__/**' | grep -c '\.png$' || true)
+          [ "$made" -gt 0 ] || exit 1
+          echo "::notice::$made new reference picture(s) for new stories; comparing again."
           npm run test:visual
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add 'stories/**/__screenshots__/**'
+            git commit -m "Visual: reference pictures for new stories from ${GITHUB_SHA::7}"
+            git pull --rebase -q origin main && git push
+          fi
 
       - name: Make new references and commit them
         if: ${{ inputs.update }}

@@ -357,7 +357,7 @@ Web Design Model v4, GOV.UK and W3C COGA (guide **Performance and sustainability
   on the page: `CardTitle` is no heading, `TextLink external`, `DatedLinkTable` and `StoryList` do not say a link leaves, `Logo` has no
   decorative mode, `PeriodPicker` changes the page on a choice, `PageSection`'s title is always an `h2`.
 - **Visual regression in CI**: `npm run test:visual` compares every story's picture with the reference kept in `__screenshots__`; the
-  Visual workflow makes the references, by hand with «update», and only there.
+  Visual workflow makes the references, and only there: a new story's on the push that adds it, a changed one by hand with «update».
 - `CalendarHeatmap` and `Heatmap` take `unit` as `{ one, many }`, so a count of one reads «1 visning».
 
 ## 8.20

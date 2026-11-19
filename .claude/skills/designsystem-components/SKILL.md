@@ -82,7 +82,7 @@ If the thing is not here, **add a component**; do not style in the project.
 3. Add a test if it carries a rule (`src/*.test.ts` reads the source and pins it).
 4. Update the README (the table of what is here, the rules if it adds one) and the migration notes.
 5. `npm test`, `npm run test:stories` and `npm run build-storybook` must pass. CI also compares every story's picture with the
-   reference it keeps (`.github/workflows/visual.yml`); a change that is meant to look different is followed by a run of that workflow
+   reference it keeps (`.github/workflows/visual.yml`); a new story gets its reference from the push that adds it, and a change that is meant to look different is followed by a run of that workflow
    by hand with «update», which commits the new references (never make them on a laptop: its fonts draw other pixels). Look at the story with the toolbar's **Tema** «Begge» (light
    and dark side by side), **Skjermlesertekst** «Synlig» (what a screen reader hears, drawn dashed) and **Viewport** (the five width classes
    of the guide «Wide screens»).
