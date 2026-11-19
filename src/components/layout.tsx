@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 
-import { PAGE_COLUMN, PAGE_PADDING_Y, READING_COLUMN } from "../lib/page-width"
+import { PAGE_COLUMN, PAGE_PADDING_Y, PANE_COLUMN, READING_COLUMN } from "../lib/page-width"
 
 /**
  * How an app puts things next to and under each other without a class of its own (`docs/UI-COMPONENTS.md`): every choice
@@ -66,11 +66,11 @@ export function Grid({ as: Tag = "div", gap = "md", columns = 2, children, ...re
   )
 }
 
-/** The column every page stands in (`PAGE_COLUMN`), with the page's parts under each other, in the reading column (`width="reading"`, the default) or across the page area (`"wide"`). */
-export function PageColumn({ as: Tag = "div", gap = "lg", width = "reading", children, ...rest }: BoxProps & { width?: "reading" | "wide" }) {
+/** The column every page stands in (`PAGE_COLUMN`), with the page's parts under each other, in the reading column (`width="reading"`, the default), with room for a `Split` pane (`"pane"`) or across the page area (`"wide"`), as `PageLayout`. */
+export function PageColumn({ as: Tag = "div", gap = "lg", width = "reading", children, ...rest }: BoxProps & { width?: "reading" | "pane" | "wide" }) {
   return (
     <Tag className={`${PAGE_COLUMN} ${PAGE_PADDING_Y}`} {...rest}>
-      <div className={`grid content-start ${GAPS[gap]} ${width === "reading" ? READING_COLUMN : ""}`}>{children}</div>
+      <div className={`grid content-start ${GAPS[gap]} ${width === "reading" ? READING_COLUMN : width === "pane" ? PANE_COLUMN : ""}`}>{children}</div>
     </Tag>
   )
 }
