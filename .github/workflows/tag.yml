@@ -1,0 +1,26 @@
+name: Tag the version
+
+# A project pins a commit, which says nothing about the version. This tags every push to main whose `version` in package.json has no tag yet,
+# so a commit can be told by `v<version>`, and `npx designsystem-bump v<version>` works.
+on:
+  push:
+    branches: [main]
+    paths: [package.json]
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create the tag when the version is new
+        run: |
+          version="v$(node -p "require('./package.json').version")"
+          if git ls-remote --exit-code --tags origin "refs/tags/$version" >/dev/null 2>&1; then
+            echo "$version already exists"
+          else
+            git tag "$version"
+            git push origin "$version"
+          fi

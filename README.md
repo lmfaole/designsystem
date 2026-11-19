@@ -45,7 +45,7 @@ repository does (`scripts/design-tokens.ts` there).
 | `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
 | `src/components/nav-bar.tsx`, `breadcrumbs.tsx`, `sub-pages.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
-| `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings; `brand-icon.tsx`, `src/lib/brand-marks.ts`: `BrandIcon`, the mark of GitHub, Spotify, Bluesky or Mastodon for a link there. See «Icons» below. |
+| `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings; `brand-icon.tsx`, `src/lib/brand-marks.ts`: `BrandIcon`, the mark of GitHub, Spotify, Bluesky, Mastodon, Steam or PlayStation for a link there. See «Icons» below. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
 | `src/lib/` | What the components share: `cn` (`utils`), icons, the page column and the columns of a list (`page-width`), link style, small pure helpers with tests. |
@@ -100,9 +100,7 @@ npm install
 npm run verify      # typecheck, lint and the tests
 ```
 
-A change is released as a tag: bump `version` in `package.json`, commit, `git tag v<version>`, `git push --follow-tags`, and
-raise the tag in the projects that use it (`npm install @lmfaole/designsystem@github:lmfaole/designsystem#v<version>`).
-A change that removes or renames a component, a prop or a token is a new major version.
+A change is released by bumping `version` in `package.json` and pushing to `main`: CI checks it (`tsc`, the tests), Storybook is published, and the workflow `tag.yml` tags the commit `v<version>` when that version has no tag yet. A project then runs **`npx designsystem-bump`** (the latest `main`, or a commit or `v<version>` as its argument): it pins the same commit in every `package.json` of the repository, brings the lockfile in step, installs the skills again and checks them, so the project never follows the rules of an older version without anyone seeing it. `--dry-run` says what would change.
 
 ## Grouping sections
 

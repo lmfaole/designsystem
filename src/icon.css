@@ -24,6 +24,9 @@
     &[data-size='lg'] {
       --icon-size: 1.25rem;
     }
+    &[data-size='xl'] {
+      --icon-size: 1.75rem;
+    }
 
     &[data-tone='muted'] {
       color: var(--muted-foreground);
