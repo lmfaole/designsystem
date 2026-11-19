@@ -23,3 +23,5 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 export const Counted: Story = { args: { label: "Lest", value: 12, max: 40, valueText: "12 av 40" } }
 export const Empty: Story = { args: { value: 0, valueText: undefined, label: "Mål" } }
+export const WithTarget: Story = { args: { label: "Lest", value: 12, max: 40, valueText: "12 av 40", target: 30 } }
+export const PastTheTarget: Story = { args: { label: "Lyttemål", value: 36, max: 40, valueText: "36 av 40", target: 30 } }

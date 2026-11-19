@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs"
 import { join } from "node:path"
 import { test } from "node:test"
 
+import { GREY_STEPS, LINE_STEPS } from "./lib/chart-colors.ts"
 import { CVD, contrast, distance, inGamut, onto, parseOklch, simulate, toLinear, type Oklch, type Rgb } from "./lib/colour.ts"
 
 const css = readFileSync(join(import.meta.dirname, "theme.css"), "utf8")
@@ -90,10 +91,26 @@ for (const [mode, tokens] of Object.entries(MODES)) {
   })
 }
 
-test("the chart ramp and the lightest default steps are known to be weak, and the guides say so", () => {
-  // `chart-1` is 1.5:1 on a light page and `chart-3` to `chart-5` are weak on a dark one: marks are never told apart by these alone.
+for (const [mode, tokens] of Object.entries(MODES)) {
+  test(`${mode}: every default chart step (the grey steps of a stack, the strengths of a line) keeps 3:1 on the page and on the card`, () => {
+    const low: string[] = []
+    for (const share of new Set([...GREY_STEPS, ...LINE_STEPS])) {
+      for (const background of ["background", "card"]) {
+        const behind = surface(tokens, background)
+        const seen = contrast(onto({ ...token(tokens, "foreground"), a: share / 100 }, behind), behind)
+        if (seen < 3) low.push(`${share} % on ${background}: ${seen.toFixed(2)}`)
+      }
+    }
+    assert.deepEqual(low, [], "a default step this light cannot be told from the page: use a darker one, or a series colour")
+  })
+}
+
+test("the lightest steps that used to be defaults, and the chart ramp, are known to be weak, and the guides say so", () => {
+  // 36 % and 24 % of the foreground, and `chart-1` on a light page, `chart-3` to `chart-5` on a dark one: marks are never told apart by these alone.
+  const behind = surface(light, "background")
+  assert.ok(contrast(onto({ ...token(light, "foreground"), a: 0.36 }, behind), behind) < 3)
   assert.ok(ratio(light, "chart-1", "background") < 3)
   assert.ok(ratio(dark, "chart-5", "background") < 3)
   const tokensMdx = readFileSync(join(import.meta.dirname, "..", "stories", "tokens", "Tokens.mdx"), "utf8")
-  assert.match(tokensMdx, /two lightest default steps/)
+  assert.match(tokensMdx, /36 and 24 %/)
 })

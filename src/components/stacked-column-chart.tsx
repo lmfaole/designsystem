@@ -3,6 +3,7 @@ import { scaleBand } from "@tanstack/charts/scales/band"
 import { scaleLinear } from "@tanstack/charts/scales/linear"
 import { tooltip } from "@tanstack/charts/tooltip"
 
+import { defaultSeriesColor } from "../lib/chart-colors"
 import { formatChartValue } from "../lib/chart-format"
 import { stackedRows } from "../lib/chart-rows"
 import { ChartFrame } from "./chart-frame"
@@ -20,11 +21,11 @@ export interface StackedDatum {
 interface StackedColumnChartProps {
   /** One row per label and series; a missing pair is nothing. */
   data: StackedDatum[]
-  /** Bottom to top in the stack, and the legend's order. At most as many as there are chart colours. */
+  /** Bottom to top in the stack, and the legend's order. At most five (more is a ranking or a table); the first three are grey steps and the rest take `series-4` and on. */
   series: string[]
   ariaLabel: string
   height: number
-  /** A colour as CSS for each series, in the order of `series`; a series with none (or `null`) has the grey step of its place. */
+  /** A colour as CSS for each series, in the order of `series`; a series with none (or `null`) has the grey step of its place (the first three) or `series-4` and on. */
   colors?: readonly (string | null | undefined)[]
   /** A text that says what the chart shows (type, range, trend, extremes), visible under it. `summariseSeries` writes one. */
   summary?: string
@@ -40,13 +41,11 @@ const stackedTooltip: ChartTooltipOptions<StackedDatum>["content"] = (points) =>
   return { title: datum.label, rows: [{ label: datum.series, value: formatChartValue(datum.value) }] }
 }
 
-// The foreground in falling strength, first series strongest: the chart tokens' darkest steps are too close to tell apart.
-const SEGMENT_COLORS = [100, 72, 52, 36, 24].map((share) => `color-mix(in oklab, var(--foreground) ${share}%, transparent)`)
 
 /** Columns divided into the parts that make each up, for how a total splits: a count per year by category. */
 export function StackedColumnChart({ data, series, ariaLabel, height, colors = [], summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE }: StackedColumnChartProps) {
   if (data.length === 0) return <ChartEmpty height={height} message={emptyMessage} />
-  const colourOf = (index: number): string => colors[index] ?? SEGMENT_COLORS[index] ?? SEGMENT_COLORS.at(-1) ?? "currentColor"
+  const colourOf = (index: number): string => colors[index] ?? defaultSeriesColor(index)
   const labels = [...new Set(data.map((datum) => datum.label))]
   const padding = Math.max(0.12, 1 - 0.1 * labels.length)
   const definition = defineChart({

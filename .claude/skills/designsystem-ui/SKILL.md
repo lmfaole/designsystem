@@ -41,7 +41,7 @@ fits, the markup becomes a component in the design system, named for what it is,
 
 ## Charts
 
-Colour is not the code: a chart in the grey palette is told apart by direct labels, then pattern, dash and marker, never by shade alone. Marks meet 3:1 against the background (the two lightest default steps, 36 and 24 %, are 2.7 and 1.9:1, so they are never the only difference: name the series), neighbouring parts are separated by a thin gap, and values use tabular numbers. Limits per chart and the table behind it are in `designsystem-accessibility` (Charts). `destructive` marks only the one value that stops something, with a symbol and a word.
+Colour is not the code: a chart in the grey palette is told apart by direct labels, then pattern, dash and marker, never by shade alone. Marks meet 3:1 against the background (the default grey steps, 100, 66 and 44 % of the foreground, keep 3:1 on the page and the card; a fourth series takes a `series-*` colour), neighbouring parts are separated by a thin gap, and values use tabular numbers. Limits per chart and the table behind it are in `designsystem-accessibility` (Charts). `destructive` marks only the one value that stops something, with a symbol and a word.
 
 ## Cards
 

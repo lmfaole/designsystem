@@ -25,3 +25,18 @@ export function stackedRows(data: readonly StackedValue[], series: readonly stri
   }
   return [...byLabel].map(([label, values]) => [label, ...values])
 }
+
+export interface LineSeriesData {
+  name: string
+  data: readonly ChartDatum[]
+}
+
+/** The labels of several series in the order they first appear. */
+export function seriesLabels(series: readonly LineSeriesData[]): string[] {
+  return [...new Set(series.flatMap((one) => one.data.map((datum) => datum.label)))]
+}
+
+/** One row per label with a column for each series; a series with no value at a label has «–», never a made-up zero. */
+export function lineRows(series: readonly LineSeriesData[], formatLabel: (label: string) => string = (label) => label): ChartRow[] {
+  return seriesLabels(series).map((label) => [formatLabel(label), ...series.map((one) => one.data.find((datum) => datum.label === label)?.value ?? "–")])
+}

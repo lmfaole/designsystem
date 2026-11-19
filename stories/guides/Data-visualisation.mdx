@@ -6,8 +6,8 @@ import { Sparkline } from "../../src/components/sparkline"
 
 # Data visualisation
 
-Our charts are `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart` and `RankedBarChart`, in a `ChartFrame` or a `ChartCard`, and a `Sparkline` for a shape beside a number. The default
-series are the foreground at falling strength (100, 72, 52, 36 and 24 %) and the one colour in the interface (`destructive`) is for what stops something, so colour never carries the meaning. A page that needs colours of its own passes `series-1` to `series-6`
+Our charts are `AreaChart`, `LineChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart` and `RankedBarChart`, in a `ChartFrame` or a `ChartCard`, and a `Sparkline` for a shape beside a number. The default
+series are the foreground at falling strength (100, 66 and 44 %; a fourth series takes `series-4` and on) and the one colour in the interface (`destructive`) is for what stops something, so colour never carries the meaning. A page that needs colours of its own passes `series-1` to `series-6`
 (they are told apart in every kind of colour vision; see **Tokens / Overview**). The rules are from GOV.UK (Analysis Function), Carbon, Primer, NN/G and Datawrapper; what is our own decision is marked.
 
 ## 1. Ask the question first
@@ -17,6 +17,7 @@ series are the foreground at falling strength (100, 72, 52, 36 and 24 %) and the
 | One number | A `SummaryBar` or a `FactList`, not a chart | |
 | A number and how it moved | The number with a `Sparkline` beside it | |
 | A trend over time, one series | `AreaChart` (a line over a light fill) | |
+| Trends for up to four series | `LineChart`: the first line solid, the others dashed, each named at its last point | |
 | Compare a few categories | `ColumnChart` | |
 | A ranking | `RankedBarChart`, sorted, longest first | |
 | A total split into parts over time | `StackedColumnChart` | |
@@ -24,7 +25,7 @@ series are the foreground at falling strength (100, 72, 52, 36 and 24 %) and the
 | Exact values | A table (`showTable`) | |
 
 **Not drawn** (GOV.UK, NN/G, Datawrapper): 3D charts, radial gauges (a linear `Progress` is the bullet), a pie or donut of more than five slices, two value axes in one chart, a truncated bar axis, colour as the measure of size, and a chart of fewer than three points (the number says it better).
-There is no multi-series `LineChart` yet: for several series, one `AreaChart` each in a list or a table, which fits the one-column rule better than a grid of small charts.
+More than four series is a table, or one `AreaChart` each in a list, which fits the one-column rule better than a grid of small charts.
 
 ## 2. Limits
 
@@ -42,8 +43,7 @@ Line five series or fewer (GOV.UK says four, Primer five); bars ten or fewer; a 
 
 ## 4. Without colour
 
-Name the series; separate neighbouring parts with a thin gap in the background colour; lines are 2 px, the first solid and later ones dashed with another marker (Primer). Marks meet 3:1 against the background and axis text 4.5:1. Measured, the two lightest default steps (36 and 24 %) are about 2.7 and 1.9:1,
-so they are never the only difference between two parts: name the series and keep the gap (see **Tokens / Overview**). A chart's colour never carries a state: use `series-*` or the foreground, and tell a state with a symbol and words.
+Name the series; separate neighbouring parts with a thin gap in the background colour; lines are 2 px, the first solid and later ones dashed with another marker (Primer). Marks meet 3:1 against the background and axis text 4.5:1: the default steps keep 3:1 on the page and the card (a test checks it; lighter steps do not, and are not used). Name the series and keep the gap anyway (see **Tokens / Overview**). A chart's colour never carries a state: use `series-*` or the foreground, and tell a state with a symbol and words.
 
 ## 5. A number with its shape
 

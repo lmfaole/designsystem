@@ -45,7 +45,7 @@ repository does (`scripts/design-tokens.ts` there).
 | `src/components/page-layout.tsx`, `page-header.tsx`, `page-section.tsx` | The frame and the parts of a page. |
 | `src/components/ui/` | Generated shadcn/ui (button, button-group, card, native-select, separator, skeleton, table), exported as `components/<name>`. Add one with `npx shadcn@latest add <component>`; never hand-edit one. |
 | `src/components/nav-bar.tsx`, `breadcrumbs.tsx`, `sub-pages.tsx`, `summary-bar.tsx`, `link-button.tsx` | Navigation between and into pages. See «Pages and navigation» below. |
-| `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings. See «Icons» below. |
+| `src/components/icon.tsx`, `status-line.tsx`, `src/lib/icons.ts` | Icons: `Icon` (a meaning from `ICONS`), `StatusLine` (statuses with a symbol), and the register of meanings; `brand-icon.tsx`, `src/lib/brand-marks.ts`: `BrandIcon`, the mark of GitHub, Spotify, Bluesky or Mastodon for a link there. See «Icons» below. |
 | `src/components/*-chart.tsx`, `chart-frame.tsx` | Charts on TanStack Charts, themed through `chart-frame.tsx`. |
 | `src/components/*.tsx` (the rest) | Rows, lists, cards, covers, links, overlays, error pages. |
 | `src/lib/` | What the components share: `cn` (`utils`), icons, the page column and the columns of a list (`page-width`), link style, small pure helpers with tests. |
@@ -337,6 +337,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.14
+
+New: `LineChart` (several series over time, each named at its line's end, with a dash pattern and not colour alone), `Progress` takes a `target` (a bullet: the value against a goal and a mark where the goal is), `BrandIcon` (GitHub, Spotify, Bluesky, Mastodon; LinkedIn is not in Simple Icons any more, so a link there uses its words). Corrected: the default grey steps of a stacked chart are now `100, 66, 44` (and `100, 72, 52, 44` for lines), the lightest that keep 3:1 against the surface, checked by a test.
 
 ## Charts (8.13)
 

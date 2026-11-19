@@ -46,15 +46,15 @@ How to read the numbers: text needs **4.5:1**, and the parts of a control or a m
 
 | Token | Value | For |
 | --- | --- | --- |
-| Default series (`StackedColumnChart`) | `foreground` at 100, 72, 52, 36 and 24 % | The series of a chart that is not given colours, first series strongest |
+| Default series (`StackedColumnChart`) | `foreground` at 100, 66 and 44 %, then `series-4` and on | The series of a chart that is not given colours, first series strongest |
+| Default lines (`LineChart`) | `foreground` at 100, 72, 52 and 44 %, told apart by dash | Up to four lines |
 | `chart-1` to `chart-5` | A grey ramp, the same in light and dark | The grey steps for marks that are not given a colour |
 | `series-1` to `series-6` | Six hues, one lightness: 0.5 in light and 0.78 in dark | A chart a page gives colours of its own (`colors`, `DonutChart` `color`) |
 
 What this means for a chart, measured on the page background:
 
-- The default series steps are 19.8, 9.8 and 4.7:1 at 100, 72 and 52 % in light (19.0, 8.9 and 4.7 in dark). **The two lightest default steps (36 and 24 %) are
-  about 2.7 and 1.9:1**, below 3:1 in both modes. A mark told apart only by those steps is not enough: name the series on the chart and keep the gap
-  between parts (guide «Data visualisation»).
+- The default steps keep **3:1 on the page and on the card in light and dark**: 100, 66 and 44 % of the foreground are 19.8, 6.6 and 3.1:1 in light (19.0, 8.4 and 4.2 in dark), and the line steps 100, 72, 52 and 44 % are as strong. A test checks it. **The steps that used to be the defaults, 36 and 24 %, are
+  2.4 and 1.7:1 in light** (3.2 and 2.0 in dark) and are not used: a mark told apart only by a step that light is not enough. (Until 8.13 this page gave 2.7 and 1.9, which was worked out with the colours blended in linear light; a browser blends in encoded sRGB, as `theme-contrast.test.ts` does.) A chart still names its series on the chart and keeps the gap between parts (guide «Data visualisation»).
 - `chart-1` is 1.5:1 on a light page and `chart-3` to `chart-5` are 2.5, 1.9 and 1.3:1 on a dark one, because the ramp is the same in both modes. Do not
   rely on a `chart-*` step alone for a mark that carries meaning.
 - The `series-*` colours are six that differ in **lightness as well as hue**, so they can be told apart without colour vision. They are 3.3 to 12.0:1 on a light page and 4.9 to 15.6:1 on a dark one (4.5 to 14.1 on a dark card),

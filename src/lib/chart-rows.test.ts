@@ -1,7 +1,7 @@
 import { strict as assert } from "node:assert"
 import { test } from "node:test"
 
-import { datumRows, stackedRows } from "./chart-rows.ts"
+import { datumRows, lineRows, seriesLabels, stackedRows } from "./chart-rows.ts"
 
 test("one row per category in the chart's own order, labelled as the axis labels it", () => {
   const rows = datumRows([{ label: "1990", value: 12 }, { label: "2000", value: 7 }], (label) => `${label}-tallet`)
@@ -34,4 +34,10 @@ test("labels keep the order they first appear in, and a pair given twice is adde
 
 test("a series that is not in the list is left out", () => {
   assert.deepEqual(stackedRows([{ label: "x", series: "Z", value: 9 }], ["A"]), [["x", 0]])
+})
+
+test("a table of lines has a column for each series, and a dash where one has no value", () => {
+  const series = [{ name: "A", data: [{ label: "jan", value: 1 }, { label: "feb", value: 2 }] }, { name: "B", data: [{ label: "feb", value: 5 }, { label: "mar", value: 6 }] }]
+  assert.deepEqual(seriesLabels(series), ["jan", "feb", "mar"])
+  assert.deepEqual(lineRows(series), [["jan", 1, "–"], ["feb", 2, 5], ["mar", "–", 6]])
 })
