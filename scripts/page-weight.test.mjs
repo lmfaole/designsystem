@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { DEFAULT_BUDGET, gramsFor, overBudget, ratingOf, weigh } from "./page-weight.ts"
+import { DEFAULT_BUDGET, gramsFor, overBudget, ratingOf, weigh } from "../scripts/page-weight.mjs"
 
 test("a megabyte is about 0.15 g with SWDM v4 at the global grid, and the ratings follow its table", () => {
   assert.ok(Math.abs(gramsFor(1e6) - 0.1482) < 0.001)

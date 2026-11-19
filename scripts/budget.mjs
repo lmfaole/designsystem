@@ -11,7 +11,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from "node:fs"
 import { join, relative, resolve } from "node:path"
 import { gzipSync } from "node:zlib"
 
-import { DEFAULT_BUDGET, gramsFor, overBudget, ratingOf, weigh } from "../src/lib/page-weight.ts"
+import { DEFAULT_BUDGET, gramsFor, overBudget, ratingOf, weigh } from "./page-weight.mjs"
 
 const args = process.argv.slice(2)
 const dist = resolve(args.find((arg) => !arg.startsWith("--")) ?? "dist")
