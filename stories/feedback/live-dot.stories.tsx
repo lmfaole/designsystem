@@ -16,7 +16,15 @@ the page merely loads fresh data, or as the only sign that something is live (sa
 
 ### Accessibility
 
-Decoration only and hidden from assistive technology. It is still, not pulsing, for anyone who asks for less motion.
+**Handled by the component**
+
+- \`aria-hidden\`, so a screen reader meets nothing empty ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- The pulse stops when the device asks for reduced motion ([2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions))
+
+**You check**
+
+- The word «Live» is beside it in text, so the dot is never the only sign ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content), [1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- The pulse loops for as long as it is shown: keep it small and to one per thing that is live ([2.2.2 Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide))
 
 ### Content
 
@@ -29,4 +37,5 @@ Always say «Live» in text next to it.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** The dot on its own; on a page it always sits beside the word «Live». */
 export const Default: Story = {}

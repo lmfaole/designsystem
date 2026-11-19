@@ -19,7 +19,19 @@ navigation (a link) or an action that changes data.
 
 ### Accessibility
 
-Uses the browser's own invoker commands, so it works before scripts load; a click handler covers browsers without them.
+**Handled by the component**
+
+- A native \`<button type="button">\`, reached and pressed from the keyboard ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+- Named by \`label\` (\`aria-label\`) for a screen reader ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value))
+- Works through the browser's invoker commands before scripts load, with a click handler for browsers without them ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+- When the dialog closes, the browser returns focus to it ([2.4.3 Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order))
+
+**You check**
+
+- \`label\` contains the words that are visible on the button ([2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name))
+- The content says what opens; an icon alone needs a \`label\` that says it ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content), [2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels))
+- A visible focus style and room to hit it, from \`Button\` or the content you put in it ([2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible), [2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum))
+- \`commandFor\` is the id of a dialog or popover that is on the page ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value))
 
 ### Content
 
@@ -32,6 +44,7 @@ The button says what opens.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** A zoom button opening a dialog; the play test checks opening, closing and focus return. */
 export const Zoom: Story = {
   render: (args) => <><CommandButton {...args} /><Overlay id="cmd-demo" variant="dialog" title="Target">Opened by the button.</Overlay></>,
   // The button opens the dialog with no script of its own (invoker commands), «Lukk» closes it, and focus goes back to the button.

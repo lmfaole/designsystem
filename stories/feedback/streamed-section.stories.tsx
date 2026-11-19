@@ -17,7 +17,16 @@ the content is already there (a plain section), or around a source that can thro
 
 ### Accessibility
 
-The fallback is a \`SectionSkeleton\` with one status for the part. The fallback is never \`null\`: an empty place makes the page jump.
+**Handled by the component**
+
+- While waiting it shows a \`SectionSkeleton\`: one status for the part, with a hidden «Henter …» label ([4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages))
+- The content replaces the skeleton in the same place, so reading order stays ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence))
+
+**You check**
+
+- \`title\` names what is loading ([4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages))
+- The content that arrives has its own heading in the page's heading order ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- Focus is not on anything inside the fallback, since it is replaced ([2.4.3 Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order))
 
 ### Content
 
@@ -30,4 +39,5 @@ The title names what is loading.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** The content has arrived, so the skeleton fallback is no longer shown. */
 export const Arrived: Story = {}

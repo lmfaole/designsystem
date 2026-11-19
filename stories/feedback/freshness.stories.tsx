@@ -19,7 +19,17 @@ the time is part of the content (\`Time\`), or for a change the reader must know
 
 ### Accessibility
 
-A still line, not a live region: the reader finds it and it does not interrupt. Past the threshold it turns into a warning with a symbol and words, never colour alone. \`now\` is the server's time, so the first render is the same on the server and in the browser; after that it follows the device's clock.
+**Handled by the component**
+
+- A still line, not a live region, so renewing every 30 seconds never interrupts a screen reader ([4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages))
+- Past the threshold the warning is in words and a symbol; no colour is used ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- The symbol is hidden from assistive technology; the words say it ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+
+**You check**
+
+- When the reader must know at once that data is old, add a \`Banner\`: this line is not announced ([4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages))
+- It sits in the page's lead, where it is found in reading order ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence))
+- It renders nothing when \`at\` is not a valid time: the page must not depend on it
 
 ### Content
 
@@ -32,5 +42,7 @@ A still line, not a live region: the reader finds it and it does not interrupt. 
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Within the threshold: a plain «Oppdatert» line. */
 export const Fresh: Story = {}
+/** Past the threshold: the line becomes a warning in words with a symbol. */
 export const Stale: Story = { args: { at: minutesAgo(20) } }
