@@ -7,7 +7,7 @@ import { Heading, Text } from "./text"
  * A page's own `<h1>` (the one page-title look of `Heading`) and an optional one-line lead-in, above its content, with
  * room for the page's controls beside the title. The room under it is fixed.
  */
-export function PageHeader({ title, lead, actions }: { title: string; lead?: string | undefined; /** Buttons or menus shown alongside the title. */ actions?: ReactNode }) {
+export function PageHeader({ title, lead, actions }: { title: string; /** One line, as text or with inline parts (a `Person` in a byline). */ lead?: ReactNode; /** Buttons or menus shown alongside the title. */ actions?: ReactNode }) {
   return (
     <header className="mb-6">
       <Stack gap="sm">
@@ -15,7 +15,7 @@ export function PageHeader({ title, lead, actions }: { title: string; lead?: str
           <Heading level={1}>{title}</Heading>
           {actions}
         </Inline>
-        {lead ? (
+        {lead !== undefined && lead !== null && lead !== false && lead !== "" ? (
           <Stack width="prose">
             <Text size="sm" tone="muted">
               {lead}
