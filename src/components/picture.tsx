@@ -1,3 +1,4 @@
+import { fallbackOf, srcSetOf, type PictureSource } from '../lib/picture-sources'
 import { cn } from '../lib/utils'
 
 /** A poster is 2:3 (a book, a film); a square is a cover, a box or an avatar. */
@@ -14,16 +15,45 @@ const SIZES: Record<Ratio, Record<Size, [number, number]>> = {
   square: { row: [40, 40], hero: [112, 112], fill: [200, 200] },
 }
 
+/** The widest the frame is drawn, in CSS pixels, at any width (the hero grows with its container): what `sizes` promises the browser. */
+const DRAWN: Record<Ratio, Record<Size, number>> = {
+  poster: { row: 40, hero: 192, fill: 320 },
+  square: { row: 40, hero: 224, fill: 320 },
+}
+
 /**
  * The picture of one thing in a frame of its own. The frame is always there, so the rows of a list stay level when there is
  * no picture or it fails to load: it is then just not drawn in it, with no script to find out. Decorative: the name beside it
  * says what it is. `src` is the address as the browser asks for it; resolving it (a base path, a CDN) is the project's.
  */
-export function Picture({ src, ratio = 'poster', size = 'row' }: { src: string | null | undefined; ratio?: Ratio; size?: Size }) {
+export function Picture({ src, sources, priority = false, ratio = 'poster', size = 'row' }: {
+  src: string | null | undefined
+  /** The same picture in the widths its source offers: the browser takes the smallest that is sharp here (`srcset`), not the largest. */
+  sources?: readonly PictureSource[]
+  /** The one picture that is the page's largest thing on load (the hero of a detail page): fetched at once and first, never lazily. */
+  priority?: boolean
+  ratio?: Ratio
+  size?: Size
+}) {
   const [width, height] = SIZES[ratio][size]
+  const drawn = DRAWN[ratio][size]
+  const set = srcSetOf(sources, drawn)
+  const shown = src ?? (sources === undefined ? undefined : fallbackOf(sources, drawn)?.src)
   return (
     <div aria-hidden="true" className={cn('shrink-0 overflow-hidden rounded-md bg-muted', FRAMES[ratio][size], size === 'hero' && 'shadow-md')}>
-      {src ? <img src={src} alt="" loading="lazy" decoding="async" width={width} height={height} className="size-full object-cover" /> : null}
+      {shown ? (
+        <img
+          src={shown}
+          {...(set === null ? {} : { srcSet: set.srcSet, sizes: set.sizes })}
+          alt=""
+          loading={priority ? 'eager' : 'lazy'}
+          {...(priority ? { fetchPriority: 'high' as const } : {})}
+          decoding="async"
+          width={width}
+          height={height}
+          className="size-full object-cover"
+        />
+      ) : null}
     </div>
   )
 }

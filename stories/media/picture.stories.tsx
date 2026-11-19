@@ -44,3 +44,11 @@ export const Hero: Story = { args: { size: "hero" } }
 export const Fill: Story = { args: { size: "fill" }, decorators: [(Story) => <div className="w-40"><Story /></div>] }
 /** No picture: the frame stays, so rows stay level. */
 export const NoPicture: Story = { args: { src: null } }
+
+/** The same picture in three widths: the browser takes the smallest that is sharp at the size it is drawn (`srcset`, `sizes`), not the largest. */
+export const WithSources: Story = {
+  args: { src: null, sources: [{ src: poster(10, "S"), width: 92 }, { src: poster(40, "M"), width: 185 }, { src: poster(70, "L"), width: 342 }] },
+}
+
+/** The picture that leads a detail page: fetched at once and first (`priority`), the only one on the page. */
+export const Priority: Story = { args: { size: "hero", priority: true } }

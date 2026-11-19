@@ -1,6 +1,6 @@
 {
   "name": "@lmfaole/designsystem",
-  "version": "8.21.0",
+  "version": "8.22.0",
   "private": true,
   "type": "module",
   "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
@@ -79,6 +79,7 @@
   },
   "bin": {
     "designsystem-bump": "./scripts/bump.mjs",
-    "designsystem-skills": "./scripts/install-skills.mjs"
+    "designsystem-skills": "./scripts/install-skills.mjs",
+    "designsystem-budget": "./scripts/budget.mjs"
   }
 }

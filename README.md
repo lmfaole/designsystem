@@ -336,6 +336,18 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.22
+
+Performance and sustainability, researched against web.dev, the Web Almanac 2025, the W3C Web Sustainability Guidelines, the Sustainable
+Web Design Model v4, GOV.UK and W3C COGA (guide **Performance and sustainability**):
+- **`Picture`** takes `sources` (the widths its source offers: `srcset` with a `sizes` that is the width it is drawn at, so a 40 px thumbnail
+  takes the small file) and `priority` (the one picture that leads the page: eager and `fetchpriority="high"`; every other is lazy).
+- **`npx designsystem-budget <dist>`** weighs every built page (HTML, CSS and script gzipped, the `latin` font files, its own pictures) against a
+  budget (500 KB a page; 150 script, 50 CSS, 100 fonts), fails above it, and gives grams of CO2e per view and the SWDM v4 rating. A page of
+  this system is about 85 KB without pictures: 0.013 g, A+.
+- The skills: light pages in `designsystem-ui`, a check in `designsystem-review`, refresh no faster than the data changes in `designsystem-ux`.
+- Myths written down: dark mode saves energy only on OLED at high brightness; `prefers-reduced-data` is in no browser yet.
+
 ## 8.21
 
 - **Every component page's Accessibility section** is now what the component handles and what the page must still check («You check»), each

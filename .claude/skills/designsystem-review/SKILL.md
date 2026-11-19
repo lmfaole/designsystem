@@ -75,6 +75,11 @@ and a detail page, not only the front page.
 - [ ] A PWA: `id`, scope with a closing slash, `any` and `maskable` icons, an update path, no login page kept as a page (guide «Installed apps (PWA)»).
 - [ ] Auto-updating content can be paused, or says why it is essential.
 
+**Performance and sustainability**
+- [ ] `npx designsystem-budget dist` passes; the page's rating and grams per view are stated in the review.
+- [ ] One `priority` picture at most (the one that leads the page); pictures from an API have `sources`.
+- [ ] No third-party script, font or CDN, no autoplay; nothing hydrates that does not react; data refreshes no faster than it changes.
+
 **Code**
 - [ ] No `lucide-react` import in a page; icons by meaning.
 - [ ] `npm run verify` and, in the design system, `npm run build-storybook` pass.

@@ -85,6 +85,7 @@ last built (`Freshness`: «Oppdatert 19:27»). Pause when the window is hidden, 
 - **A renewal that takes under a second shows nothing;** a part that is on its way is a `StreamedSection` with a skeleton at its final height, never `null`.
 - A retry is a button in the failed part, «Prøv igjen», and only where the reader has no other way (an installed app has no reload button).
 - Auto-updating content has a way to pause or stop it, or a reason why it is essential (WCAG 2.2.2).
+- It refreshes as often as the data changes and no more (departures each minute, weather each half hour, a log each few hours): every refresh costs the reader's battery and data.
 
 ## 7. Installed and server-rendered
 
