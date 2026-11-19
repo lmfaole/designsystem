@@ -1,11 +1,13 @@
 name: Tag the version
 
 # A project pins a commit, which says nothing about the version. This tags every push to main whose `version` in package.json has no tag yet,
-# so a commit can be told by `v<version>`, and `npx designsystem-bump v<version>` works.
+# so a commit can be told by `v<version>`, and `npx designsystem-bump v<version>` works. Run by hand (`workflow_dispatch`) it also tags every
+# earlier version that has none, at the first commit of the history that had it.
 on:
   push:
     branches: [main]
     paths: [package.json]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,12 +17,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create the tag when the version is new
+        with:
+          fetch-depth: 0
+      - name: Tag the versions that have no tag
         run: |
-          version="v$(node -p "require('./package.json').version")"
-          if git ls-remote --exit-code --tags origin "refs/tags/$version" >/dev/null 2>&1; then
-            echo "$version already exists"
-          else
-            git tag "$version"
-            git push origin "$version"
-          fi
+          git fetch --tags origin
+          # Oldest first, one commit for each version: the first commit whose package.json has it.
+          for commit in $(git log --reverse --format=%H -- package.json); do
+            version=$(git show "$commit:package.json" | node -p "JSON.parse(require('fs').readFileSync(0, 'utf8')).version")
+            echo "$version $commit"
+          done | awk '!seen[$1]++' > versions.txt
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then tail -n 1 versions.txt > latest.txt; mv latest.txt versions.txt; fi
+          while read -r version commit; do
+            if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+              echo "v$version already exists"
+            else
+              git tag "v$version" "$commit"
+              git push origin "v$version"
+              echo "tagged v$version at $commit"
+            fi
+          done < versions.txt
