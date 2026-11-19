@@ -338,6 +338,11 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## Charts (8.13)
+
+Researched against GOV.UK (Analysis Function), Carbon, Primer, NN/G, Datawrapper, the W3C (complex images), Chartability and the chart library's own documentation. A chart box now has its **final height from the first paint, in CSS** (`clamp(height, 22cqw, 480px)`), where it used to grow after it had measured itself and push the page; numbers in a tooltip and a table are formatted `nb-NO` through `formatChartValue` (a test fails on a bare `toLocaleString()`);
+a chart with no data says why at its height (`emptyMessage`); every chart can show a visible `summary` (`summariseSeries()` writes one in Norwegian) and offer its table to everyone (`showTable`); the donut's `keep` is at most five and it keeps its ring in forced colours. New: `Sparkline`, a number's shape, plain markup with no script. Guides: **Data visualisation** (rewritten: a decision table, what is not drawn, limits, anatomy), **Accessible charts**, **Charts on the server**.
+
 ## Colour and icons (8.11)
 
 Researched against Primer, Atlassian, Radix, Carbon, GOV.UK, NN/G, WCAG and MDN. `src/theme-contrast.test.ts` works out the contrast of every token pair from `theme.css` on each `npm test` (text 4.5:1, marks 3:1, the decorative lines under 3:1 on purpose, the chart series told apart in four kinds of vision) with `src/lib/colour.ts`, which has no dependency. The six `series-*` colours were changed to differ in lightness as well as hue; `shell.css` repairs forced colours and `theme.css` answers `prefers-contrast: more`. Five icon meanings were added (`copy`, `mail`, `history`, `filter`, `sort`). The guides **Colour and state** (with a routine for a change) and **Icons / Guide** (before you reach for one, icon and word, accessible names, governance) and the skills have the rules.

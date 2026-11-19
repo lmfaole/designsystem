@@ -4,6 +4,9 @@ import { scalePoint } from "@tanstack/charts/scales/point"
 
 import { datumRows } from "../lib/chart-rows"
 import { type ChartDatum, ChartFrame, datumTooltip } from "./chart-frame"
+import { ChartEmpty } from "./chart-empty"
+import { ChartSummary } from "./chart-summary"
+import { EMPTY_CHART_MESSAGE } from "../lib/chart-format"
 import { ChartTable } from "./chart-table"
 
 interface AreaChartProps {
@@ -18,10 +21,17 @@ interface AreaChartProps {
   formatLabel?: (label: string) => string
   /** The series' colour, as CSS; the theme's primary by default. */
   color?: string | undefined
+  /** A text that says what the chart shows (type, range, trend, extremes), visible under it. `summariseSeries` writes one. */
+  summary?: string
+  /** Offer the exact values as a table anyone can open (`Vis tallene`), not only a screen reader. */
+  showTable?: boolean
+  /** What the chart says when there is no data; «Ingen data i denne perioden.» by default. */
+  emptyMessage?: string
 }
 
 /** One filled area for a trend: the shape over time, not an exact comparison of two points. */
-export function AreaChart({ data, ariaLabel, valueLabel, height, color, formatLabel = (label) => label }: AreaChartProps) {
+export function AreaChart({ data, ariaLabel, valueLabel, height, color, formatLabel = (label) => label, summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE }: AreaChartProps) {
+  if (data.length === 0) return <ChartEmpty height={height} message={emptyMessage} />
   const labels = data.map((datum) => datum.label)
   const definition = defineChart({
     marks: [
@@ -42,7 +52,8 @@ export function AreaChart({ data, ariaLabel, valueLabel, height, color, formatLa
   return (
     <>
       <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} color={color} />
-      <ChartTable caption={ariaLabel} columns={["Tidspunkt", valueLabel]} rows={datumRows(data, formatLabel)} />
+      {summary === undefined ? null : <ChartSummary text={summary} />}
+      <ChartTable caption={ariaLabel} columns={["Tidspunkt", valueLabel]} rows={datumRows(data, formatLabel)} visible={showTable} />
     </>
   )
 }

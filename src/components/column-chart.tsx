@@ -4,6 +4,9 @@ import { scaleLinear } from "@tanstack/charts/scales/linear"
 
 import { datumRows } from "../lib/chart-rows"
 import { type ChartDatum, ChartFrame, datumTooltip } from "./chart-frame"
+import { ChartEmpty } from "./chart-empty"
+import { ChartSummary } from "./chart-summary"
+import { EMPTY_CHART_MESSAGE } from "../lib/chart-format"
 import { ChartTable } from "./chart-table"
 
 interface ColumnChartProps {
@@ -20,10 +23,17 @@ interface ColumnChartProps {
   color?: string | undefined
   /** Label every nth column only, for a crowded axis (24 hours: every 3rd). */
   labelEvery?: number
+  /** A text that says what the chart shows (type, range, trend, extremes), visible under it. `summariseSeries` writes one. */
+  summary?: string
+  /** Offer the exact values as a table anyone can open (`Vis tallene`), not only a screen reader. */
+  showTable?: boolean
+  /** What the chart says when there is no data; «Ingen data i denne perioden.» by default. */
+  emptyMessage?: string
 }
 
 /** Columns in the data's own order, for a shape across categories: decades, hours of the day. */
-export function ColumnChart({ data, ariaLabel, valueLabel, height, color, formatLabel = (label) => label, labelEvery = 1 }: ColumnChartProps) {
+export function ColumnChart({ data, ariaLabel, valueLabel, height, color, formatLabel = (label) => label, labelEvery = 1, summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE }: ColumnChartProps) {
+  if (data.length === 0) return <ChartEmpty height={height} message={emptyMessage} />
   const labels = data.map((datum) => datum.label)
   // A column is at most a tenth of the width, so one year or three days do not become slabs.
   const padding = Math.max(0.12, 1 - 0.1 * labels.length)
@@ -47,7 +57,8 @@ export function ColumnChart({ data, ariaLabel, valueLabel, height, color, format
   return (
     <>
       <ChartFrame definition={definition} ariaLabel={ariaLabel} height={height} color={color} />
-      <ChartTable caption={ariaLabel} columns={["Kategori", valueLabel]} rows={datumRows(data, formatLabel)} />
+      {summary === undefined ? null : <ChartSummary text={summary} />}
+      <ChartTable caption={ariaLabel} columns={["Kategori", valueLabel]} rows={datumRows(data, formatLabel)} visible={showTable} />
     </>
   )
 }

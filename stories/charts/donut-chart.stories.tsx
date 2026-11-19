@@ -22,3 +22,5 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 export const KeepThree: Story = { args: { keep: 3 } }
+export const WithSummary: Story = { args: { summary: "Ringdiagram. Rock er størst med 38 %, de fem største utgjør 81 %." } }
+export const Empty: Story = { args: { data: [] } }

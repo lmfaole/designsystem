@@ -57,6 +57,13 @@ with a list, a table, a `dl` or `Text`. Cards are not nested (rule 8).
 - A part with a shadow-only edge or a fill-only state also has a border or a mark (forced colours drop shadows and fills). Icons use `currentColor`.
 - A change to a token: `npm test` (`theme-contrast.test.ts`), the numbers in Tokens / Overview, the Accessibility panel in light and dark, and a look at hover, focus, selected, disabled and error.
 
+## Charts
+
+- **Ask the question first** (guide «Data visualisation»): one number is a `SummaryBar`, a number and its movement is a `Sparkline`, a trend is `AreaChart`, a few categories `ColumnChart`, a ranking `RankedBarChart`, parts over time `StackedColumnChart`, a whole in five parts or fewer `DonutChart`. Not drawn: 3D, radial gauges, more than five slices, two value axes, a truncated bar axis, colour as size, fewer than three points.
+- A bar chart starts at zero. The title states the message; the subtitle gives what is counted, the unit and the period (`ChartCard`).
+- Name the series on the chart before a legend. Numbers are formatted `nb-NO` (`formatChartValue`), never the runtime's default.
+- A chart has its **height reserved** from the first paint, says why when it has no data (`emptyMessage`), and is a `StreamedSection` when its source is slow.
+
 ## Icons (rule 10)
 
 Use an icon wherever it makes something **quicker to find or to understand**: a section title (`icon`), the kind of a row

@@ -49,6 +49,11 @@ and a detail page, not only the front page.
 - [ ] Dates, times and numbers formatted with `Intl` (nb-NO, Europe/Oslo); `−` for minus; counts have singular and plural.
 - [ ] One word per meaning for statuses.
 
+**Charts**
+- [ ] The right chart for the question; none of the refused ones; a title that states the message and a subtitle with unit and period.
+- [ ] Bars from zero; the series named on the chart; numbers in `nb-NO`; the height reserved; an empty sentence that says why.
+- [ ] A summary and a table (`ChartTable`, `showTable`); the chart is not a tab stop; nothing is told by colour alone.
+
 **Colour and icons**
 - [ ] Only tokens; no alpha colour carries text or a mark that needs 3:1; pairs checked on `card` too; `npm test` passes (`theme-contrast.test.ts`).
 - [ ] A state is a symbol and a word; nothing is told by colour alone, in light, dark, forced colours and more contrast.

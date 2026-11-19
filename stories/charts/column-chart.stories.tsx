@@ -23,3 +23,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 export const LabelEvery2: Story = { args: { labelEvery: 2 } }
+export const WithSummary: Story = { args: { summary: "Søylediagram. Avspillinger, 12 verdier. Høyest mar (402), lavest des (210). Økte fra 210 til 380." } }
+export const ShowTable: Story = { args: { showTable: true } }
+export const Empty: Story = { args: { data: [] } }

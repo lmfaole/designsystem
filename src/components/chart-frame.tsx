@@ -5,6 +5,7 @@ import { Chart, type ChartDefinition } from "@tanstack/charts/react"
 import { tooltip } from "@tanstack/charts/tooltip"
 import { useEffect, useRef, useState } from "react"
 import "../lib/css-variables"
+import { formatChartValue } from "../lib/chart-format"
 import { cn } from "cn"
 
 /** One value per category, the shape every chart here draws. */
@@ -22,7 +23,7 @@ export function datumTooltip(valueLabel: string, formatLabel: (label: string) =>
   const content: ChartTooltipOptions<ChartDatum>["content"] = (points) => {
     const datum = points[0]?.datum
     if (datum === undefined) return { rows: [] }
-    return { title: formatLabel(datum.label), rows: [{ label: valueLabel, value: datum.value.toLocaleString() }] }
+    return { title: formatLabel(datum.label), rows: [{ label: valueLabel, value: formatChartValue(datum.value) }] }
   }
   return { use: tooltip, content }
 }
@@ -71,9 +72,14 @@ export function ChartFrame<TDatum>({ definition, ariaLabel, height, grow = true,
       )}
     />
   )
+  // The box has its final height from the first paint, in CSS: a fifth of its own width between `height` and 480 px (`cqw` is a percent of the container's width),
+  // so the page below does not jump when the chart measures itself and grows.
+  const reserved = grow ? `clamp(${height}px, 22cqw, ${Math.max(height, 480)}px)` : `${height}px`
   return (
-    <div ref={box} className="w-full min-w-0" style={color === undefined ? undefined : { "--chart-accent": color }}>
-      {chart}
+    <div className="@container w-full min-w-0">
+      <div ref={box} className="w-full min-w-0" style={{ minHeight: reserved, ...(color === undefined ? {} : { "--chart-accent": color }) }}>
+        {chart}
+      </div>
     </div>
   )
 }

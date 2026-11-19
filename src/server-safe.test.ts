@@ -20,3 +20,8 @@ test("no component reads the clock or a random number in its render: the first r
   // The clock is read in an effect, after the first render, by the two components that follow the device (their first render uses what is passed in).
   assert.deepEqual(found.filter((name) => !["freshness.tsx"].includes(name)), [], "pass the time in (`now`), as `Time` does")
 })
+
+test("numbers and dates are formatted with a named locale: no `toLocaleString()` without one, no `Intl` formatter without one", () => {
+  const found = files.filter((name) => /\.toLocale(?:Date|Time)?String\(\s*\)|new Intl\.\w+\(\s*\)/.test(readFileSync(join(dir, name), "utf8")))
+  assert.deepEqual(found, [], "say `nb-NO` (and `Europe/Oslo` for a time): the runtime's default differs between the server and the browser")
+})

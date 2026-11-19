@@ -72,6 +72,12 @@
     border: 1px solid CanvasText;
   }
 
+  /* A mark that is only a fill or a gradient (the ring of a donut, a legend key) keeps its own colours: the legend beside it says what each is, and the
+     browser would otherwise drop it. */
+  [data-chart-mark] {
+    forced-color-adjust: none;
+  }
+
   /* The filled part of a meter is only a background, which is dropped: keep it as the text colour. */
   [role='meter'] > * {
     forced-color-adjust: none;

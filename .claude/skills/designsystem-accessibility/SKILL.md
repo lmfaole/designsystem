@@ -68,6 +68,7 @@ The Storybook panel and tools like axe and WAVE miss issues (GOV.UK service manu
 
 ## Charts
 
+- **A chart is an image with a label, a `summary` (type, range, trend, extremes; `summariseSeries()` writes one) and its data as a table** (`showTable` for a table anyone can open). It is not a tab stop (Chartability O6); a tooltip is never the only route to a value (WCAG 1.4.13); a mark that is only a fill keeps its colours in forced colours (`data-chart-mark`).
 - **Every chart has its numbers as a table** a screen reader can move through (`ChartTable`; the chart itself takes no focus and a tooltip is for a pointer) and a title that states what it shows with the unit and the period. A slice or a bar too small to reach with a pointer is only reachable in the table (Carbon, chart anatomy).
 - **Never shade alone.** Name the series on the chart (direct labels) before a legend; separate neighbouring parts with a 1–2 px gap in the background colour; marks meet 3:1 against the background and axis text 4.5:1 (Primer, data visualization). Lines are 2 px; the first is solid and later ones are dashed with another marker.
 - **Limits** (Primer): line 5 series or fewer, bars 10 or fewer, stacked segments 5, a donut 5 slices with the rest folded into «Annet».
