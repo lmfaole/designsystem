@@ -17,7 +17,10 @@ description: Use when choosing which design system component to use for somethin
 | Text written in Markdown (a description, a comment) | `Markdown`, never HTML inserted; `size="sm"` for a comment |
 | A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
 | Terms and their values (facts about one thing) | `FactList`: one value or several stacked under one term; links on a line `LinkList` |
-| A status | `StatusLine`; a count that links `SummaryBar` |
+| A status | `StatusLine` (under a title), `Badge` (next to a name in a row); a count that links `SummaryBar` |
+| A message about a page or section | `Banner`; a failed query `ErrorMessage`; nothing to show `EmptyState` |
+| A time | `Time` (relative when recent, a date later, the exact time always at hand) |
+| Code | `Code` (inline or a block); long content out of the way `Disclosure` |
 | The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos` |

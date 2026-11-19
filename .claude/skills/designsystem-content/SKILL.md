@@ -20,8 +20,8 @@ Code and comments are English; **on-screen text is Norwegian bokmål** (rule 9).
 
 | State | Write |
 | --- | --- |
-| Empty | One quiet line: what would be here. «Ingen åpne pull requests.» |
-| Error | What went wrong and, where possible, what to do: «Kunne ikke hente pull requesten: GitHub svarte 502». No apology, no vagueness. |
+| Empty | What would be here, and why it is empty when the reader can change that («Ingen treff. Prøv færre filtre.»). When nothing is wrong, say so: «Ingen åpne pull requests. Alt er behandlet.» Where many sections are empty at once, one quiet line each. `EmptyState`. |
+| Error | What happened, then what to do: «Kunne ikke hente pull requesten: GitHub svarte 502». No «Vennligst», «Beklager», «Ups», «ugyldig» or «Noe gikk galt». Use the same words in a summary and next to the field. |
 | Not found | Say what was not found and give a way back. |
 | Waiting | «Venter på review», «Tester kjører»: the state, not «Vennligst vent». |
 | Done | Say what happened: «Lagret». |
@@ -37,12 +37,12 @@ decide, cut at a paragraph and not in the middle of a construct, and say where t
 - Format with `Intl` in **nb-NO** and **Europe/Oslo**: dates `18. nov.`, long `18. november 2026`, time `19:27`. Never a
   hand-written format.
 - A minus is **−** (U+2212), not a hyphen: `−3°`. A range is «−2° / 4°». Figures that line up use `numeric` (tabular numbers).
-- «i dag», «i morgen» are fine for the near; a date for anything older than a few days. Say how old where age matters («Venter 3 dager»).
+- «i dag», «i morgen» are fine for the near; a date for anything older than a few days. Say how old where age matters («Venter 3 dager»). A relative time («for 3 timer siden») always has the exact time with it: use `Time` (relative under seven days, a date after, the exact time in `title` and `datetime`).
 - Units are written the Norwegian way: `mm`, `m/s`, `°`.
 
 ## Status words
 
-Keep one word for one meaning across the page: «Blokkert» (something stops it and it is for you to fix), «Klar til merge»,
+A status is a short word with a symbol, sentence case, never truncated and never colour alone (`Badge`, `StatusLine`). Colour only for what stops something. Keep one word for one meaning across the page: «Blokkert» (something stops it and it is for you to fix), «Klar til merge»,
 «Venter på din review», «Venter på andre», «Utkast», «Stille i 3 dager». Do not invent a second word for the same state.
 
 ## Headings and labels

@@ -65,11 +65,15 @@ Every page that fetches has all four states, designed:
 | State | Do |
 | --- | --- |
 | Loading | Show the page frame at once; a part that waits is `Skeleton`, not a blank. |
-| Empty | One quiet line that says what would be here and what to do («Ingen åpne pull requests.»). |
+| Empty | `EmptyState`: what would be here, why it is empty if the reader can change that, and one next step if there is one. It replaces the whole empty structure (no table headers over no rows). |
 | Error | `ErrorMessage` **in the part that failed**, with what went wrong. One failing source never takes the page down: each part asks for its data and shows its own error. |
 | Not found | `notFound()` and `NotFoundPage`; check an address before it goes into a query. |
 
 State is told **in form** (a symbol and words), and `destructive` is only for what stops something.
+
+**Loading.** Show nothing for a part that arrives within a second (a flash feels slower); use `Skeleton` for what takes longer and for whole regions; announce a group of skeletons once, not each one, with a hidden label («Henter pull requests»).
+
+**Messages.** Choose by scope. A message about the whole page or a section is a `Banner` at the top of its body. A message about one action or one field is inline next to it. A message the reader must answer before going on is a dialog. There is **no toast** (it disappears before it can be read and is hard to reach). A message about what stops something cannot be dismissed until it is solved. Do not show success where it is already evident.
 
 ## 6. Live pages
 

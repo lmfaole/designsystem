@@ -315,6 +315,21 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
 - **Enforced:** `src/lib/icons.test.ts` fails on a `lucide-react` import outside `lib/icons.ts` and `ui/`, on two meanings
   sharing a glyph, and on an `Icon` that is not hidden by default or that takes a class.
 
+## States and messages (8.4)
+
+What a page says when it has nothing, is old, is loading or has failed. Researched against the documentation of GOV.UK, Primer, Carbon and Atlassian; the rules are in the `designsystem-ux` (§5), `designsystem-content` and `designsystem-components` skills and in Storybook, **Guides / States and messages**.
+
+| Component | For |
+| --- | --- |
+| `EmptyState` | Nothing to show: what would be here, why, and one next step. Replaces the whole empty structure |
+| `Banner` | A message about the whole page or a section: old data, a failed source. Cannot be dismissed; `destructive` is announced at once |
+| `Badge` | One short word about a thing, next to its name in a row. Words and symbol, never colour alone |
+| `Time` | A moment: relative under seven days, a date after, the exact time always in `title` and `datetime`; `now` is passed in |
+| `Disclosure` | Longer content out of the way, a native `<details>`; never what matters |
+| `Code` | Code in a sentence or on lines of its own (a block scrolls inside its box and can be focused) |
+
+There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
 ## Migrating to 8.0
 
 **Breaking:**
