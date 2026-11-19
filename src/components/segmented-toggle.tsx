@@ -9,6 +9,8 @@ interface SegmentedToggleOption<T extends string> {
 }
 
 interface SegmentedToggleProps<T extends string> {
+  /** What the switch is about, for a screen reader: «Visning». The buttons are a group with this name. */
+  label: string
   options: SegmentedToggleOption<T>[]
   value: T
   onChange: (value: T) => void
@@ -21,9 +23,9 @@ interface SegmentedToggleProps<T extends string> {
  * `FilterChipGroup`); this always has exactly one option selected and never
  * narrows what's shown below it to a subset, only how it's shown.
  */
-export function SegmentedToggle<T extends string>({ options, value, onChange }: SegmentedToggleProps<T>) {
+export function SegmentedToggle<T extends string>({ label, options, value, onChange }: SegmentedToggleProps<T>) {
   return (
-    <ButtonGroup>
+    <ButtonGroup aria-label={label}>
       {options.map((option) => (
         <Button
           key={option.value}

@@ -336,6 +336,18 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.21
+
+- **Every component page's Accessibility section** is now what the component handles and what the page must still check («You check»), each
+  point with its WCAG 2.2 criterion, and every story says in a line why it exists. Writing them down against the code found claims it did
+  not keep and gaps that are now fixed: the scroll regions of `Heatmap` and `CalendarHeatmap` and the zoom button of `ImageLightbox` have a
+  focus ring, and **`SegmentedToggle` takes a required `label`** (its group had no name). What is not fixed is written under «You check»
+  on the page: `CardTitle` is no heading, `TextLink external`, `DatedLinkTable` and `StoryList` do not say a link leaves, `Logo` has no
+  decorative mode, `PeriodPicker` changes the page on a choice, `PageSection`'s title is always an `h2`.
+- **Visual regression in CI**: `npm run test:visual` compares every story's picture with the reference kept in `__screenshots__`; the
+  Visual workflow makes the references, by hand with «update», and only there.
+- `CalendarHeatmap` and `Heatmap` take `unit` as `{ one, many }`, so a count of one reads «1 visning».
+
 ## 8.20
 
 How well-made design systems use Storybook (Primer, Carbon, Fluent, Spectrum, Polaris, Atlassian; Digdir, NAV Aksel, Equinor, Skatteetaten,
