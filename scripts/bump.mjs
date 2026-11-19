@@ -17,7 +17,7 @@ const wanted = process.argv.slice(2).find((argument) => !argument.startsWith("--
 const REPOSITORY = "https://github.com/lmfaole/designsystem.git"
 const PIN = /(github:lmfaole\/designsystem#)([0-9a-f]{40}|v?\d[\w.-]*)/g
 
-const run = (command, args, options = {}) => execFileSync(command, args, { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"], ...options }).trim()
+const run = (command, args, options = {}) => (execFileSync(command, args, { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"], ...options }) ?? "").trim()
 
 function resolveRef(ref) {
   if (/^[0-9a-f]{40}$/.test(ref)) return ref
@@ -42,10 +42,7 @@ for (const file of files) {
   console.log(`${dry ? "would pin" : "pinned"} ${file}`)
   if (!dry) writeFileSync(file, after)
 }
-if (changed === 0) {
-  console.log(`Every pin is already ${sha}.`)
-  process.exit(0)
-}
+if (changed === 0) console.log(`Every pin is already ${sha}; the lockfile and the skills are still checked.`)
 if (dry) process.exit(0)
 
 run("npm", ["install", "--no-audit", "--no-fund"], { stdio: "inherit" })
