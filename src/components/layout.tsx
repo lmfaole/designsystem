@@ -80,7 +80,7 @@ export function PageColumn({ as: Tag = "div", gap = "lg", width = "reading", chi
  * the extra width of a desktop goes to the pane, while the main content keeps the reading column's 48rem. Put it in a
  * `PageLayout width="pane"`; in the default reading column there is never room, so it stays one column.
  *
- * - `position="start"` (the default): the pane is WHO the page is about, a cover and its facts and the link out; it comes first in the
+ * - `position="start"` (the default): the pane is WHO the page is about, a cover and its facts (the link out stays last in the main content); it comes first in the
  *   document and on a phone, and at the left on a desktop, where it stays in view while the main content scrolls.
  * - `position="end"`: the pane SUPPORTS the main content (related things, help, a summary); it comes after it in the document and on a
  *   phone, and at the right on a desktop.

@@ -16,7 +16,7 @@ reading direction, down.** What is read stands under each other, in one column, 
   first, and spreads the eye's work. There is no `Grid columns="sections"`, no list in columns, and a `SectionGroup`'s subsections
   are always under each other. A test fails if they come back.
 - On a wide screen the LINE does not grow: text stays at 45–75 characters (the 48rem column). The width a desktop has goes, in this
-  order, to (1) a **pane** beside the main content, when the page has something to look up (a cover and its facts, the link out,
+  order, to (1) a **pane** beside the main content, when the page has something to look up (a cover and its facts,
   related things): `PageLayout width="pane"` and `Split` (`position="start"` for who the page is about, `"end"` for support);
   (2) **more across** of what is looked at (pictures, cards, charts) on a `width="wide"` page; (3) otherwise **margin**. Never to
   longer lines, a second list beside the first, or the same content spread thin. See the guide «Wide screens».

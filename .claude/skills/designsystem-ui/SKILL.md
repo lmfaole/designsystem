@@ -20,8 +20,8 @@ fits, the markup becomes a component in the design system, named for what it is,
   (≥75rem), extra-large (≥100rem), as container queries (`@container`), so a part behaves by the room it has wherever it stands. A page
   chooses its width: `reading` (text and lists), `pane` (a detail page: the reading column and a `Split` pane beside it from expanded up),
   `wide` (galleries, charts). Content is never hidden at a width: it moves (a pane goes under), it does not disappear.
-- **A detail page on a desktop:** the cover, its facts and the link out in a `Split` pane (`position="start"`), the lists in the main
-  column; on a phone the pane comes first and the lists follow.
+- **A detail page on a desktop:** the cover and its facts in a `Split` pane (`position="start"`), the lists in the main column and the
+  link out last in it (rule: a link out comes last on the page); on a phone the pane comes first and the lists follow.
 - **Groups:** several parts that belong together are a `SectionGroup` with `SubSection`s, under each other.
 - Check at **400, 768, 1024, 1440 and 2560** px and at 200 % zoom.
 

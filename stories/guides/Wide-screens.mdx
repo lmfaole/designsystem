@@ -20,7 +20,7 @@ px. A longer line makes the eye lose its place on the way back, and a list whose
 
 | | The page has | It gets | With |
 | --- | --- | --- | --- |
-| 1 | Something to **look up** next to what is read: a cover and its facts, the link out, related things | A **pane** beside the main content (about 30 %, at most 20rem), sticky | `PageLayout width="pane"` and `Split` |
+| 1 | Something to **look up** next to what is read: a cover and its facts, related things | A **pane** beside the main content (about 30 %, at most 20rem), sticky | `PageLayout width="pane"` and `Split` |
 | 2 | Mostly things that are **looked at**: pictures, cards of equal weight, charts | **More across** | `PageLayout width="wide"`, `Grid columns="tiles" \| "cards" \| "charts"`, `Tiles` |
 | 3 | Neither | **Margin.** Not wasted: it is what keeps the line short | `PageLayout width="reading"` (the default) |
 
@@ -31,7 +31,7 @@ Never: the same content spread thin, two lists side by side to compare (that is 
 
 `Split` puts its pane **beside** the main content from the `expanded` width class up and **in line** below it.
 
-- `position="start"`: the pane is **who** the page is about (a cover, the facts, the link out). It comes first in the document and on
+- `position="start"`: the pane is **who** the page is about (a cover and its facts; the link out stays last in the main content, as everywhere). It comes first in the document and on
   a phone, at the left on a desktop, and stays in view while the main content scrolls. A detail page.
 - `position="end"`: the pane **supports** the main content (related things, a summary, help). It comes after it in the document and
   on a phone, at the right on a desktop.
