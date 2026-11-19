@@ -338,6 +338,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.15
+
+Six charts for distributions, relations, rhythm and change, from research into graphical perception (Cleveland and McGill), box-plot and histogram practice (Tukey; Freedman and Diaconis), colour-scale and accessibility guidance for heat maps (Visa, Carbon, Smashing, the W3C): `CalendarHeatmap` (days by week, Monday first), `Heatmap` (two categories, optional numbers in the cells), `ScatterChart` (dots, a dashed trend line, r² and a sentence that it is not a cause), `Histogram`, `BoxPlot` and `DumbbellChart` (change between two moments). Every one has a visible summary, a table (`showTable`), an empty state, steps that keep 3:1 (a test) and no meaning in colour alone. The statistics are pure functions in `lib/stats.ts`, `lib/heatmap.ts` and `lib/dumbbell.ts`, with tests.
+
 ## 8.14
 
 New: `LineChart` (several series over time, each named at its line's end, with a dash pattern and not colour alone), `Progress` takes a `target` (a bullet: the value against a goal and a mark where the goal is), `BrandIcon` (GitHub, Spotify, Bluesky, Mastodon; LinkedIn is not in Simple Icons any more, so a link there uses its words). Corrected: the default grey steps of a stacked chart are now `100, 66, 44` (and `100, 72, 52, 44` for lines), the lightest that keep 3:1 against the surface, checked by a test.

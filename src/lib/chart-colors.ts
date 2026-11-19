@@ -15,3 +15,12 @@ export function defaultSeriesColor(index: number): string {
   const share = GREY_STEPS[index]
   return share === undefined ? `var(--series-${Math.min(index + 1, 6)})` : greyStep(share)
 }
+
+/** The strengths of the four heat steps: the lightest keeps 3:1 against the page like the other default steps, and no step is told apart by colour alone (a title, the table and the numbers say it). */
+export const HEAT_SHADES = [44, 60, 80, 100] as const
+
+/** The fill of a heat step; 0 is nothing and has no fill, only a faint edge. */
+export const heatColour = (level: number): string | undefined => {
+  const share = HEAT_SHADES[level - 1]
+  return share === undefined ? undefined : greyStep(share)
+}

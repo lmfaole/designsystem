@@ -22,10 +22,21 @@ series are the foreground at falling strength (100, 66 and 44 %; a fourth series
 | A ranking | `RankedBarChart`, sorted, longest first | |
 | A total split into parts over time | `StackedColumnChart` | |
 | How one whole divides | `DonutChart` only with five parts or fewer and one that dominates; otherwise a ranking | |
+| Whether two measures go together | `ScatterChart`: a dot each, a dashed trend line, r² and «ikke en årsak» in the summary | |
+| The shape of many values of one thing | `Histogram` (Freedman–Diaconis bins, nice edges, bars touching, counts from zero) | |
+| How the values of several groups spread | `BoxPlot` (Tukey: the middle half, the median, whiskers to 1.5 box lengths, single dots beyond) | |
+| Rhythm over days, weeks and months | `CalendarHeatmap` (Monday first, four quantile steps, the months as a table) | |
+| Two categories meeting, for the pattern | `Heatmap` (weekday by hour); `showValues` for a small matrix | |
+| How several things changed between two moments | `DumbbellChart`: a ring at the start, a filled dot at the end, biggest change first | |
 | Exact values | A table (`showTable`) | |
 
 **Not drawn** (GOV.UK, NN/G, Datawrapper): 3D charts, radial gauges (a linear `Progress` is the bullet), a pie or donut of more than five slices, two value axes in one chart, a truncated bar axis, colour as the measure of size, and a chart of fewer than three points (the number says it better).
 More than four series is a table, or one `AreaChart` each in a list, which fits the one-column rule better than a grid of small charts.
+
+**Why these, and how they are drawn** (Cleveland and McGill's ranking of what a person reads accurately: position on a common scale first, then length, then angle and area, then colour).
+The relation, distribution and change charts therefore put the value in a **position** (a dot, a box, a ring) and keep colour for help only: the heat steps are four greys that keep 3:1 and every cell is also in a title and a table, so colour is never the only carrier.
+Heat steps come from **quantiles of the values above zero**, not equal ranges: one very busy day would otherwise turn all the others pale. A day or cell with no data is empty, and a zero is a zero. A scatter plot says in words that a relation is not a cause; a box plot says what a box is; a histogram's bin width follows the spread and the count (Freedman–Diaconis) and its edges are numbers a person would write.
+A dumbbell has one shared axis, so its rows must share a unit and a size; for things of very different size use percent change or one column chart each.
 
 ## 2. Limits
 
