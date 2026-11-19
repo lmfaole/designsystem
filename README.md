@@ -336,6 +336,15 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.17
+
+Wide screens, researched against Material 3 (window size classes, supporting pane), GOV.UK (two-thirds and one-third), Primer (`PageLayout`
+pane) and the research on line length: the line does not grow on a desktop; the width goes to a **pane**, to more pictures across, or to margin,
+in that order. New: `PageLayout width="pane"` (the 48rem reading column and a pane of at most 20rem), `Split position="start" | "end"` (the pane
+is who the page is about, or what supports it), the width classes (`WIDTH_CLASSES`, compact to extra-large, as container queries in rem) and
+the guide **Wide screens**. Fixed: a `Split` in the reading column never had room for its pane (48rem against the 56rem it needs); its main
+column is now held at 48rem, and `page-width.test.ts` holds the numbers to each other. The skills check at 400, 768, 1024, 1440 and 2560 px.
+
 ## 8.15
 
 Six charts for distributions, relations, rhythm and change, from research into graphical perception (Cleveland and McGill), box-plot and histogram practice (Tukey; Freedman and Diaconis), colour-scale and accessibility guidance for heat maps (Visa, Carbon, Smashing, the W3C): `CalendarHeatmap` (days by week, Monday first), `Heatmap` (two categories, optional numbers in the cells), `ScatterChart` (dots, a dashed trend line, r² and a sentence that it is not a cause), `Histogram`, `BoxPlot` and `DumbbellChart` (change between two moments). Every one has a visible summary, a table (`showTable`), an empty state, steps that keep 3:1 (a test) and no meaning in colour alone. The statistics are pure functions in `lib/stats.ts`, `lib/heatmap.ts` and `lib/dumbbell.ts`, with tests.

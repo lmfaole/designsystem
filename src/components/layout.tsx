@@ -76,17 +76,26 @@ export function PageColumn({ as: Tag = "div", gap = "lg", width = "reading", chi
 }
 
 /**
- * A rail of REFERENCE beside the main content on a wide screen (a cover and its facts, the numbers) and above it on a narrow one;
- * never a second list to read: the main content is read from top to bottom, the rail is looked up. The rail
- * comes first in the document and stays in view while the main content scrolls. The container query follows the room
- * the page has, not the screen.
+ * The main content and a PANE beside it from the `expanded` width class up (the page has 56rem of room), under or above it below that:
+ * the extra width of a desktop goes to the pane, while the main content keeps the reading column's 48rem. Put it in a
+ * `PageLayout width="pane"`; in the default reading column there is never room, so it stays one column.
+ *
+ * - `position="start"` (the default): the pane is WHO the page is about, a cover and its facts and the link out; it comes first in the
+ *   document and on a phone, and at the left on a desktop, where it stays in view while the main content scrolls.
+ * - `position="end"`: the pane SUPPORTS the main content (related things, help, a summary); it comes after it in the document and on a
+ *   phone, and at the right on a desktop.
+ *
+ * Never a second list to read and never navigation: the main content is read from top to bottom, the pane is looked up.
  */
-export function Split({ rail, children, gap = "xl" }: { rail: ReactNode; children: ReactNode; gap?: Gap }) {
+export function Split({ rail, children, gap = "xl", position = "start" }: { rail: ReactNode; children: ReactNode; gap?: Gap; position?: "start" | "end" }) {
+  const pane = <aside className="grid min-w-0 content-start gap-4 @4xl:sticky @4xl:top-4">{rail}</aside>
+  const main = <div className="grid min-w-0 content-start gap-6">{children}</div>
+  const columns = position === "start" ? "@4xl:grid-cols-[minmax(16rem,20rem)_minmax(0,48rem)]" : "@4xl:grid-cols-[minmax(0,48rem)_minmax(16rem,20rem)]"
   return (
     <div className="@container min-w-0">
-      <div className={`grid min-w-0 items-start ${GAPS[gap]} @4xl:grid-cols-[minmax(16rem,22rem)_minmax(0,1fr)]`}>
-        <aside className="grid min-w-0 content-start gap-4 @4xl:sticky @4xl:top-4">{rail}</aside>
-        <div className="grid min-w-0 content-start gap-6">{children}</div>
+      <div className={`grid min-w-0 items-start ${GAPS[gap]} ${columns}`}>
+        {position === "start" ? pane : main}
+        {position === "start" ? main : pane}
       </div>
     </div>
   )

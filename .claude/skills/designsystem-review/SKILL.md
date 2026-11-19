@@ -10,7 +10,7 @@ checked. Fix what is a clear violation, report what is a judgement call.
 
 ## 1. Look at it
 
-Render it (Storybook, or the running app) at **400, 1440 and 2560 px**, in **light and dark**. Take a screenshot of each. Open a list
+Render it (Storybook, or the running app) at **400, 768, 1024, 1440 and 2560 px** (the five width classes), in **light and dark**. Take a screenshot of each. Open a list
 and a detail page, not only the front page.
 
 ## 2. Checklist
@@ -22,6 +22,12 @@ and a detail page, not only the front page.
 - [ ] `NavBar` (as `nav` on `PageLayout`) in the same order on every page, the current place marked, never tabs for navigation; `Breadcrumbs` on every page that has a parent (the title is not repeated in a second heading); `SubPages` (one column, not cards) where a page has subpages.
 - [ ] Several things of one kind (reviewers, labels) are several values of one `FactList` term, stacked, never `a, b, c` in one line.
 - [ ] Loading, empty, error and not-found are designed; one failing source does not take the page down.
+
+**Wide screens (guide «Wide screens»)**
+- [ ] No line of text is longer at 2560 than at 1440 (45–75 characters); the extra width went to a pane, to more pictures or cards across, or to margin, in that order.
+- [ ] A detail page with a cover, facts or a link out is `width="pane"` with a `Split`, and the pane is beside the main content from 1024 px; nothing in the pane is the only place something is said.
+- [ ] Nothing is hidden at a width; a pane moves under or above, a gallery takes fewer across.
+- [ ] Breakpoints are container queries by the room a part has, not the device.
 
 **Reading and hierarchy (designsystem-hierarchy)**
 - [ ] Everything that is read is in **one column, under each other**; no `Grid` for text, lists or sections; the rest of a wide screen is margin.

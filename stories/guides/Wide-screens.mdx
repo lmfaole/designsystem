@@ -1,0 +1,68 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Guides/Wide screens" />
+
+# Wide screens and responsive layout
+
+A desktop has more width, not more attention. The question at every width is the same: **what does the reader read, and what do
+they look up?** What is read keeps a line the eye can follow; the width a desktop adds goes to what is looked up or looked at.
+
+Researched against Material 3 (window size classes and canonical layouts: list-detail, supporting pane, feed), GOV.UK (two-thirds
+for the main content, one-third beside it, a page of 1020px), Primer (`PageLayout` with a pane beside the content, sticky, start or
+end), Carbon (2x grid, a page of 1584px) and the research on line length (45–75 characters, about 66 the most comfortable).
+
+## 1. The line does not grow
+
+Text, lists and the sections of a page stand in the **reading column** (48rem, 45–75 characters). It is the same at 1440 and at 2560
+px. A longer line makes the eye lose its place on the way back, and a list whose date is 2000px from its name cannot be read across.
+
+## 2. Where the extra width goes, in this order
+
+| | The page has | It gets | With |
+| --- | --- | --- | --- |
+| 1 | Something to **look up** next to what is read: a cover and its facts, the link out, related things | A **pane** beside the main content (about 30 %, at most 20rem), sticky | `PageLayout width="pane"` and `Split` |
+| 2 | Mostly things that are **looked at**: pictures, cards of equal weight, charts | **More across** | `PageLayout width="wide"`, `Grid columns="tiles" \| "cards" \| "charts"`, `Tiles` |
+| 3 | Neither | **Margin.** Not wasted: it is what keeps the line short | `PageLayout width="reading"` (the default) |
+
+Never: the same content spread thin, two lists side by side to compare (that is a table), a menu in a second column (that is the
+`NavBar`), or a pane that is the only place something is said (on a phone it is under or above, and it must still make sense).
+
+## 3. The pane
+
+`Split` puts its pane **beside** the main content from the `expanded` width class up and **in line** below it.
+
+- `position="start"`: the pane is **who** the page is about (a cover, the facts, the link out). It comes first in the document and on
+  a phone, at the left on a desktop, and stays in view while the main content scrolls. A detail page.
+- `position="end"`: the pane **supports** the main content (related things, a summary, help). It comes after it in the document and
+  on a phone, at the right on a desktop.
+
+It only fits in a `PageLayout width="pane"` (70rem: the 48rem reading column, a 2rem gap and the pane). In the reading column there
+is never room, so a `Split` there stays one column. `page-width.test.ts` holds the numbers to each other.
+
+## 4. Width classes: by the room, not the device
+
+| Class | From | What changes |
+| --- | --- | --- |
+| compact | 0 | One column; a pane stands above (`start`) or under (`end`) |
+| medium | 40rem (640px) | Wider gutters; pictures and cards two or three across |
+| expanded | 56rem (896px) | The pane beside the main content; the reading column at its full width |
+| large | 75rem (1200px) | As expanded, centred; a wide page takes more across |
+| extra-large | 100rem (1600px) | The line still does not grow; a gallery or dashboard takes more across |
+
+They are **container queries** (`@container`), so a part behaves by the room it has wherever it stands (a chart in a pane, a card in a
+grid), and in rem, so they follow the reader's text size: at 200 % zoom a desktop is a compact window, and the page is the phone's.
+
+## 5. Nothing disappears
+
+A narrower window moves things (a pane goes under, a gallery takes fewer across, a table scrolls in its own box); it never hides them.
+There is no «desktop only» and no «mobile only» content. A list-detail view (the list and a detail side by side) is not used: a detail
+has an address of its own (guide «Pages and navigation»), so the list and the detail are two pages.
+
+## 6. Check
+
+At **400, 768, 1024, 1440 and 2560 px**, and at 200 % zoom on a desktop:
+
+1. No line of text is longer at 2560 than at 1440.
+2. From 1024 px a detail page's pane is beside its main content; below, it is above (start) or under (end).
+3. The reader can still read straight down; nothing scrolls sideways but a table in its own box.
+4. Pictures and cards take more across on a wide page, never larger than their natural size.

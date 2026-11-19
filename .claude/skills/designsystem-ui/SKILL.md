@@ -15,9 +15,15 @@ fits, the markup becomes a component in the design system, named for what it is,
 - **One reading direction: down** (rule 7). What is read (text, lists, the sections of a page) stands under each other in the reading
   column (`width="reading"`, 48rem, centred). On a wide screen the rest is margin. See **designsystem-hierarchy**.
 - **Columns are for what is looked at:** `Grid columns="tiles" | "cards" | "charts"` or a number, `Tiles`, and a `Split`
-  rail of reference. A page that is mostly such things is `width="wide"`. Never `Grid` for text, lists or sections.
+  pane. A page that is mostly such things is `width="wide"`. Never `Grid` for text, lists or sections.
+- **Responsive by the room, not the device** (guide «Wide screens»): width classes compact (<40rem), medium, expanded (≥56rem), large
+  (≥75rem), extra-large (≥100rem), as container queries (`@container`), so a part behaves by the room it has wherever it stands. A page
+  chooses its width: `reading` (text and lists), `pane` (a detail page: the reading column and a `Split` pane beside it from expanded up),
+  `wide` (galleries, charts). Content is never hidden at a width: it moves (a pane goes under), it does not disappear.
+- **A detail page on a desktop:** the cover, its facts and the link out in a `Split` pane (`position="start"`), the lists in the main
+  column; on a phone the pane comes first and the lists follow.
 - **Groups:** several parts that belong together are a `SectionGroup` with `SubSection`s, under each other.
-- Check at **400, 1440 and 2560** px.
+- Check at **400, 768, 1024, 1440 and 2560** px and at 200 % zoom.
 
 ## Type
 

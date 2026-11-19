@@ -16,7 +16,7 @@ A place has at most **three levels**: front page → list → detail (in an app 
 | --- | --- | --- | --- |
 | Front page | A **digest** | Do I have to do something now? | `SummaryBar`, `PageSection` with `more`, `Rows` |
 | List | **Everything** of one kind, in groups | What is there? | `SectionGroup`, `SubSection`, `Rows`, `NavBar` |
-| Detail | **One thing**, enough to decide | What is this, what do I do? | `Breadcrumbs`, `PageHeader`, `StatusLine`, `FactList`, `LinkButton` |
+| Detail | **One thing**, enough to decide | What is this, what do I do? | `Breadcrumbs`, `PageHeader`, `StatusLine`, `FactList`, `LinkButton`; on a desktop the picture, facts and link out in a `Split` pane (`PageLayout width="pane"`) |
 
 A thing needs a **detail page** when it has more to say than a row can (a description, a history, checks) *and* the reader needs
 that to decide. A thing that is one line (an hour of the forecast) has none. A detail page has an **address of its own**

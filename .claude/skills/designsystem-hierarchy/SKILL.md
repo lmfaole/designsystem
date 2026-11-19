@@ -15,7 +15,11 @@ reading direction, down.** What is read stands under each other, in one column, 
 - **Never** a grid that makes the reader read across and then down. A row of equal columns puts the order in doubt, hides what is
   first, and spreads the eye's work. There is no `Grid columns="sections"`, no list in columns, and a `SectionGroup`'s subsections
   are always under each other. A test fails if they come back.
-- On a wide screen the rest is **margin, not more columns**.
+- On a wide screen the LINE does not grow: text stays at 45–75 characters (the 48rem column). The width a desktop has goes, in this
+  order, to (1) a **pane** beside the main content, when the page has something to look up (a cover and its facts, the link out,
+  related things): `PageLayout width="pane"` and `Split` (`position="start"` for who the page is about, `"end"` for support);
+  (2) **more across** of what is looked at (pictures, cards, charts) on a `width="wide"` page; (3) otherwise **margin**. Never to
+  longer lines, a second list beside the first, or the same content spread thin. See the guide «Wide screens».
 - **Columns are for what is looked at, not read:** pictures (`Tiles`), charts (`Grid columns="charts"`), cards of equal weight
   (`Grid columns="cards"`), a few figures or chips (`SummaryBar`), and a `Split` rail of *reference* (a cover and its facts)
   beside the main content. A page that is mostly such things is `width="wide"`.
@@ -70,7 +74,8 @@ One column is one path. Do not put two lists side by side to compare (that is a 
 
 ## 10. Check it
 
-1. Look at **400, 1440 and 2560 px**. At each width the reader can read straight down.
+1. Look at **400, 768, 1024, 1440 and 2560 px** (compact, medium, expanded, large, extra-large) and at 200 % zoom. At each width the
+   reader can read straight down; from 1024 px a detail page's pane is beside the main content, and no line is longer at 2560 than at 1440.
 2. Cover all but the first screen: is it clear what matters most?
 3. Squint: are the three levels still different? Is anything shouting that should not?
 4. Follow the left edge: does it say what every row is?

@@ -10,7 +10,7 @@ description: Use when choosing which design system component to use for somethin
 | You need | Use |
 | --- | --- |
 | Things under each other (text, lists, sections) | `Stack`; short things in a line `Inline` |
-| Things that are LOOKED AT in columns | `Grid` (`tiles`, `cards`, `charts`, a count), `Tiles`; a rail of reference `Split` |
+| Things that are LOOKED AT in columns | `Grid` (`tiles`, `cards`, `charts`, a count), `Tiles`; a pane beside the main content `Split` (`position` start or end) in a `PageLayout width="pane"` |
 | The page frame, its title | `PageLayout`, `PageColumn`, `PageHeader` |
 | A titled part of a page | `PageSection`; a set that belongs together `SectionGroup` + `SubSection`; a link to all of it: `more` |
 | Text, a heading, a link | `Text`, `Heading`, `TextLink`; out to another site `ExternalLink`, `LinkButton external` |

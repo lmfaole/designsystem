@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 
-import { PAGE_COLUMN, PAGE_PADDING_Y, READING_COLUMN } from "../lib/page-width"
+import { PAGE_COLUMN, PAGE_PADDING_Y, PANE_COLUMN, READING_COLUMN } from "../lib/page-width"
 
 /** The id of the page area, which the skip link points at. */
 export const MAIN_ID = "main-content"
@@ -15,7 +15,7 @@ const WITH_NAV = "pt-10 pb-[calc(--spacing(24)+var(--safe-bottom))] md:pb-10 md:
  * state, so a server renders it and sends no script for it. `foot` is the room at the bottom: `bar` keeps the page
  * clear of a bar fixed to the foot of the screen. `after` follows the page inside the column.
  */
-export function PageLayout({ foot = "none", width = "reading", nav, after, children }: { foot?: keyof typeof FOOT; /** The app's `NavBar`: the page leaves room for it, at the foot on a phone and at the left from tablet width up. */ nav?: ReactNode; /** `reading` (the default): one column at a readable width, centred. `wide`: the whole page area, for pages that are mostly pictures or charts. */ width?: "reading" | "wide"; after?: ReactNode; children: ReactNode }) {
+export function PageLayout({ foot = "none", width = "reading", nav, after, children }: { foot?: keyof typeof FOOT; /** The app's `NavBar`: the page leaves room for it, at the foot on a phone and at the left from tablet width up. */ nav?: ReactNode; /** `reading` (the default): one column at a readable width, centred. `pane`: the reading column and a `Split` pane beside it on a wide screen (a detail page with a cover and facts). `wide`: the whole page area, for pages that are mostly pictures or charts. */ width?: "reading" | "pane" | "wide"; after?: ReactNode; children: ReactNode }) {
   return (
     <>
       <a
@@ -28,7 +28,7 @@ export function PageLayout({ foot = "none", width = "reading", nav, after, child
       {/* A named container, so a page can bleed out of the column to the width of the page area (`margin-inline: calc(50% - 50cqw)`) without 100vw overshooting. */}
       <main id={MAIN_ID} className="[container:page/inline-size] outline-none">
         <div className={`${PAGE_COLUMN} ${nav === undefined ? FOOT[foot] : WITH_NAV}`}>
-          <div className={width === "reading" ? READING_COLUMN : ""}>
+          <div className={width === "reading" ? READING_COLUMN : width === "pane" ? PANE_COLUMN : ""}>
             {children}
             {after}
           </div>
