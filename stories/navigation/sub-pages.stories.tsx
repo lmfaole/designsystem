@@ -15,6 +15,15 @@ const meta = {
       { href: "#drift", label: "Drift", icon: "info", description: "Om tjenesten kjører, og hvor fersk dataen er." },
     ],
   },
+  parameters: { docs: { description: { component: `**Use it when** a page has subpages: a list in one column under the title (icon, name, one line).
+
+**Do not use it when** top-level places (\`NavBar\`), or as cards or buttons.
+
+**Accessibility.** A \`nav\` with a list of real links.
+
+**Content.** One line says what is on the page, not what it is called.
+
+**Related.** \`NavBar\`, \`Breadcrumbs\`, \`SummaryBar\`` } }, },
 } satisfies Meta<typeof SubPages>
 export default meta
 type Story = StoryObj<typeof meta>

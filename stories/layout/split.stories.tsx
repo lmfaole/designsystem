@@ -10,6 +10,13 @@ const meta = {
   component: Split,
   tags: ["autodocs"],
   args: { rail: null, children: null },
+  parameters: { docs: { description: { component: `**Use it when** a rail of reference (a cover and its facts) stands beside the main content on a wide screen.
+
+**Do not use it when** read content or a menu in a rail (read content stands in one column, navigation is the \`NavBar\`).
+
+**Accessibility.** The rail comes after the main content in the DOM, so the reading order is unchanged.
+
+**Related.** \`Stack\`, \`PageLayout\`` } }, },
 } satisfies Meta<typeof Split>
 export default meta
 type Story = StoryObj<typeof meta>

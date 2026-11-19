@@ -9,6 +9,13 @@ const meta = {
   component: Grid,
   tags: ["autodocs"],
   args: { children: null },
+  parameters: { docs: { description: { component: `**Use it when** things are looked at, not read: pictures, charts, cards of equal weight.
+
+**Do not use it when** the content is text to be read (a grid is read across and then down: \`Stack\`).
+
+**Accessibility.** Order in the DOM is the reading order.
+
+**Related.** \`Stack\`, \`Tiles\`, \`Split\`` } }, },
 } satisfies Meta<typeof Grid>
 export default meta
 type Story = StoryObj<typeof meta>

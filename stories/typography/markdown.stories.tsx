@@ -46,6 +46,15 @@ const meta = {
   component: Markdown,
   tags: ["autodocs"],
   args: { source: SAMPLE },
+  parameters: { docs: { description: { component: `**Use it when** text people wrote in Markdown is shown: a pull request description, a comment.
+
+**Do not use it when** text the app wrote (\`Text\`).
+
+**Accessibility.** Headings are demoted so they never break the page's outline; raw HTML is not shown.
+
+**Content.** Show enough to decide, cut at a paragraph, and say where the rest is.
+
+**Related.** \`Text\`, \`Code\`, \`FactList\`` } }, },
 } satisfies Meta<typeof Markdown>
 export default meta
 type Story = StoryObj<typeof meta>

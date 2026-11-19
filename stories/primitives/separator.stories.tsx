@@ -6,6 +6,13 @@ const meta = {
   title: "Primitives/Separator",
   component: Separator,
   tags: ["autodocs"],
+  parameters: { docs: { description: { component: `**Use it when** a break between two unrelated parts where space does not do it.
+
+**Do not use it when** grouping (space groups; do not draw lines or boxes).
+
+**Accessibility.** A thematic break that is hidden from assistive technology when it is decoration.
+
+**Related.** \`Stack\`, \`PageSection\`` } }, },
 } satisfies Meta<typeof Separator>
 export default meta
 type Story = StoryObj<typeof meta>

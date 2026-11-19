@@ -9,6 +9,15 @@ const meta = {
   tags: ["autodocs"],
   args: { children: "Alfa" },
   decorators: [(Story) => <Table><TableBody><TableRow><Story /></TableRow></TableBody></Table>],
+  parameters: { docs: { description: { component: `**Use it when** a cell of text in a \`Table\`: plain or muted, medium or normal, with prose that may wrap.
+
+**Do not use it when** a column of figures (\`NumberCell\`).
+
+**Accessibility.** A real cell; the header names the column.
+
+**Content.** An empty cell stays empty.
+
+**Related.** \`Table\`, \`NumberCell\`` } }, },
 } satisfies Meta<typeof DataCell>
 export default meta
 type Story = StoryObj<typeof meta>

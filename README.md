@@ -337,6 +337,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## Documentation of a component
+
+Every component's story has the same sections in its description (Storybook, **Docs**): **Use it when**, **Do not use it when** (naming the component to use instead), **Accessibility**, **Content** (the Norwegian wording) and **Related**. A new component is not added without them (see the guide «Status and contributing»). The tokens and the icon catalogue are documented in their own guides.
+
 ## Migrating to 8.0
 
 **Breaking:**

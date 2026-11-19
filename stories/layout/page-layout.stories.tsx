@@ -8,7 +8,13 @@ const meta = {
   component: PageLayout,
   tags: ["autodocs"],
   args: { children: null },
-  parameters: { layout: "fullscreen" },
+  parameters: { docs: { description: { component: `**Use it when** the frame of every page: the skip link, the page area (\`main\`) and the reading column. It takes the \`NavBar\` as \`nav\`.
+
+**Do not use it when** inside a page (a page has one frame).
+
+**Accessibility.** The first thing to tab to is the skip link, which jumps to the page area.
+
+**Related.** \`NavBar\`, \`PageHeader\`, \`Breadcrumbs\`` } }, layout: "fullscreen" },
 } satisfies Meta<typeof PageLayout>
 export default meta
 type Story = StoryObj<typeof meta>

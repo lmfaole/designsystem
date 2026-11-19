@@ -7,6 +7,15 @@ const meta = {
   component: Text,
   tags: ["autodocs"],
   args: { children: "Blåbærsyltetøy på skiva." },
+  parameters: { docs: { description: { component: `**Use it when** running text in the few forms the system has: size, tone, weight.
+
+**Do not use it when** a heading (\`Heading\`) or a label next to a field (\`TextField\`).
+
+**Accessibility.** Real paragraphs; muted text still meets 4.5:1.
+
+**Content.** Plain words, active voice, «du» to the reader.
+
+**Related.** \`Heading\`, \`Lines\`, \`Markdown\`` } }, },
 } satisfies Meta<typeof Text>
 export default meta
 type Story = StoryObj<typeof meta>

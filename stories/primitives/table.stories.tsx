@@ -7,6 +7,15 @@ const meta = {
   component: Table,
   tags: ["autodocs"],
   subcomponents: { TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption },
+  parameters: { docs: { description: { component: `**Use it when** several figures are compared down a column.
+
+**Do not use it when** a list of things the reader opens (\`Rows\`) or facts about one thing (\`FactList\`).
+
+**Accessibility.** A real table with headers; a narrow window scrolls it sideways in a focusable wrapper.
+
+**Content.** Headers are one or two words in sentence case.
+
+**Related.** \`DataCell\`, \`NumberCell\`, \`SortHeader\`, \`SrTableHead\`` } }, },
 } satisfies Meta<typeof Table>
 export default meta
 type Story = StoryObj<typeof meta>

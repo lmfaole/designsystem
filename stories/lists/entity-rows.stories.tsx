@@ -15,6 +15,15 @@ const meta = {
     <EntityRow key="2" picture={<Picture ratio="square" src={square(80, "2")} />} name="Song Two" label="Song Two" detail="Spor 2" count="3 ganger" />,
     <EntityRow key="3" picture={<Picture ratio="square" src={null} />} name="Never played" label="Never played" count="0" muted />,
   ] },
+  parameters: { docs: { description: { component: `**Use it when** the lines of a list on the page of a thing, as a table: its count and the extra belong to the name.
+
+**Do not use it when** a list the reader opens (\`Rows\`).
+
+**Accessibility.** A table: a screen reader hears the count and the extra with the name they belong to.
+
+**Content.** Short lines; the count is a number.
+
+**Related.** \`Rows\`, \`FactList\`` } }, },
 } satisfies Meta<typeof EntityRows>
 export default meta
 type Story = StoryObj<typeof meta>

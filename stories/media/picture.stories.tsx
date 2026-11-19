@@ -8,6 +8,13 @@ const meta = {
   component: Picture,
   tags: ["autodocs"],
   args: { src: poster(10, "A") },
+  parameters: { docs: { description: { component: `**Use it when** one thing's picture in a frame of its own, at the size of a row or a page.
+
+**Do not use it when** decoration, or a picture that carries information (give that its own text).
+
+**Accessibility.** Decorative: the name beside it says what it is. The frame is always there, so rows stay level.
+
+**Related.** \`PictureRows\`, \`Person\`, \`ImageLightbox\`` } }, },
 } satisfies Meta<typeof Picture>
 export default meta
 type Story = StoryObj<typeof meta>

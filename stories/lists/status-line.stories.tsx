@@ -7,6 +7,15 @@ const meta = {
   component: StatusLine,
   tags: ["autodocs"],
   args: { items: [{ text: "Tester OK", icon: "success" }, { text: "Godkjent", icon: "success" }, { text: "Stille i 3 dager", icon: "time", tone: "muted" }] },
+  parameters: { docs: { description: { component: `**Use it when** short statuses stand on one line under a title: «Tester feilet», «Godkjent».
+
+**Do not use it when** one word beside a name in a row (\`Badge\`) or a count that links (\`SummaryBar\`).
+
+**Accessibility.** Each status has a symbol and its words, so colour never stands alone.
+
+**Content.** Sentence case, one meaning for one word; \`destructive\` only for what stops something.
+
+**Related.** \`Badge\`, \`SummaryBar\`, \`Banner\`` } }, },
 } satisfies Meta<typeof StatusLine>
 export default meta
 type Story = StoryObj<typeof meta>

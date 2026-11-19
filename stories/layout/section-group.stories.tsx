@@ -21,6 +21,15 @@ const meta = {
       <SubSection key="c" id="waiting" title="Venter på andre" icon="waiting"><Text size="sm" tone="muted">Ingen.</Text></SubSection>,
     ],
   },
+  parameters: { docs: { description: { component: `**Use it when** several sections belong together under one title with an icon.
+
+**Do not use it when** one section, or sections that are side by side (they stand under each other).
+
+**Accessibility.** The group title is a heading and each subsection one level down.
+
+**Content.** The title says what the sections have in common.
+
+**Related.** \`PageSection\`, \`Stack\`` } }, },
 } satisfies Meta<typeof SectionGroup>
 export default meta
 type Story = StoryObj<typeof meta>

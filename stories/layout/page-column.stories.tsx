@@ -9,6 +9,13 @@ const meta = {
   component: PageColumn,
   tags: ["autodocs"],
   args: { children: null },
+  parameters: { docs: { description: { component: `**Use it when** the one column a page's content stands in, at the reading width or wide.
+
+**Do not use it when** inside another column.
+
+**Accessibility.** —
+
+**Related.** \`PageLayout\`, \`Stack\`` } }, },
 } satisfies Meta<typeof PageColumn>
 export default meta
 type Story = StoryObj<typeof meta>

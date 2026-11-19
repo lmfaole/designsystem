@@ -18,7 +18,15 @@ const meta = {
   component: NavBar,
   tags: ["autodocs"],
   args: { label: "Hovedmeny", title: "Startside", items },
-  parameters: { layout: "fullscreen" },
+  parameters: { docs: { description: { component: `**Use it when** the way between an app's top-level places: a bar at the foot on a phone, a rail from tablet width. Three to five places.
+
+**Do not use it when** going into a page's subpages (\`SubPages\`), narrowing a list (\`FilterChips\`) or switching views (\`SegmentedToggle\`). It is navigation, not tabs.
+
+**Accessibility.** A \`nav\` with real links; the current place is \`aria-current="page"\`; one-word labels under an icon.
+
+**Content.** One word each, the same order on every page.
+
+**Related.** \`Breadcrumbs\`, \`SubPages\`, \`PageLayout\`` } }, layout: "fullscreen" },
 } satisfies Meta<typeof NavBar>
 export default meta
 type Story = StoryObj<typeof meta>

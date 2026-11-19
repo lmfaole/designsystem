@@ -8,6 +8,15 @@ const meta = {
   component: Button,
   tags: ["autodocs"],
   args: { children: "Button" },
+  parameters: { docs: { description: { component: `**Use it when** an action that changes something or sends something: save, send, copy.
+
+**Do not use it when** going to another page (\`LinkButton\`, \`TextLink\`).
+
+**Accessibility.** A real button with a visible label; the focus ring is never removed.
+
+**Content.** A verb: «Lagre», «Opprett», with the thing when it is not clear.
+
+**Related.** \`LinkButton\`, \`ButtonGroup\`, \`CommandButton\`` } }, },
 } satisfies Meta<typeof Button>
 export default meta
 type Story = StoryObj<typeof meta>

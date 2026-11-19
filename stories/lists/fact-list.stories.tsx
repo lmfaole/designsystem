@@ -8,6 +8,15 @@ const meta = {
   component: FactList,
   tags: ["autodocs"],
   args: { facts: [["Utgitt", "1982"], ["Regi", <CardLink key="d" href="#">Ridley Scott</CardLink>], ["Lengde", "117 min"]] },
+  parameters: { docs: { description: { component: `**Use it when** facts about one thing: each term once with one value or several stacked under it (reviewers, labels, assignees).
+
+**Do not use it when** figures to compare across things (\`Table\`), or a list of things (\`Rows\`).
+
+**Accessibility.** A real description list. Terms without a value are left out.
+
+**Content.** Several values are several lines, never a comma-separated string. Terms are nouns.
+
+**Related.** \`Rows\`, \`StatusLine\`, \`Person\`` } }, },
 } satisfies Meta<typeof FactList>
 export default meta
 type Story = StoryObj<typeof meta>

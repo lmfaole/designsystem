@@ -9,6 +9,15 @@ const meta = {
   tags: ["autodocs"],
   subcomponents: { ButtonGroupText, ButtonGroupSeparator },
   args: { children: [<Button key="a" variant="outline">Dag</Button>, <Button key="b" variant="outline">Uke</Button>, <Button key="c" variant="outline">Måned</Button>] },
+  parameters: { docs: { description: { component: `**Use it when** a few related buttons stand together, such as the options of \`SegmentedToggle\`.
+
+**Do not use it when** unrelated actions, or navigation.
+
+**Accessibility.** Buttons keep their own labels and focus order.
+
+**Content.** Short verbs.
+
+**Related.** \`Button\`, \`SegmentedToggle\`` } }, },
 } satisfies Meta<typeof ButtonGroup>
 export default meta
 type Story = StoryObj<typeof meta>
