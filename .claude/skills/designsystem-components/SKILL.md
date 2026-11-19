@@ -20,7 +20,8 @@ description: Use when choosing which design system component to use for somethin
 | A status | `StatusLine` (under a title), `Badge` (next to a name in a row); a count that links `SummaryBar` |
 | A message about a page or section | `Banner`; a failed query `ErrorMessage`; nothing to show `EmptyState` |
 | A time | `Time` (relative when recent, a date later, the exact time always at hand) |
-| Code | `Code` (inline or a block); long content out of the way `Disclosure` |
+| Code | `Code` (inline or a block), `CopyButton` for a value to copy; long content out of the way `Disclosure` |
+| A value against a goal | `Progress`; pages of a long list with addresses `Pagination` |
 | The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos` |

@@ -327,6 +327,9 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Time` | A moment: relative under seven days, a date after, the exact time always in `title` and `datetime`; `now` is passed in |
 | `Disclosure` | Longer content out of the way, a native `<details>`; never what matters |
 | `Code` | Code in a sentence or on lines of its own (a block scrolls inside its box and can be focused) |
+| `CopyButton` | Copies a value that is hard to write by hand and says so in words («Kopiert») in a polite live region |
+| `Progress` | One value against a goal or a limit, as a meter with its label and value in words; never colour |
+| `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
