@@ -40,7 +40,12 @@ Each differs in size, weight or case. **No fourth level of emphasis.** `destruct
 
 - Things that belong together are close: `gap="xs"` or `"sm"`.
 - Groups are further apart: `"lg"` or `"xl"`. **The gap between sections is always larger than the gap inside one.**
-- Do not draw a box or a line to group. A card is only for one self-contained item (`designsystem-ui`, cards).
+- **Three steps of space,** each larger than the one inside it, never the same gap at two levels: inside an item `xs`/`sm`, between items of one group `sm`/`md`, between groups `lg`/`xl`.
+- **A heading is closer to its own content than to what is above it.** Do not put a `Stack` with a bigger gap than the section's own inside a section: the content then reads as two groups.
+- **Space first.** A thin line only when a gap does not separate, a box only when a line does not, one of them for one level and never nested. A card is only for one self-contained item (`designsystem-ui`, cards); one set of facts is a `FactList`.
+- **Grouping is two levels** (`SectionGroup` and `SubSection`); a third level is a page. **Disclosure is two levels:** what is needed, then «Se alle».
+- **Room for what matters.** The most important thing has space around it; a dense part is fine, a crowded page is not.
+- **A row starts with what tells it apart**, not with what every row repeats (move that into the icon or the section title). A heading starts with its meaning.
 
 ## 6. One left edge, a short eye path
 

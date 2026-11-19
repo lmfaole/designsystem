@@ -25,6 +25,11 @@ fits, the markup becomes a component in the design system, named for what it is,
   that line up) and `Heading` (`level` is the element, `look` is the appearance: page, section, label, item).
 - One page `<h1>` (`PageHeader`). Sections are `<h2>`, their parts `<h3>`. Never skip a level for looks.
 - Figures in columns use `numeric` (tabular numbers). Titles are short noun phrases, not sentences.
+- **Three levels, no fourth:** page, section, item. A section is never made by bolding or enlarging `Text`; it is a `Heading`. Bold is for what stops something or the point; no italic.
+- **Paragraphs stand in `Stack width="prose"`** (about 65 characters; 45–90 is the range, GOV.UK says 75 at most). A list, a row or a table can use the whole reading column.
+- **Uppercase** only in short labels (`Heading look="label"`), never a sentence. `xs` is for fine print and secondary notes, never the only place something needed to act is said.
+- Never a size in viewport units; text must survive 200 % zoom and WCAG 1.4.12 text spacing. `<html lang="nb">` is set once.
+- Quotes « », ranges with an en dash and no spaces, a non-breaking space between a number and its unit.
 
 ## Colour and state
 
