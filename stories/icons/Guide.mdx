@@ -7,6 +7,16 @@ import { StatusLine } from "../../src/components/status-line"
 
 # Icons: use them
 
+## Before you reach for one
+
+An icon is not free. Few icons are understood by everyone (home, search, print), the same icon means different things to different people (a heart is love or «save»), and a feature behind an icon nobody recognised goes unused
+(NN/G, *Icon usability*; GOV.UK avoids icons for the same reason). So:
+
+1. **Ask whether the page needs it.** If the word says it, the icon only adds noise. Icons earn their place where a page is scanned again and again: the kind of a row, a status, a section that must be found.
+2. **Use a meaning that exists** before you ask for a new one (Atlassian), and **one meaning for one icon**: a magnifier only ever means search.
+3. **Put the word beside it.** A label that is always visible, never only on hover. An icon alone must be unmistakable and has a `label`.
+
+
 **Use an icon wherever it makes something quicker to find or to understand.** A page of words is slow to scan; a page
 where the kind of a thing, its status and its actions are also drawn is read at a glance. The design system makes this the
 easy way: icons are a meaning you ask for (`<Icon name="failure" />`), the components that show titles, rows, statuses and
@@ -47,16 +57,16 @@ so two pages that mean the same thing show the same symbol, and changing the gly
 
 ## The groups
 
-The catalogue has 65 meanings in seven groups. A group is a place to look first, not a rule about where to use an icon.
+The catalogue has 70 meanings in seven groups. A group is a place to look first, not a rule about where to use an icon.
 
 | Group | For |
 | --- | --- |
 | The work | Code, reviews, tickets and conversations: `pull-request`, `issue`, `discussion`, `merge`, `tasks` |
 | How it stands | The state of a thing: `success`, `failure`, `warning`, `info`, `pending`, `waiting`, `blocked` |
-| People and time | Who and when: `person`, `people`, `view`, `time`, `calendar`, `notification` |
+| People and time | Who and when: `person`, `people`, `view`, `time`, `history`, `calendar`, `notification`, `mail` |
 | Place and weather | Where it is and what the sky does: `place`, `weather`, `rain`, `wind`, `temperature` |
 | Getting around | On foot and by public transport: `walk`, `bus`, `tram`, `metro` |
-| What you can do | Actions: `refresh`, `search`, `add`, `edit`, `delete`, `link`, `external`, `close`, `settings` |
+| What you can do | Actions: `refresh`, `search`, `filter`, `sort`, `copy`, `add`, `edit`, `delete`, `link`, `external`, `close`, `settings` |
 | Direction | Where to go: `back`, `chevron-down`, `chevron-right` |
 
 ## Choosing between close meanings
@@ -77,7 +87,7 @@ These are our conventions, so that two pages that mean the same show the same sy
 | `question`, `discussion` | An unanswered question; a conversation | A comment on a pull request (`discussion` is the kind of thing, not an action) |
 | `place` | A place on the map | The home page (`home`) |
 | `link`, `external` | A link to a place in the app; a link out of the app (always with its words) | Each other |
-| `time`, `calendar` | A duration or an age; a date | Each other |
+| `time`, `history`, `calendar` | A duration or an age; what happened before (a log); a date | Each other |
 
 ## Sizes and tones
 
@@ -91,6 +101,35 @@ stops something; `primary` for the one thing to look at.
 - Where an icon **stands alone and carries the meaning** (the kind of a row), give it a `label` (`iconLabel` on a row).
 - An **icon-only button** needs an `aria-label`.
 - A status must read the same **without colour**: that is why `StatusLine` pairs a symbol with its words.
+
+## Icon and word
+
+- The icon stands **before** the word, at the start of the line, centred on the line's height (not on its baseline), at the size of the text: `md` (16 px) beside 14–16 px text, `sm` (14 px) in small text (Carbon, Atlassian).
+- The icon takes the text's colour (4.5:1 as text). An icon that stands alone and is needed to understand the page needs 3:1 against what is next to it (WCAG 1.4.11); one beside its word, or purely decorative, is exempt.
+- An icon that is **a control** (alone) is at least 24 × 24 px with spacing (WCAG 2.5.8); in practice ours are words with an icon, so this is rare.
+
+## Accessible names
+
+| The icon is | Do |
+| --- | --- |
+| Beside its word | Nothing: it is decorative and hidden from a screen reader (the default) |
+| The kind of a row, alone | `label` on the icon («Pull request»), so the kind is read before the name |
+| A control with no word | A name that says **what it does**, not what it looks like («Kopier kommando», not «Ikon med to ark»), as `aria-label` on the control or hidden text; never `title` alone. When the word on screen changes, change the name too: the accessible name contains the visible one (Primer) |
+
+Do not label the SVG itself for a control; label the control (Sara Soueidan: labelling the `svg` fails in some browser and screen reader pairs).
+
+## State: filled and outline
+
+Material Symbols has a `FILL` axis for a selected or active state, and the usual way is outline for the default and filled for selected. We do **not** use it yet: our states are told with words and the symbol of the state
+(`StatusLine`, `Badge`). If a control needs a filled variant (a favourite that is on), add it as a separate meaning (`favorite-on`), with a real use, rather than a prop.
+
+## Governance
+
+- **Add a meaning** when two real places need it, with the name of what it means, in its group, with its Catalogue entry (it fails to compile without one). One glyph for one meaning (a test fails otherwise).
+- **Change a glyph** in `src/lib/icons.ts`: one line, and every page follows.
+- **Remove or rename** by keeping the old name as an alias for one minor version, then removing it in a major (as for a component).
+- **Brand marks** (GitHub, LinkedIn, Spotify) are marks, not meanings: they do not go in `ICONS`, are never recoloured and always have their name as text.
+- Lucide's own conventions (24 px canvas, 2 px stroke, round caps) are why the set looks the same; do not mix in a glyph from another set.
 
 ## Keep it recognisable
 

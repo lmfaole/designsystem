@@ -49,6 +49,12 @@ and a detail page, not only the front page.
 - [ ] Dates, times and numbers formatted with `Intl` (nb-NO, Europe/Oslo); `−` for minus; counts have singular and plural.
 - [ ] One word per meaning for statuses.
 
+**Colour and icons**
+- [ ] Only tokens; no alpha colour carries text or a mark that needs 3:1; pairs checked on `card` too; `npm test` passes (`theme-contrast.test.ts`).
+- [ ] A state is a symbol and a word; nothing is told by colour alone, in light, dark, forced colours and more contrast.
+- [ ] Each chart names its series; the series are told apart without colour vision.
+- [ ] An icon is needed, has a meaning that exists, stands beside its word, and no sibling shares it; a control with no word has a name that says what it does.
+
 **Installed and server-rendered**
 - [ ] Each source that can fail has its own error that names it and says whether old data is kept; one failing source does not remove another part.
 - [ ] The page says when it was made (`Freshness`); a renewal that stops turns into a warning; offline is a `ConnectionBanner`, not an error; at most one banner.

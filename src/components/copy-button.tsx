@@ -24,7 +24,7 @@ export function CopyButton({ value, label = "Kopier" }: { value: string; label?:
   return (
     <span className="inline-flex items-center gap-2">
       <Button type="button" variant="outline" size="sm" onClick={copy}>
-        <Icon name={state === "done" ? "done" : "link"} slot="start" />
+        <Icon name={state === "done" ? "done" : "copy"} slot="start" />
         {label}
       </Button>
       <span role="status" className="text-muted-foreground text-xs">

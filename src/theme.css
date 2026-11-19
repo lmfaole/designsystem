@@ -79,12 +79,12 @@
     --chart-4: oklch(0.371 0 0);
     --chart-5: oklch(0.269 0 0);
     --radius: 0.625rem;
-    --series-1: oklch(0.5 0.14 250);
-    --series-2: oklch(0.5 0.14 25);
-    --series-3: oklch(0.5 0.14 150);
-    --series-4: oklch(0.5 0.14 330);
-    --series-5: oklch(0.5 0.14 70);
-    --series-6: oklch(0.5 0.14 200);
+    --series-1: oklch(0.52 0.07 239);
+    --series-2: oklch(0.66 0.17 51);
+    --series-3: oklch(0.35 0.10 353);
+    --series-4: oklch(0.66 0.20 299);
+    --series-5: oklch(0.49 0.15 40);
+    --series-6: oklch(0.36 0.20 287);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -113,12 +113,12 @@
     --chart-3: oklch(0.439 0 0);
     --chart-4: oklch(0.371 0 0);
     --chart-5: oklch(0.269 0 0);
-    --series-1: oklch(0.78 0.12 250);
-    --series-2: oklch(0.78 0.12 25);
-    --series-3: oklch(0.78 0.12 150);
-    --series-4: oklch(0.78 0.12 330);
-    --series-5: oklch(0.78 0.12 70);
-    --series-6: oklch(0.78 0.12 200);
+    --series-1: oklch(0.77 0.10 267);
+    --series-2: oklch(0.74 0.14 86);
+    --series-3: oklch(0.62 0.18 2);
+    --series-4: oklch(0.62 0.18 295);
+    --series-5: oklch(0.90 0.15 175);
+    --series-6: oklch(0.90 0.18 105);
 }
 }
 
@@ -135,4 +135,12 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
     }
+}
+
+/* More contrast asked for: the lines between parts, which are decorative otherwise, become as strong as secondary text. (Here, after the tokens, so it wins over them.) */
+@media (prefers-contrast: more) {
+  :root {
+    --border: var(--muted-foreground);
+    --input: var(--muted-foreground);
+  }
 }

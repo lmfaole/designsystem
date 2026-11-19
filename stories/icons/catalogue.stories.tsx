@@ -8,17 +8,17 @@ import type { IconName } from "../../src/lib/icons"
 const GROUPS = [
   ["The work", ["pull-request", "pull-request-draft", "merge", "branch", "issue", "discussion", "question", "changes", "code", "bug", "package", "tag", "tasks"]],
   ["How it stands", ["success", "failure", "warning", "info", "pending", "waiting", "blocked"]],
-  ["People and time", ["person", "people", "view", "time", "calendar", "notification"]],
+  ["People and time", ["person", "people", "view", "time", "history", "calendar", "notification", "mail"]],
   ["Place and weather", ["place", "sun", "moon", "weather", "clouds", "rain", "snow", "fog", "thunder", "wind", "temperature", "rain-drop"]],
   ["Getting around", ["walk", "bus", "tram", "metro"]],
-  ["What you can do", ["refresh", "search", "add", "remove", "edit", "delete", "download", "upload", "link", "external", "close", "done", "settings", "favorite", "bookmark", "locked", "unlocked", "idea", "inbox", "home"]],
+  ["What you can do", ["refresh", "search", "filter", "sort", "copy", "add", "remove", "edit", "delete", "download", "upload", "link", "external", "close", "done", "settings", "favorite", "bookmark", "locked", "unlocked", "idea", "inbox", "home"]],
   ["Direction", ["back", "chevron-down", "chevron-right"]],
 ] as const satisfies readonly (readonly [string, readonly IconName[]])[]
 
 const meta = {
   title: "Icons/Catalogue",
   tags: ["autodocs"],
-  parameters: { docs: { description: { component: "Every meaning a page can ask for with `<Icon name=\"…\" />`, by what it means: 65 meanings in seven groups. The names are the keys of `ICONS` in `src/lib/icons.ts`. Which of two close meanings to use is in **Icons / Guide** (Choosing between close meanings); a new meaning is added there first, with its group." } } },
+  parameters: { docs: { description: { component: "Every meaning a page can ask for with `<Icon name=\"…\" />`, by what it means: 70 meanings in seven groups. The names are the keys of `ICONS` in `src/lib/icons.ts`. Which of two close meanings to use is in **Icons / Guide** (Choosing between close meanings); a new meaning is added there first, with its group." } } },
 } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>

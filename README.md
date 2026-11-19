@@ -337,6 +337,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## Colour and icons (8.11)
+
+Researched against Primer, Atlassian, Radix, Carbon, GOV.UK, NN/G, WCAG and MDN. `src/theme-contrast.test.ts` works out the contrast of every token pair from `theme.css` on each `npm test` (text 4.5:1, marks 3:1, the decorative lines under 3:1 on purpose, the chart series told apart in four kinds of vision) with `src/lib/colour.ts`, which has no dependency. The six `series-*` colours were changed to differ in lightness as well as hue; `shell.css` repairs forced colours and `theme.css` answers `prefers-contrast: more`. Five icon meanings were added (`copy`, `mail`, `history`, `filter`, `sort`). The guides **Colour and state** (with a routine for a change) and **Icons / Guide** (before you reach for one, icon and word, accessible names, governance) and the skills have the rules.
+
 ## Installed apps and server rendering (8.10)
 
 Researched against web.dev, MDN, the WebKit blog, React, Next.js, Astro, Primer and NN/G; the rules are in the guides **Installed apps (PWA)**, **Server rendering** and **Fresh data and offline** (Storybook) and in the skills.

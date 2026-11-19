@@ -46,3 +46,35 @@
     user-select: none;
   }
 }
+
+/*
+ * Forced colours (Windows high contrast). The browser replaces colours, drops box-shadows and background images, so what was told by a
+ * fill or a shadow disappears. Small repairs only, as MDN advises, not a second design: focus is a real outline, a control that is only
+ * a fill gets an edge, the current place gets a line, and a bar that is only a fill gets a border. Icons take `currentColor`, so they
+ * follow the text.
+ */
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  :where(button, [role='button']) {
+    border: 1px solid ButtonBorder;
+  }
+
+  :where(nav a[aria-current]:not([aria-current='false'])) {
+    outline: 2px solid CanvasText;
+    outline-offset: -2px;
+  }
+
+  :where([role='meter'], [data-slot='skeleton']) {
+    border: 1px solid CanvasText;
+  }
+
+  /* The filled part of a meter is only a background, which is dropped: keep it as the text colour. */
+  [role='meter'] > * {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

@@ -49,6 +49,14 @@ A card (`Card`) is only for **one self-contained item** that is comparable with 
 or a frame around a chart. It needs real content of its own and at least two of its kind. Everything else is a `PageSection`
 with a list, a table, a `dl` or `Text`. Cards are not nested (rule 8).
 
+## Colour rules
+
+- Colour comes from tokens only. The interface has one colour (`destructive`); a state is a symbol and a word. A second colour is a new role with a symbol, measured first (guide «Colour and state»).
+- **Alpha never carries text or a mark that needs 3:1** (`border` and `input` are decorative, about 1.3:1; a field takes its edge from `muted-foreground`). Check a pair on `card` as well as on the page.
+- Chart colours: `series-*` are six that differ in lightness as well as hue and are told apart for every kind of colour vision; a chart still names its series. Never rely on the lightest default steps or a `chart-*` step alone.
+- A part with a shadow-only edge or a fill-only state also has a border or a mark (forced colours drop shadows and fills). Icons use `currentColor`.
+- A change to a token: `npm test` (`theme-contrast.test.ts`), the numbers in Tokens / Overview, the Accessibility panel in light and dark, and a look at hover, focus, selected, disabled and error.
+
 ## Icons (rule 10)
 
 Use an icon wherever it makes something **quicker to find or to understand**: a section title (`icon`), the kind of a row

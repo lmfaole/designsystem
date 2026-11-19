@@ -8,8 +8,8 @@ The tokens are the custom properties of `src/theme.css` (colour, radius, the fon
 and a dark set. A page uses them through the components and never writes a colour, a radius or a duration of its own. This page says what each
 is for and how it measures; the live swatches are in the other pages of **Tokens**.
 
-The contrast ratios are **calculated from the values in `theme.css`** (WCAG relative luminance, the colour converted from oklch; a value with
-transparency is laid over the page background). They are as exact as that conversion; check a new colour with a contrast tool before you rely on it.
+The contrast ratios are **calculated from the values in `theme.css`** (WCAG relative luminance, the colour converted from oklch; a value with transparency is laid over the surface
+behind it, mixed in encoded sRGB the way a browser does). `src/theme-contrast.test.ts` works them out on every `npm test` and fails when a text pair is under 4.5:1 or a mark that carries meaning is under 3:1, so the numbers below are checked, not just written.
 
 ## 1. Colour roles
 
@@ -27,8 +27,8 @@ alone. The six `series-*` hues exist for a chart that asks for colours of its ow
 | `muted` | A quiet surface (a code box, a skeleton) | — | — |
 | `muted-foreground` | Secondary text | 6.0 | 7.6 |
 | `destructive` | What stops something and is for you to fix | 4.8 | 6.8 |
-| `border` | Lines between parts | 1.3 | 2.9 |
-| `input` | The edge of a field | 1.3 | 3.8 |
+| `border` | Lines between parts | 1.3 | 1.3 |
+| `input` | A decorative line at the edge of a field | 1.3 | 1.5 |
 | `ring` | The focus ring | 4.7 | 4.2 |
 | `logo-plate` | The light plate under a dark logo | — | — |
 
@@ -36,8 +36,9 @@ How to read the numbers: text needs **4.5:1**, and the parts of a control or a m
 
 - **Secondary text** (`muted-foreground`) is 6.0:1 on the page and 5.5:1 on a `muted` surface in light, and 7.6:1 and 5.8:1 in dark, so it can be used for
   small text on both. (It was 4.3:1 on a `muted` surface in light until 8.8, which is why the value was darkened.)
-- **`border` is for a line between parts, not for the edge of something the reader must find.** In light it is 1.3:1, so it never marks a control on its own:
-  a field takes its edge from `muted-foreground` (`TextField`, `SearchField`) and a button has a fill or a visible edge of its own.
+- **`border` and `input` are for a line between parts, not for the edge of something the reader must find.** They are 1.3:1 in light and 1.3 and 1.5:1 in dark (they are
+  translucent, so they also change with what is behind them), so they never mark a control on its own: a field takes its edge from `muted-foreground` (`TextField`, `SearchField`) and a button has a fill or a visible edge of its own.
+- **Check a pair on `card` as well as on the page.** `muted-foreground` is 6.0:1 on both in light and 7.6 and 6.9:1 in dark; `destructive` is 4.8:1 on both in light and 6.8 and 6.2:1 in dark. `destructive` text on a `muted` surface is 4.4:1 in light, so it is not set there.
 - **The focus ring** is 4.7:1 on the page in light and 4.2:1 in dark, so it can always be seen. It is never removed.
 - Pair a surface only with its own `-foreground`: `primary` with `primary-foreground`, never with `foreground`.
 
@@ -51,13 +52,14 @@ How to read the numbers: text needs **4.5:1**, and the parts of a control or a m
 
 What this means for a chart, measured on the page background:
 
-- The default series steps are 19.8, 9.8 and 4.7:1 at 100, 72 and 52 % in light (19.0, 8.9 and 4.7 in dark). **The two lightest steps (36 and 24 %) are
+- The default series steps are 19.8, 9.8 and 4.7:1 at 100, 72 and 52 % in light (19.0, 8.9 and 4.7 in dark). **The two lightest default steps (36 and 24 %) are
   about 2.7 and 1.9:1**, below 3:1 in both modes. A mark told apart only by those steps is not enough: name the series on the chart and keep the gap
   between parts (guide «Data visualisation»).
 - `chart-1` is 1.5:1 on a light page and `chart-3` to `chart-5` are 2.5, 1.9 and 1.3:1 on a dark one, because the ramp is the same in both modes. Do not
   rely on a `chart-*` step alone for a mark that carries meaning.
-- The `series-*` hues are 5.2 to 6.5:1 in light and 9.4 to 10.4:1 in dark: they meet 3:1 on the page. They are told apart by hue, so a chart that uses them
-  still names its series (colour is never the only signal), and they are never used for a state.
+- The `series-*` colours are six that differ in **lightness as well as hue**, so they can be told apart without colour vision. They are 3.3 to 12.0:1 on a light page and 4.9 to 15.6:1 on a dark one (4.5 to 14.1 on a dark card),
+  and they sit inside the sRGB gamut, so a browser shows them as written. Measured with the simulations of Machado et al. (2009), no two of them are closer than 16 in oklab distance (times 100; 8 is plainly different) in normal vision, protanopia, deuteranopia or
+  tritanopia. Before 8.11 they were six hues of one lightness, and two pairs were 1.2 and 0.6 apart for deuteranopia. They carry no meaning and a chart that uses them still names its series, because colour is never the only signal. They are never used for a state.
 
 ## 3. Radius
 

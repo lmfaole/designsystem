@@ -59,6 +59,13 @@ The Storybook panel and tools like axe and WAVE miss issues (GOV.UK service manu
 5. **Greyscale:** is every state still told apart?
 6. **Reduced motion:** turn it on; nothing should move.
 
+## Colour and icons
+
+- Colour is never the only signal (WCAG 1.4.1): a symbol and a word, and a green and red pair needs another cue even at 3:1. Text is 4.5:1; marks, edges and the focus ring 3:1 (1.4.11); a test checks the token pairs, in light and dark.
+- **Forced colours and more contrast** are supported with small repairs in `shell.css`; a new component is looked at in both (Playwright `emulateMedia({ forcedColors: 'active', contrast: 'more' })`).
+- An icon beside its word is decorative (hidden). An icon that is the kind of a row has a `label`. An icon with no word is a control whose **name says what it does** (not what it looks like), as `aria-label` or hidden text, never `title` alone, and the accessible name contains the visible label. Label the control, not the `svg`.
+- Never the same icon on sibling items, and never one icon for two meanings.
+
 ## Charts
 
 - **Every chart has its numbers as a table** a screen reader can move through (`ChartTable`; the chart itself takes no focus and a tooltip is for a pointer) and a title that states what it shows with the unit and the period. A slice or a bar too small to reach with a pointer is only reachable in the table (Carbon, chart anatomy).
