@@ -1,0 +1,36 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Guides/Motion" />
+
+# Motion
+
+Motion orients; it does not decorate. If the reader sees it often, make it smaller or take it away (Carbon). Durations and easings are the
+`--motion-*` tokens in `motion.css`; app code never writes its own.
+
+## 1. Tokens
+
+| Token | Value |
+| --- | --- |
+| `--motion-duration-instant` | 100 ms |
+| `--motion-duration-fast` | 150 ms |
+| `--motion-duration-base` | 250 ms |
+| `--motion-duration-slow` | 450 ms |
+| `--motion-duration-live` | 2400 ms |
+| `--motion-ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` |
+| `--motion-ease-in` | `cubic-bezier(0.7, 0, 0.84, 0)` |
+| `--motion-ease-in-out` | `cubic-bezier(0.65, 0, 0.35, 1)` |
+| `--motion-distance` | 0.75 rem |
+| `--motion-stagger` | 60 ms |
+
+The duration grows with the size of the change (Carbon): a hover is not a chart growing.
+
+## 2. Rules
+
+- **Entrances move and never fade text.** A fade hands a contrast checker half-transparent text.
+- Motion tells where something came from or that something changed. Nothing moves for its own sake.
+- `Reveal`, `CountUp` and the staggered entrances are the shared movements; use them rather than a keyframe of your own.
+
+## 3. Reduced motion
+
+Under `prefers-reduced-motion: reduce` every duration is 0.01 ms and the stagger is 0, so nothing travels. What remains is static: a row that
+arrives is simply there, and what changed is said in text («ny»), never only by movement (Carbon: say it statically too).

@@ -1,0 +1,50 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Guides/Data visualisation" />
+
+# Data visualisation
+
+Our charts are `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart` and `RankedBarChart`, in a `ChartFrame` or a `ChartCard`. The
+palette is grey on purpose: the one colour (`destructive`) is for what stops something, so colour never carries the meaning.
+
+## 1. Choose
+
+| The reader wants | Use |
+| --- | --- |
+| A trend over time | `AreaChart` |
+| Compare a few categories | `ColumnChart` |
+| A ranking | `RankedBarChart` |
+| A total split into parts over time | `StackedColumnChart` |
+| One whole split into a few parts | `DonutChart` |
+| One number | A `SummaryBar` or a `FactList`, not a chart |
+| Exact values | A table |
+
+## 2. Limits (Primer)
+
+Line 5 series or fewer; bars 10 or fewer; stacked 5 segments; a donut 5 slices with the rest folded into «Annet». More than that is a table.
+
+## 3. Without colour
+
+Name the series on the chart before using a legend; separate neighbouring parts with a thin gap in the background colour; lines are 2 px,
+the first solid and later ones dashed with another marker. Marks meet 3:1 against the background (the lightest chart grey needs an outline) and
+axis text 4.5:1. A legend is only for more than one series that is not named directly.
+
+## 3b. Title and labels
+
+The title says what the chart shows, with the unit and the period: «Temperatur siste 24 timer: fra −2° til 4°» (Carbon: titles state the insight).
+Axes show their units. Figures use tabular numbers.
+
+## 4. Access
+
+The chart draws; the numbers are in a `ChartTable` next to it that a screen reader moves through, and the chart takes no focus. A tooltip repeats
+what the table has and is for a pointer. A slice too small to reach is only reachable in the table (Carbon).
+
+## 5. States
+
+Loading is a skeleton at the chart's final height, so the page does not jump. Empty is a sentence that says why, with no axes drawn. An error
+says what failed, in the part that failed.
+
+## Sources
+
+[Carbon chart anatomy](https://carbondesignsystem.com/data-visualization/chart-anatomy/),
+[Primer data visualization](https://primer.style/product/ui-patterns/data-visualization/).

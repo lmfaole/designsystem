@@ -38,6 +38,10 @@ component to fix accessibility: fix the component (see **designsystem-components
 10. **Zoom and reflow:** at 400 px width and 200 % zoom nothing is cut off and nothing scrolls sideways except a table in its own box.
 11. **Contrast:** use the tokens (they are checked in light and dark). Never lower contrast with opacity on text.
 
+## What automation cannot find
+
+The Storybook panel and tools like axe and WAVE miss issues (GOV.UK service manual): reading order, whether a name means something out of context, link text, alt text, whether focus lands somewhere sensible after a page change or a dialog, whether a live region's wording makes sense, and whether a chart has an equivalent. Check these by hand.
+
 ## How to check
 
 1. **Storybook:** open the story, the **Accessibility** panel at the bottom must show no violations in light and dark.
@@ -46,6 +50,27 @@ component to fix accessibility: fix the component (see **designsystem-components
 4. **Zoom:** 400 px wide and 200 % zoom.
 5. **Greyscale:** is every state still told apart?
 6. **Reduced motion:** turn it on; nothing should move.
+
+## Charts
+
+- **Every chart has its numbers as a table** a screen reader can move through (`ChartTable`; the chart itself takes no focus and a tooltip is for a pointer) and a title that states what it shows with the unit and the period. A slice or a bar too small to reach with a pointer is only reachable in the table (Carbon, chart anatomy).
+- **Never shade alone.** Name the series on the chart (direct labels) before a legend; separate neighbouring parts with a 1–2 px gap in the background colour; marks meet 3:1 against the background and axis text 4.5:1 (Primer, data visualization). Lines are 2 px; the first is solid and later ones are dashed with another marker.
+- **Limits** (Primer): line 5 series or fewer, bars 10 or fewer, stacked segments 5, a donut 5 slices with the rest folded into «Annet».
+- Loading, empty and error are designed for a chart too: a skeleton at the chart's final height (no layout shift), a sentence for empty with no axes drawn, and the error in the part that failed.
+
+## Forms (rare, but they exist)
+
+- A visible label above the field; the hint and the error stay visible beside it (no tooltip) and are tied with `aria-describedby`. The error says what is wrong and how to fix it, begins with a hidden «Feil:», and has the same words in the `FormErrorSummary` and beside the field.
+- **Validate on submit**, not while typing or on leaving the field, and on the server too. After submit show the summary at the top and move focus to it, list each error as a link to its field, and keep what the reader wrote. Do not use the HTML `required` attribute (use `novalidate` and say it in words); mark only the minority: «(valgfritt)» when most fields are required. (GOV.UK, validation and error summary.)
+- A switch takes effect at once; a checkbox needs an explicit save. The label names the setting, not the state (Primer, toggle switch). Read-only is shown as text; avoid `disabled` and say why.
+
+## Tables
+
+`aria-sort` on the sorted column header, and the sort control is a link or button of at least 24 px (`SortHeader`). A table that scrolls sideways in a narrow window has a focusable wrapper. A page change is announced («11–20 av 100»); nothing is announced for content that arrives within 750 ms. (Primer, data table accessibility.)
+
+## Targets
+
+WCAG 2.2 target size (2.5.8) is 24 × 24 CSS px; the exceptions are spacing (a 24 px circle centred on the target overlaps no other target), an equivalent control, an inline link in a sentence, a browser control and what is essential. Ours are larger than that on touch.
 
 ## Common mistakes
 

@@ -1,0 +1,45 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Badge } from "../../src/components/badge"
+
+<Meta title="Guides/Colour and state" />
+
+# Colour and state
+
+The theme is monochrome. There is **one** colour, `destructive`, and it is for what stops something and is for you to fix. Everything else is
+told in form: a symbol and words.
+
+## 1. Roles
+
+| Token | Role |
+| --- | --- |
+| `background`, `foreground` | The page and its text |
+| `muted`, `muted-foreground` | Quiet surfaces and secondary text |
+| `primary`, `primary-foreground` | The one strong action |
+| `secondary`, `accent` | Hover and selected surfaces |
+| `destructive` | What stops something |
+| `border`, `input`, `ring` | Lines, field edges, the focus ring |
+| `chart-1` to `chart-5` | The grey series of a chart (see Data visualisation) |
+
+A page uses the tokens and never a colour of its own. Light and dark are the same tokens with other values.
+
+## 2. State is never colour alone
+
+A state has **a symbol, a word and a place**: <Badge icon="failure" tone="destructive">Feilet</Badge> <Badge icon="pull-request-draft">Utkast</Badge>
+<Badge tone="muted">Arkivert</Badge>. Use one word for one meaning across the page, and put the symbol before the word. Attention goes from
+what needs the reader now (`destructive`), through feedback and progress, to what only changed.
+
+## 3. Contrast
+
+Text is 4.5:1 against its background, and 3:1 for large text and for the parts of controls and marks that carry meaning (Atlassian,
+WCAG). Muted text is for secondary information and still meets 4.5:1. The lightest chart grey is under 3:1 on white, so it carries an
+outline.
+
+## 4. Selected and focused
+
+A selected item and a focused item are different things. When both apply, both show (Atlassian): the focus ring is never removed from the selected one.
+
+## Sources
+
+[Atlassian, colour](https://atlassian.design/foundations/color/),
+[Carbon, status indicators](https://carbondesignsystem.com/patterns/status-indicator-pattern/).

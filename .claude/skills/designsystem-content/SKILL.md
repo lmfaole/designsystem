@@ -38,12 +38,24 @@ decide, cut at a paragraph and not in the middle of a construct, and say where t
   hand-written format.
 - A minus is **−** (U+2212), not a hyphen: `−3°`. A range is «−2° / 4°». Figures that line up use `numeric` (tabular numbers).
 - «i dag», «i morgen» are fine for the near; a date for anything older than a few days. Say how old where age matters («Venter 3 dager»). A relative time («for 3 timer siden») always has the exact time with it: use `Time` (relative under seven days, a date after, the exact time in `title` and `datetime`).
-- Units are written the Norwegian way: `mm`, `m/s`, `°`.
+- Units are written the Norwegian way: `mm`, `m/s`, `°`, without a period, and money as «kr» after the number («500 000 kr»). Thousands are grouped in threes with a space (`Intl` gives a non-breaking one), never a comma or a period, and a number and its unit or `%` stay together («93 %»).
+- A time is `19:27` and in a sentence «kl. 19:27» (what `Intl` gives in nb-NO; Skatteetaten writes it with a colon, while Aksel writes «kl. 14.00», so we follow one and keep it). A range is «fra 08:00 til 15:30» or an en dash without spaces («9–15», «2020–2025»), never a spaced hyphen. Avoid «24:00»: say «ved midnatt».
+- Small numbers in running text are words up to twelve and digits above; **counts and figures that are the point stay digits** («2 åpne kommentarer», «Se alle 14»).
 
 ## Status words
 
 A status is a short word with a symbol, sentence case, never truncated and never colour alone (`Badge`, `StatusLine`). Colour only for what stops something. Keep one word for one meaning across the page: «Blokkert» (something stops it and it is for you to fix), «Klar til merge»,
 «Venter på din review», «Venter på andre», «Utkast», «Stille i 3 dager». Do not invent a second word for the same state.
+
+## Wording buttons, links and titles
+
+- **Verbs for actions, not noun phrases:** «Åpne på GitHub», not «Åpning av GitHub»; «Lagre», not «Lagring».
+- **A link says where it goes.** Never «Les mer», «Mer info» or «Klikk her». A file gets its type in parentheses: «Årsrapport (pdf)».
+- Write **«du»** to the reader. Sentence case in titles and labels; a list item that is a full sentence takes a capital and a full stop, a fragment neither.
+- Explain **why** a question is asked when it is not obvious, and say what happens next.
+- A copy button says «Kopier» and then «Kopiert».
+
+Sources: Aksel, *Skriveregler i Nav* and *Skriveguide* (aksel.nav.no); Skatteetaten, *Skriveregler* (skatteetaten.no).
 
 ## Headings and labels
 

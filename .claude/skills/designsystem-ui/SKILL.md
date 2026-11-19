@@ -34,6 +34,10 @@ fits, the markup becomes a component in the design system, named for what it is,
   symbol and words. Colour is never the only signal (see **designsystem-accessibility**).
 - Light and dark follow `prefers-color-scheme`; both are checked in Storybook.
 
+## Charts
+
+Colour is not the code: a chart in the grey palette is told apart by direct labels, then pattern, dash and marker, never by shade alone. Marks meet 3:1 against the background (the lightest chart grey needs an outline), neighbouring parts are separated by a thin gap, and values use tabular numbers. Limits per chart and the table behind it are in `designsystem-accessibility` (Charts). `destructive` marks only the one value that stops something, with a symbol and a word.
+
 ## Cards
 
 A card (`Card`) is only for **one self-contained item** that is comparable with its siblings or clickable as a whole,

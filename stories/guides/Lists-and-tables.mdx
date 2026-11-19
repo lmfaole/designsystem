@@ -1,0 +1,55 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Pagination } from "../../src/components/pagination"
+import { SearchField } from "../../src/components/search-field"
+
+<Meta title="Guides/Lists and tables" />
+
+# Lists and tables
+
+## 1. Choose
+
+| It is | Use |
+| --- | --- |
+| Things the reader opens, each with a name and a status | `Rows` (one column, name strongest) |
+| Things with several figures to compare down a column | `Table` |
+| Hundreds of rows on one page | `VirtualRows`, or a progressive count with «Se alle» |
+| Many pages with an address each | `Pagination` |
+
+## 2. Order and size
+
+- Default to the most recent first, or alphabetical by the first column (Primer, data table).
+- Start paging at about 20 rows. Before that, show them all.
+- A sorted column says so: `SortHeader` sets `aria-sort` and is a link, so the sorted page has an address.
+- Leave an empty cell empty; never a dash (Primer).
+
+## 3. Find
+
+<SearchField label="Søk i listen" action="#" />
+
+A short list needs nothing. A list of a few known values has `FilterChips`. A long list has a `SearchField` above it, and says how many
+there were («5 treff»). When filters are active, say so: «2 filtre er på. Nullstill.»
+
+## 4. Pages
+
+<Pagination current={3} total={12} hrefFor={(page) => `?side=${page}`} />
+
+Real links, «Forrige» and «Neste» in words, the current page marked. A page change is announced («11–20 av 100»); nothing is announced when content
+arrives within 750 ms (Primer, data table accessibility).
+
+## 5. States
+
+- **Loading:** a `Skeleton` that matches the column widths and the height of a row, so nothing jumps.
+- **Empty:** an `EmptyState`; no table headers over no rows.
+- **Error:** a `Banner` or `ErrorMessage` in the part that failed.
+
+## 6. A narrow window
+
+Keep the key columns and scroll the rest sideways inside a focusable wrapper, or drop the least important columns (Primer). A list of
+text is never put in columns; on a phone `Rows` is already one column.
+
+## Sources
+
+[Primer data table guidelines](https://primer.style/product/components/data-table/guidelines/),
+[Primer data table accessibility](https://primer.style/product/components/data-table/accessibility/),
+[Carbon data table](https://carbondesignsystem.com/components/data-table/usage/).
