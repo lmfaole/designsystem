@@ -337,6 +337,19 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## Installed apps and server rendering (8.10)
+
+Researched against web.dev, MDN, the WebKit blog, React, Next.js, Astro, Primer and NN/G; the rules are in the guides **Installed apps (PWA)**, **Server rendering** and **Fresh data and offline** (Storybook) and in the skills.
+
+| Component or helper | For |
+| --- | --- |
+| `Freshness` | When the page's data was made («Oppdatert 19:27»); past a threshold a warning in words. A still line, not a live region |
+| `ConnectionBanner` | «Du er frakoblet» in a live region that is always on the page; a hint, never a gate |
+| `StreamedSection`, `SectionSkeleton` | A part that arrives on its own, with a skeleton at its final height and one status |
+| `webManifest()`, `inScope()` (`lib/manifest.ts`) | A manifest that meets what browsers need, or an error; a scope check on a whole segment |
+
+A component that uses a hook or a handler starts with `"use client"`, and none reads the clock or a random number in render: `src/server-safe.test.ts` fails otherwise. Components that are client components: `ChartFrame`, `CommandButton`, `CopyButton`, `FormErrorSummary`, `Freshness`, `ConnectionBanner`, `Overlay`, `SegmentedToggle`, `VirtualTbody`. (Five of these had no `"use client"` until 8.10, which would fail in a server component such as a Next.js page.)
+
 ## Documentation of a component
 
 Every component's story has the same sections in its description (Storybook, **Docs**): **Use it when**, **Do not use it when** (naming the component to use instead), **Accessibility**, **Content** (the Norwegian wording) and **Related**. A new component is not added without them (see the guide «Status and contributing»). The tokens and the icon catalogue are documented in their own guides.

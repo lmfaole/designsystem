@@ -78,7 +78,18 @@ State is told **in form** (a symbol and words), and `destructive` is only for wh
 ## 6. Live pages
 
 A page that updates while open keeps what is on screen until the new content has arrived, never empties, and says when it was
-last built («oppdatert 19:27»). Pause when the window is hidden or offline.
+last built (`Freshness`: «Oppdatert 19:27»). Pause when the window is hidden, and renew when it comes back or is restored from the back/forward cache.
+
+- **Every source that can fail has its own error,** names the source, and says whether old data is kept. A part that fails keeps its last good data where there is some. One failing source never removes another part.
+- **Stale and offline are states with a time and an action, not errors:** past the threshold `Freshness` becomes a warning in words; offline is a `ConnectionBanner`. Never disable a control because a source is down. At most one banner on a page.
+- **A renewal that takes under a second shows nothing;** a part that is on its way is a `StreamedSection` with a skeleton at its final height, never `null`.
+- A retry is a button in the failed part, «Prøv igjen», and only where the reader has no other way (an installed app has no reload button).
+- Auto-updating content has a way to pause or stop it, or a reason why it is essential (WCAG 2.2.2).
+
+## 7. Installed and server-rendered
+
+- **An installed app has no browser around it:** every page below the top has a visible way up (`Breadcrumbs`), links stay in the window, and a link out is marked and last. There is no install button.
+- **A page renders on the server and in the browser with the same first render:** no clock, random number or `window` in render; time is passed in. See the guides **Server rendering** and **Installed apps (PWA)**.
 
 ## Don't
 

@@ -38,6 +38,14 @@ component to fix accessibility: fix the component (see **designsystem-components
 10. **Zoom and reflow:** at 400 px width and 200 % zoom nothing is cut off and nothing scrolls sideways except a table in its own box.
 11. **Contrast:** use the tokens (they are checked in light and dark). Never lower contrast with opacity on text.
 
+## Live and offline
+
+- A live region exists **before** it changes. `polite` for a status, `assertive`/`alert` only for what stops something. A renewal that happens by itself is not announced; offline, back and a failure are, once.
+- `navigator.onLine` is a hint, never a gate: it says a network exists, not that a source can be reached.
+- Content that updates by itself next to other content can be paused, stopped or hidden, or its rate controlled, unless it is essential (WCAG 2.2.2).
+- A retry control keeps focus and uses `aria-busy` while it runs. Push is asked for from a tap.
+- A skeleton group is **one** status with a hidden label, not one announcement per bar.
+
 ## What automation cannot find
 
 The Storybook panel and tools like axe and WAVE miss issues (GOV.UK service manual): reading order, whether a name means something out of context, link text, alt text, whether focus lands somewhere sensible after a page change or a dialog, whether a live region's wording makes sense, and whether a chart has an equivalent. Check these by hand.

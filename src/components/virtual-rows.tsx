@@ -1,3 +1,5 @@
+"use client"
+
 import { type VirtualItem, useVirtualizer, useWindowVirtualizer } from "@tanstack/react-virtual"
 import { type ReactNode, type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react"
 

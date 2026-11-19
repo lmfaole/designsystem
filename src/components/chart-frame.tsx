@@ -1,3 +1,5 @@
+"use client"
+
 import type { ChartTooltipOptions } from "@tanstack/charts"
 import { Chart, type ChartDefinition } from "@tanstack/charts/react"
 import { tooltip } from "@tanstack/charts/tooltip"

@@ -1,0 +1,71 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Guides/Server rendering" />
+
+# Server rendering
+
+Our pages are rendered on the server and then hydrated in the browser. Hydration expects **the same output** on both sides (React: `hydrateRoot`), so a component is written to
+render the same wherever it runs. The rules are from the React, Next.js, Astro and web.dev documentation.
+
+## 1. The first render is the same
+
+- **No clock and no random number in render.** `Date.now()`, `Math.random()` and `new Date()` make the server and the browser disagree. A component that shows a time takes `now` as a prop (`Time`, `Freshness`), and a test fails if a component reads the clock in render.
+- **A fixed zone and language.** Times and numbers are formatted with `Europe/Oslo` and `nb-NO`, never the runtime's default: a Worker runs in UTC.
+- **Theme and size from CSS** (`prefers-color-scheme`, media and container queries), not from `window` in render.
+- **A value only the browser has** (the position, storage, the online state) is read in an effect after the first render, held in state, and its place is reserved so nothing jumps (React: two-pass render). For an external store, `useSyncExternalStore` needs a server snapshot that matches.
+- `suppressHydrationWarning` is a last resort; it works one level deep and does not repair a mismatch.
+
+## 2. Three kinds of component
+
+| Kind | Is | Tag |
+| --- | --- | --- |
+| Pure | No hooks, no handlers: renders on the server and ships no script | (nothing) |
+| Client | State, effects or handlers: the file starts with `"use client"`; its first render still matches the server | `"use client"` |
+| Browser only | Needs the browser to draw at all | `"use client"` and a skeleton for its place |
+
+`src/server-safe.test.ts` fails when a component uses a hook or a handler without `"use client"`, and when one reads the clock in render. A client file brings everything it imports to the browser
+(Next.js): keep client components small and pass server components to them as `children`. The client components are `ChartFrame`, `CommandButton`, `CopyButton`, `FormErrorSummary`, `Freshness`, `ConnectionBanner`, `Overlay`, `SegmentedToggle` and `VirtualTbody`.
+
+## 3. Streaming
+
+The server sends the frame and a fallback first, and each part replaces its fallback as it arrives (React: Suspense). So:
+
+- **One `StreamedSection` for each slow source**, so the slowest does not hold the page back. Its fallback is a `SectionSkeleton` at the section's final height and is never `null`, because an empty place makes the page jump.
+- **A source that can fail returns the failure as a value** and shows its own `ErrorMessage`; it does not throw (Next.js: expected errors are values). One failing source never takes the page down.
+- **A part that is on screen stays** while it is renewed: update inside `startTransition`, or the fallback replaces the content (React).
+- A streamed page has status 200 from the first byte, and some browsers buffer under 1 KB (Next.js).
+
+## 4. Staying fresh
+
+A page that stays open renews itself (a refresh on an interval) and says when it was made: `Freshness`. See **Fresh data and offline**. Shared reads can use `stale-while-revalidate`
+(web.dev); a page that reads cookies is rendered for each request (Next.js), and is never cached for others.
+
+## 5. Without script (our rule: graceful, not required)
+
+Navigation is links, a search is a GET form, a disclosure is `details`, a number has its text in the HTML (`CountUp`). A component that needs script renders a visible fallback in the server HTML. Nothing promises that a page works with scripts off, but nothing that costs
+nothing should need them.
+
+## 6. Layout stability
+
+Reserve the space of what arrives late: images have `width` and `height` or an aspect ratio, a streamed part has a skeleton at its final height, a control that appears after hydration has its place. Animate with `transform`, not
+`height` or `top`. A layout shift should stay under 0.1 at the 75th percentile (web.dev, CLS).
+
+## 7. Check it
+
+1. View the page's source: is the content in the HTML?
+2. Load with a slow network: does anything jump when a part arrives?
+3. Open the console on a hydrated page: no hydration message.
+4. Turn the network off after load: the page on screen stays, and says it is offline.
+
+## Sources
+
+[React, hydrateRoot](https://react.dev/reference/react-dom/client/hydrateRoot),
+[React, Suspense](https://react.dev/reference/react/Suspense),
+[React, useSyncExternalStore](https://react.dev/reference/react/useSyncExternalStore),
+[Next.js, caching](https://nextjs.org/docs/app/getting-started/caching),
+[Next.js, server and client components](https://nextjs.org/docs/app/getting-started/server-and-client-components),
+[Next.js, error handling](https://nextjs.org/docs/app/getting-started/error-handling),
+[Astro, server islands](https://docs.astro.build/en/guides/server-islands/),
+[web.dev, rendering on the web](https://web.dev/articles/rendering-on-the-web),
+[web.dev, cumulative layout shift](https://web.dev/articles/cls),
+[web.dev, stale-while-revalidate](https://web.dev/articles/stale-while-revalidate).

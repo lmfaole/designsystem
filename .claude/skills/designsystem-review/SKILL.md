@@ -49,6 +49,15 @@ and a detail page, not only the front page.
 - [ ] Dates, times and numbers formatted with `Intl` (nb-NO, Europe/Oslo); `−` for minus; counts have singular and plural.
 - [ ] One word per meaning for statuses.
 
+**Installed and server-rendered**
+- [ ] Each source that can fail has its own error that names it and says whether old data is kept; one failing source does not remove another part.
+- [ ] The page says when it was made (`Freshness`); a renewal that stops turns into a warning; offline is a `ConnectionBanner`, not an error; at most one banner.
+- [ ] A part that is on its way has a skeleton at its final height (never `null`); nothing jumps when it arrives.
+- [ ] No clock, random number or `window` in render; time is passed in; a component with a hook starts with `"use client"`.
+- [ ] A page below the top has a way up (`Breadcrumbs`); links stay in the window; no install button.
+- [ ] A PWA: `id`, scope with a closing slash, `any` and `maskable` icons, an update path, no login page kept as a page (guide «Installed apps (PWA)»).
+- [ ] Auto-updating content can be paused, or says why it is essential.
+
 **Code**
 - [ ] No `lucide-react` import in a page; icons by meaning.
 - [ ] `npm run verify` and, in the design system, `npm run build-storybook` pass.

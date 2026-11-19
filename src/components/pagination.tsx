@@ -5,7 +5,7 @@ import { pageWindow } from "../lib/pagination"
  * The way between the pages of a long list that has an address for each page (`?side=3`). Real links, so a page can be bookmarked, shared and
  * found; «Forrige» and «Neste» carry their words, the current page is marked (`aria-current="page"`) and a gap stands where pages are left
  * out. Prefer a short list with a clear sort and filters to many pages, and never an endless list where the reader has to get to the foot (a
- * `VirtualRows` or a `progressive count` keeps one page). `hrefFor` gives the address of a page.
+ * `VirtualTbody` or a `progressive count` keeps one page). `hrefFor` gives the address of a page.
  */
 export function Pagination({ current, total, hrefFor, label = "Sidenummer" }: { current: number; total: number; hrefFor: (page: number) => string; label?: string }) {
   if (total <= 1) return null

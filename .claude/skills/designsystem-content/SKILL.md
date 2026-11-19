@@ -22,6 +22,8 @@ Code and comments are English; **on-screen text is Norwegian bokmål** (rule 9).
 | --- | --- |
 | Empty | What would be here, and why it is empty when the reader can change that («Ingen treff. Prøv færre filtre.»). When nothing is wrong, say so: «Ingen åpne pull requests. Alt er behandlet.» Where many sections are empty at once, one quiet line each. `EmptyState`. |
 | Error | What happened, then what to do: «Kunne ikke hente pull requesten: GitHub svarte 502». No «Vennligst», «Beklager», «Ups», «ugyldig» or «Noe gikk galt». Use the same words in a summary and next to the field. |
+| Stale or offline | «Oppdatert 19:27 · dataene kan være gamle», «Du er frakoblet. Det du ser er fra sist siden ble hentet.» Back online: nothing. |
+| Source failed | «Henting fra Yr feilet. Viser vær fra 19:27.» with old data; «Kunne ikke hente værmeldingen fra Yr. Prøv igjen.» without. A retry says «Prøv igjen», and «Henter …» while it runs. |
 | Not found | Say what was not found and give a way back. |
 | Waiting | «Venter på review», «Tester kjører»: the state, not «Vennligst vent». |
 | Done | Say what happened: «Lagret». |

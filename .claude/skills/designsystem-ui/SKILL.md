@@ -69,6 +69,13 @@ decoration, and not the same icon on every row (use it to tell kinds and states 
 Durations and easings come from the `--motion-*` tokens. Entrances **move and never fade text**. Everything is off under
 `prefers-reduced-motion`. Motion is for orienting the reader (a new row, a change of page), never decoration.
 
+## Installed and server-rendered
+
+- Insets come from the tokens (`--safe-top` … `--safe-left`) through `PageLayout` and `NavBar`; a page never reads `env(safe-area-inset-*)` itself, and never sets overscroll.
+- Manifest colours are the dark theme as opaque hex (`webManifest()`); a manifest takes no variables.
+- Reserve the place of what arrives late (a skeleton at its final height, an image with width and height, a control that appears after hydration); animate with `transform`.
+- No `window`, `Date.now()` or `Math.random()` in render (a test fails); a value only the browser has is read in an effect.
+
 ## Before you write markup
 
 1. Is there a component? Check **designsystem-components**.

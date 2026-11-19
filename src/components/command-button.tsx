@@ -1,3 +1,5 @@
+"use client"
+
 import type { ReactNode } from "react"
 
 import type { InvokerCommand as Command } from "../lib/html-invokers"

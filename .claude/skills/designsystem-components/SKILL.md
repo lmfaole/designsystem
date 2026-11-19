@@ -19,6 +19,7 @@ description: Use when choosing which design system component to use for somethin
 | Terms and their values (facts about one thing) | `FactList`: one value or several stacked under one term; links on a line `LinkList` |
 | A status | `StatusLine` (under a title), `Badge` (next to a name in a row); a count that links `SummaryBar` |
 | A message about a page or section | `Banner`; a failed query `ErrorMessage`; nothing to show `EmptyState` |
+| Fresh data, offline, streamed parts | `Freshness` (when it was made, and when it is old), `ConnectionBanner`, `StreamedSection` with `SectionSkeleton` |
 | A time | `Time` (relative when recent, a date later, the exact time always at hand) |
 | Code | `Code` (inline or a block), `CopyButton` for a value to copy; long content out of the way `Disclosure` |
 | A form (rare) | `TextField`, `SearchField`, `FormErrorSummary`; a choice from a list `NativeSelect`; a sort `SortHeader` |
@@ -67,3 +68,7 @@ and to the Catalogue story (it does not compile until it is there). Two meanings
 
 Additive change → minor version (`5.3.0`); breaking → major, with a «Migrating to X» section in the README. Push to `main`,
 tag `vX.Y.Z` (`git tag vX.Y.Z && git push origin vX.Y.Z`); projects pin a tag or a commit.
+
+## Server and client
+
+A component renders on the server by default. One that uses a hook or a handler starts with `"use client"` (a test checks this) and its first render matches the server: no clock, random number or `window` in render, and time is passed in (`now`). Client components: `ChartFrame`, `CommandButton`, `CopyButton`, `FormErrorSummary`, `Freshness`, `ConnectionBanner`, `Overlay`, `SegmentedToggle`, `VirtualTbody`. Guide: **Server rendering**.
