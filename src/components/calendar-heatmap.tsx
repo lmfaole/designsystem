@@ -1,6 +1,6 @@
 import { heatColour } from "../lib/chart-colors"
 import { EMPTY_CHART_MESSAGE, formatChartValue } from "../lib/chart-format"
-import { summariseCalendar } from "../lib/chart-summary-complex"
+import { summariseCalendar, type Unit, unitWord } from "../lib/chart-summary-complex"
 import { type CalendarDay, calendarWeeks, dayName, monthRows } from "../lib/heatmap"
 import { ChartEmpty } from "./chart-empty"
 import { ChartSummary } from "./chart-summary"
@@ -11,8 +11,8 @@ interface CalendarHeatmapProps {
   /** One row per day with something to say, `YYYY-MM-DD`; a day with no row is drawn as nothing, a row with 0 as zero. */
   days: readonly CalendarDay[]
   ariaLabel: string
-  /** What a value counts, in the plural: «avspillinger». */
-  unit: string
+  /** What a value counts: the plural alone («avspillinger»), or `{ one: "avspilling", many: "avspillinger" }` so a count of one reads right. */
+  unit: Unit
   /** A text under the chart; `summariseCalendar` writes one by default. */
   summary?: string
   /** Offer the months as a table anyone can open (`Vis tallene`). */
@@ -60,7 +60,7 @@ export function CalendarHeatmap({ days, ariaLabel, unit, summary, showTable = fa
                 ) : (
                   <span
                     key={cell.date}
-                    title={`${dayName(cell.date)}: ${cell.value === null ? "ingen data" : `${formatChartValue(cell.value)} ${unit}`}`}
+                    title={`${dayName(cell.date)}: ${cell.value === null ? "ingen data" : `${formatChartValue(cell.value)} ${unitWord(cell.value, unit)}`}`}
                     className="border-border size-[14px] rounded-[3px] border"
                     style={{ background: heatColour(cell.level), forcedColorAdjust: "none" }}
                   />
@@ -72,7 +72,7 @@ export function CalendarHeatmap({ days, ariaLabel, unit, summary, showTable = fa
       </div>
       <HeatLegend />
       {text === null ? null : <ChartSummary text={text} />}
-      <ChartTable caption={ariaLabel} columns={["Måned", `Sum (${unit})`, "Dager med noe"]} rows={monthRows(days)} visible={showTable} />
+      <ChartTable caption={ariaLabel} columns={["Måned", `Sum (${unitWord(2, unit)})`, "Dager med noe"]} rows={monthRows(days)} visible={showTable} />
     </div>
   )
 }

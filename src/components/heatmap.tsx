@@ -1,6 +1,6 @@
 import { heatColour } from "../lib/chart-colors"
 import { EMPTY_CHART_MESSAGE, formatChartValue } from "../lib/chart-format"
-import { summariseHeatMatrix } from "../lib/chart-summary-complex"
+import { summariseHeatMatrix, type Unit, unitWord } from "../lib/chart-summary-complex"
 import { heatLevels } from "../lib/heatmap"
 import { ChartEmpty } from "./chart-empty"
 import { ChartSummary } from "./chart-summary"
@@ -20,8 +20,8 @@ interface HeatmapProps {
   columns: readonly string[]
   cells: readonly HeatCell[]
   ariaLabel: string
-  /** What a value counts, in the plural. */
-  unit: string
+  /** What a value counts: the plural alone, or `{ one, many }` so a count of one reads right. */
+  unit: Unit
   /** Label every nth column only, for a crowded axis (24 hours: every 3rd). */
   labelEvery?: number
   /** What a row is, for the table's first column: «Ukedag». */
@@ -64,7 +64,7 @@ export function Heatmap({ rows, columns, cells, ariaLabel, unit, rowName = "Rad"
                 <span
                   key={`${row}-${column}`}
                   aria-hidden
-                  title={`${row}, ${column}: ${value === null ? "ingen data" : `${formatChartValue(value)} ${unit}`}`}
+                  title={`${row}, ${column}: ${value === null ? "ingen data" : `${formatChartValue(value)} ${unitWord(value, unit)}`}`}
                   className={`border-border grid min-h-6 place-items-center rounded-[3px] border text-[11px] tabular-nums ${step >= 2 ? "text-background" : "text-foreground"}`}
                   style={{ background: heatColour(step), forcedColorAdjust: "none" }}
                 >

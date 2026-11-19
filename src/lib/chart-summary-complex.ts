@@ -3,7 +3,13 @@ import { formatChartValue as fmt } from "./chart-format.ts"
 import { dayName, type CalendarDay } from "./heatmap.ts"
 import { type Bin, type FiveNumbers, type LinearFit, strengthWord } from "./stats.ts"
 
-export function summariseCalendar(days: readonly CalendarDay[], unit: string): string | null {
+/** What a value counts: one word for every number («min»), or the singular and the plural («1 visning», «2 visninger»). */
+export type Unit = string | { one: string; many: string }
+
+/** The word for `n` of the unit; the plural for a word that has no singular given. */
+export const unitWord = (n: number, unit: Unit): string => (typeof unit === "string" ? unit : n === 1 ? unit.one : unit.many)
+
+export function summariseCalendar(days: readonly CalendarDay[], unit: Unit): string | null {
   if (days.length === 0) return null
   const sorted = [...days].sort((a, b) => a.date.localeCompare(b.date))
   const total = sorted.reduce((sum, day) => sum + day.value, 0)
@@ -11,14 +17,14 @@ export function summariseCalendar(days: readonly CalendarDay[], unit: string): s
   const busiest = sorted.reduce((best, day) => (day.value > best.value ? day : best), sorted[0] ?? { date: "", value: 0 })
   const range = `${dayName(sorted[0]?.date ?? "")} til ${dayName(sorted.at(-1)?.date ?? "")}`
   const peak = busiest.value > 0 ? ` Travleste dag: ${dayName(busiest.date)} (${fmt(busiest.value)}).` : ""
-  return `Kalenderdiagram, ${range}: ${fmt(total)} ${unit} på ${fmt(active.length)} av ${fmt(sorted.length)} dager.${peak}`
+  return `Kalenderdiagram, ${range}: ${fmt(total)} ${unitWord(total, unit)} på ${fmt(active.length)} av ${fmt(sorted.length)} dager.${peak}`
 }
 
-export function summariseHeatMatrix(cells: readonly { row: string; column: string; value: number | null }[], unit: string): string | null {
+export function summariseHeatMatrix(cells: readonly { row: string; column: string; value: number | null }[], unit: Unit): string | null {
   const filled = cells.filter((cell): cell is { row: string; column: string; value: number } => cell.value !== null)
   const top = filled.reduce<(typeof filled)[number] | null>((best, cell) => (best === null || cell.value > best.value ? cell : best), null)
   if (top === null) return null
-  return `Varmekart over ${fmt(filled.length)} ruter. Høyest: ${top.row}, ${top.column} (${fmt(top.value)} ${unit}).`
+  return `Varmekart over ${fmt(filled.length)} ruter. Høyest: ${top.row}, ${top.column} (${fmt(top.value)} ${unitWord(top.value, unit)}).`
 }
 
 export function summariseScatter(fit: LinearFit | null, n: number, xName: string, yName: string): string | null {

@@ -1,0 +1,65 @@
+name: Visual
+
+# Every story's picture against the reference CI keeps in `stories/**/__screenshots__` (`npm run test:visual`, `.storybook/visual.setup.ts`).
+# The references are made here and only here, from a run by hand with «update» on (Actions → Visual → Run workflow): a picture from another
+# machine differs by a few pixels of font rendering. A failed run keeps the actual pictures and the differences as an artifact.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Make new reference pictures from this commit and commit them
+        type: boolean
+        default: false
+
+concurrency:
+  group: visual-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Compare with the references
+        if: ${{ !inputs.update }}
+        run: |
+          if [ -z "$(find stories -path '*__screenshots__*' -name '*.png' -print -quit)" ]; then
+            echo "::notice::No reference pictures yet: run this workflow by hand with «update» on to make them."
+            exit 0
+          fi
+          npm run test:visual
+
+      - name: Make new references and commit them
+        if: ${{ inputs.update }}
+        run: |
+          npm run test:visual -- --update
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 'stories/**/__screenshots__/**'
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "Visual: new reference pictures from ${GITHUB_SHA::7}"
+          git push
+
+      - name: Keep the pictures of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-differences
+          path: |
+            stories/**/__screenshots__/**
+            .vitest-attachments/**
+          if-no-files-found: ignore

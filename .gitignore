@@ -1,3 +1,8 @@
 node_modules/
 *.tsbuildinfo
 storybook-static
+
+# What a failed visual run drew; the references in __screenshots__ are committed by CI.
+.vitest-attachments/
+stories/**/__screenshots__/**/*-actual-*.png
+stories/**/__screenshots__/**/*-diff-*.png

@@ -13,7 +13,8 @@
     "verify": "npm run -s typecheck && npm run -s lint && npm test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o storybook-static",
-    "test:stories": "vitest run"
+    "test:stories": "vitest run --project=\"storybook-*\"",
+    "test:visual": "vitest run --project=visual"
   },
   "exports": {
     "./theme.css": "./src/theme.css",
