@@ -25,7 +25,7 @@ and a detail page, not only the front page.
 
 **Wide screens (guide «Wide screens»)**
 - [ ] No line of text is longer at 2560 than at 1440 (45–75 characters); the extra width went to a pane, to more pictures or cards across, or to margin, in that order.
-- [ ] A detail page with a cover or facts is `width="pane"` with a `Split`, and the pane is beside the main content from 1024 px; nothing in the pane is the only place something is said.
+- [ ] A detail page with a cover or facts is `width="pane"` with a `Split`, and the pane is beside the main content from 1024 px (about 1150 px with a `NavBar` rail: it is the room that counts); nothing in the pane is the only place something is said.
 - [ ] Nothing is hidden at a width; a pane moves under or above, a gallery takes fewer across.
 - [ ] Breakpoints are container queries by the room a part has, not the device.
 

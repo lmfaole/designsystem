@@ -75,7 +75,7 @@ One column is one path. Do not put two lists side by side to compare (that is a 
 ## 10. Check it
 
 1. Look at **400, 768, 1024, 1440 and 2560 px** (compact, medium, expanded, large, extra-large) and at 200 % zoom. At each width the
-   reader can read straight down; from 1024 px a detail page's pane is beside the main content, and no line is longer at 2560 than at 1440.
+   reader can read straight down; from 1024 px (about 1150 px with a `NavBar` rail) a detail page's pane is beside the main content, and no line is longer at 2560 than at 1440.
 2. Cover all but the first screen: is it clear what matters most?
 3. Squint: are the three levels still different? Is anything shouting that should not?
 4. Follow the left edge: does it say what every row is?
