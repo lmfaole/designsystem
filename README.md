@@ -336,6 +336,25 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.20
+
+How well-made design systems use Storybook (Primer, Carbon, Fluent, Spectrum, Polaris, Atlassian; Digdir, NAV Aksel, Equinor, Skatteetaten,
+SpareBank 1), and what was taken:
+- **Tema «Begge»**: a story in light and in dark side by side (Primer's «All», SpareBank 1's «Begge moduser»); the tokens now follow
+  `data-theme` on any element, not only the root.
+- **Skjermlesertekst «Synlig»** (Skatteetaten): what only a screen reader hears is drawn, dashed, where it stands. It found the first wrong
+  one at once: `Rows` stories said «Antall» over a column of dates.
+- **`lang="nb"`** on the stories' document (it said `en` over Norwegian text), and controls without handlers, refs and aria attributes.
+- **Do and don't as stories** (Digdir, Equinor, Aksel): `Dont…` («Ikke:», kept out of the manifest) and `Do…` («Gjør:»); the first pair is
+  sections side by side against under each other (`Grid`).
+- **A Welcome page** that says how to use it, how to read it and where an agent finds it as data.
+- The skills: a JSDoc line on each story saying why it exists; the Accessibility section as what the component handles and what the page
+  must still check, with WCAG 2.2 criteria.
+
+Not taken, with the reason: a snapshot story per component and visual regression (Digdir, Aksel, Primer: their pictures need one fixed
+machine; a later step in CI), a language toolbar (the system has one language), pseudo-states for hover and focus in snapshots (with the
+snapshots), docs generated from one data file per component (Atlassian, Equinor: worth it when the README and the stories drift).
+
 ## 8.19
 
 Storybook used as more than a gallery, from three research passes over its documentation (docs, controls and testing, organisation and AI):

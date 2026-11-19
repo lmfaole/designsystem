@@ -34,13 +34,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Plain: Story = {}
-export const Ranked: Story = { args: { lead: "rank", rows: ["Alfa", "Beta", "Gamma", "Delta"].map((name, i) => ({ key: name, body: <CardLink href="#" look="strong">{name}</CardLink>, trailing: `${40 - i * 7} avspillinger` })) } }
-export const WithPoster: Story = { args: { lead: "poster", rows: ["Alfa", "Beta", "Gamma"].map((name, i) => ({ key: name, lead: <Picture src={poster(i * 70, name[0])} />, body: name, trailing: "★ 4,5" })) } }
+export const Ranked: Story = { args: { lead: "rank", rows: ["Alfa", "Beta", "Gamma", "Delta"].map((name, i) => ({ key: name, body: <CardLink href="#" look="strong">{name}</CardLink>, trailing: `${40 - i * 7} avspillinger` })), columns: { name: "Artist", value: "Avspillinger" } } }
+export const WithPoster: Story = { args: { lead: "poster", rows: ["Alfa", "Beta", "Gamma"].map((name, i) => ({ key: name, lead: <Picture src={poster(i * 70, name[0])} />, body: name, trailing: "★ 4,5" })), columns: { name: "Tittel", value: "Vurdering" } } }
 
 /** The kind of each row as an icon in front of it; `iconLabel` where the kind is not in the words. */
 export const WithIcon: Story = {
   args: {
     lead: "icon",
+    // The headers a screen reader hears with every cell: the trailing column is a date, not a count (toolbar «Skjermlesertekst: Synlig»).
+    columns: { name: "Tittel", value: "Oppdatert" },
     rows: [
       { key: "a", icon: "pull-request", iconLabel: "Pull request", body: "Fiks tidssone i værmeldingen", trailing: "i dag" },
       { key: "b", icon: "pull-request-draft", iconLabel: "Utkast", body: "Utkast: tidslinje", trailing: "10. nov." },

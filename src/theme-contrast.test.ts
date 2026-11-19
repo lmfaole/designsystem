@@ -9,8 +9,8 @@ import { CVD, contrast, distance, inGamut, onto, parseOklch, simulate, toLinear,
 const css = readFileSync(join(import.meta.dirname, "theme.css"), "utf8")
 // The tokens' dark block (the custom variant `dark` above it has a media query of the same words).
 const DARK_AT = "@media (prefers-color-scheme: dark) {\n  :root"
-const lightBlock = css.slice(css.indexOf(":root {\n    color-scheme: light"), css.indexOf(DARK_AT))
-const FORCED_AT = ':root[data-theme="dark"] {'
+const lightBlock = css.slice(css.indexOf(':root,\n[data-theme="light"] {\n    color-scheme: light'), css.indexOf(DARK_AT))
+const FORCED_AT = '[data-theme="dark"] {'
 const darkBlock = css.slice(css.indexOf(DARK_AT), css.indexOf(FORCED_AT))
 const forcedBlock = css.slice(css.indexOf(FORCED_AT), css.indexOf("@layer base"))
 

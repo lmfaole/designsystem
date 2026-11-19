@@ -5,12 +5,32 @@ import type { Decorator, Preview } from "@storybook/react-vite"
 import "../src/theme.css"
 import "./docs.css"
 
-/** The toolbar's theme on the document's root: «system» leaves it to the device, as an app does. */
+/**
+ * The toolbar's theme on the document's root: «system» leaves it to the device, as an app does; «both» draws the story twice, in light and
+ * in dark side by side (the tokens follow `data-theme` on any element), so one look checks both.
+ */
 const withTheme: Decorator = (Story, context) => {
   // A test run sets the theme through `initialGlobals` (`vitest.config.ts`), the toolbar in the browser.
   const theme = String(context.globals["theme"] ?? "system")
-  if (theme === "system") delete document.documentElement.dataset["theme"]
-  else document.documentElement.dataset["theme"] = theme
+  const root = document.documentElement
+  // The design system's text is Norwegian: a screen reader and axe read it as such.
+  root.lang = "nb"
+  if (context.globals["srText"] === "visible") root.dataset["srVisible"] = ""
+  else delete root.dataset["srVisible"]
+  if (theme === "both") {
+    root.dataset["theme"] = "light"
+    return (
+      <div className="grid gap-4 md:grid-cols-2">
+        {(["light", "dark"] as const).map((one) => (
+          <section key={one} data-theme={one} aria-label={one === "light" ? "Lys" : "Mørk"} className="bg-background text-foreground min-w-0 rounded-lg border p-4">
+            <Story />
+          </section>
+        ))}
+      </div>
+    )
+  }
+  if (theme === "system") delete root.dataset["theme"]
+  else root.dataset["theme"] = theme
   return <Story />
 }
 
@@ -23,10 +43,14 @@ const preview: Preview = {
   globalTypes: {
     theme: {
       description: "Lys, mørk eller som enheten",
-      toolbar: { title: "Tema", icon: "contrast", items: [{ value: "system", title: "Som enheten" }, { value: "light", title: "Lys" }, { value: "dark", title: "Mørk" }], dynamicTitle: true },
+      toolbar: { title: "Tema", icon: "contrast", items: [{ value: "system", title: "Som enheten" }, { value: "light", title: "Lys" }, { value: "dark", title: "Mørk" }, { value: "both", title: "Begge" }], dynamicTitle: true },
+    },
+    srText: {
+      description: "Vis tekst som bare skjermlesere hører (sr-only), for å lese den under gjennomgang",
+      toolbar: { title: "Skjermlesertekst", icon: "accessibility", items: [{ value: "hidden", title: "Skjult" }, { value: "visible", title: "Synlig" }], dynamicTitle: true },
     },
   },
-  initialGlobals: { theme: "system" },
+  initialGlobals: { theme: "system", srText: "hidden" },
   parameters: {
     layout: "padded",
     // Every story is checked with axe when the stories run as tests (`npm run test:stories`), and a violation fails the run.
@@ -50,7 +74,8 @@ const preview: Preview = {
       },
     },
     // Required props first and every prop's description open: the props table is the component's API.
-    controls: { sort: "requiredFirst", expanded: true, matchers: { color: /(background|color)$/i } },
+    // Handlers, refs and aria attributes are not choices a reader makes on a page: out of the controls (Carbon, Spectrum).
+    controls: { sort: "requiredFirst", expanded: true, exclude: /^(on[A-Z].*|ref|key|aria-.*)$/, matchers: { color: /(background|color)$/i } },
     options: { storySort: { order: ["Welcome", "Tokens", "Layout", "Typography", "Primitives", "Navigation", "Lists", "Media", "Charts", "Tables", "Feedback", "Overlays", "Motion", "Entries", "Icons", "Guides"] } },
   },
 }

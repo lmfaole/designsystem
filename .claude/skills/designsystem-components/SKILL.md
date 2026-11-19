@@ -69,14 +69,21 @@ If the thing is not here, **add a component**; do not style in the project.
    - a **`play` test** for anything that reacts (a toggle, an overlay, a fold): it does what a reader does (`userEvent`, by role and name)
      and checks the result and the state a screen reader hears (`aria-pressed`, `open`, focus back). A browser's own key handling (Esc in
      a dialog, Enter on a summary) is not simulated: click, and check focus with Tab;
+   - **each story says why it exists** in a JSDoc line above it (the docs page and the manifest show it): what a reader sees here that the
+     others do not show;
+   - a rule that is easy to break gets a **do and a don't as stories**: `Dont…` (its JSDoc starts with «**Ikke:**», says what goes wrong and
+     names the right way; tagged `!manifest`, so no agent copies it) and `Do…` right after it («**Gjør:**»);
+   - the **Accessibility** section says what the component handles and then what the page must still check («You check»), each point with
+     its WCAG 2.2 criterion where there is one;
    - the component's JSDoc is its description in the docs and the manifest: say what it is for in the first sentence; give each prop a
      JSDoc line. A component on its way in or out is tagged `experimental` or `deprecated` (hidden in the sidebar by default) and `!manifest`;
    - every story is a test: `npm run test:stories` renders each in Chromium in the light and the dark theme, runs its `play` and fails
      on an axe violation (`a11y: { test: "error" }`). Fix the component, never turn the check off for a story.
 3. Add a test if it carries a rule (`src/*.test.ts` reads the source and pins it).
 4. Update the README (the table of what is here, the rules if it adds one) and the migration notes.
-5. `npm test`, `npm run test:stories` and `npm run build-storybook` must pass. Look at the story with the toolbar's **Tema** (light, dark)
-   and **Viewport** (the five width classes of the guide «Wide screens»).
+5. `npm test`, `npm run test:stories` and `npm run build-storybook` must pass. Look at the story with the toolbar's **Tema** «Begge» (light
+   and dark side by side), **Skjermlesertekst** «Synlig» (what a screen reader hears, drawn dashed) and **Viewport** (the five width classes
+   of the guide «Wide screens»).
 
 ## Add an icon meaning
 

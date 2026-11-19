@@ -2,3 +2,17 @@
 .sbdocs ol { list-style: decimal; padding-left: 1.5rem; }
 .sbdocs ul { list-style: disc; padding-left: 1.5rem; }
 .sbdocs .sb-unstyled ul, .sbdocs .sb-unstyled ol { list-style: none; padding-left: 0; }
+
+/* The toolbar's «Skjermlesertekst: Synlig»: what only a screen reader hears is drawn, dashed, where it stands (Skatteetaten). */
+:root[data-sr-visible] .sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+  white-space: normal !important;
+  outline: 1px dashed currentColor;
+  outline-offset: 2px;
+}
