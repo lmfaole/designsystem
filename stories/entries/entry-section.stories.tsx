@@ -9,15 +9,25 @@ const meta = {
   tags: ["autodocs"],
   subcomponents: { EntryList, DatedEntry, EntryGroup, GroupItem, SubItems, SubItem, LinkItems },
   args: { title: "Utdanning", children: null },
-  parameters: { docs: { description: { component: `**Use it when** a long page of dated entries: a CV, a changelog, a history, with groups and items.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a list the reader opens (\`Rows\`) or facts about one thing (\`FactList\`).
+a long page of dated entries: a CV, a changelog, a history, with groups and items.
 
-**Accessibility.** Sections are headings and entries a list, in date order.
+### Do not use it when
 
-**Content.** Dates and periods the way the page words them («2010–2013»).
+a list the reader opens (\`Rows\`) or facts about one thing (\`FactList\`).
 
-**Related.** \`EntryList\`, \`Time\`, \`PageSection\`` } }, },
+### Accessibility
+
+Sections are headings and entries a list, in date order.
+
+### Content
+
+Dates and periods the way the page words them («2010–2013»).
+
+### Related
+
+\`EntryList\`, \`Time\`, \`PageSection\`` } }, },
 } satisfies Meta<typeof EntrySection>
 export default meta
 type Story = StoryObj<typeof meta>

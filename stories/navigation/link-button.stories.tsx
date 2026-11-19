@@ -8,15 +8,25 @@ const meta = {
   component: LinkButton,
   tags: ["autodocs"],
   args: { href: "#", children: "Se alle" },
-  parameters: { docs: { description: { component: `**Use it when** an action that goes somewhere: «Åpne på GitHub». \`external\` is the last action on a page.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a link that only continues in the same place (\`TextLink\`).
+an action that goes somewhere: «Åpne på GitHub». \`external\` is the last action on a page.
 
-**Accessibility.** A real link; an external one is marked with the symbol and «eksternt nettsted» for a screen reader.
+### Do not use it when
 
-**Content.** A verb that names the place: «Åpne på GitHub», never «Les mer».
+a link that only continues in the same place (\`TextLink\`).
 
-**Related.** \`ExternalLink\`, \`TextLink\`, \`Button\`` } }, },
+### Accessibility
+
+A real link; an external one is marked with the symbol and «eksternt nettsted» for a screen reader.
+
+### Content
+
+A verb that names the place: «Åpne på GitHub», never «Les mer».
+
+### Related
+
+\`ExternalLink\`, \`TextLink\`, \`Button\`` } }, },
 } satisfies Meta<typeof LinkButton>
 export default meta
 type Story = StoryObj<typeof meta>

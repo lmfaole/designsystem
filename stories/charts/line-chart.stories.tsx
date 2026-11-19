@@ -10,15 +10,25 @@ const meta = {
   component: LineChart,
   tags: ["autodocs"],
   args: { ariaLabel: "Avspillinger per måned", height: 240, series: [{ name: "Musikk", data: line(40, 8) }, { name: "Podkast", data: line(30, 3) }, { name: "Film", data: line(20, 1) }] },
-  parameters: { docs: { description: { component: `**Use it when** up to four things moved together over the same axis: a trend for each, compared.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** there is one series (\`AreaChart\`), more than four (a table or a ranking), or the reader needs exact values (\`showTable\`, or a table).
+up to four things moved together over the same axis: a trend for each, compared.
 
-**Accessibility.** An image with a label, a table next to it (a dash where a series has no value, never an invented zero), an optional visible \`summary\`; not a tab stop. The first line is solid and the others dashed in other patterns, and each line is named at its last point, so nothing is told by colour alone.
+### Do not use it when
 
-**Content.** A title that states the message and a subtitle with unit and period (\`ChartCard\`). Short series names.
+there is one series (\`AreaChart\`), more than four (a table or a ranking), or the reader needs exact values (\`showTable\`, or a table).
 
-**Related.** \`AreaChart\`, \`StackedColumnChart\`, \`Sparkline\`, guide «Data visualisation»` } } },
+### Accessibility
+
+An image with a label, a table next to it (a dash where a series has no value, never an invented zero), an optional visible \`summary\`; not a tab stop. The first line is solid and the others dashed in other patterns, and each line is named at its last point, so nothing is told by colour alone.
+
+### Content
+
+A title that states the message and a subtitle with unit and period (\`ChartCard\`). Short series names.
+
+### Related
+
+\`AreaChart\`, \`StackedColumnChart\`, \`Sparkline\`, guide «Data visualisation»` } } },
 } satisfies Meta<typeof LineChart>
 export default meta
 type Story = StoryObj<typeof meta>

@@ -8,15 +8,25 @@ const meta = {
   component: Histogram,
   tags: ["autodocs"],
   args: { values: sampleLengths(240, 38, 40, 5), valueName: "Lengde (min)", unit: "min", ariaLabel: "Fordeling av albumlengder", height: 240 },
-  parameters: { docs: { description: { component: `**Use it when** there are many values of one thing and the question is their shape: where they pile up, how wide they spread, whether there is a tail.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** there are fewer than about ten values (a list), the categories are named (\`ColumnChart\`), or several groups are compared (\`BoxPlot\`).
+there are many values of one thing and the question is their shape: where they pile up, how wide they spread, whether there is a tail.
 
-**Accessibility.** One image with a label, a summary with the median and the fullest interval, the counts as a table (\`showTable\`). The bin width is Freedman–Diaconis (follows the spread and the count) with edges that are numbers a person would write; the last bin includes its top edge. Bars touch, since the axis is continuous, and start at zero.
+### Do not use it when
 
-**Content.** Name the value with its unit; the count is «Antall».
+there are fewer than about ten values (a list), the categories are named (\`ColumnChart\`), or several groups are compared (\`BoxPlot\`).
 
-**Related.** \`BoxPlot\`, \`ColumnChart\`, \`ScatterChart\`` } } },
+### Accessibility
+
+One image with a label, a summary with the median and the fullest interval, the counts as a table (\`showTable\`). The bin width is Freedman–Diaconis (follows the spread and the count) with edges that are numbers a person would write; the last bin includes its top edge. Bars touch, since the axis is continuous, and start at zero.
+
+### Content
+
+Name the value with its unit; the count is «Antall».
+
+### Related
+
+\`BoxPlot\`, \`ColumnChart\`, \`ScatterChart\`` } } },
 } satisfies Meta<typeof Histogram>
 export default meta
 type Story = StoryObj<typeof meta>

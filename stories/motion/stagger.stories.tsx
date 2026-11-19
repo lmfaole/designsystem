@@ -7,13 +7,21 @@ const meta = {
   component: Stagger,
   tags: ["autodocs"],
   args: { children: null },
-  parameters: { docs: { description: { component: `**Use it when** items enter one after another when a page arrives.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** content that changes after load.
+items enter one after another when a page arrives.
 
-**Accessibility.** Movement only; off under \`prefers-reduced-motion\`.
+### Do not use it when
 
-**Related.** \`Reveal\`, guide «Motion»` } }, },
+content that changes after load.
+
+### Accessibility
+
+Movement only; off under \`prefers-reduced-motion\`.
+
+### Related
+
+\`Reveal\`, guide «Motion»` } }, },
 } satisfies Meta<typeof Stagger>
 export default meta
 type Story = StoryObj<typeof meta>

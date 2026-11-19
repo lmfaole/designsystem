@@ -8,15 +8,25 @@ const meta = {
   component: Tiles,
   tags: ["autodocs"],
   args: { tiles: Array.from({ length: 10 }, (_, i) => ({ key: String(i), href: i === 3 ? null : `#item-${i}`, title: `Title ${i + 1}`, picture: poster(i * 36, String(i + 1)), ratio: "poster" as const, detail: "Director", lines: ["★ 4"] })) },
-  parameters: { docs: { description: { component: `**Use it when** pictures are looked at in a gallery: a poster wall, album covers.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a list to read (\`Rows\`).
+pictures are looked at in a gallery: a poster wall, album covers.
 
-**Accessibility.** Each tile is a link with the name; the picture is decorative.
+### Do not use it when
 
-**Content.** The name and a line under it.
+a list to read (\`Rows\`).
 
-**Related.** \`PictureRows\`, \`Grid\`, \`Picture\`` } }, },
+### Accessibility
+
+Each tile is a link with the name; the picture is decorative.
+
+### Content
+
+The name and a line under it.
+
+### Related
+
+\`PictureRows\`, \`Grid\`, \`Picture\`` } }, },
 } satisfies Meta<typeof Tiles>
 export default meta
 type Story = StoryObj<typeof meta>

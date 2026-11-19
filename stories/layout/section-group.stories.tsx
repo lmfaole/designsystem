@@ -21,15 +21,25 @@ const meta = {
       <SubSection key="c" id="waiting" title="Venter på andre" icon="waiting"><Text size="sm" tone="muted">Ingen.</Text></SubSection>,
     ],
   },
-  parameters: { docs: { description: { component: `**Use it when** several sections belong together under one title with an icon.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** one section, or sections that are side by side (they stand under each other).
+several sections belong together under one title with an icon.
 
-**Accessibility.** The group title is a heading and each subsection one level down.
+### Do not use it when
 
-**Content.** The title says what the sections have in common.
+one section, or sections that are side by side (they stand under each other).
 
-**Related.** \`PageSection\`, \`Stack\`` } }, },
+### Accessibility
+
+The group title is a heading and each subsection one level down.
+
+### Content
+
+The title says what the sections have in common.
+
+### Related
+
+\`PageSection\`, \`Stack\`` } }, },
 } satisfies Meta<typeof SectionGroup>
 export default meta
 type Story = StoryObj<typeof meta>

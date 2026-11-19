@@ -7,15 +7,25 @@ const meta = {
   component: TextField,
   tags: ["autodocs"],
   args: { label: "Navn", name: "navn" },
-  parameters: { docs: { description: { component: `**Use it when** the reader types one line: a name, an address, a search term, a number.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the choice is from a known list (\`NativeSelect\`), or the reader only reads the value (a \`FactList\`). Avoid \`disabled\`: say why instead.
+the reader types one line: a name, an address, a search term, a number.
 
-**Accessibility.** A visible label above the field, never a placeholder. The hint and the error are tied to the input with \`aria-describedby\`; the error begins with a hidden «Feil:» and carries a symbol. Validate on submit, not while typing.
+### Do not use it when
 
-**Content.** The label is a noun («E-postadresse»). The hint gives the format. The error says what is wrong and how to fix it, in the same words as the \`FormErrorSummary\`. Mark only the minority: «(valgfritt)» when most fields are required.
+the choice is from a known list (\`NativeSelect\`), or the reader only reads the value (a \`FactList\`). Avoid \`disabled\`: say why instead.
 
-**Related.** \`SearchField\`, \`FormErrorSummary\`, \`NativeSelect\`` } } },
+### Accessibility
+
+A visible label above the field, never a placeholder. The hint and the error are tied to the input with \`aria-describedby\`; the error begins with a hidden «Feil:» and carries a symbol. Validate on submit, not while typing.
+
+### Content
+
+The label is a noun («E-postadresse»). The hint gives the format. The error says what is wrong and how to fix it, in the same words as the \`FormErrorSummary\`. Mark only the minority: «(valgfritt)» when most fields are required.
+
+### Related
+
+\`SearchField\`, \`FormErrorSummary\`, \`NativeSelect\`` } } },
 } satisfies Meta<typeof TextField>
 export default meta
 type Story = StoryObj<typeof meta>

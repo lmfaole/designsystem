@@ -1,6 +1,6 @@
 {
   "name": "@lmfaole/designsystem",
-  "version": "8.18.0",
+  "version": "8.19.0",
   "private": true,
   "type": "module",
   "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
@@ -55,6 +55,7 @@
   "devDependencies": {
     "@storybook/addon-a11y": "^10.6.7",
     "@storybook/addon-docs": "^10.6.7",
+    "@storybook/addon-mcp": "^10.6.7",
     "@storybook/addon-vitest": "^10.6.7",
     "@storybook/react-vite": "^10.6.7",
     "@tailwindcss/vite": "^4.3.5",

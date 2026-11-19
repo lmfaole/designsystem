@@ -7,15 +7,25 @@ const meta = {
   component: FilterChips,
   tags: ["autodocs"],
   args: { label: "Kategori", chips: [{ key: "a", label: "Alle", href: "#a", current: true }, { key: "b", label: "Teknologi", href: "#b", current: false }, { key: "c", label: "Politikk", href: "#c", current: false }] },
-  parameters: { docs: { description: { component: `**Use it when** a list is narrowed to one of two to six known values; each chip is a link to the filtered page.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** many values (\`NativeSelect\`) or free text (\`SearchField\`).
+a list is narrowed to one of two to six known values; each chip is a link to the filtered page.
 
-**Accessibility.** Real links; the chip that is on is marked with \`aria-current\`.
+### Do not use it when
 
-**Content.** Short nouns; say how many there are after filtering.
+many values (\`NativeSelect\`) or free text (\`SearchField\`).
 
-**Related.** \`SearchField\`, \`NativeSelect\`, \`SegmentedToggle\`` } }, },
+### Accessibility
+
+Real links; the chip that is on is marked with \`aria-current\`.
+
+### Content
+
+Short nouns; say how many there are after filtering.
+
+### Related
+
+\`SearchField\`, \`NativeSelect\`, \`SegmentedToggle\`` } }, },
 } satisfies Meta<typeof FilterChips>
 export default meta
 type Story = StoryObj<typeof meta>

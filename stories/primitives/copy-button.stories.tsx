@@ -7,15 +7,25 @@ const meta = {
   component: CopyButton,
   tags: ["autodocs"],
   args: { value: "npm run skills" },
-  parameters: { docs: { description: { component: `**Use it when** a value is hard to write by hand: an id, a hash, a command, an address.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the value is secret (do not put a token on the page), or the page is the only place it is needed.
+a value is hard to write by hand: an id, a hash, a command, an address.
 
-**Accessibility.** The result is said in words («Kopiert», «Kunne ikke kopiere») in a polite live region; the button always has its text. If the browser refuses, it says so.
+### Do not use it when
 
-**Content.** The label says what is copied when it is not obvious («Kopier kommando»). Show the value next to it, in a \`Code\`.
+the value is secret (do not put a token on the page), or the page is the only place it is needed.
 
-**Related.** \`Code\`, \`LinkButton\`` } } },
+### Accessibility
+
+The result is said in words («Kopiert», «Kunne ikke kopiere») in a polite live region; the button always has its text. If the browser refuses, it says so.
+
+### Content
+
+The label says what is copied when it is not obvious («Kopier kommando»). Show the value next to it, in a \`Code\`.
+
+### Related
+
+\`Code\`, \`LinkButton\`` } } },
 } satisfies Meta<typeof CopyButton>
 export default meta
 type Story = StoryObj<typeof meta>

@@ -10,15 +10,25 @@ const meta = {
   component: Overlay,
   tags: ["autodocs"],
   args: { id: "x", variant: "dialog", title: "A dialog", children: <Text>Esc, the cross or a tap outside closes it.</Text> },
-  parameters: { docs: { description: { component: `**Use it when** a dialog or popover that a \`CommandButton\` points at: a picture opened large, a message the reader must answer.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** what has an address of its own (a page), or a message about the page (\`Banner\`).
+a dialog or popover that a \`CommandButton\` points at: a picture opened large, a message the reader must answer.
 
-**Accessibility.** A modal \`dialog\`: focus is trapped, the page behind is inert, Esc closes it and so does a tap outside.
+### Do not use it when
 
-**Content.** A title that says what it is.
+what has an address of its own (a page), or a message about the page (\`Banner\`).
 
-**Related.** \`CommandButton\`, \`ImageLightbox\`` } }, },
+### Accessibility
+
+A modal \`dialog\`: focus is trapped, the page behind is inert, Esc closes it and so does a tap outside.
+
+### Content
+
+A title that says what it is.
+
+### Related
+
+\`CommandButton\`, \`ImageLightbox\`` } }, },
 } satisfies Meta<typeof Overlay>
 export default meta
 type Story = StoryObj<typeof meta>

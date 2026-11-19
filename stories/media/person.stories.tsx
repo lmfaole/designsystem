@@ -8,15 +8,25 @@ const meta = {
   component: Person,
   tags: ["autodocs"],
   args: { name: "Kari Nordmann", src: square(7) },
-  parameters: { docs: { description: { component: `**Use it when** a person is named: reviewers, authors, who answered.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a thing that is not a person (\`Picture\`).
+a person is named: reviewers, authors, who answered.
 
-**Accessibility.** The picture is decorative and the name beside it says who; the frame is always there so names stay level.
+### Do not use it when
 
-**Content.** The name as the source gives it.
+a thing that is not a person (\`Picture\`).
 
-**Related.** \`FactList\`, \`Rows\`, \`Picture\`` } }, },
+### Accessibility
+
+The picture is decorative and the name beside it says who; the frame is always there so names stay level.
+
+### Content
+
+The name as the source gives it.
+
+### Related
+
+\`FactList\`, \`Rows\`, \`Picture\`` } }, },
 } satisfies Meta<typeof Person>
 export default meta
 type Story = StoryObj<typeof meta>

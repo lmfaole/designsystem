@@ -7,15 +7,25 @@ const meta = {
   component: Progress,
   tags: ["autodocs"],
   args: { label: "Disk", value: 93, valueText: "93 % full" },
-  parameters: { docs: { description: { component: `**Use it when** one value is shown against a goal or a limit: a listening goal, a disk, a backlog read.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** something is waiting (use \`Skeleton\` or text), or when it is several parts of a whole (\`DonutChart\`, \`SummaryBar\`).
+one value is shown against a goal or a limit: a listening goal, a disk, a backlog read.
 
-**Accessibility.** Read as a meter (\`role="meter"\` with its range and a value in words). The label and the value are always visible, so the bar never stands alone and no colour is used.
+### Do not use it when
 
-**Content.** The label is a noun («Disk»); the value says it in words («93 % full», «12 av 40»).
+something is waiting (use \`Skeleton\` or text), or when it is several parts of a whole (\`DonutChart\`, \`SummaryBar\`).
 
-**Related.** \`SummaryBar\`, \`DonutChart\`, \`Skeleton\`` } } },
+### Accessibility
+
+Read as a meter (\`role="meter"\` with its range and a value in words). The label and the value are always visible, so the bar never stands alone and no colour is used.
+
+### Content
+
+The label is a noun («Disk»); the value says it in words («93 % full», «12 av 40»).
+
+### Related
+
+\`SummaryBar\`, \`DonutChart\`, \`Skeleton\`` } } },
 } satisfies Meta<typeof Progress>
 export default meta
 type Story = StoryObj<typeof meta>

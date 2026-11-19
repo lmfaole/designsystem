@@ -14,15 +14,25 @@ const meta = {
   component: ScatterChart,
   tags: ["autodocs"],
   args: { points, xName: "Lengde (min)", yName: "Vurdering (1–5)", ariaLabel: "Vurdering mot lengde for album", height: 280 },
-  parameters: { docs: { description: { component: `**Use it when** two measures of the same things might go together, and the question is whether and how strongly (length and rating, age and plays).
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** one axis is a category (\`ColumnChart\`), there are fewer than three points (a table), or the reader may take the trend for a cause.
+two measures of the same things might go together, and the question is whether and how strongly (length and rating, age and plays).
 
-**Accessibility.** One image with a label, **both axes named in words above the chart**, a trend line that is dashed (not only colour) with r² and its strength in the summary, which says a relation is not a cause. Dots are translucent so overlap shows, with a ring so they hold 3:1. Tooltip for a pointer, table (\`showTable\`) for everyone else. Not a tab stop.
+### Do not use it when
 
-**Content.** Axis names with units. Title says the finding: «Lengre album får litt høyere vurdering».
+one axis is a category (\`ColumnChart\`), there are fewer than three points (a table), or the reader may take the trend for a cause.
 
-**Related.** \`LineChart\`, \`Histogram\`, guide «Data visualisation»` } } },
+### Accessibility
+
+One image with a label, **both axes named in words above the chart**, a trend line that is dashed (not only colour) with r² and its strength in the summary, which says a relation is not a cause. Dots are translucent so overlap shows, with a ring so they hold 3:1. Tooltip for a pointer, table (\`showTable\`) for everyone else. Not a tab stop.
+
+### Content
+
+Axis names with units. Title says the finding: «Lengre album får litt høyere vurdering».
+
+### Related
+
+\`LineChart\`, \`Histogram\`, guide «Data visualisation»` } } },
 } satisfies Meta<typeof ScatterChart>
 export default meta
 type Story = StoryObj<typeof meta>

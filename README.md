@@ -336,6 +336,21 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.19
+
+Storybook used as more than a gallery, from three research passes over its documentation (docs, controls and testing, organisation and AI):
+- **A catalogue for agents:** the build writes `manifests/components.json` (every component with its description, props and story code) and
+  `manifests/docs.json` (the guides), published with Storybook; `@storybook/addon-mcp` serves components, stories, docs and test runs to an
+  agent in this repository (`.mcp.json`). The skills point at both.
+- **Docs pages:** the template's sections are headings (a test holds them), a table of contents on every page, a code panel, WCAG 2.2 AA and
+  best-practice rules in the axe run, required props first in the props table, and live examples in the guides (`Canvas`).
+- **Organisation:** a `manager.ts` with the system's name and link and the accessibility panel first; `experimental` and `deprecated` tags,
+  hidden in the sidebar by default; the token pages kept out of the components manifest.
+- **Tests:** the light and dark runs set the theme with `initialGlobals`, as the toolbar does.
+
+Not taken: `react-docgen-typescript` (it needs TypeScript's JavaScript API, which TypeScript 7 does not have), visual snapshot tests (their
+pictures differ between machines; a later step, in CI only), CSF Factories (still a preview).
+
 ## 8.18
 
 Storybook as the system's test bench, from Storybook's own guidance (the Vitest addon, accessibility tests) and how other design systems keep

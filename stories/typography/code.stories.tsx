@@ -7,15 +7,25 @@ const meta = {
   component: Code,
   tags: ["autodocs"],
   args: { children: "npm run skills" },
-  parameters: { docs: { description: { component: `**Use it when** an identifier, a path or a command is in a sentence (\`inline\`), or code stands on lines of its own (\`block\`).
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** it is a quote or a table of values.
+an identifier, a path or a command is in a sentence (\`inline\`), or code stands on lines of its own (\`block\`).
 
-**Accessibility.** A block scrolls sideways inside its own box and can be reached with the keyboard (\`tabindex=0\`), so nothing is cut off for someone who cannot use a mouse.
+### Do not use it when
 
-**Content.** The contents are text, never markup. Do not translate code.
+it is a quote or a table of values.
 
-**Related.** \`Markdown\` (code in a description), \`CopyButton\` (not yet)` } } },
+### Accessibility
+
+A block scrolls sideways inside its own box and can be reached with the keyboard (\`tabindex=0\`), so nothing is cut off for someone who cannot use a mouse.
+
+### Content
+
+The contents are text, never markup. Do not translate code.
+
+### Related
+
+\`Markdown\` (code in a description), \`CopyButton\` (not yet)` } } },
 } satisfies Meta<typeof Code>
 export default meta
 type Story = StoryObj<typeof meta>

@@ -8,15 +8,25 @@ const meta = {
   tags: ["autodocs"],
   subcomponents: { NativeSelectOption, NativeSelectOptGroup },
   args: { "aria-label": "Type", children: [<NativeSelectOption key="a">Alle</NativeSelectOption>, <NativeSelectOption key="b">Filmer</NativeSelectOption>, <NativeSelectOption key="c">Serier</NativeSelectOption>] },
-  parameters: { docs: { description: { component: `**Use it when** the reader chooses one from a known list: the platform's own picker.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** two to six values that narrow a list (\`FilterChips\`) or an either/or view (\`SegmentedToggle\`).
+the reader chooses one from a known list: the platform's own picker.
 
-**Accessibility.** A native \`select\` with a visible label, so a phone gets its wheel or sheet.
+### Do not use it when
 
-**Content.** The label names what is chosen.
+two to six values that narrow a list (\`FilterChips\`) or an either/or view (\`SegmentedToggle\`).
 
-**Related.** \`PeriodPicker\`, \`TextField\`, \`FilterChips\`` } }, },
+### Accessibility
+
+A native \`select\` with a visible label, so a phone gets its wheel or sheet.
+
+### Content
+
+The label names what is chosen.
+
+### Related
+
+\`PeriodPicker\`, \`TextField\`, \`FilterChips\`` } }, },
 } satisfies Meta<typeof NativeSelect>
 export default meta
 type Story = StoryObj<typeof meta>

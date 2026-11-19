@@ -10,13 +10,21 @@ const meta = {
   component: Inline,
   tags: ["autodocs"],
   args: { children: null },
-  parameters: { docs: { description: { component: `**Use it when** a few small things sit on one line: a count and a label, a button and a link.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the things are read in order down the page (\`Stack\`).
+a few small things sit on one line: a count and a label, a button and a link.
 
-**Accessibility.** Order in the DOM is the reading order; it wraps instead of scrolling sideways.
+### Do not use it when
 
-**Related.** \`Stack\`, \`StatusLine\`` } }, },
+the things are read in order down the page (\`Stack\`).
+
+### Accessibility
+
+Order in the DOM is the reading order; it wraps instead of scrolling sideways.
+
+### Related
+
+\`Stack\`, \`StatusLine\`` } }, },
 } satisfies Meta<typeof Inline>
 export default meta
 type Story = StoryObj<typeof meta>

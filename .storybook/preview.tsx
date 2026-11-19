@@ -7,10 +7,8 @@ import "./docs.css"
 
 /** The toolbar's theme on the document's root: «system» leaves it to the device, as an app does. */
 const withTheme: Decorator = (Story, context) => {
-  // A test run forces its theme (`vitest.config.ts`); in the browser the toolbar's choice wins.
-  const forced: unknown = import.meta.env["STORYBOOK_THEME"]
-  const chosen = String(context.globals["theme"] ?? "system")
-  const theme = typeof forced === "string" && chosen === "system" ? forced : chosen
+  // A test run sets the theme through `initialGlobals` (`vitest.config.ts`), the toolbar in the browser.
+  const theme = String(context.globals["theme"] ?? "system")
   if (theme === "system") delete document.documentElement.dataset["theme"]
   else document.documentElement.dataset["theme"] = theme
   return <Story />
@@ -32,7 +30,14 @@ const preview: Preview = {
   parameters: {
     layout: "padded",
     // Every story is checked with axe when the stories run as tests (`npm run test:stories`), and a violation fails the run.
-    a11y: { test: "error" },
+    // Against WCAG 2.2 AA (the README's target) and axe's best practices, not every rule axe knows.
+    a11y: { test: "error", options: { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] } },
+    docs: {
+      // A table of contents on every docs page, the code of a story in its own panel, and the source without the theme decorator.
+      toc: { title: "På denne siden", headingSelector: "h2, h3" },
+      codePanel: true,
+      source: { excludeDecorators: true },
+    },
     // The page's colour is the theme's, never a background picked in the toolbar.
     backgrounds: { disable: true },
     viewport: {
@@ -44,7 +49,8 @@ const preview: Preview = {
         extraLarge: viewport("Extra-large (2560)", 2560, "desktop"),
       },
     },
-    controls: { matchers: { color: /(background|color)$/i } },
+    // Required props first and every prop's description open: the props table is the component's API.
+    controls: { sort: "requiredFirst", expanded: true, matchers: { color: /(background|color)$/i } },
     options: { storySort: { order: ["Welcome", "Tokens", "Layout", "Typography", "Primitives", "Navigation", "Lists", "Media", "Charts", "Tables", "Feedback", "Overlays", "Motion", "Entries", "Icons", "Guides"] } },
   },
 }

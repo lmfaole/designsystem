@@ -10,15 +10,25 @@ const meta = {
   tags: ["autodocs"],
   args: { name: "pull-request" },
   argTypes: { name: { control: "select" } },
-  parameters: { docs: { description: { component: `**Use it when** an icon makes a thing quicker to find or understand: a status beside its words, the kind of a row, a section title, an action.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** it is decoration without meaning, or it would stand alone for something that needs words (put the words beside it).
+an icon makes a thing quicker to find or understand: a status beside its words, the kind of a row, a section title, an action.
 
-**Accessibility.** Hidden from a screen reader unless it is given a \`label\`; the meaning is asked for by name from \`ICONS\`, never a glyph.
+### Do not use it when
 
-**Content.** The words stay; the icon repeats them.
+it is decoration without meaning, or it would stand alone for something that needs words (put the words beside it).
 
-**Related.** \`StatusLine\`, \`Badge\`, guides «Icons / Guide» and «Icons / Catalogue»` } }, },
+### Accessibility
+
+Hidden from a screen reader unless it is given a \`label\`; the meaning is asked for by name from \`ICONS\`, never a glyph.
+
+### Content
+
+The words stay; the icon repeats them.
+
+### Related
+
+\`StatusLine\`, \`Badge\`, guides «Icons / Guide» and «Icons / Catalogue»` } }, },
 } satisfies Meta<typeof Icon>
 export default meta
 type Story = StoryObj<typeof meta>

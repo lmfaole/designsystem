@@ -9,15 +9,25 @@ const meta = {
   component: SegmentedToggle,
   tags: ["autodocs"],
   args: { value: "month", onChange: fn(), options: [{ value: "month", label: "Per måned" }, { value: "year", label: "Per år" }] },
-  parameters: { docs: { description: { component: `**Use it when** an either/or view switch (per month or per year) where exactly one is on.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** narrowing a list (\`FilterChips\`) or navigating between pages (\`NavBar\`).
+an either/or view switch (per month or per year) where exactly one is on.
 
-**Accessibility.** A group of buttons; the one that is on is the \`default\` variant and \`aria-pressed\`, the others are outlined. The story's test clicks the other and checks both.
+### Do not use it when
 
-**Content.** Short labels that name the views.
+narrowing a list (\`FilterChips\`) or navigating between pages (\`NavBar\`).
 
-**Related.** \`FilterChips\`, \`NavBar\`` } }, },
+### Accessibility
+
+A group of buttons; the one that is on is the \`default\` variant and \`aria-pressed\`, the others are outlined. The story's test clicks the other and checks both.
+
+### Content
+
+Short labels that name the views.
+
+### Related
+
+\`FilterChips\`, \`NavBar\`` } }, },
 } satisfies Meta<typeof SegmentedToggle>
 export default meta
 type Story = StoryObj<typeof meta>

@@ -7,15 +7,25 @@ const meta = {
   component: SrTableHead,
   tags: ["autodocs"],
   args: { columns: ["Navn", "Antall"] },
-  parameters: { docs: { description: { component: `**Use it when** a table has no header the page shows, but a screen reader needs one.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a table that has a visible header (\`TableHeader\`).
+a table has no header the page shows, but a screen reader needs one.
 
-**Accessibility.** Read by a screen reader with every cell, never drawn.
+### Do not use it when
 
-**Content.** The header names each column.
+a table that has a visible header (\`TableHeader\`).
 
-**Related.** \`Table\`, \`ChartTable\`` } }, },
+### Accessibility
+
+Read by a screen reader with every cell, never drawn.
+
+### Content
+
+The header names each column.
+
+### Related
+
+\`Table\`, \`ChartTable\`` } }, },
 } satisfies Meta<typeof SrTableHead>
 export default meta
 type Story = StoryObj<typeof meta>

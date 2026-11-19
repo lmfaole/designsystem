@@ -7,15 +7,25 @@ const meta = {
   component: Time,
   tags: ["autodocs"],
   args: { value: "2026-11-19T09:00:00Z", now: new Date("2026-11-19T12:00:00Z") },
-  parameters: { docs: { description: { component: `\`**Use it when** a moment is shown: when something happened or will happen.
+  parameters: { docs: { description: { component: `\`### Use it when
 
-**Do not use it when** the date is the content (a release date in a table of releases): use \`format="date"\` there.
+a moment is shown: when something happened or will happen.
 
-**Accessibility.** Renders \`<time datetime>\` with the exact time in the title. \`now\` is passed in, never read in the component, so the server and the browser tell the same story and a first render has no clock in it.
+### Do not use it when
 
-**Content.** Relative under seven days («for 3 timer siden», «i går»), a date from then on («2. nov. 2026»); Norwegian bokmål and Oslo time. Add the exact time (\`format="datetime"\`) where relative is not enough.
+the date is the content (a release date in a table of releases): use \`format="date"\` there.
 
-**Related.** \`CountUp\`, \`DatedEntry\`` } } },
+### Accessibility
+
+Renders \`<time datetime>\` with the exact time in the title. \`now\` is passed in, never read in the component, so the server and the browser tell the same story and a first render has no clock in it.
+
+### Content
+
+Relative under seven days («for 3 timer siden», «i går»), a date from then on («2. nov. 2026»); Norwegian bokmål and Oslo time. Add the exact time (\`format="datetime"\`) where relative is not enough.
+
+### Related
+
+\`CountUp\`, \`DatedEntry\`` } } },
 } satisfies Meta<typeof Time>
 export default meta
 type Story = StoryObj<typeof meta>

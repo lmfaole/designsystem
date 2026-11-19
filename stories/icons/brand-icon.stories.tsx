@@ -9,7 +9,25 @@ const meta = {
   title: "Icons/BrandIcon",
   component: BrandIcon,
   tags: ["autodocs"],
-  parameters: { docs: { description: { component: "The mark of a service a link goes to. A closed set (GitHub, Spotify, Bluesky, Mastodon, Steam, PlayStation) from Simple Icons (CC0). It is not an `Icon`: it keeps the service's shape, follows the text colour and always says the service's name unless the words beside it do (`decorative`). LinkedIn is not here: Simple Icons no longer carries it, so a link to it uses its words." } } },
+  parameters: { docs: { description: { component: `### Use it when
+
+A link goes to a service a reader knows by its mark: GitHub, Spotify, Bluesky, Mastodon, Steam, PlayStation.
+
+### Do not use it when
+
+The thing is a meaning, not a service (\`Icon\`), or the service is not in the closed set (use its name in words; LinkedIn is not in Simple Icons any more).
+
+### Accessibility
+
+It says the service's name to a screen reader unless the words beside it already do (\`decorative\`). It is the text colour, so it keeps the contrast of its text and survives forced colours.
+
+### Content
+
+The name of the service, as the service writes it.
+
+### Related
+
+\`Icon\`, \`ExternalLink\`, guide «Colour and state»` } } },
 } satisfies Meta<typeof BrandIcon>
 export default meta
 type Story = StoryObj<typeof meta>

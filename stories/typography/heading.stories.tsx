@@ -7,15 +7,25 @@ const meta = {
   component: Heading,
   tags: ["autodocs"],
   args: { level: 2, children: "A heading" },
-  parameters: { docs: { description: { component: `**Use it when** a heading: \`level\` is the element and the look is chosen apart, so the page's outline and its looks are decided separately.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** bold text that is not a heading (\`Text\`).
+a heading: \`level\` is the element and the look is chosen apart, so the page's outline and its looks are decided separately.
 
-**Accessibility.** One \`h1\` per page and no skipped levels.
+### Do not use it when
 
-**Content.** A title is a noun or a short phrase, in sentence case.
+bold text that is not a heading (\`Text\`).
 
-**Related.** \`PageHeader\`, \`PageSection\`, \`Text\`` } }, },
+### Accessibility
+
+One \`h1\` per page and no skipped levels.
+
+### Content
+
+A title is a noun or a short phrase, in sentence case.
+
+### Related
+
+\`PageHeader\`, \`PageSection\`, \`Text\`` } }, },
 } satisfies Meta<typeof Heading>
 export default meta
 type Story = StoryObj<typeof meta>

@@ -11,15 +11,25 @@ const meta = {
   component: Split,
   tags: ["autodocs"],
   args: { rail: null, children: null },
-  parameters: { layout: "fullscreen", docs: { description: { component: `**Use it when** a page has something to look up beside what is read: a cover and its facts (\`position="start"\`, a detail page; the link out stays last in the main content), or related things and a summary (\`position="end"\`). Inside a \`PageLayout width="pane"\`, the pane is beside the main content from the \`expanded\` width class (56rem of room) and in line below it; the main content keeps the reading column's 48rem.
+  parameters: { layout: "fullscreen", docs: { description: { component: `### Use it when
 
-**Do not use it when** it would hold read content, a second list or navigation (read content stands in one column, navigation is the \`NavBar\`), or the page is in the default reading column (there is no room, so it stays one column).
+a page has something to look up beside what is read: a cover and its facts (\`position="start"\`, a detail page; the link out stays last in the main content), or related things and a summary (\`position="end"\`). Inside a \`PageLayout width="pane"\`, the pane is beside the main content from the \`expanded\` width class (56rem of room) and in line below it; the main content keeps the reading column's 48rem.
 
-**Accessibility.** The DOM order is the order on a phone and the order a screen reader reads: \`start\` puts the pane first, \`end\` after the main content. The pane is an \`aside\`. Nothing in the pane may be the only place something is said.
+### Do not use it when
 
-**Content.** The pane holds short things: a picture and a \`FactList\`. A link out is last in the main content, not in the pane, which comes first on a phone.
+it would hold read content, a second list or navigation (read content stands in one column, navigation is the \`NavBar\`), or the page is in the default reading column (there is no room, so it stays one column).
 
-**Related.** \`PageLayout\`, \`Stack\`, \`Grid\`, guide «Wide screens»` } }, },
+### Accessibility
+
+The DOM order is the order on a phone and the order a screen reader reads: \`start\` puts the pane first, \`end\` after the main content. The pane is an \`aside\`. Nothing in the pane may be the only place something is said.
+
+### Content
+
+The pane holds short things: a picture and a \`FactList\`. A link out is last in the main content, not in the pane, which comes first on a phone.
+
+### Related
+
+\`PageLayout\`, \`Stack\`, \`Grid\`, guide «Wide screens»` } }, },
 } satisfies Meta<typeof Split>
 export default meta
 type Story = StoryObj<typeof meta>

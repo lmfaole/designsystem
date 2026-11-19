@@ -7,15 +7,25 @@ const meta = {
   component: StreamedSection,
   tags: ["autodocs"],
   args: { title: "pull requests", children: "Her kommer innholdet." },
-  parameters: { docs: { description: { component: `**Use it when** a part of a server-rendered page arrives on its own while the rest is already shown: around each source that is slow, so the slowest does not hold the page back.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the content is already there (a plain section), or around a source that can throw: it returns its failure as a value and shows its own \`ErrorMessage\`.
+a part of a server-rendered page arrives on its own while the rest is already shown: around each source that is slow, so the slowest does not hold the page back.
 
-**Accessibility.** The fallback is a \`SectionSkeleton\` with one status for the part. The fallback is never \`null\`: an empty place makes the page jump.
+### Do not use it when
 
-**Content.** The title names what is loading.
+the content is already there (a plain section), or around a source that can throw: it returns its failure as a value and shows its own \`ErrorMessage\`.
 
-**Related.** \`SectionSkeleton\`, \`ErrorMessage\`, guide «Server rendering»` } } },
+### Accessibility
+
+The fallback is a \`SectionSkeleton\` with one status for the part. The fallback is never \`null\`: an empty place makes the page jump.
+
+### Content
+
+The title names what is loading.
+
+### Related
+
+\`SectionSkeleton\`, \`ErrorMessage\`, guide «Server rendering»` } } },
 } satisfies Meta<typeof StreamedSection>
 export default meta
 type Story = StoryObj<typeof meta>

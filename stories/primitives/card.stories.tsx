@@ -8,15 +8,25 @@ const meta = {
   component: Card,
   tags: ["autodocs"],
   subcomponents: { CardHeader, CardTitle, CardDescription, CardAction, CardContent, CardFooter },
-  parameters: { docs: { description: { component: `**Use it when** one self-contained item, such as a chart in a \`ChartCard\`.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** grouping things that belong together (space groups, not boxes) or a list (\`Rows\`).
+one self-contained item, such as a chart in a \`ChartCard\`.
 
-**Accessibility.** The title is a heading; the card is not a link as a whole.
+### Do not use it when
 
-**Content.** A title that names the thing.
+grouping things that belong together (space groups, not boxes) or a list (\`Rows\`).
 
-**Related.** \`ChartCard\`, \`PictureCard\`, \`PageSection\`` } }, },
+### Accessibility
+
+The title is a heading; the card is not a link as a whole.
+
+### Content
+
+A title that names the thing.
+
+### Related
+
+\`ChartCard\`, \`PictureCard\`, \`PageSection\`` } }, },
 } satisfies Meta<typeof Card>
 export default meta
 type Story = StoryObj<typeof meta>

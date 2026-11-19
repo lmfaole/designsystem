@@ -1,6 +1,8 @@
-import { Meta } from "@storybook/addon-docs/blocks"
+import { Canvas, Meta } from "@storybook/addon-docs/blocks"
 
-<Meta title="Guides/Wide screens" />
+import * as SplitStories from "../layout/split.stories"
+
+<Meta title="Guides/Wide screens" summary="Where the width of a desktop goes: the line does not grow; a pane, then more pictures across, then margin. Width classes by the room a part has." />
 
 # Wide screens and responsive layout
 
@@ -35,6 +37,8 @@ Never: the same content spread thin, two lists side by side to compare (that is 
   a phone, at the left on a desktop, and stays in view while the main content scrolls. A detail page.
 - `position="end"`: the pane **supports** the main content (related things, a summary, help). It comes after it in the document and
   on a phone, at the right on a desktop.
+
+<Canvas of={SplitStories.Default} sourceState="shown" />
 
 It only fits in a `PageLayout width="pane"` (70rem: the 48rem reading column, a 2rem gap and the pane). In the reading column there
 is never room, so a `Split` there stays one column. `page-width.test.ts` holds the numbers to each other.

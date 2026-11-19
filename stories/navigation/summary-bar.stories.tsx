@@ -15,15 +15,25 @@ const meta = {
       { key: "issues", label: "issues", count: 9, href: "#", icon: "issue" },
     ],
   },
-  parameters: { docs: { description: { component: `**Use it when** the state of a place in counts that each link to what they count: first on a front page.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a count that links nowhere, or figures to compare (\`FactList\`).
+the state of a place in counts that each link to what they count: first on a front page.
 
-**Accessibility.** A \`nav\` with links; each count has its words and an icon, and \`destructive\` is only for what stops something.
+### Do not use it when
 
-**Content.** Plural labels («blokkert»). Leave out the zeros.
+a count that links nowhere, or figures to compare (\`FactList\`).
 
-**Related.** \`SubPages\`, \`PageSection\`, \`StatusLine\`` } }, },
+### Accessibility
+
+A \`nav\` with links; each count has its words and an icon, and \`destructive\` is only for what stops something.
+
+### Content
+
+Plural labels («blokkert»). Leave out the zeros.
+
+### Related
+
+\`SubPages\`, \`PageSection\`, \`StatusLine\`` } }, },
 } satisfies Meta<typeof SummaryBar>
 export default meta
 type Story = StoryObj<typeof meta>

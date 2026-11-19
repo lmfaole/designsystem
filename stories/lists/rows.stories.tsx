@@ -10,15 +10,25 @@ const meta = {
   component: Rows,
   tags: ["autodocs"],
   args: { rows: [{ key: "a", body: "Alfa", trailing: "12" }, { key: "b", body: "Beta", trailing: "7" }] },
-  parameters: { docs: { description: { component: `**Use it when** a list of things the reader opens: a name (the strongest part), a note at the end, an icon or poster at the start.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** figures compared down several columns (\`Table\`) or one fact per term (\`FactList\`).
+a list of things the reader opens: a name (the strongest part), a note at the end, an icon or poster at the start.
 
-**Accessibility.** Real links; a list of one structure so it reads as «kind, name, status, date».
+### Do not use it when
 
-**Content.** The name is the strongest part; everything else is small and muted.
+figures compared down several columns (\`Table\`) or one fact per term (\`FactList\`).
 
-**Related.** \`PictureRows\`, \`StatusLine\`, \`FactList\`` } }, },
+### Accessibility
+
+Real links; a list of one structure so it reads as «kind, name, status, date».
+
+### Content
+
+The name is the strongest part; everything else is small and muted.
+
+### Related
+
+\`PictureRows\`, \`StatusLine\`, \`FactList\`` } }, },
 } satisfies Meta<typeof Rows>
 export default meta
 type Story = StoryObj<typeof meta>

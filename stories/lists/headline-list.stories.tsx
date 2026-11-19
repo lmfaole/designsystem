@@ -7,15 +7,25 @@ const meta = {
   component: HeadlineList,
   tags: ["autodocs"],
   args: { headlines: [{ key: "1", href: "https://example.com", title: "A headline from elsewhere", note: "example.com · i dag" }, { key: "2", href: "https://example.com", title: "Another one", note: "example.org · i går" }] },
-  parameters: { docs: { description: { component: `**Use it when** a list of headlines with a source and a time: news, a feed.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** things the reader operates (\`Rows\`).
+a list of headlines with a source and a time: news, a feed.
 
-**Accessibility.** Real links; the source and time are muted text after the title.
+### Do not use it when
 
-**Content.** The title is the strongest part; the source and the time follow.
+things the reader operates (\`Rows\`).
 
-**Related.** \`StoryList\`, \`Time\`, \`Rows\`` } }, },
+### Accessibility
+
+Real links; the source and time are muted text after the title.
+
+### Content
+
+The title is the strongest part; the source and the time follow.
+
+### Related
+
+\`StoryList\`, \`Time\`, \`Rows\`` } }, },
 } satisfies Meta<typeof HeadlineList>
 export default meta
 type Story = StoryObj<typeof meta>

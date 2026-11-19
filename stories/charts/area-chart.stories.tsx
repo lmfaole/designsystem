@@ -8,15 +8,25 @@ const meta = {
   component: AreaChart,
   tags: ["autodocs"],
   args: { data: MONTHS, ariaLabel: "Utvikling over tid", valueLabel: "Avspillinger", height: 240 },
-  parameters: { docs: { description: { component: `**Use it when** a value changes over time or along an ordered axis (months, hours).
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** there are more than five series (use a table), or the reader needs exact values (add the table, or use a \`FactList\`).
+a value changes over time or along an ordered axis (months, hours).
 
-**Accessibility.** The chart draws; the numbers are in a \`ChartTable\` for a screen reader, and \`ariaLabel\` names the chart. Never told by shade alone.
+### Do not use it when
 
-**Content.** A title that says what it shows with the unit and the period. Data oldest first.
+there are more than five series (use a table), or the reader needs exact values (add the table, or use a \`FactList\`).
 
-**Related.** \`ColumnChart\`, \`StackedColumnChart\`, \`ChartCard\`, guide «Data visualisation»` } }, },
+### Accessibility
+
+The chart draws; the numbers are in a \`ChartTable\` for a screen reader, and \`ariaLabel\` names the chart. Never told by shade alone.
+
+### Content
+
+A title that says what it shows with the unit and the period. Data oldest first.
+
+### Related
+
+\`ColumnChart\`, \`StackedColumnChart\`, \`ChartCard\`, guide «Data visualisation»` } }, },
 } satisfies Meta<typeof AreaChart>
 export default meta
 type Story = StoryObj<typeof meta>

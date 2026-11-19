@@ -18,15 +18,25 @@ const meta = {
     unit: "min",
     ariaLabel: "Lengde etter slags medium",
   },
-  parameters: { docs: { description: { component: `**Use it when** the spread of values in several groups should be compared, not only their middle: a mean hides whether a group is tight or wild.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the readers have never seen one and nothing explains it (the story has a sentence that does; keep it), a group has fewer than five values (a list), or there is one group (\`Histogram\`).
+the spread of values in several groups should be compared, not only their middle: a mean hides whether a group is tight or wild.
 
-**Accessibility.** One image with a label; the five numbers of each group are a table (\`showTable\`), outliers counted in the summary. The box is the middle half, the line the median, the whiskers Tukey's (1.5 box lengths), dots single values. One to eight groups, in the order given, horizontal so the names read as words. Not a tab stop.
+### Do not use it when
 
-**Content.** Group names short; the unit in the label.
+the readers have never seen one and nothing explains it (the story has a sentence that does; keep it), a group has fewer than five values (a list), or there is one group (\`Histogram\`).
 
-**Related.** \`Histogram\`, \`RankedBarChart\`` } } },
+### Accessibility
+
+One image with a label; the five numbers of each group are a table (\`showTable\`), outliers counted in the summary. The box is the middle half, the line the median, the whiskers Tukey's (1.5 box lengths), dots single values. One to eight groups, in the order given, horizontal so the names read as words. Not a tab stop.
+
+### Content
+
+Group names short; the unit in the label.
+
+### Related
+
+\`Histogram\`, \`RankedBarChart\`` } } },
 } satisfies Meta<typeof BoxPlot>
 export default meta
 type Story = StoryObj<typeof meta>

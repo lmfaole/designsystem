@@ -7,15 +7,25 @@ const meta = {
   component: ExternalLink,
   tags: ["autodocs"],
   args: { href: "https://example.com", children: "example.com" },
-  parameters: { docs: { description: { component: `**Use it when** a link out to another site, in running text or as a pill among a thing's other places.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a link that stays in the app (\`TextLink\`, \`CardLink\`).
+a link out to another site, in running text or as a pill among a thing's other places.
 
-**Accessibility.** Marked with the symbol and read as external; \`rel\` is not a prop because it is a safety property.
+### Do not use it when
 
-**Content.** Names the place: «GitHub», not «Klikk her».
+a link that stays in the app (\`TextLink\`, \`CardLink\`).
 
-**Related.** \`LinkButton\`, \`TextLink\`` } }, },
+### Accessibility
+
+Marked with the symbol and read as external; \`rel\` is not a prop because it is a safety property.
+
+### Content
+
+Names the place: «GitHub», not «Klikk her».
+
+### Related
+
+\`LinkButton\`, \`TextLink\`` } }, },
 } satisfies Meta<typeof ExternalLink>
 export default meta
 type Story = StoryObj<typeof meta>

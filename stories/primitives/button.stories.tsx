@@ -8,15 +8,25 @@ const meta = {
   component: Button,
   tags: ["autodocs"],
   args: { children: "Button" },
-  parameters: { docs: { description: { component: `**Use it when** an action that changes something or sends something: save, send, copy.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** going to another page (\`LinkButton\`, \`TextLink\`).
+an action that changes something or sends something: save, send, copy.
 
-**Accessibility.** A real button with a visible label; the focus ring is never removed.
+### Do not use it when
 
-**Content.** A verb: «Lagre», «Opprett», with the thing when it is not clear.
+going to another page (\`LinkButton\`, \`TextLink\`).
 
-**Related.** \`LinkButton\`, \`ButtonGroup\`, \`CommandButton\`` } }, },
+### Accessibility
+
+A real button with a visible label; the focus ring is never removed.
+
+### Content
+
+A verb: «Lagre», «Opprett», with the thing when it is not clear.
+
+### Related
+
+\`LinkButton\`, \`ButtonGroup\`, \`CommandButton\`` } }, },
 } satisfies Meta<typeof Button>
 export default meta
 type Story = StoryObj<typeof meta>

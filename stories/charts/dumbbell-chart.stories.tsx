@@ -18,15 +18,25 @@ const meta = {
     toLabel: "2025",
     ariaLabel: "Timer per medium, 2024 mot 2025",
   },
-  parameters: { docs: { description: { component: `**Use it when** several things changed between two moments (a year and the next; before and after) and the question is how much each moved.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the things are in different units or sizes by orders of magnitude (the smallest would sit in a heap on one shared axis: use \`ColumnChart\` per thing or percent change), there are more than two moments (\`LineChart\`), more than about twelve things (a table), or a single value against a goal (\`Progress\`).
+several things changed between two moments (a year and the next; before and after) and the question is how much each moved.
 
-**Accessibility.** One image with a label and a summary (how many up, how many down, the biggest change); each row writes both values and the change with its sign; the **start is a ring and the end a filled dot**, so direction is not told by colour. A table (\`showTable\`). Biggest change first (\`keepOrder\` keeps yours). Plain HTML, no script.
+### Do not use it when
 
-**Content.** The two moments named in the legend; units in \`formatValue\`.
+the things are in different units or sizes by orders of magnitude (the smallest would sit in a heap on one shared axis: use \`ColumnChart\` per thing or percent change), there are more than two moments (\`LineChart\`), more than about twelve things (a table), or a single value against a goal (\`Progress\`).
 
-**Related.** \`LineChart\`, \`ColumnChart\`, \`Progress\`` } } },
+### Accessibility
+
+One image with a label and a summary (how many up, how many down, the biggest change); each row writes both values and the change with its sign; the **start is a ring and the end a filled dot**, so direction is not told by colour. A table (\`showTable\`). Biggest change first (\`keepOrder\` keeps yours). Plain HTML, no script.
+
+### Content
+
+The two moments named in the legend; units in \`formatValue\`.
+
+### Related
+
+\`LineChart\`, \`ColumnChart\`, \`Progress\`` } } },
 } satisfies Meta<typeof DumbbellChart>
 export default meta
 type Story = StoryObj<typeof meta>

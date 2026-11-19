@@ -8,15 +8,25 @@ const meta = {
   component: ColumnChart,
   tags: ["autodocs"],
   args: { data: MONTHS, ariaLabel: "Avspillinger per måned", valueLabel: "Avspillinger", height: 240 },
-  parameters: { docs: { description: { component: `**Use it when** a few categories are compared, left to right in a fixed order (hours, weekdays, months).
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the categories are ranked by size (\`RankedBarChart\`), or there are more than ten.
+a few categories are compared, left to right in a fixed order (hours, weekdays, months).
 
-**Accessibility.** A \`ChartTable\` has the exact values; \`ariaLabel\` names the chart; a tooltip repeats the table and is for a pointer.
+### Do not use it when
 
-**Content.** Labels are short. The title says what is counted and in what unit.
+the categories are ranked by size (\`RankedBarChart\`), or there are more than ten.
 
-**Related.** \`RankedBarChart\`, \`AreaChart\`, \`ChartCard\`` } }, },
+### Accessibility
+
+A \`ChartTable\` has the exact values; \`ariaLabel\` names the chart; a tooltip repeats the table and is for a pointer.
+
+### Content
+
+Labels are short. The title says what is counted and in what unit.
+
+### Related
+
+\`RankedBarChart\`, \`AreaChart\`, \`ChartCard\`` } }, },
 } satisfies Meta<typeof ColumnChart>
 export default meta
 type Story = StoryObj<typeof meta>

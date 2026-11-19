@@ -8,15 +8,25 @@ const meta = {
   component: PageHeader,
   tags: ["autodocs"],
   args: { title: "Musikk" },
-  parameters: { docs: { description: { component: `**Use it when** every page: its title as the one \`h1\` and one line of lead-in, with room for the page's controls.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a section title (\`PageSection\`).
+every page: its title as the one \`h1\` and one line of lead-in, with room for the page's controls.
 
-**Accessibility.** The one \`h1\` of the page; the lead is a paragraph under it.
+### Do not use it when
 
-**Content.** A title that names the page; the lead says what is on it, in one line.
+a section title (\`PageSection\`).
 
-**Related.** \`PageSection\`, \`Breadcrumbs\`, \`PageLayout\`` } }, },
+### Accessibility
+
+The one \`h1\` of the page; the lead is a paragraph under it.
+
+### Content
+
+A title that names the page; the lead says what is on it, in one line.
+
+### Related
+
+\`PageSection\`, \`Breadcrumbs\`, \`PageLayout\`` } }, },
 } satisfies Meta<typeof PageHeader>
 export default meta
 type Story = StoryObj<typeof meta>

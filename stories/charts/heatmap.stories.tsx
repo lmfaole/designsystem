@@ -19,15 +19,25 @@ const meta = {
   component: Heatmap,
   tags: ["autodocs"],
   args: { rows, columns: hours, cells, ariaLabel: "Avspillinger etter ukedag og time", unit: "avspillinger", rowName: "Ukedag", labelEvery: 3 },
-  parameters: { docs: { description: { component: `**Use it when** two categories meet and the reader is looking for the pattern: weekday by hour, category by month.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the reader must read exact numbers (a table; or \`showValues\` for a matrix of at most about 7 × 12), or one of the axes is not a category.
+two categories meet and the reader is looking for the pattern: weekday by hour, category by month.
 
-**Accessibility.** One image with a label and a summary; each cell has a title; the matrix is also a table (\`showTable\`). Steps are quantiles of the values above zero, greys that keep 3:1; a cell with no data is empty, never the palest step. With \`showValues\` the number is in the cell, and the colour is help only.
+### Do not use it when
 
-**Content.** The unit in the plural, short axis labels (\`labelEvery\` thins a crowded axis).
+the reader must read exact numbers (a table; or \`showValues\` for a matrix of at most about 7 × 12), or one of the axes is not a category.
 
-**Related.** \`CalendarHeatmap\`, \`ColumnChart\`` } } },
+### Accessibility
+
+One image with a label and a summary; each cell has a title; the matrix is also a table (\`showTable\`). Steps are quantiles of the values above zero, greys that keep 3:1; a cell with no data is empty, never the palest step. With \`showValues\` the number is in the cell, and the colour is help only.
+
+### Content
+
+The unit in the plural, short axis labels (\`labelEvery\` thins a crowded axis).
+
+### Related
+
+\`CalendarHeatmap\`, \`ColumnChart\`` } } },
 } satisfies Meta<typeof Heatmap>
 export default meta
 type Story = StoryObj<typeof meta>

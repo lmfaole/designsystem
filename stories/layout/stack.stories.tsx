@@ -9,13 +9,21 @@ const meta = {
   component: Stack,
   tags: ["autodocs"],
   args: { children: null },
-  parameters: { docs: { description: { component: `**Use it when** things stand under each other: the sections of a page, the parts of a card. This is the layout of read content.
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** the things are looked at side by side (\`Tiles\`, \`Grid\`).
+things stand under each other: the sections of a page, the parts of a card. This is the layout of read content.
 
-**Accessibility.** Order in the DOM is the reading order.
+### Do not use it when
 
-**Related.** \`Inline\`, \`Grid\`, \`Split\`` } }, },
+the things are looked at side by side (\`Tiles\`, \`Grid\`).
+
+### Accessibility
+
+Order in the DOM is the reading order.
+
+### Related
+
+\`Inline\`, \`Grid\`, \`Split\`` } }, },
 } satisfies Meta<typeof Stack>
 export default meta
 type Story = StoryObj<typeof meta>

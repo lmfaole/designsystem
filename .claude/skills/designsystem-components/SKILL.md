@@ -5,6 +5,13 @@ description: Use when choosing which design system component to use for somethin
 
 # Components: choose, and extend
 
+## Look a component up
+
+- **The catalogue as data:** <https://lmfaole.github.io/designsystem/manifests/components.json> (every component: its description, props with
+  types and JSDoc, and the code of each story) and `…/manifests/docs.json` (the guides). Read it before guessing a prop.
+- **In this repository**, with `npm run storybook` running, the `storybook` MCP server (`.mcp.json`, `@storybook/addon-mcp`) lists
+  components and docs, previews stories and runs their tests (`test-run`).
+
 ## Choose by purpose
 
 | You need | Use |
@@ -62,6 +69,8 @@ If the thing is not here, **add a component**; do not style in the project.
    - a **`play` test** for anything that reacts (a toggle, an overlay, a fold): it does what a reader does (`userEvent`, by role and name)
      and checks the result and the state a screen reader hears (`aria-pressed`, `open`, focus back). A browser's own key handling (Esc in
      a dialog, Enter on a summary) is not simulated: click, and check focus with Tab;
+   - the component's JSDoc is its description in the docs and the manifest: say what it is for in the first sentence; give each prop a
+     JSDoc line. A component on its way in or out is tagged `experimental` or `deprecated` (hidden in the sidebar by default) and `!manifest`;
    - every story is a test: `npm run test:stories` renders each in Chromium in the light and the dark theme, runs its `play` and fails
      on an axe violation (`a11y: { test: "error" }`). Fix the component, never turn the check off for a story.
 3. Add a test if it carries a rule (`src/*.test.ts` reads the source and pins it).

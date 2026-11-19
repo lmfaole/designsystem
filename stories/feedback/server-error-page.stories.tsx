@@ -6,15 +6,25 @@ const meta = {
   title: "Feedback/ServerErrorPage",
   component: ServerErrorPage,
   tags: ["autodocs"],
-  parameters: { docs: { description: { component: `**Use it when** a page crashed while rendering (a 500).
+  parameters: { docs: { description: { component: `### Use it when
 
-**Do not use it when** a failed query in one part (\`ErrorMessage\`).
+a page crashed while rendering (a 500).
 
-**Accessibility.** A heading, the text and a way to reload.
+### Do not use it when
 
-**Content.** Say that the page could not load and what to do (reload); no error code as the only content.
+a failed query in one part (\`ErrorMessage\`).
 
-**Related.** \`ErrorPage\`, \`NotFoundPage\`, \`ErrorMessage\`` } }, },
+### Accessibility
+
+A heading, the text and a way to reload.
+
+### Content
+
+Say that the page could not load and what to do (reload); no error code as the only content.
+
+### Related
+
+\`ErrorPage\`, \`NotFoundPage\`, \`ErrorMessage\`` } }, },
 } satisfies Meta<typeof ServerErrorPage>
 export default meta
 type Story = StoryObj<typeof meta>
