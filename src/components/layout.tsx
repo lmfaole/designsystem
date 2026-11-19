@@ -20,7 +20,8 @@ const COLUMNS = {
   tiles: "grid-cols-[repeat(auto-fill,minmax(9rem,1fr))]",
   cards: "grid-cols-[repeat(auto-fill,minmax(18rem,1fr))]",
 } as const
-const WIDTHS = { full: "", prose: "max-w-prose" } as const
+/** `reading`: the reading column's 48rem, for read content in a wider page (a pane page with nothing for its pane). */
+const WIDTHS = { full: "", prose: "max-w-prose", reading: "max-w-3xl" } as const
 
 export type Gap = keyof typeof GAPS
 type Element = "div" | "section" | "ul" | "ol" | "li" | "nav" | "header" | "article" | "main" | "span"
