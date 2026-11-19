@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm"
 const config: StorybookConfig = {
   stories: ["../stories/**/*.mdx", "../stories/**/*.stories.tsx"],
   // remark-gfm: tables in the guides.
-  addons: [{ name: "@storybook/addon-docs", options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } } }, "@storybook/addon-a11y"],
+  addons: [{ name: "@storybook/addon-docs", options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } } }, "@storybook/addon-a11y", "@storybook/addon-vitest"],
   framework: "@storybook/react-vite",
   viteFinal: (config) => ({
     ...config,

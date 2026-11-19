@@ -46,13 +46,13 @@ export function DumbbellChart({ rows, fromLabel, toLabel, ariaLabel, formatValue
           {toLabel}
         </span>
       </div>
-      <ul role="img" aria-label={ariaLabel} className="grid gap-4">
+      <div role="img" aria-label={ariaLabel} className="grid gap-4">
         {shown.map((row) => {
           const delta = row.to - row.from
           const start = axisPosition(row.from, min, max)
           const end = axisPosition(row.to, min, max)
           return (
-            <li key={row.label} className="grid gap-1.5" aria-hidden>
+            <div key={row.label} className="grid gap-1.5" aria-hidden>
               <div className="flex items-baseline justify-between gap-3 text-sm">
                 <span className="min-w-0 break-words font-medium">{row.label}</span>
                 <span className="shrink-0 tabular-nums">
@@ -65,12 +65,12 @@ export function DumbbellChart({ rows, fromLabel, toLabel, ariaLabel, formatValue
                 <span className="bg-background absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-current" style={{ left: `${start}%` }} />
                 <span className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current" style={{ left: `${end}%` }} />
               </div>
-            </li>
+            </div>
           )
         })}
-      </ul>
+      </div>
       {text === null ? null : <ChartSummary text={text} />}
-      <ChartTable caption={ariaLabel} columns={["", fromLabel, toLabel, "Endring"]} rows={shown.map((row) => [row.label, row.from, row.to, row.to - row.from])} visible={showTable} />
+      <ChartTable caption={ariaLabel} columns={["Hva", fromLabel, toLabel, "Endring"]} rows={shown.map((row) => [row.label, row.from, row.to, row.to - row.from])} visible={showTable} />
     </div>
   )
 }

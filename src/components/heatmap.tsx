@@ -24,6 +24,8 @@ interface HeatmapProps {
   unit: string
   /** Label every nth column only, for a crowded axis (24 hours: every 3rd). */
   labelEvery?: number
+  /** What a row is, for the table's first column: «Ukedag». */
+  rowName?: string
   /** Write the number in each cell: for a small matrix, where it is then read as a table of numbers with colour as help. */
   showValues?: boolean
   summary?: string
@@ -36,7 +38,7 @@ interface HeatmapProps {
  * is for finding the pattern, not for reading a number; `showValues` writes the numbers in a small one. Steps are quantiles of the values above zero,
  * and a cell with no data is empty and not the lightest step.
  */
-export function Heatmap({ rows, columns, cells, ariaLabel, unit, labelEvery = 1, showValues = false, summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE }: HeatmapProps) {
+export function Heatmap({ rows, columns, cells, ariaLabel, unit, rowName = "Rad", labelEvery = 1, showValues = false, summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE }: HeatmapProps) {
   if (cells.every((cell) => cell.value === null)) return <ChartEmpty height={96} message={emptyMessage} />
   const valueAt = new Map(cells.map((cell) => [`${cell.row}\u0000${cell.column}`, cell.value]))
   const level = heatLevels(cells.map((cell) => cell.value ?? 0))
@@ -77,7 +79,7 @@ export function Heatmap({ rows, columns, cells, ariaLabel, unit, labelEvery = 1,
       {text === null ? null : <ChartSummary text={text} />}
       <ChartTable
         caption={ariaLabel}
-        columns={["", ...columns]}
+        columns={[rowName, ...columns]}
         rows={rows.map((row) => [row, ...columns.map((column) => valueAt.get(`${row}\u0000${column}`) ?? "–")])}
         visible={showTable}
       />

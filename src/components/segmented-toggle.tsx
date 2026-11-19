@@ -30,6 +30,8 @@ export function SegmentedToggle<T extends string>({ options, value, onChange }: 
           type="button"
           size="sm"
           variant={value === option.value ? "default" : "outline"}
+          // The look says which is on to the eye; `aria-pressed` says it to a screen reader.
+          aria-pressed={value === option.value}
           onClick={() => onChange(option.value)}
         >
           {option.label}

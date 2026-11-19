@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, within } from "storybook/test"
 
 import { Disclosure } from "../../src/components/disclosure"
 
@@ -20,4 +21,14 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  // Closed on load, reached with Tab and opened by its line (Enter on it is the browser's own, which a simulated key does not trigger).
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await expect(canvas.queryByText("Linje 1 og linje 2.")).not.toBeVisible()
+    await userEvent.tab()
+    await expect(canvas.getByText("Hele loggen")).toHaveFocus()
+    await userEvent.click(canvas.getByText("Hele loggen"))
+    await expect(canvas.getByText("Linje 1 og linje 2.")).toBeVisible()
+  },
+}

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { expect, userEvent, within } from "storybook/test"
 
 import { FoldList } from "../../src/components/fold-list"
 
@@ -20,4 +21,11 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    await expect(canvas.queryByText("feb: 18")).not.toBeVisible()
+    await userEvent.click(canvas.getByText("Vis alle verdier"))
+    await expect(canvas.getByText("feb: 18")).toBeVisible()
+  },
+}

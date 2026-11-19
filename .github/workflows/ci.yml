@@ -21,3 +21,6 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npm test
+      # Every story rendered in Chromium, in the light and the dark theme, with its play test and an axe check that fails on a violation.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:stories

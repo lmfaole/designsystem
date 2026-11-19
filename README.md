@@ -336,6 +336,19 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.18
+
+Storybook as the system's test bench, from Storybook's own guidance (the Vitest addon, accessibility tests) and how other design systems keep
+theirs: every story is a test (`npm run test:stories`, `@storybook/addon-vitest`): it renders in Chromium **in the light and the dark theme**,
+runs its `play` test and **fails on an axe violation** (`a11y: { test: "error" }`); CI runs it. The toolbar has **Tema** (as the device,
+light, dark: `data-theme` on the root, which only Storybook and the tests set; an app follows the device) and **Viewport** with the five
+width classes. `play` tests for `SegmentedToggle`, `Disclosure`, `FoldList` and `CommandButton` with `Overlay`.
+
+Found by the new tests and fixed: `--destructive` in light is darker (4.0:1 on its own tint in the destructive button, now 4.7:1; 5.6:1 on
+the page; a test holds it), `SegmentedToggle` says which option is on with `aria-pressed` (it was told by the look alone), `DumbbellChart`'s
+`role="img"` is on a `div` (not allowed on a `ul`), and the tables of `DumbbellChart` and `Heatmap` have a first column header
+(`Heatmap rowName`).
+
 ## 8.17
 
 Wide screens, researched against Material 3 (window size classes, supporting pane), GOV.UK (two-thirds and one-third), Primer (`PageLayout`

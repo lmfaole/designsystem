@@ -26,7 +26,7 @@ alone. The six `series-*` hues exist for a chart that asks for colours of its ow
 | `accent`, `accent-foreground` | A hovered or selected surface and text on it | 16.4 | 14.5 |
 | `muted` | A quiet surface (a code box, a skeleton) | — | — |
 | `muted-foreground` | Secondary text | 6.0 | 7.6 |
-| `destructive` | What stops something and is for you to fix | 4.8 | 6.8 |
+| `destructive` | What stops something and is for you to fix | 5.6 | 6.8 |
 | `border` | Lines between parts | 1.3 | 1.3 |
 | `input` | A decorative line at the edge of a field | 1.3 | 1.5 |
 | `ring` | The focus ring | 4.7 | 4.2 |
@@ -38,7 +38,7 @@ How to read the numbers: text needs **4.5:1**, and the parts of a control or a m
   small text on both. (It was 4.3:1 on a `muted` surface in light until 8.8, which is why the value was darkened.)
 - **`border` and `input` are for a line between parts, not for the edge of something the reader must find.** They are 1.3:1 in light and 1.3 and 1.5:1 in dark (they are
   translucent, so they also change with what is behind them), so they never mark a control on its own: a field takes its edge from `muted-foreground` (`TextField`, `SearchField`) and a button has a fill or a visible edge of its own.
-- **Check a pair on `card` as well as on the page.** `muted-foreground` is 6.0:1 on both in light and 7.6 and 6.9:1 in dark; `destructive` is 4.8:1 on both in light and 6.8 and 6.2:1 in dark. `destructive` text on a `muted` surface is 4.4:1 in light, so it is not set there.
+- **Check a pair on `card` as well as on the page.** `muted-foreground` is 6.0:1 on both in light and 7.6 and 6.9:1 in dark; `destructive` is 5.6:1 on both in light and 6.8 and 6.2:1 in dark, 5.2:1 on `muted`, and 4.7:1 on its own 10 % tint (the destructive button and badge), which the test checks since the stories' axe run found it at 4.0:1.
 - **The focus ring** is 4.7:1 on the page in light and 4.2:1 in dark, so it can always be seen. It is never removed.
 - Pair a surface only with its own `-foreground`: `primary` with `primary-foreground`, never with `foreground`.
 

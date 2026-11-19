@@ -54,12 +54,20 @@ If the thing is not here, **add a component**; do not style in the project.
 ## Add or change a component
 
 1. Make it in `src/components/<name>.tsx`; export it (`exports` in `package.json` already maps `./components/*`).
-2. Add a story in `stories/<group>/<name>.stories.tsx` (autodocs, one story per variant) and, if it is a new idea, mention it in the
-   right **Guide**.
+2. Add a story in `stories/<group>/<name>.stories.tsx` and, if it is a new idea, mention it in the right **Guide**. A story file:
+   - CSF 3 with `satisfies Meta<typeof X>`, `args` on the meta for the default, the story Default first, then **one story per variant and per state**
+     a page meets (Empty, Loading, Error, a long text, ShowTable), named for what it shows;
+   - the description in the template: **Use it when**, **Do not use it when**, **Accessibility**, **Content**, **Related**;
+   - `args` for what a page passes, `render` only where a story needs state or other components, never a styling of its own;
+   - a **`play` test** for anything that reacts (a toggle, an overlay, a fold): it does what a reader does (`userEvent`, by role and name)
+     and checks the result and the state a screen reader hears (`aria-pressed`, `open`, focus back). A browser's own key handling (Esc in
+     a dialog, Enter on a summary) is not simulated: click, and check focus with Tab;
+   - every story is a test: `npm run test:stories` renders each in Chromium in the light and the dark theme, runs its `play` and fails
+     on an axe violation (`a11y: { test: "error" }`). Fix the component, never turn the check off for a story.
 3. Add a test if it carries a rule (`src/*.test.ts` reads the source and pins it).
 4. Update the README (the table of what is here, the rules if it adds one) and the migration notes.
-5. `npm run verify` (typecheck, lint, tests) and `npm run build-storybook` must pass. Look at the story in light and dark and at
-   400 px.
+5. `npm test`, `npm run test:stories` and `npm run build-storybook` must pass. Look at the story with the toolbar's **Tema** (light, dark)
+   and **Viewport** (the five width classes of the guide «Wide screens»).
 
 ## Add an icon meaning
 

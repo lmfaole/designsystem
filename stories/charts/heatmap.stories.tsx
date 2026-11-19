@@ -18,7 +18,7 @@ const meta = {
   title: "Charts/Heatmap",
   component: Heatmap,
   tags: ["autodocs"],
-  args: { rows, columns: hours, cells, ariaLabel: "Avspillinger etter ukedag og time", unit: "avspillinger", labelEvery: 3 },
+  args: { rows, columns: hours, cells, ariaLabel: "Avspillinger etter ukedag og time", unit: "avspillinger", rowName: "Ukedag", labelEvery: 3 },
   parameters: { docs: { description: { component: `**Use it when** two categories meet and the reader is looking for the pattern: weekday by hour, category by month.
 
 **Do not use it when** the reader must read exact numbers (a table; or \`showValues\` for a matrix of at most about 7 × 12), or one of the axes is not a category.

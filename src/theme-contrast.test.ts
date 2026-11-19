@@ -7,9 +7,12 @@ import { GREY_STEPS, HEAT_SHADES, LINE_STEPS } from "./lib/chart-colors.ts"
 import { CVD, contrast, distance, inGamut, onto, parseOklch, simulate, toLinear, type Oklch, type Rgb } from "./lib/colour.ts"
 
 const css = readFileSync(join(import.meta.dirname, "theme.css"), "utf8")
-const DARK_AT = "@media (prefers-color-scheme: dark) {"
+// The tokens' dark block (the custom variant `dark` above it has a media query of the same words).
+const DARK_AT = "@media (prefers-color-scheme: dark) {\n  :root"
 const lightBlock = css.slice(css.indexOf(":root {\n    color-scheme: light"), css.indexOf(DARK_AT))
-const darkBlock = css.slice(css.indexOf(DARK_AT))
+const FORCED_AT = ':root[data-theme="dark"] {'
+const darkBlock = css.slice(css.indexOf(DARK_AT), css.indexOf(FORCED_AT))
+const forcedBlock = css.slice(css.indexOf(FORCED_AT), css.indexOf("@layer base"))
 
 const read = (block: string): Record<string, Oklch> =>
   Object.fromEntries([...block.matchAll(/--([a-z0-9-]+):\s*(oklch\([^)]*\))/g)].map((match) => [match[1] ?? "", parseOklch(match[2] ?? "")]))
@@ -18,6 +21,11 @@ const light = read(lightBlock)
 // Dark redefines most tokens and inherits the rest (the chart ramp, the radius).
 const dark = { ...light, ...read(darkBlock) }
 const MODES = { light, dark } as const
+
+test("the forced dark theme (Storybook's toolbar, the tests) is the device's dark theme, token for token", () => {
+  assert.deepEqual(read(forcedBlock), read(darkBlock))
+  assert.ok(css.includes(':root:not([data-theme="light"])'), "a forced light theme wins over a dark device")
+})
 
 const token = (tokens: Record<string, Oklch>, name: string): Oklch => {
   const found = tokens[name]
@@ -43,6 +51,18 @@ const TEXT: readonly (readonly [string, string])[] = [
   ["destructive", "background"],
   ["destructive", "card"],
 ]
+
+/** The tinted button and badge of a destructive action: its text on its own colour at 10 % (light) or 20 % (dark) over the page (shadcn's `destructive` variant). */
+const TINTED: Readonly<Record<string, number>> = { light: 0.1, dark: 0.2 }
+
+for (const [mode, tokens] of Object.entries(MODES)) {
+  test(`${mode}: the destructive text keeps 4.5:1 on its own tint`, () => {
+    const page = surface(tokens, "background")
+    const tint = onto({ ...token(tokens, "destructive"), a: TINTED[mode] ?? 0.1 }, page)
+    const seen = contrast(onto(token(tokens, "destructive"), tint), tint)
+    assert.ok(seen >= 4.5, `destructive on its tint: ${seen.toFixed(2)}; darken (light) or lighten (dark) --destructive`)
+  })
+}
 
 /** Parts that carry meaning: 3:1 (WCAG 1.4.11): the focus ring, the edge of a field, an error edge, a chart series. */
 const MARKS: readonly (readonly [string, string])[] = [
