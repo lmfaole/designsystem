@@ -29,7 +29,7 @@ const ALLOWED_MAX_W: Readonly<Record<string, readonly string[]>> = {
   "components/error-page.tsx": ["max-w-prose"],
   "components/logos.tsx": ["max-w-36", "max-w-44"],
   "components/markdown.tsx": ["max-w-full"],
-  "components/layout.tsx": ["max-w-prose"],
+  "components/layout.tsx": ["max-w-prose", "max-w-3xl"],
 }
 
 /** The components whose columns hold things that are looked at (pictures, charts, small cards, figures), not read. */
