@@ -20,7 +20,17 @@ it is decoration without meaning, or it would stand alone for something that nee
 
 ### Accessibility
 
-Hidden from a screen reader unless it is given a \`label\`; the meaning is asked for by name from \`ICONS\`, never a glyph.
+**Handled by the component**
+
+- Decorative by default: \`aria-hidden\` and not focusable ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- With \`label\` it is \`role="img"\` with that name ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- It is drawn in \`currentColor\`, so it follows its text and shows in forced colours ([1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))
+
+**You check**
+
+- An icon-only button or link gets its \`aria-label\` on the control, not on the icon ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value))
+- Meaning is never told by an icon's tone alone: words say it too ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- An icon that stands alone and carries meaning has a \`label\` and reaches 3:1 against its background ([1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))
 
 ### Content
 
@@ -36,6 +46,7 @@ type Story = StoryObj<typeof meta>
 /** Decorative by default: hidden from a screen reader, since the words beside it say the same. */
 export const Default: Story = {}
 
+/** The three sizes side by side. */
 export const Sizes: Story = {
   render: (args) => (
     <Inline gap="md">
@@ -46,6 +57,7 @@ export const Sizes: Story = {
   ),
 }
 
+/** The four tones; each still sits beside words that say the same. */
 export const Tones: Story = {
   args: { name: "warning" },
   render: (args) => (

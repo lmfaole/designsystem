@@ -19,7 +19,17 @@ The thing is a meaning, not a service (\`Icon\`), or the service is not in the c
 
 ### Accessibility
 
-It says the service's name to a screen reader unless the words beside it already do (\`decorative\`). It is the text colour, so it keeps the contrast of its text and survives forced colours.
+**Handled by the component**
+
+- By default \`role="img"\` named with the service's name, as the service writes it ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- \`decorative\` hides it (\`aria-hidden\`), for when the words beside it name the service ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- It is drawn in \`currentColor\`, so it keeps the contrast of its text and shows in forced colours ([1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))
+
+**You check**
+
+- Use \`decorative\` only when the words beside it already name the service ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- A link that is only the mark says where it goes through that name; add words when the place is more than the service ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context))
+- The link around it is at least 24 by 24px ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum))
 
 ### Content
 
@@ -32,8 +42,10 @@ The name of the service, as the service writes it.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** One mark, named for a screen reader. */
 export const Default: Story = { args: { name: "github" } }
 
+/** Every mark in the closed set, decorative, with its name beside it. */
 export const All: Story = {
   args: { name: "github" },
   render: () => (

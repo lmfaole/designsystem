@@ -17,7 +17,16 @@ a list of things the reader opens (\`Rows\`) or facts about one thing (\`FactLis
 
 ### Accessibility
 
-A real table with headers; a narrow window scrolls it sideways in a focusable wrapper.
+**Handled by the component**
+
+- Native table elements: \`table\`, \`caption\`, \`thead\`, \`tbody\`, \`tfoot\`, \`th\` and \`td\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- A wide table scrolls sideways in its wrapper, not the page ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow))
+
+**You check**
+
+- A \`TableCaption\` or a heading before it says what the table holds ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- Column headers are \`TableHead\`; a first column that names the row gets \`scope="row"\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- The wrapper is not focusable: a table wider than a phone cannot be scrolled by keyboard, so keep it narrow ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
 
 ### Content
 
@@ -30,6 +39,7 @@ Headers are one or two words in sentence case.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Every part of a table: caption, header, body and a footer with a sum. */
 export const Default: Story = {
   render: () => (
     <Table>

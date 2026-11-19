@@ -18,7 +18,21 @@ the reader needs a total, a trend or a comparison (\`ColumnChart\`, \`LineChart\
 
 ### Accessibility
 
-The grid is one image with a label and a summary text under it; each cell has a title for a pointer; the months are a table (\`showTable\`, «Vis tallene») for a phone and a screen reader, not 365 rows. Four steps from the **quantiles** of the busy days, so one huge day does not turn the rest pale; a day with no row is empty and a row with 0 is zero. The steps are greys that keep 3:1, they are not the only way to read it (title, table, legend), and they survive forced colours. A year is wider than a phone, so the box scrolls sideways, as a region a keyboard can reach.
+**Handled by the component**
+
+- The grid is one image named by \`ariaLabel\`; the cells and labels are hidden from a screen reader ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- A summary is written by default (\`summariseCalendar\`) ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- The months are a \`ChartTable\` (sum, days with something), read by a screen reader or opened with \`showTable\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- The step is not the only cue: each cell has a title with its value, and the table has the numbers ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- Step greys and cell borders keep 3:1 ([1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))
+- A year scrolls sideways inside its own box, so the page itself does not ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow))
+- That box is a named region in the tab order, so a keyboard can scroll it ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+
+**You check**
+
+- \`ariaLabel\` says what is counted and over what period, not «Diagram» ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- \`unit\` reads right in the plural, and as \`{ one, many }\` where a count of one occurs
+- The scroll box shows its focus in your theme ([2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible))
 
 ### Content
 
@@ -31,7 +45,11 @@ Say the unit in the plural: «avspillinger», «commits». Title: what the patte
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** A year of days, scrolling sideways inside its own box on a phone. */
 export const Default: Story = {}
+/** The months as a table anyone can open, not 365 rows. */
 export const ShowTable: Story = { args: { showTable: true } }
+/** A short period, to see how few weeks look. */
 export const OneMonth: Story = { args: { days: sampleDays().filter((day) => day.date.startsWith("2026-03")) } }
+/** No days: a sentence in the chart's place. */
 export const Empty: Story = { args: { days: [] } }

@@ -16,7 +16,7 @@ function runCommand(command: Command, target: HTMLElement | null): void {
   if (command === "toggle-popover") target.togglePopover()
 }
 
-const LOOKS = { zoom: "cursor-zoom-in rounded-md", close: "" } as const
+const LOOKS = { zoom: "cursor-zoom-in rounded-md focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none", close: "" } as const
 
 /**
  * A button that opens or closes the dialog or popover with the id `commandFor`, with the browser's own invoker

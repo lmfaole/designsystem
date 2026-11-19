@@ -28,7 +28,19 @@ the readers have never seen one and nothing explains it (the story has a sentenc
 
 ### Accessibility
 
-One image with a label; the five numbers of each group are a table (\`showTable\`), outliers counted in the summary. The box is the middle half, the line the median, the whiskers Tukey's (1.5 box lengths), dots single values. One to eight groups, in the order given, horizontal so the names read as words. Not a tab stop.
+**Handled by the component**
+
+- The chart is one image (\`role="img"\`) named by \`ariaLabel\` ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- A sentence under it says how to read a box, and a summary (yours or the default) gives each group's spread and outliers ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- The five numbers of each group are a \`ChartTable\` with headers, read by a screen reader or opened with \`showTable\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- Not a tab stop and no tooltip, so nothing needs a pointer ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+- Boxes and whiskers are drawn in \`--foreground\` ([1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))
+
+**You check**
+
+- \`ariaLabel\` and \`valueName\` say what is measured, with its unit ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- Group names are short and distinct; they head the table's rows ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels))
+- A \`summary\` you write states the finding ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
 
 ### Content
 
@@ -41,6 +53,9 @@ Group names short; the unit in the label.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Four groups, the reading sentence and the default summary with outliers. */
 export const Default: Story = {}
+/** The five numbers of each group as a table anyone can open. */
 export const ShowTable: Story = { args: { showTable: true } }
+/** No values: a sentence in the chart's place. */
 export const Empty: Story = { args: { groups: [] } }

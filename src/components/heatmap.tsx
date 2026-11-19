@@ -45,7 +45,7 @@ export function Heatmap({ rows, columns, cells, ariaLabel, unit, rowName = "Rad"
   const text = summary ?? summariseHeatMatrix(cells, unit)
   return (
     <div className="grid gap-3">
-      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={`${ariaLabel}, rull sideveis`}>
+      <div className="focus-visible:ring-ring overflow-x-auto rounded-md focus-visible:ring-2 focus-visible:outline-none" tabIndex={0} role="region" aria-label={`${ariaLabel}, rull sideveis`}>
         <div role="img" aria-label={ariaLabel} className="text-muted-foreground grid w-max min-w-full gap-[3px] text-xs" style={{ gridTemplateColumns: `auto repeat(${columns.length}, minmax(${showValues ? 28 : 14}px, 1fr))` }}>
           <span />
           {columns.map((column, index) => (

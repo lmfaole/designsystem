@@ -28,7 +28,21 @@ the things are in different units or sizes by orders of magnitude (the smallest 
 
 ### Accessibility
 
-One image with a label and a summary (how many up, how many down, the biggest change); each row writes both values and the change with its sign; the **start is a ring and the end a filled dot**, so direction is not told by colour. A table (\`showTable\`). Biggest change first (\`keepOrder\` keeps yours). Plain HTML, no script.
+**Handled by the component**
+
+- The rows are one image named by \`ariaLabel\`, hidden inside ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- A summary is written by default: how many went up, how many down, the biggest change ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- The start is a ring and the end a filled dot, and the change is written with its sign, so direction is not told by colour ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- The values and the change are a \`ChartTable\`, read by a screen reader or opened with \`showTable\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- Drawing and table share one order, biggest change first ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence))
+- Plain HTML with no tab stop or tooltip, so nothing needs a pointer ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+
+**You check**
+
+- \`ariaLabel\` names the two moments being compared ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- \`fromLabel\` and \`toLabel\` are the moments' names; they head the table's columns ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels))
+- \`formatValue\` includes the unit
+- \`keepOrder\` only when your own order carries meaning ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence))
 
 ### Content
 
@@ -41,7 +55,11 @@ The two moments named in the legend; units in \`formatValue\`.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Rows sorted biggest change first, with rises and falls. */
 export const Default: Story = {}
+/** The order as given, not sorted by change. */
 export const KeepOrder: Story = { args: { keepOrder: true } }
+/** Both values and the change as a table anyone can open. */
 export const ShowTable: Story = { args: { showTable: true } }
+/** No rows: a sentence in the chart's place. */
 export const Empty: Story = { args: { rows: [] } }

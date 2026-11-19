@@ -18,7 +18,18 @@ two to six values that narrow a list (\`FilterChips\`) or an either/or view (\`S
 
 ### Accessibility
 
-A native \`select\` with a visible label, so a phone gets its wheel or sheet.
+**Handled by the component**
+
+- A native \`<select>\`: the keyboard works, and a phone opens its own picker ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+- Role, value and \`disabled\` are the platform's own ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value))
+- A focus ring in the \`ring\` token on keyboard focus ([2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible))
+- The chevron is hidden from assistive technology ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+
+**You check**
+
+- A visible \`<label>\` tied to it, or an \`aria-label\` where the label is elsewhere ([3.3.2 Labels or Instructions](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions))
+- Choosing a value does not by itself go to another page or submit a form ([3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input))
+- \`aria-invalid\` only marks the border: say what is wrong in words ([3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification))
 
 ### Content
 
@@ -31,9 +42,13 @@ The label names what is chosen.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** A native picker with three options. */
 export const Default: Story = {}
+/** The small size, for a toolbar. */
 export const Small: Story = { args: { size: "sm" } }
+/** The native disabled state: faded and not focusable. */
 export const Disabled: Story = { args: { disabled: true } }
+/** Options in labelled groups (`NativeSelectOptGroup`). */
 export const Grouped: Story = {
   render: (args) => (
     <NativeSelect {...args}>

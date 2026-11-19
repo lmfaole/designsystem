@@ -20,7 +20,15 @@ text (\`DataCell\`).
 
 ### Accessibility
 
-A real cell; the header is right-aligned with the figures.
+**Handled by the component**
+
+- \`NumberCell\` is a real \`td\` and \`NumberHead\` a real \`th\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- Head and figures are right-aligned together, so the header stands over its numbers ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+
+**You check**
+
+- The column uses \`NumberHead\`, and it names the unit ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels))
+- Figures are formatted in nb-NO, with a real minus sign (−)
 
 ### Content
 
@@ -33,4 +41,5 @@ Figures formatted in nb-NO; a minus is −.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** A figure under its right-aligned head. */
 export const Default: Story = {}

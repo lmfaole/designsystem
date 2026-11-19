@@ -35,7 +35,7 @@ export function CalendarHeatmap({ days, ariaLabel, unit, summary, showTable = fa
   const text = summary ?? summariseCalendar(days, unit)
   return (
     <div className="grid gap-3">
-      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={`${ariaLabel}, rull sideveis`}>
+      <div className="focus-visible:ring-ring overflow-x-auto rounded-md focus-visible:ring-2 focus-visible:outline-none" tabIndex={0} role="region" aria-label={`${ariaLabel}, rull sideveis`}>
         <div role="img" aria-label={ariaLabel} className="grid w-max grid-cols-[auto_auto] gap-x-2 text-xs">
           <span />
           <div className="text-muted-foreground grid gap-[3px]" style={{ gridTemplateColumns: `repeat(${weeks.length}, ${CELL}px)` }} aria-hidden>

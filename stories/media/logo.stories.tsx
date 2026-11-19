@@ -18,7 +18,15 @@ decoration.
 
 ### Accessibility
 
-The name is the text alternative.
+**Handled by the component**
+
+- The logo is an \`img\` with \`name\` as its \`alt\` and title ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+
+**You check**
+
+- \`name\` is the maker's or source's name, not «logo» ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- Where the name is already written next to it, a screen reader hears it twice: there is no decorative mode ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- With \`plate={false}\`, a dark logo still shows on the card's ground
 
 ### Related
 
@@ -27,5 +35,7 @@ The name is the text alternative.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** The light plate, so a dark logo shows. */
 export const Plate: Story = {}
+/** No plate, on the card's own ground. */
 export const Bare: Story = { args: { plate: false } }

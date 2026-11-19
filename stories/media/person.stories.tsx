@@ -18,7 +18,15 @@ a thing that is not a person (\`Picture\`).
 
 ### Accessibility
 
-The picture is decorative and the name beside it says who; the frame is always there so names stay level.
+**Handled by the component**
+
+- The picture is decorative (\`alt=""\`, hidden), since the name beside it says who ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- A long name wraps instead of overflowing ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow))
+
+**You check**
+
+- The name is written as the source gives it
+- Where the person has a page, wrap it in a link whose text is the name ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context))
 
 ### Content
 
@@ -31,5 +39,7 @@ The name as the source gives it.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** A name with its round picture. */
 export const Default: Story = {}
+/** No picture: the frame stays, so names line up. */
 export const NoPicture: Story = { args: { src: null } }

@@ -18,7 +18,14 @@ pictures of people (\`Person\`).
 
 ### Accessibility
 
-Each logo has the name as text.
+**Handled by the component**
+
+- Each logo is an \`img\` with its name as \`alt\` ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- Logos are read in the order given ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence))
+
+**You check**
+
+- Every \`name\` is the maker's real name, distinct from the others ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
 
 ### Related
 
@@ -27,4 +34,5 @@ Each logo has the name as text.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Two logos side by side, the way a page head shows them. */
 export const Default: Story = {}

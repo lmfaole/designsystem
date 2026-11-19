@@ -18,7 +18,14 @@ decoration, or a picture that carries information (give that its own text).
 
 ### Accessibility
 
-Decorative: the name beside it says what it is. The frame is always there, so rows stay level.
+**Handled by the component**
+
+- Decorative: the frame is hidden and the \`img\` has \`alt=""\` ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+
+**You check**
+
+- The thing's name is written next to it ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- A picture that carries information is not a \`Picture\`: give it its own text alternative ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
 
 ### Related
 
@@ -27,8 +34,13 @@ Decorative: the name beside it says what it is. The frame is always there, so ro
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** The 2:3 frame at row size. */
 export const Poster: Story = {}
+/** The square frame, for a cover or an avatar. */
 export const Square: Story = { args: { ratio: "square", src: square(100) } }
+/** The size that heads the thing's own page. */
 export const Hero: Story = { args: { size: "hero" } }
+/** As wide as its cell, for a gallery tile. */
 export const Fill: Story = { args: { size: "fill" }, decorators: [(Story) => <div className="w-40"><Story /></div>] }
+/** No picture: the frame stays, so rows stay level. */
 export const NoPicture: Story = { args: { src: null } }

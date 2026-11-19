@@ -24,7 +24,21 @@ one axis is a category (\`ColumnChart\`), there are fewer than three points (a t
 
 ### Accessibility
 
-One image with a label, **both axes named in words above the chart**, a trend line that is dashed (not only colour) with r² and its strength in the summary, which says a relation is not a cause. Dots are translucent so overlap shows, with a ring so they hold 3:1. Tooltip for a pointer, table (\`showTable\`) for everyone else. Not a tab stop.
+**Handled by the component**
+
+- The chart is one image (\`role="img"\`) named by \`ariaLabel\` ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- Both axes are named in words above the chart ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- The trend line is dashed, not only coloured ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- Dots have a foreground ring, so they keep 3:1 where they are translucent ([1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast))
+- A summary is written by default, with r², the strength in words and that a relation is not a cause ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- Every point is a row of a \`ChartTable\`, read by a screen reader or opened with \`showTable\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- Not a tab stop; the tooltip only repeats the table, so nothing needs a pointer ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard))
+
+**You check**
+
+- \`ariaLabel\` names both measures ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
+- \`xName\` and \`yName\` carry their units ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels))
+- Points have a \`label\`, or the table's rows are only «Punkt 1», «Punkt 2» ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
 
 ### Content
 
@@ -37,7 +51,11 @@ Axis names with units. Title says the finding: «Lengre album får litt høyere 
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Sixty points with the dashed trend line and the summary with r². */
 export const Default: Story = {}
+/** The points alone, with the trend line turned off. */
 export const NoTrend: Story = { args: { trend: false } }
+/** Each point as a row of a table anyone can open. */
 export const ShowTable: Story = { args: { showTable: true, points: points.slice(0, 12) } }
+/** No points: a sentence in the chart's place. */
 export const Empty: Story = { args: { points: [] } }
