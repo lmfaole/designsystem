@@ -10,5 +10,8 @@ afterEach(async () => {
   // Under Vitest a story renders into a plain <div> of the body, beside Storybook's own wrappers (`.sb-wrapper`).
   const root = document.querySelector("body > div:not(.sb-wrapper)")
   if (root === null || root.childElementCount === 0) return
+  // A story with nothing to see (what only a screen reader hears, a banner that is hidden while online) has no picture to keep.
+  const box = root.getBoundingClientRect()
+  if (box.width < 1 || box.height < 1 || root instanceof HTMLElement && root.innerText.trim() === "" && root.querySelector("svg, img, canvas") === null) return
   await expect(page.elementLocator(root)).toMatchScreenshot()
 })
