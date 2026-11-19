@@ -1,5 +1,6 @@
 import { Fragment, type ReactNode } from "react"
 
+import type { PictureSource } from "../lib/picture-sources"
 import { Picture } from "./picture"
 import { SrTableHead } from "./sr-table-head"
 
@@ -8,6 +9,8 @@ export interface PictureRow {
   key: string
   /** The picture's address, `null` where there is none. */
   picture: string | null
+  /** The same picture in the widths its source offers, so a thumbnail takes the small file (`Picture`'s `sources`). */
+  sources?: readonly PictureSource[]
   title: ReactNode
   /** Under the title: whatever is worth a line (by whom, a rating, a place). Build it with `details`. */
   detail: ReactNode
@@ -41,7 +44,7 @@ export function PictureRows({ rows, ratio }: { rows: readonly PictureRow[]; rati
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
             <td role="cell" className="mr-2 [grid-area:picture]">
-              <Picture ratio={ratio} src={row.picture} />
+              <Picture ratio={ratio} src={row.picture} {...(row.sources === undefined ? {} : { sources: row.sources })} />
             </td>
             <td role="rowheader" className="min-w-0 truncate font-medium [grid-area:title]">
               {row.title}
