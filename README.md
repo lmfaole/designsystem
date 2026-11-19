@@ -274,6 +274,7 @@ never by the text. It is the one way to show Markdown: **do not convert it to HT
 
 **Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
 icon is a *meaning* you ask for, and the components that show titles, rows, statuses, actions and errors take one.
+The set is **complete on purpose** (157 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
 The full guide, with the catalogue of every meaning, is in Storybook (**Icons / Guide** and **Icons / Catalogue**).
 
 ```tsx

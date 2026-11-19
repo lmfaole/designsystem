@@ -1,0 +1,42 @@
+/*
+ * The look of `Icon`, in CSS and not in the markup. An icon is an inline `<svg>` of plain shapes; its size, stroke and colour come from here,
+ * so one change reaches every icon and nothing about it needs script.
+ *
+ * - Size is a custom property (`--icon-size`) that `data-size` sets; `size-(--icon-size)` on the element reads it, so a `Button` that sizes
+ *   its icons leaves these alone.
+ * - Colour is `currentColor`, so an icon is the colour of its text; `data-tone` only picks another token.
+ * - A direction (back, next, sign in) is mirrored where the text runs right to left, with `:dir()` and the individual `scale` property.
+ * - In forced colours the stroke stays `currentColor`, which the browser maps to a system colour, so an icon never disappears.
+ */
+@layer components {
+  .ds-icon {
+    --icon-size: 1rem;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    &[data-size='sm'] {
+      --icon-size: 0.875rem;
+    }
+    &[data-size='lg'] {
+      --icon-size: 1.25rem;
+    }
+
+    &[data-tone='muted'] {
+      color: var(--muted-foreground);
+    }
+    &[data-tone='destructive'] {
+      color: var(--destructive);
+    }
+    &[data-tone='primary'] {
+      color: var(--primary);
+    }
+
+    &[data-mirror]:dir(rtl) {
+      scale: -1 1;
+    }
+  }
+}

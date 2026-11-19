@@ -125,7 +125,8 @@ Material Symbols has a `FILL` axis for a selected or active state, and the usual
 
 ## Governance
 
-- **Add a meaning** when two real places need it, with the name of what it means, in its group, with its Catalogue entry (it fails to compile without one). One glyph for one meaning (a test fails otherwise).
+- **The set is complete on purpose.** A page should never wait for an icon: the meanings a read-mostly dashboard asks for are all in the Catalogue. Look there first.
+- **A meaning that is missing is added at once**, without waiting for a second use: in its group in `scripts/icon-set.mjs`, named for what it means, with one Lucide glyph, and `npm run icons` regenerates the shapes, the types and the Catalogue. One glyph for one meaning (a test fails otherwise).
 - **Change a glyph** in `src/lib/icons.ts`: one line, and every page follows.
 - **Remove or rename** by keeping the old name as an alias for one minor version, then removing it in a major (as for a component).
 - **Brand marks** (GitHub, LinkedIn, Spotify) are marks, not meanings: they do not go in `ICONS`, are never recoloured and always have their name as text.
@@ -140,7 +141,12 @@ Material Symbols has a `FILL` axis for a selected or active state, and the usual
 
 ## Adding a meaning
 
-1. Look in the Catalogue: the meaning may be there already. Use it.
-2. If not, add it to `ICONS` in `src/lib/icons.ts`, named for the meaning, under the group it belongs to, and add it to the
-   Catalogue story (it fails to compile until it is there).
+1. Look in the Catalogue: the meaning is probably there already. Use it.
+2. If not, add it **now** to its group in `scripts/icon-set.mjs` (the meaning and a Lucide glyph) and run `npm run icons`. The shapes (`src/lib/icon-nodes.ts`), the `IconName` type and the Catalogue are generated.
 3. Never import from `lucide-react` in a page: a test fails on it. Two meanings may not share a glyph: that test fails too.
+
+## How an icon is drawn
+
+An icon is an **inline `<svg>` that the server renders as plain HTML**: the shapes are data, there is no icon component and no script, and the look is CSS (`src/icon.css`): `--icon-size` for the size, `currentColor` for the colour (so it follows the text), `data-tone` for
+another token, and `scale: -1 1` under `:dir(rtl)` for the meanings that point somewhere (back, next, sign in). In forced colours the stroke stays `currentColor`, which the browser maps to a system colour, so it never disappears. The `width` and `height` attributes are the
+fallback until the stylesheet has arrived, so the page does not jump.

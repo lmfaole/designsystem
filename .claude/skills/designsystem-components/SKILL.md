@@ -61,8 +61,8 @@ If the thing is not here, **add a component**; do not style in the project.
 
 ## Add an icon meaning
 
-Look in the Catalogue first. If it is missing, add it to `ICONS` in `src/lib/icons.ts`, named for the **meaning**, under its group,
-and to the Catalogue story (it does not compile until it is there). Two meanings may not share a glyph.
+The set is **complete on purpose**: a read-mostly dashboard's meanings (work, state, people and time, place and weather, getting around, content, home and devices, money, data, actions, direction) are all there, so a page never waits for an icon. Look in the Catalogue first.
+If a meaning really is missing, **add it at once**, without waiting for a second use: put it in its group in `scripts/icon-set.mjs` (named for the meaning, one Lucide glyph for it) and run `npm run icons`; the Catalogue, the types and the tests follow. Two meanings may not share a glyph, and a glyph with no meaning is decoration and does not belong.
 
 ## Release
 

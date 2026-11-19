@@ -9,6 +9,7 @@
     "lint": "oxlint -c oxlintrc.json src",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "node --test \"src/**/*.test.ts\"",
+    "icons": "node scripts/generate-icons.mjs",
     "verify": "npm run -s typecheck && npm run -s lint && npm test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o storybook-static"
