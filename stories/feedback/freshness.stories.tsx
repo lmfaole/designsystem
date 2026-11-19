@@ -2,13 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Freshness } from "../../src/components/freshness"
 
-const minutesAgo = (minutes: number) => new Date(Date.now() - minutes * 60_000).toISOString()
+// A fixed «now», so the story reads the same every time (and its picture in the visual test does not change with the clock).
+const NOW = Date.parse("2026-11-19T12:00:00Z")
+const minutesAgo = (minutes: number) => new Date(NOW - minutes * 60_000).toISOString()
 
 const meta = {
   title: "Feedback/Freshness",
   component: Freshness,
   tags: ["autodocs"],
-  args: { at: minutesAgo(1), now: new Date().toISOString(), staleAfterSeconds: 180 },
+  args: { at: minutesAgo(1), now: new Date(NOW).toISOString(), staleAfterSeconds: 180 },
   parameters: { docs: { description: { component: `### Use it when
 
 a page that renews itself shows when its data was made («Oppdatert 19:27»), usually in the page's lead.
