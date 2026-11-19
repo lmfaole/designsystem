@@ -19,7 +19,19 @@ narrowing a list (\`FilterChips\`) or navigating between pages (\`NavBar\`).
 
 ### Accessibility
 
-A group of buttons; the one that is on is the \`default\` variant and \`aria-pressed\`, the others are outlined. The story's test clicks the other and checks both.
+**Handled by the component**
+
+- Real buttons in a \`group\`; the one that is on is \`aria-pressed="true"\`, the others \`"false"\` ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value)).
+- The one that is on is filled and the others outlined, so it does not rely on colour ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color)).
+- Enter and Space from the native buttons ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)).
+- The focus ring of \`Button\` ([2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible)).
+- Each button is 28 px high ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
+
+**You check**
+
+- The group has no name: a heading or text before it says what it switches ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- Each label says the view («Per måned») ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
+- What changes below is not announced: it must be what the label promised ([4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages)).
 
 ### Content
 
@@ -32,6 +44,7 @@ Short labels that name the views.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Two options with the first on; its test clicks the other and checks that `aria-pressed` moves. */
 export const Default: Story = {
   render: function Render(args) {
     const [value, setValue] = useState(args.value)

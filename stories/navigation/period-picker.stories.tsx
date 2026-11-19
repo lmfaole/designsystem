@@ -17,7 +17,19 @@ a free date (a native date field).
 
 ### Accessibility
 
-A native \`select\`, so the list is the platform's own picker; each option carries its address and the page navigates when one is chosen.
+**Handled by the component**
+
+- A native \`select\` named by \`label\` («Periode»), with the chosen period selected ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value)).
+- The keyboard and the picker are the platform's own ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)).
+- The focus ring of \`NativeSelect\` ([2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible)).
+- 48 px high ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
+
+**You check**
+
+- Choosing an option loads another page: say so by the picker, since it changes context on input ([3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input)).
+- The name is only for a screen reader: where the options do not say what they are, show a label ([3.3.2 Labels or Instructions](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions)).
+- \`formatLabel\` gives words a reader knows («november 2026», not «2026-11») ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
+- The page runs \`enableNavigatingSelects\` once, or choosing does nothing.
 
 ### Content
 
@@ -30,5 +42,7 @@ The label names the period («Måned»).
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Three months with the latest chosen, named «Periode» for a screen reader. */
 export const Default: Story = {}
+/** `label` changes what a screen reader calls it («Måned»). */
 export const CustomLabel: Story = { args: { label: "Måned" } }

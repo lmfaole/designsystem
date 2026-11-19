@@ -22,7 +22,19 @@ things without a picture (\`Rows\`).
 
 ### Accessibility
 
-The picture is decorative; the name beside it says what it is.
+**Handled by the component**
+
+- A table with hidden column headers (Bilde, Tittel, Detaljer, Notat); the title is the row header, so each cell is heard with it ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The table roles are written out, so it stays a table while it is laid out as a grid ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The picture is decorative: hidden from assistive technology, with an empty \`alt\` ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)).
+- The DOM order is picture, title, detail, note: the order it is read in ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- A row keeps to the width of its column, so nothing scrolls sideways at 320 px ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+
+**You check**
+
+- \`title\` names the thing; when it is a link, it goes to the thing's page ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
+- Title and detail are cut with an ellipsis when too long: keep them short, and the whole text on the thing's page ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+- \`detail\` and \`aside\` say in words what they are (a date, a rating).
 
 ### Content
 
@@ -35,5 +47,7 @@ The name first, a line under it, a short note at the end.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Posters, a detail line built with `details` (one part missing), and a row with no picture. */
 export const Poster: Story = {}
+/** The same rows with square pictures, as for albums. */
 export const Square: Story = { args: { ratio: "square" } }

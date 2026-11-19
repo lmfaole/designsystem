@@ -20,7 +20,16 @@ the things are read in order down the page (\`Stack\`).
 
 ### Accessibility
 
-Order in the DOM is the reading order; it wraps instead of scrolling sideways.
+**Handled by the component**
+
+- The children are in DOM order, the order they are read in; \`between\` only moves them apart ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- It wraps instead of scrolling sideways ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+- No semantics of its own: a \`div\`, or the element given as \`as\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+
+**You check**
+
+- \`as="ul"\` when the children are a list of things ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- Small controls side by side keep the gap that makes each a 24 px target or spaced like one ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
 
 ### Related
 
@@ -29,8 +38,11 @@ Order in the DOM is the reading order; it wraps instead of scrolling sideways.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Three things in a row at the default `sm` gap, wrapping when the row is full. */
 export const Default: Story = { render: (args) => <Inline {...args}>{boxes(3)}</Inline> }
+/** `justify="between"`: one thing at each end, as a title and its action. */
 export const SpaceBetween: Story = { args: { justify: "between" }, render: (args) => <Inline {...args}>{boxes(2)}</Inline> }
+/** `align="baseline"`: a heading and small text aligned on their text, not their boxes. */
 export const Baseline: Story = {
   args: { align: "baseline", gap: "md" },
   render: (args) => (

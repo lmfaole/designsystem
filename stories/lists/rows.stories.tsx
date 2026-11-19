@@ -20,7 +20,20 @@ figures compared down several columns (\`Table\`) or one fact per term (\`FactLi
 
 ### Accessibility
 
-Real links; a list of one structure so it reads as «kind, name, status, date».
+**Handled by the component**
+
+- A table with hidden column headers (Rang, Type or Bilde, then the name and the value); the body is the row header, so what a row has is heard with its name ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The table roles are written out, so it stays a table while it is laid out as a grid ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- With \`lead="rank"\` the rank is counted from the order, so the number and the reading order agree ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- With \`lead="icon"\` the icon is hidden, or an image named \`iconLabel\` when one is given ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)).
+- The body wraps anywhere, so a long name fits at 320 px ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+
+**You check**
+
+- \`columns.name\` and \`columns.value\` name the columns («Navn» and «Antall» when left out) ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- \`iconLabel\` is given where the kind of a row is not in its words ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)).
+- An \`iconTone\` is never the only sign: the words say the same ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color)).
+- A name that is a link goes to the thing's page and says which thing ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
 
 ### Content
 
@@ -33,8 +46,11 @@ The name is the strongest part; everything else is small and muted.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** No lead: a name and what it has, the simplest list. */
 export const Plain: Story = {}
+/** `lead="rank"`: the rank counted from the order, names as links, and the columns named for a screen reader. */
 export const Ranked: Story = { args: { lead: "rank", rows: ["Alfa", "Beta", "Gamma", "Delta"].map((name, i) => ({ key: name, body: <CardLink href="#" look="strong">{name}</CardLink>, trailing: `${40 - i * 7} avspillinger` })), columns: { name: "Artist", value: "Avspillinger" } } }
+/** `lead="poster"`: a picture in front of each name, with the columns named «Tittel» and «Vurdering». */
 export const WithPoster: Story = { args: { lead: "poster", rows: ["Alfa", "Beta", "Gamma"].map((name, i) => ({ key: name, lead: <Picture src={poster(i * 70, name[0])} />, body: name, trailing: "★ 4,5" })), columns: { name: "Tittel", value: "Vurdering" } } }
 
 /** The kind of each row as an icon in front of it; `iconLabel` where the kind is not in the words. */

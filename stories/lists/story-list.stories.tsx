@@ -17,7 +17,16 @@ short list rows (\`Rows\`).
 
 ### Accessibility
 
-Real links with the title as text.
+**Handled by the component**
+
+- An ordered list, each story a link with its byline after it ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships), [1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- Each link is at least 24 px high ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
+
+**You check**
+
+- \`title\` is the story's own title, so the link says what it opens ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
+- The links are NOT marked as external (unlike \`HeadlineList\`): say near the list that they lead to other sites ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
+- The order means something (an \`ol\`): a heading before the list says what it is ordered by ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
 
 ### Content
 
@@ -30,4 +39,5 @@ The line under the title says the source and the time.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Two stories as large links, each with its byline under it. */
 export const Default: Story = {}

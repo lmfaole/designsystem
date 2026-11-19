@@ -31,7 +31,17 @@ one section, or sections that are side by side (they stand under each other).
 
 ### Accessibility
 
-The group title is a heading and each subsection one level down.
+**Handled by the component**
+
+- The group is a \`section\` named by its \`h2\`; each \`SubSection\` a \`section\` named by its \`h3\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The subsections stand under each other in DOM order ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- Title icons are hidden from assistive technology ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)).
+
+**You check**
+
+- Every \`id\` is unique on the page ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The titles of the subsections tell them apart ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
+- Each \`more.label\` says what it opens in full ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
 
 ### Content
 

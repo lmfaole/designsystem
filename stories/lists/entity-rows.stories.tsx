@@ -25,7 +25,22 @@ a list the reader opens (\`Rows\`).
 
 ### Accessibility
 
-A table: a screen reader hears the count and the extra with the name they belong to.
+**Handled by the component**
+
+- A table with a hidden \`caption\` and hidden column headers (Bilde, Navn, Antall, Mer); the name is the row header, so the count and the extra are heard with it ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The table roles are written out, so it stays a table while it is laid out as a grid ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- A long list keeps its whole row count for a screen reader (\`aria-rowcount\`) while only part of it is drawn ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The «i» is a native button named «Om …» from \`label\`, opening a native popover; keyboard and Escape come from the browser ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard), [4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value)).
+- The «i» button is 24 px ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
+- A \`muted\` row dims only the picture; its name is the muted text colour, not lowered opacity ([1.4.3 Contrast (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum)).
+
+**You check**
+
+- \`caption\` says what the list is ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- \`label\` is the plain name, so the button reads «Om Song One» ([4.1.2 Name, Role, Value](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value)).
+- A picture passed as \`Picture\` is hidden; anything else needs its own text alternative ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content)).
+- A name that is a link goes to the thing's page and says which thing ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
+- \`count\` says in words what is counted («12 ganger», not «12»).
 
 ### Content
 
@@ -38,4 +53,5 @@ Short lines; the count is a number.
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** Every state of a line in one list: a linked name with an «i» popover, a plain one, and a muted one with no picture. */
 export const Default: Story = {}

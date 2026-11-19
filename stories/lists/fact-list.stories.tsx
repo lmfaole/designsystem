@@ -18,7 +18,19 @@ figures to compare across things (\`Table\`), or a list of things (\`Rows\`).
 
 ### Accessibility
 
-A real description list. Terms without a value are left out.
+**Handled by the component**
+
+- A real description list: each term a \`dt\`, each value a \`dd\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- Several values are separate \`dd\`s, not one joined string ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- Terms without a value, and a list with none left, are not drawn, so no empty term is announced ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- Terms and values are read in the order given ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- Values wrap anywhere, so a long address or branch name fits at 320 px ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+
+**You check**
+
+- Each term is a short noun that says what its value is ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
+- A value that is a link says where it goes ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
+- A heading before the list says what the facts are about ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
 
 ### Content
 
@@ -31,6 +43,7 @@ Several values are several lines, never a comma-separated string. Terms are noun
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** One value per term, one of them a link to a card: the common case. */
 export const Default: Story = {}
 
 /**

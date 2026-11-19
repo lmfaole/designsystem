@@ -21,7 +21,17 @@ it would hold read content, a second list or navigation (read content stands in 
 
 ### Accessibility
 
-The DOM order is the order on a phone and the order a screen reader reads: \`start\` puts the pane first, \`end\` after the main content. The pane is an \`aside\`. Nothing in the pane may be the only place something is said.
+**Handled by the component**
+
+- The pane is an \`aside\` ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- The DOM order is the order on a phone and for a screen reader: \`start\` puts the pane first, \`end\` after the main content ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
+- One column below the \`expanded\` width, so nothing scrolls sideways at 320 px ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+
+**You check**
+
+- The pane starts with a heading; with more than one \`aside\` on the page, each needs a name ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
+- With \`start\` the pane comes first for the keyboard too: keep it short ([2.4.3 Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order)).
+- Nothing in the pane is the only place something is said.
 
 ### Content
 
@@ -34,11 +44,13 @@ The pane holds short things: a picture and a \`FactList\`. A link out is last in
 export default meta
 type Story = StoryObj<typeof meta>
 
+/** The pane first (`start`): who the page is about, at the left on a desktop and above on a phone. */
 export const Default: Story = {
   args: { rail: <Heading level={2} look="label">Facts</Heading>, children: null },
   render: (args) => <PageLayout width="pane"><Split {...args}>{boxes(8)}</Split></PageLayout>,
 }
 
+/** `position="end"`: the pane supports the main content, at the right on a desktop and under it on a phone. */
 export const PaneEnd: Story = {
   args: { rail: <Heading level={2} look="label">Related</Heading>, children: null, position: "end" },
   render: (args) => <PageLayout width="pane"><Split {...args}>{boxes(8)}</Split></PageLayout>,
