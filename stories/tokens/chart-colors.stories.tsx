@@ -2,8 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ColorToken } from "../tokens"
 
-/** The grey ramp of the chart components. */
-const meta = { title: "Tokens/Chart colours", tags: ["autodocs"] } satisfies Meta
+const meta = { title: "Tokens/Chart colours", tags: ["autodocs"], parameters: { docs: { description: { component: `The grey ramp of the chart components, the same in light and dark.
+
+**Use it** for marks that are not given a colour of their own.
+
+**Do not** rely on one step alone for a mark that carries meaning: \`chart-1\` is 1.5:1 on a light page and \`chart-3\` to \`chart-5\` are 2.5, 1.9 and 1.3:1 on a dark one. Name the series on the chart.
+
+**Related.** \`AreaChart\`, \`ColumnChart\`, guide «Data visualisation»` } } } } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>
 

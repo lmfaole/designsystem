@@ -45,9 +45,43 @@ so two pages that mean the same thing show the same symbol, and changing the gly
   <Icon name="success" /> done &nbsp; <Icon name="failure" /> failed &nbsp; <Icon name="warning" /> in doubt &nbsp; <Icon name="pending" /> on its way &nbsp; <Icon name="waiting" /> held up
 </p>
 
+## The groups
+
+The catalogue has 65 meanings in seven groups. A group is a place to look first, not a rule about where to use an icon.
+
+| Group | For |
+| --- | --- |
+| The work | Code, reviews, tickets and conversations: `pull-request`, `issue`, `discussion`, `merge`, `tasks` |
+| How it stands | The state of a thing: `success`, `failure`, `warning`, `info`, `pending`, `waiting`, `blocked` |
+| People and time | Who and when: `person`, `people`, `view`, `time`, `calendar`, `notification` |
+| Place and weather | Where it is and what the sky does: `place`, `weather`, `rain`, `wind`, `temperature` |
+| Getting around | On foot and by public transport: `walk`, `bus`, `tram`, `metro` |
+| What you can do | Actions: `refresh`, `search`, `add`, `edit`, `delete`, `link`, `external`, `close`, `settings` |
+| Direction | Where to go: `back`, `chevron-down`, `chevron-right` |
+
+## Choosing between close meanings
+
+These are our conventions, so that two pages that mean the same show the same symbol.
+
+| Meaning | Use it for | Not for |
+| --- | --- | --- |
+| `success` | A result that is good and has been checked: tests passed, approved | A button that confirms (`done`) |
+| `done` | The act of confirming or a tick in a choice | A state of a thing (`success`) |
+| `failure` | Something that ran and failed: tests, a build | A thing that is held up (`blocked`) or in doubt (`warning`) |
+| `blocked` | Something that cannot go on until someone acts | A failure |
+| `warning` | In doubt, or about to stop something; an `ErrorMessage` and a `Banner` use it | Information that needs no action (`info`) |
+| `info` | A neutral note | A problem (`warning`) |
+| `pending` | On its way: a check that is running | Waiting for a person (`waiting`) |
+| `waiting` | Held up by someone: «Venter på review» | A check that is running (`pending`) |
+| `view` | Someone is asked to look: a review | A search (`search`) |
+| `question`, `discussion` | An unanswered question; a conversation | A comment on a pull request (`discussion` is the kind of thing, not an action) |
+| `place` | A place on the map | The home page (`home`) |
+| `link`, `external` | A link to a place in the app; a link out of the app (always with its words) | Each other |
+| `time`, `calendar` | A duration or an age; a date | Each other |
+
 ## Sizes and tones
 
-`size`: `sm` in a line of small text (a `StatusLine`), `md` (the default) beside normal text, `lg` where an icon stands
+`size`: `sm` (14 px) in a line of small text (a `StatusLine`), `md` (16 px, the default) beside normal text, `lg` (20 px) where an icon stands
 by itself (an empty state). `tone`: the text's own colour by default; `muted` for a quiet kind; `destructive` for what
 stops something; `primary` for the one thing to look at.
 
@@ -57,6 +91,13 @@ stops something; `primary` for the one thing to look at.
 - Where an icon **stands alone and carries the meaning** (the kind of a row), give it a `label` (`iconLabel` on a row).
 - An **icon-only button** needs an `aria-label`.
 - A status must read the same **without colour**: that is why `StatusLine` pairs a symbol with its words.
+
+## Keep it recognisable
+
+- The same meaning has the same symbol on every page; never pick another glyph in a page.
+- An icon in front of a word is read as part of the word: put it before the text, at the start of the line.
+- Do not recolour an icon to mean something; a state is told with its symbol and words.
+- Count them: a page where every line has an icon has none that stands out. Use them for kinds, states and actions.
 
 ## Adding a meaning
 

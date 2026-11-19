@@ -2,8 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { RadiusToken } from "../tokens"
 
-/** `--radius` and the steps Tailwind gets from it. */
-const meta = { title: "Tokens/Radius", tags: ["autodocs"] } satisfies Meta
+const meta = { title: "Tokens/Radius", tags: ["autodocs"], parameters: { docs: { description: { component: `\`--radius\` (0.625 rem) and the steps Tailwind gets from it: \`sm\` 0.6, \`md\` 0.8, \`lg\` 1, \`xl\` 1.4, \`2xl\` 1.8, \`3xl\` 2.2 and \`4xl\` 2.6 times the base.
+
+**Use them** through the components, which each pick their step. Things of one kind have one radius, and a box inside another has a smaller one.
+
+**Related.** \`Card\`, \`Badge\`, \`Banner\`` } } } } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>
 

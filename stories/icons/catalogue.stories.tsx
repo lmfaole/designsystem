@@ -18,7 +18,7 @@ const GROUPS = [
 const meta = {
   title: "Icons/Catalogue",
   tags: ["autodocs"],
-  parameters: { docs: { description: { component: "Every meaning a page can ask for with `<Icon name=\"…\" />`, by what it means. The names are the keys of `ICONS` in `src/lib/icons.ts`." } } },
+  parameters: { docs: { description: { component: "Every meaning a page can ask for with `<Icon name=\"…\" />`, by what it means: 65 meanings in seven groups. The names are the keys of `ICONS` in `src/lib/icons.ts`. Which of two close meanings to use is in **Icons / Guide** (Choosing between close meanings); a new meaning is added there first, with its group." } } },
 } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>

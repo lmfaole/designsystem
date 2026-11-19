@@ -42,7 +42,7 @@ export function TextField({ label, name, type = "text", hint, error, optional = 
         autoComplete={autoComplete}
         aria-invalid={error === undefined ? undefined : true}
         aria-describedby={described === "" ? undefined : described}
-        className={`border-input bg-background focus-visible:ring-ring h-9 w-full rounded-md border px-3 text-base focus-visible:ring-2 focus-visible:outline-none ${error === undefined ? "" : "border-destructive"}`}
+        className={`border-muted-foreground bg-background focus-visible:ring-ring h-9 w-full rounded-md border px-3 text-base focus-visible:ring-2 focus-visible:outline-none ${error === undefined ? "" : "border-destructive"}`}
       />
     </div>
   )

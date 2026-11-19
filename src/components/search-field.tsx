@@ -13,7 +13,7 @@ export function SearchField({ label, action, q = "", name = "q" }: { label: stri
         {label}
       </label>
       <div className="flex gap-2">
-        <input id={name} name={name} type="search" defaultValue={q} className="border-input bg-background focus-visible:ring-ring h-9 min-w-0 flex-1 rounded-md border px-3 text-base focus-visible:ring-2 focus-visible:outline-none" />
+        <input id={name} name={name} type="search" defaultValue={q} className="border-muted-foreground bg-background focus-visible:ring-ring h-9 min-w-0 flex-1 rounded-md border px-3 text-base focus-visible:ring-2 focus-visible:outline-none" />
         <Button type="submit" variant="outline">
           <Icon name="search" slot="start" />
           Søk

@@ -2,8 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ColorToken } from "../tokens"
 
-/** One colour for each series of a multi-series chart; lighter in dark mode. */
-const meta = { title: "Tokens/Series colours", tags: ["autodocs"] } satisfies Meta
+const meta = { title: "Tokens/Series colours", tags: ["autodocs"], parameters: { docs: { description: { component: `Six hues of one lightness, one for each series of a chart that is given colours of its own (lighter in dark mode). They meet 3:1 on the page (5.2 to 6.5:1 in light and 9.4 to 10.4:1 in dark).
+
+**Use them** when a chart needs colours (a thing that has a colour of its own). They carry no meaning and are never used for a state.
+
+**Do not** use them to tell series apart without naming the series on the chart.
+
+**Related.** \`StackedColumnChart\`, \`DonutChart\`, guide «Data visualisation»` } } } } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>
 

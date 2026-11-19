@@ -2,8 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ValueToken } from "../tokens"
 
-/** Durations, easings and distances of `motion.css`. All collapse to ~0 under `prefers-reduced-motion`. */
-const meta = { title: "Tokens/Motion", tags: ["autodocs"] } satisfies Meta
+const meta = { title: "Tokens/Motion", tags: ["autodocs"], parameters: { docs: { description: { component: `Durations, easings and distances of \`motion.css\`: instant 100 ms, fast 150, base 250, slow 450 and live 2400, three easings, a distance of 0.75 rem and a stagger of 60 ms. All durations are 0.01 ms under \`prefers-reduced-motion\`.
+
+**Use them** through \`Reveal\`, \`CountUp\` and the staggered entrances; a page never writes a duration of its own.
+
+**Related.** guide «Motion», \`Reveal\`, \`CountUp\`` } } } } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>
 

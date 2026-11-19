@@ -5,7 +5,7 @@ import { Meta } from "@storybook/addon-docs/blocks"
 # Data visualisation
 
 Our charts are `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart` and `RankedBarChart`, in a `ChartFrame` or a `ChartCard`. The
-palette is grey on purpose: the one colour (`destructive`) is for what stops something, so colour never carries the meaning.
+default series are the foreground at falling strength (100, 72, 52, 36 and 24 %) and the one colour in the interface (`destructive`) is for what stops something, so colour never carries the meaning. A page that needs colours of its own passes `series-1` to `series-6`.
 
 ## 1. Choose
 
@@ -26,8 +26,7 @@ Line 5 series or fewer; bars 10 or fewer; stacked 5 segments; a donut 5 slices w
 ## 3. Without colour
 
 Name the series on the chart before using a legend; separate neighbouring parts with a thin gap in the background colour; lines are 2 px,
-the first solid and later ones dashed with another marker. Marks meet 3:1 against the background (the lightest chart grey needs an outline) and
-axis text 4.5:1. A legend is only for more than one series that is not named directly.
+the first solid and later ones dashed with another marker. Marks meet 3:1 against the background and axis text 4.5:1. Measured, the two lightest default steps (36 and 24 %) are about 2.7 and 1.9:1, so they are never the only difference between two parts: name the series and keep the gap (see **Tokens / Overview**). A legend is only for more than one series that is not named directly.
 
 ## 3b. Title and labels
 

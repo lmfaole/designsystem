@@ -2,8 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ColorToken } from "../tokens"
 
-/** The base colours of `theme.css`, light and dark. Read live from the page's computed style. */
-const meta = { title: "Tokens/Colours", tags: ["autodocs"] } satisfies Meta
+const meta = { title: "Tokens/Colours", tags: ["autodocs"], parameters: { docs: { description: { component: `The base colours of \`theme.css\`, light and dark, read live from the page's computed style. The interface is monochrome and the one colour is \`destructive\`.
+
+**Use them** through the components. A page never writes a colour; a new colour is a new role in the guide **Tokens / Overview**, with its pair and its contrast.
+
+**Pairs.** A surface is used only with its own \`-foreground\` (\`primary\` with \`primary-foreground\`). Text needs 4.5:1 and the parts of a control or a mark 3:1.
+
+**Do not** use \`border\` or \`input\` as the only edge of something the reader must find: in light they are 1.3:1 against the page.
+
+**Related.** \`StatusLine\`, \`Banner\`, guide «Colour and state»` } } } } satisfies Meta
 export default meta
 type Story = StoryObj<typeof meta>
 
