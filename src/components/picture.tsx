@@ -45,7 +45,7 @@ export function Picture({ src, sources, priority = false, ratio = 'poster', size
   size?: Size
   /** What kind of thing it is, as a shape (see `PictureCorners`). */
   corners?: PictureCorners
-  /** A record playing now: round with a hole in the middle, and it spins three times and slows to a stop (under five seconds, then still). Needs `ratio="square"`; always with the words «playing now» beside it. */
+  /** A record playing now: round with a hole in the middle, and it turns slowly for as long as it plays (12 s a turn; still under reduced motion). Needs `ratio="square"`; always with the words «playing now» beside it. */
   disc?: boolean
 }) {
   const [width, height] = SIZES[ratio][size]

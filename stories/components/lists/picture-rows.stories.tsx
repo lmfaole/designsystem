@@ -56,7 +56,7 @@ export const People: Story = { args: { ratio: "square", corners: "round", rows: 
   { key: "1", picture: poster(40, "A"), title: "Al Pacino", detail: details(["Vincent Hanna"]), aside: "Nr. 1" },
   { key: "2", picture: poster(80, "B"), title: "Robert De Niro", detail: details(["Neil McCauley"]), aside: "Nr. 2" },
 ] } }
-/** A song playing now: its cover is a disc that spins three times and slows to a stop (under five seconds), and the aside, with a pulsing dot, says «Spilles nå» in words. */
+/** A song playing now: its cover is a disc that turns slowly for as long as it plays, and the aside, with a pulsing dot, says «Spilles nå» in words. */
 export const NowPlaying: Story = { args: { ratio: "square", corners: "soft", rows: [
   { key: "1", picture: poster(10, "A"), title: "Hard", detail: details(["Rihanna, Jeezy", "Rated R"]), aside: "Spilles nå", live: true },
   { key: "2", picture: poster(120, "B"), title: "Ninacamina", detail: details(["Ninajirachi", "girl EDM"]), aside: "20. nov., 10:45" },

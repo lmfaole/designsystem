@@ -21,7 +21,7 @@ words, a symbol or a position, never motion alone.
 | `--motion-duration-slow` | 400 ms | a large movement across the screen; rare |
 | `--motion-duration-data` | 700 ms | a bar growing, a number counting up (`CountUp`) |
 | `--motion-duration-live` | 2400 ms | one beat of a live pulse; it beats twice |
-| `--motion-duration-disc` | 4800 ms | a record spinning up and slowing to a stop (`Picture disc`): once, under five seconds |
+| `--motion-duration-disc` | 12000 ms | one slow turn of a record playing now (`Picture disc`); it turns for as long as it plays |
 | `--motion-ease-enter` | `cubic-bezier(0.16, 1, 0.3, 1)` | arriving: fast, then settling |
 | `--motion-ease-exit` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | leaving: accelerating away |
 | `--motion-ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | moving or changing within the page |
@@ -76,6 +76,11 @@ and a whole row that lights up would promise a bigger target than there is.
 **No loop runs longer than five seconds** (WCAG 2.2.2 Pause, Stop, Hide, level A, whatever the reduced-motion setting). `LiveDot` beats
 twice (2 × 2.4 s) and is still; the skeleton's pulse beats twice. A spinner that shows work in progress is the exception, marked
 `data-motion="essential"`.
+
+There is one more: **the disc** (`Picture disc`, a record playing now), which turns slowly (12 s a turn, linear) for as long as it plays.
+It is not essential, so it does not meet 2.2.2 as written, which asks for a way to pause it; it is a choice made for the look, kept small (a 40 px
+cover), off under `prefers-reduced-motion`, and never alone: the words «Spilles nå» stand beside it. Add a pause where a page has more than one,
+or where the disc is large.
 
 ## 6. Opening and closing
 

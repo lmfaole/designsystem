@@ -11,9 +11,13 @@ test("an entrance moves and never fades", () => {
   assert.doesNotMatch(rise, /opacity/)
 })
 
-test("no animation of the system loops for ever (WCAG 2.2.2: a loop stops within five seconds)", () => {
+test("no animation of the system loops for ever (WCAG 2.2.2: a loop stops within five seconds), but the disc of a record playing now", () => {
   const theme = readFileSync(join(import.meta.dirname, "theme.css"), "utf8")
-  for (const css of [motion, theme]) assert.doesNotMatch(css, /\binfinite\b/)
+  const withoutDisc = motion.replace(/\.motion-disc \{[^}]*\}/, "")
+  for (const css of [withoutDisc, theme]) assert.doesNotMatch(css, /\binfinite\b/)
+  assert.match(motion, /\.motion-disc \{[^}]*infinite/)
+  const reduced = motion.slice(motion.indexOf("@media (prefers-reduced-motion: reduce)"))
+  assert.match(reduced, /\.motion-disc[^{]*\{\s*animation: none/)
 })
 
 test("every duration token lands at once under reduced motion", () => {
