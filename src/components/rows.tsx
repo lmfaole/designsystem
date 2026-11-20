@@ -10,8 +10,8 @@ export interface RowData {
   lead?: ReactNode
   /** What the row is: a name, a link, a name with its line below. */
   body: ReactNode
-  /** What it has: a count, a rating, a time. */
-  trailing: ReactNode
+  /** What it has: a count, a rating, a time. Leave it out of every row where the time or the count sits in the body's own line (a long title then has the whole width): the column is not drawn. */
+  trailing?: ReactNode
   /** The kind of the row, for `lead="icon"`: a pull request, an issue, a kind of weather. */
   icon?: IconName
   /** What the icon means to a screen reader (`Pull request`); without it the icon is hidden, so give it where the kind is not in the words. */
@@ -36,10 +36,11 @@ interface RowsProps {
  * and the roles are written out, so the table stays a table when `display` is not `table`.
  */
 export function Rows({ rows, lead, columns }: RowsProps) {
-  const layout = lead === "rank" ? "grid-cols-[2rem_1fr_auto] items-baseline" : lead === "poster" ? "grid-cols-[auto_1fr_auto] items-center" : lead === "icon" ? "grid-cols-[1rem_1fr_auto] items-start" : "grid-cols-[1fr_auto] items-baseline"
+  const withValue = rows.some((row) => row.trailing !== undefined && row.trailing !== null)
+  const layout = lead === "rank" ? (withValue ? "grid-cols-[2rem_1fr_auto] items-baseline" : "grid-cols-[2rem_1fr] items-baseline") : lead === "poster" ? (withValue ? "grid-cols-[auto_1fr_auto] items-center" : "grid-cols-[auto_1fr] items-center") : lead === "icon" ? (withValue ? "grid-cols-[1rem_1fr_auto] items-start" : "grid-cols-[1rem_1fr] items-start") : withValue ? "grid-cols-[1fr_auto] items-baseline" : "grid-cols-1"
   return (
     <table role="table" className="block">
-      <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : lead === "icon" ? "Type" : "Bilde"]), columns?.name ?? "Navn", columns?.value ?? "Antall"]} />
+      <SrTableHead columns={[...(lead === undefined ? [] : [lead === "rank" ? "Rang" : lead === "icon" ? "Type" : "Bilde"]), columns?.name ?? "Navn", ...(withValue ? [columns?.value ?? "Antall"] : [])]} />
       <tbody role="rowgroup" className="grid gap-y-2">
         {rows.map((row, index) => (
           <tr role="row" key={row.key} className={`grid gap-x-3 ${layout}`}>
@@ -57,9 +58,11 @@ export function Rows({ rows, lead, columns }: RowsProps) {
             <td role="rowheader" className="min-w-0 [overflow-wrap:anywhere]">
               {row.body}
             </td>
-            <td role="cell" className="text-right text-sm whitespace-nowrap text-muted-foreground">
-              {row.trailing}
-            </td>
+            {withValue ? (
+              <td role="cell" className="text-right text-sm whitespace-nowrap text-muted-foreground">
+                {row.trailing}
+              </td>
+            ) : null}
           </tr>
         ))}
       </tbody>

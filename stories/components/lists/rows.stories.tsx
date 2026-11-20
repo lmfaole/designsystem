@@ -67,3 +67,14 @@ export const WithIcon: Story = {
     ],
   },
 }
+/** No `trailing` in any row: the time sits in the body's own line, and a long title has the whole width (no empty column is drawn). */
+export const WithoutTrailing: Story = {
+  args: {
+    lead: "icon",
+    columns: { name: "Tittel" },
+    rows: [
+      { key: "a", icon: "pull-request", iconLabel: "Pull request", body: "chore(deps): bump @tailwindcss/vite from 4.3.3 to 4.3.5 · for 20 timer siden" },
+      { key: "b", icon: "pull-request", iconLabel: "Pull request", body: "Bump the github-actions group across 1 directory with 6 updates · for 1 time siden" },
+    ],
+  },
+}
