@@ -131,6 +131,16 @@
     --transit-other: oklch(0.48 0.03 270);
     --transit-other-foreground: oklch(1 0 0);
     --transit-late: oklch(0.52 0.11 62);
+    /* What happened in a history (Timeline, StateSteps, DurationBars): the node or bar of an event that went well, that was merged or
+       otherwise marked, that warns, or that failed, with the icon that stands on it. Always beside its icon and words. */
+    --event-accent: oklch(0.5 0.19 300);
+    --event-accent-foreground: oklch(1 0 0);
+    --event-success: oklch(0.52 0.13 150);
+    --event-success-foreground: oklch(1 0 0);
+    --event-warning: oklch(0.62 0.13 65);
+    --event-warning-foreground: oklch(0.145 0 0);
+    --event-danger: oklch(0.53 0.2 27);
+    --event-danger-foreground: oklch(1 0 0);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -181,6 +191,14 @@
     --transit-other: oklch(0.72 0.03 270);
     --transit-other-foreground: oklch(0.145 0 0);
     --transit-late: oklch(0.8 0.13 75);
+    --event-accent: oklch(0.74 0.14 300);
+    --event-accent-foreground: oklch(0.145 0 0);
+    --event-success: oklch(0.74 0.14 150);
+    --event-success-foreground: oklch(0.145 0 0);
+    --event-warning: oklch(0.8 0.13 75);
+    --event-warning-foreground: oklch(0.145 0 0);
+    --event-danger: oklch(0.7 0.17 25);
+    --event-danger-foreground: oklch(0.145 0 0);
 }
 }
 
@@ -234,6 +252,14 @@
     --transit-other: oklch(0.72 0.03 270);
     --transit-other-foreground: oklch(0.145 0 0);
     --transit-late: oklch(0.8 0.13 75);
+    --event-accent: oklch(0.74 0.14 300);
+    --event-accent-foreground: oklch(0.145 0 0);
+    --event-success: oklch(0.74 0.14 150);
+    --event-success-foreground: oklch(0.145 0 0);
+    --event-warning: oklch(0.8 0.13 75);
+    --event-warning-foreground: oklch(0.145 0 0);
+    --event-danger: oklch(0.7 0.17 25);
+    --event-danger-foreground: oklch(0.145 0 0);
 }
 
 @layer base {

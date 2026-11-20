@@ -61,7 +61,7 @@ The catalogue has 70 meanings in seven groups. A group is a place to look first,
 
 | Group | For |
 | --- | --- |
-| The work | Code, reviews, tickets and conversations: `pull-request`, `issue`, `discussion`, `merge`, `tasks` |
+| The work | Code, reviews, tickets and conversations, and what happens to them: `pull-request`, `issue`, `discussion`, `merge`, `tasks`, `commit`, `comment`, `review`, `label`, `closed`, `reopen`, `draft`, `assign` |
 | How it stands | The state of a thing: `success`, `failure`, `warning`, `info`, `pending`, `waiting`, `blocked` |
 | People and time | Who and when: `person`, `people`, `view`, `time`, `history`, `calendar`, `notification`, `mail` |
 | Place and weather | Where it is and what the sky does: `place`, `weather`, `rain`, `wind`, `temperature` |
@@ -83,7 +83,11 @@ These are our conventions, so that two pages that mean the same show the same sy
 | `info` | A neutral note | A problem (`warning`) |
 | `pending` | On its way: a check that is running | Waiting for a person (`waiting`) |
 | `waiting` | Held up by someone: «Venter på review» | A check that is running (`pending`) |
-| `view` | Someone is asked to look: a review | A search (`search`) |
+| `view` | Someone is asked to look: a review requested | A search (`search`) |
+| `review` | A review given, in a history (`Timeline`) | Asking for one (`view`) |
+| `comment`, `discussion` | One comment in a history; a conversation as a kind of thing | Each other |
+| `closed`, `close` | A thing that was closed (an issue, a pull request: `pull-request-closed`); the action that closes a panel | Each other |
+| `label`, `tag` | A label put on an issue or a pull request; a version's tag | Each other |
 | `question`, `discussion` | An unanswered question; a conversation | A comment on a pull request (`discussion` is the kind of thing, not an action) |
 | `place` | A place on the map | The home page (`home`) |
 | `link`, `external` | A link to a place in the app; a link out of the app (always with its words) | Each other |

@@ -135,6 +135,24 @@ for (const [mode, tokens] of Object.entries(MODES)) {
   })
 }
 
+const EVENT_TONES = ["accent", "success", "warning", "danger"] as const
+
+for (const [mode, tokens] of Object.entries(MODES)) {
+  test(`${mode}: an event's icon has 4.5:1 on its node, and the node and a duration bar 3:1 on the page and the card`, () => {
+    const low: string[] = []
+    for (const tone of EVENT_TONES) {
+      const icon = ratio(tokens, `event-${tone}-foreground`, `event-${tone}`)
+      if (icon < 4.5) low.push(`event-${tone}-foreground on event-${tone}: ${icon.toFixed(2)}`)
+      for (const background of ["background", "card"]) {
+        const mark = ratio(tokens, `event-${tone}`, background)
+        if (mark < 3) low.push(`event-${tone} on ${background}: ${mark.toFixed(2)}`)
+      }
+      if (!inGamut(token(tokens, `event-${tone}`))) low.push(`event-${tone} is outside sRGB`)
+    }
+    assert.deepEqual(low, [], "darken or lighten the event token in theme.css")
+  })
+}
+
 for (const [mode, tokens] of Object.entries(MODES)) {
   test(`${mode}: every default chart step (the grey steps of a stack, the strengths of a line, the steps of a heat map) keeps 3:1 on the page and on the card`, () => {
     const low: string[] = []

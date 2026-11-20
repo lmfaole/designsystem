@@ -272,7 +272,7 @@ never by the text. It is the one way to show Markdown: **do not convert it to HT
 
 **Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
 icon is a *meaning* you ask for, and the components that show titles, rows, statuses, actions and errors take one.
-The set is **complete on purpose** (160 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
+The set is **complete on purpose** (169 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
 The full guide, with the catalogue of every meaning, is in Storybook (**Icons / Guide** and **Icons / Catalogue**).
 
 ```tsx
@@ -335,6 +335,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.47
+
+**A history of events, the steps it went through and how long each took.** `Timeline` shows what happened to a pull request, an issue, a discussion or what you have listened to and watched, newest first: a named list with a heading for each day («I dag · fredag 20. november»), a short line on the rail for each event (an icon in a node coloured by its tone, the actor, what they did and when) and a bordered box for a comment, with the avatar on the rail. The time is relative («for 3 timer siden») with the exact time in `title` and `dateTime`, and links to the event's own `id`. A run of more than `collapseAfter` events of the same `group` shows the first and folds the rest behind a real disclosure («Vis 7 commits til»), named by `groupNoun` or `groupNouns`, and never across a day; an `ongoing` event gets a live dot and «nå». `StateSteps` puts the states above it (Åpnet → Review → Godkjent → Merget) as done, current, upcoming, failed or skipped steps with how long each lasted («3 d så langt»), in a row on a wide screen and a column on a narrow one. `DurationBars` draws spans in lanes on a time axis with ticks, a line at now and an arrow for what goes on, with a list of each span, its length and times under it, and only the list on a phone. The logic is in `lib/timeline` (`formatDuration`, `dayLabel`, `groupByDay`, `collapseRuns`, `durationsBetween`, `layoutDurations` and more), the node colours are the new `--event-*` tokens, and there are nine new icons: `comment`, `review`, `label`, `closed`, `pull-request-closed`, `reopen`, `draft`, `assign` and `listen`.
 
 ## 8.46
 
