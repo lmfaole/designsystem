@@ -7,26 +7,27 @@ const meta = {
   title: "Components/Onboarding/TiltPreview",
   component: TiltPreview,
   tags: ["autodocs"],
-  args: { name: "tilt" },
+  args: { mode: "follow" },
   render: (args) => (
-    <form className="grid max-w-xl gap-4" onSubmit={(event) => event.preventDefault()}>
-      <TiltPreview {...args} />
+    <form className="max-w-xl" onSubmit={(event) => event.preventDefault()}>
       <ChoiceCards
-        name={args.name ?? "tilt"}
-        legend="Lyset følger telefonen"
+        name="tilt"
+        legend="Lyset i bildene"
         value="off"
         options={[
-          { value: "on", label: "På", description: "Vipp telefonen, så flytter lyset seg i bildene." },
-          { value: "off", label: "Av", description: "Lyset står stille." },
+          { value: "on", label: "Følg telefonen", description: "Vipp telefonen, så flytter lyset seg i bildene.", preview: <TiltPreview {...args} mode="follow" /> },
+          { value: "off", label: "Fast lys", description: "Lyset står stille.", preview: <TiltPreview {...args} mode="still" /> },
         ]}
       />
     </form>
   ),
   parameters: { docs: { description: { component: `### Use it when
 
-the visitor chooses whether the light in the pictures follows how the phone is held (\`data-tilt\` on \`<html>\`, from the \`prefs\` cookie: \`lib/preferences\`). A surface lit from where the light is, with a cover in it, shows what it does.
+the visitor chooses whether the light in the pictures follows how the phone is held (\`data-tilt\` on \`<html>\`, from the \`prefs\` cookie: \`lib/preferences\`). Each sample is the \`preview\` of a \`ChoiceCards\` option, so the picture is the choice: \`mode="follow"\` for «Følg telefonen», a surface lit from where the light is with a cover in it, and \`mode="still"\` for «Fast lys», the light where it stands.
 
-On a phone that asks (iOS), «Tillat bevegelse» asks and sets the radio named \`name\` in its form to what was answered; choosing «På» also asks. On a phone that does not ask, the light follows at once. On a desktop it says it needs a phone, and the pointer over the surface moves the light instead, labelled «Simulering med peker».
+On a phone that asks (iOS), choosing «Følg telefonen» (a tap or a key, so the phone may ask) asks, and a no sets the radio named \`name\` back to \`off\`. On a phone that does not ask, the light follows at once. On a desktop the pointer over the surface moves the light instead, labelled «Simulering med peker».
+
+Without \`mode\` it still draws one surface with a «Tillat bevegelse» button above a separate radio; that is deprecated.
 
 ### Do not use it when
 
@@ -51,5 +52,25 @@ Nothing to set: the words follow what the device can do.
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** On a desktop, move the pointer over the surface. */
+/** The two cards. On a desktop, move the pointer over «Følg telefonen». */
 export const Default: Story = {}
+
+/** Deprecated: one surface and a button, above a separate radio (no `mode`). Use the cards above. */
+export const WithButton: Story = {
+  args: { mode: undefined },
+  render: () => (
+    <form className="grid max-w-xl gap-4" onSubmit={(event) => event.preventDefault()}>
+      <TiltPreview />
+      <ChoiceCards
+        name="tilt"
+        legend="Lyset følger telefonen"
+        value="off"
+        layout="list"
+        options={[
+          { value: "on", label: "På" },
+          { value: "off", label: "Av" },
+        ]}
+      />
+    </form>
+  ),
+}

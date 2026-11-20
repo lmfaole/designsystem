@@ -21,13 +21,26 @@ const chosen = (form: HTMLFormElement | null, name: string): Choice | null => {
   return value === "on" || value === "off" ? value : null
 }
 
+/** The cover on its stage, as the effects `choice` draws it; the live one waits for `visible`. */
+function Sample({ choice, cover, visible }: { choice: Choice; cover: string | null; visible: boolean }) {
+  const waiting = cover === null || (choice === "on" && !visible)
+  return (
+    <div data-effects={choice} aria-hidden="true" className="@container">
+      <Stage picture={waiting ? null : cover}>
+        <div className="flex justify-center">{waiting ? <div className="bg-muted aspect-[146/100] h-28 rounded-sm sm:h-32" /> : <AlbumSleeve key={cover} src={cover} />}</div>
+      </Stage>
+    </div>
+  )
+}
+
 /**
- * The effects (WebGL) as they are and as they are not, side by side: the same `Stage` and `AlbumSleeve` live, and below `data-effects="off"` as a visitor who turns them off gets them, flat and
- * still. The one that matches the radio `name` (`effects`) of the same form is marked as chosen, and follows it as it changes; outside a form `value` says which. The live one is drawn only once it
- * is on the screen, and is drawn even where the page has the effects off, since it is a preview. Under `prefers-reduced-motion` both stand still, and it says so. `src` is a cover to show; without
- * one a made-up cover is drawn in the theme's colours.
+ * The effects (WebGL) as a picture to choose by. With `mode`, one sample for a `ChoiceCards` option's `preview` (the recommended use, `layout="visual"`): `mode="on"` is the same `Stage` and
+ * `AlbumSleeve` live, drawn only once it is on the screen and even where the page has the effects off, since it is a preview; `mode="off"` is what a visitor who turns them off gets, flat and
+ * still (`data-effects="off"`). Under `prefers-reduced-motion` the live one stands still too, and says so. `src` is a cover to show; without one a made-up cover is drawn in the theme's colours.
+ *
+ * Without `mode` (deprecated, kept as it was): both side by side above a separate radio, the one matching the radio `name` (`effects`) of the same form marked as chosen.
  */
-export function EffectsPreview({ name = "effects", value = "on", src }: { name?: string; value?: Choice; src?: string }) {
+export function EffectsPreview({ name = "effects", value = "on", src, mode }: { name?: string; value?: Choice; src?: string; mode?: Choice }) {
   const root = useRef<HTMLDivElement>(null)
   const [choice, setChoice] = useState<Choice>(value)
   const [cover, setCover] = useState<string | null>(src ?? null)
@@ -39,7 +52,7 @@ export function EffectsPreview({ name = "effects", value = "on", src }: { name?:
     if (element === null) return
     setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches)
     if (src === undefined) setCover(sampleCover(element))
-    const form = element.closest("form")
+    const form = mode === undefined ? element.closest("form") : null
     const sync = () => setChoice(chosen(form, name) ?? value)
     sync()
     form?.addEventListener("change", sync)
@@ -54,7 +67,16 @@ export function EffectsPreview({ name = "effects", value = "on", src }: { name?:
       form?.removeEventListener("change", sync)
       observer.disconnect()
     }
-  }, [name, value, src])
+  }, [name, value, src, mode])
+
+  if (mode !== undefined) {
+    return (
+      <div ref={root} className="relative">
+        <Sample choice={mode} cover={cover} visible={visible} />
+        {mode === "on" && still ? <span className="bg-background/80 text-muted-foreground absolute start-2 bottom-2 rounded-sm px-1.5 py-0.5 text-xs font-medium">Står stille: enheten ber om mindre bevegelse</span> : null}
+      </div>
+    )
+  }
 
   return (
     <div ref={root} className="grid gap-2">
@@ -62,12 +84,8 @@ export function EffectsPreview({ name = "effects", value = "on", src }: { name?:
         {SAMPLES.map((sample) => {
           const selected = sample.choice === choice
           return (
-            <figure key={sample.choice} data-effects={sample.choice} className={`grid content-start gap-2 rounded-xl border p-2 ${selected ? "border-primary ring-primary ring-1" : "border-border"}`}>
-              <div aria-hidden="true" className="@container">
-                <Stage picture={sample.choice === "on" && !visible ? null : cover}>
-                  <div className="flex justify-center">{cover === null || (sample.choice === "on" && !visible) ? <div className="bg-muted aspect-[146/100] h-28 rounded-sm" /> : <AlbumSleeve key={cover} src={cover} />}</div>
-                </Stage>
-              </div>
+            <figure key={sample.choice} className={`grid content-start gap-2 rounded-xl border p-2 ${selected ? "border-primary ring-primary ring-1" : "border-border"}`}>
+              <Sample choice={sample.choice} cover={cover} visible={visible} />
               <figcaption className="grid gap-0.5 px-1">
                 <Text as="span" size="sm" weight="medium">
                   {sample.title}

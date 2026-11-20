@@ -19,7 +19,9 @@ const meta = {
   },
   parameters: { docs: { description: { component: `### Use it when
 
-a setting has two to five values, each worth a word or a small picture: the theme, the effects, where to start. The whole card is the label, so the target is large.
+a setting has two to five values, each worth a word or a picture: the theme, the effects, where to start. The whole card is the label, so the target is large.
+
+When the choice is about how something looks, give every option a \`preview\`: the cards become pictures (\`layout="visual"\`, the default then), the picture large on top and the radio, label and sentence under it, side by side where the column has room and under each other on a phone. The example IS the choice: \`ThemeSample size="lg"\`, \`EffectsPreview mode\`, \`TiltPreview mode\`. \`layout="list"\` keeps a small picture at the end of a row.
 
 ### Do not use it when
 
@@ -30,7 +32,7 @@ there are many values (use \`NativeSelect\`), or more than one may be chosen (us
 **Handled by the component**
 
 - Native radio buttons in a \`<fieldset>\` with its \`<legend>\`: the group and its name are read, and the arrow keys move between the choices ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
-- The chosen card is marked by its border and the radio itself, never by colour alone ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
+- The chosen card is marked by its border, a ring, the radio itself and (as pictures) a check, never by colour alone ([1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color))
 - A \`preview\` is hidden from a screen reader: the label says what the choice is
 - An error is in words with a symbol, tied to the group with \`aria-describedby\` ([3.3.1 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification))
 
@@ -53,9 +55,24 @@ type Story = StoryObj<typeof meta>
 /** The theme, by name and symbol. */
 export const Default: Story = {}
 
-/** With a picture of each: the theme drawn by its own tokens. */
-export const WithPreview: Story = {
+/** As pictures (`layout="visual"`, since every option has a `preview`): the theme drawn by its own tokens is the card. */
+export const Visual: Story = {
   args: {
+    options: [
+      { value: "system", label: "Som enheten", description: "Følger innstillingen på enheten din.", preview: <ThemeSample theme="system" size="lg" /> },
+      { value: "light", label: "Lys", description: "Mørk tekst på lys bakgrunn.", preview: <ThemeSample theme="light" size="lg" /> },
+      { value: "dark", label: "Mørk", description: "Lys tekst på mørk bakgrunn.", preview: <ThemeSample theme="dark" size="lg" /> },
+    ],
+  },
+}
+
+/** As pictures, on a phone: under each other. */
+export const VisualPhone: Story = { ...Visual, decorators: [(Story) => <div className="w-[22rem]"><Story /></div>] }
+
+/** A row each with a small picture at the end (`layout="list"`). */
+export const ListWithPreview: Story = {
+  args: {
+    layout: "list",
     options: [
       { value: "system", label: "Som enheten", description: "Følger innstillingen på enheten din.", preview: <ThemeSample theme="system" /> },
       { value: "light", label: "Lys", description: "Mørk tekst på lys bakgrunn.", preview: <ThemeSample theme="light" /> },

@@ -99,9 +99,11 @@ export function FirstRun({ id = "first-run", open, title, action, back, steps, i
             </div>
           </div>
         </footer>
-        <template data-first-run-error="">
-          <FieldError id="">{null}</FieldError>
-        </template>
+        {/* The model of an error from the server, for the enhancer to copy under a field. Not a <template>: React draws a template's children into the element on the client but into its
+            content on the server, so it would not hydrate. Hidden, it is not seen, read or sent. */}
+        <div hidden data-first-run-error="">
+          <FieldError id={`${id}-error-model`}>{null}</FieldError>
+        </div>
       </form>
     </dialog>
   )

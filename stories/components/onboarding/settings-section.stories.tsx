@@ -65,6 +65,8 @@ export const SettingsPage: Story = {
         </SettingsSection>
         <SettingsSection id="effekter" title="Effekter" body="3D, lys og bevegelse i bilder og bakgrunner.">
           {fields.effects()}
+        </SettingsSection>
+        <SettingsSection id="lys" title="Lyset" body="Om lyset i bildene følger hvordan du holder telefonen.">
           {fields.tilt()}
         </SettingsSection>
         <SettingsSection id="introen" title="Introen" body="Gå gjennom de første valgene på nytt, ett om gangen.">

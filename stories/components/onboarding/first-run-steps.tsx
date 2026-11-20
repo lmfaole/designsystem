@@ -30,39 +30,33 @@ export const fields = {
       legend="Tema"
       value="system"
       options={[
-        { value: "system", label: "Som enheten", description: "Følger innstillingen på enheten din.", preview: <ThemeSample theme="system" /> },
-        { value: "light", label: "Lys", description: "Mørk tekst på lys bakgrunn.", preview: <ThemeSample theme="light" /> },
-        { value: "dark", label: "Mørk", description: "Lys tekst på mørk bakgrunn.", preview: <ThemeSample theme="dark" /> },
+        { value: "system", label: "Som enheten", description: "Følger innstillingen på enheten din.", preview: <ThemeSample theme="system" size="lg" /> },
+        { value: "light", label: "Lys", description: "Mørk tekst på lys bakgrunn.", preview: <ThemeSample theme="light" size="lg" /> },
+        { value: "dark", label: "Mørk", description: "Lys tekst på mørk bakgrunn.", preview: <ThemeSample theme="dark" size="lg" /> },
       ]}
     />
   ),
   effects: () => (
-    <>
-      <EffectsPreview />
-      <ChoiceCards
-        name="effects"
-        legend="Effekter"
-        value="on"
-        options={[
-          { value: "on", label: "På", description: "3D, lys og bevegelse i bilder og bakgrunner." },
-          { value: "off", label: "Av", description: "Flate bilder og rolige bakgrunner. Bruker mindre strøm." },
-        ]}
-      />
-    </>
+    <ChoiceCards
+      name="effects"
+      legend="Effekter"
+      value="on"
+      options={[
+        { value: "on", label: "Med effekter", description: "3D, lys og bevegelse i bilder og bakgrunner.", preview: <EffectsPreview mode="on" /> },
+        { value: "off", label: "Uten effekter", description: "Flate bilder og rolige bakgrunner. Bruker mindre strøm.", preview: <EffectsPreview mode="off" /> },
+      ]}
+    />
   ),
   tilt: () => (
-    <>
-      <TiltPreview />
-      <ChoiceCards
-        name="tilt"
-        legend="Lyset følger telefonen"
-        value="off"
-        options={[
-          { value: "on", label: "På", description: "Vipp telefonen, så flytter lyset seg i bildene." },
-          { value: "off", label: "Av", description: "Lyset står stille." },
-        ]}
-      />
-    </>
+    <ChoiceCards
+      name="tilt"
+      legend="Lyset i bildene"
+      value="off"
+      options={[
+        { value: "on", label: "Følg telefonen", description: "Vipp telefonen, så flytter lyset seg i bildene.", preview: <TiltPreview mode="follow" /> },
+        { value: "off", label: "Fast lys", description: "Lyset står stille.", preview: <TiltPreview mode="still" /> },
+      ]}
+    />
   ),
 }
 
@@ -72,7 +66,7 @@ export const steps = (errors: { github?: string } = {}): FirstRunStep[] => [
   { id: "repoer", icon: "repository", title: "Hvilke repoer vil du følge?", content: fields.repos() },
   { id: "forside", icon: "view", title: "Hva skal stå på forsiden?", content: fields.sections() },
   { id: "tema", icon: "sun", title: "Lyst eller mørkt?", content: fields.theme() },
-  { id: "effekter", icon: "idea", title: "Effekter", body: "Bilder og bakgrunner kan tegnes i 3D og følge lyset. Se forskjellen og velg.", content: fields.effects() },
-  { id: "bevegelse", icon: "device", title: "Lys som følger telefonen", body: "På en telefon kan lyset i bildene følge hvordan du holder den.", content: fields.tilt() },
+  { id: "effekter", icon: "idea", title: "Effekter", body: "Bilder og bakgrunner kan tegnes i 3D og følge lyset. Velg det som ser best ut for deg.", content: fields.effects() },
+  { id: "bevegelse", icon: "device", title: "Skal lyset følge telefonen?", body: "På en telefon kan lyset i bildene følge hvordan du holder den.", content: fields.tilt() },
   { id: "installer", icon: "download", title: "Legg Startside på hjemskjermen", body: "Da åpner den som en app, uten nettleserens knapper.", content: <InstallPrompt appName="Startside" seen={false} cookiePath="/" preview="install" /> },
 ]

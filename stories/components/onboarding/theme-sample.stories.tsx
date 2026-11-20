@@ -9,7 +9,7 @@ const meta = {
   args: { theme: "system" },
   parameters: { docs: { description: { component: `### Use it when
 
-a theme choice shows what it gives: the \`preview\` of a \`ChoiceCards\` option for «Som enheten», «Lys» or «Mørk». It is a small page drawn by that theme's own tokens, so it is right whatever the page's own theme is.
+a theme choice shows what it gives: the \`preview\` of a \`ChoiceCards\` option (\`size="lg"\` for a visual card) for «Som enheten», «Lys» or «Mørk». It is a small page drawn by that theme's own tokens, so it is right whatever the page's own theme is.
 
 ### Do not use it when
 
@@ -40,6 +40,9 @@ export const Light: Story = { args: { theme: "light" } }
 
 /** Dark, on a light page. */
 export const Dark: Story = { args: { theme: "dark" } }
+
+/** Large, to fill a card of `ChoiceCards layout="visual"`. */
+export const Large: Story = { args: { size: "lg" }, decorators: [(Story) => <div className="w-56"><Story /></div>] }
 
 /** All three side by side. */
 export const All: Story = {

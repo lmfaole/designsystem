@@ -2,6 +2,8 @@
 
 import { useEffect } from "react"
 
+import { stepQuestions } from "../lib/first-run"
+
 type Control = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
 
 const isControl = (element: Element): element is Control => element instanceof HTMLInputElement || element instanceof HTMLSelectElement || element instanceof HTMLTextAreaElement
@@ -33,12 +35,17 @@ function enhance(id: string, modal: boolean): () => void {
   const progress = dialog.querySelector<HTMLElement>("[data-first-run-progress]")
   const count = dialog.querySelector<HTMLElement>("[data-first-run-count]")
   const segments = [...dialog.querySelectorAll<HTMLElement>("[data-first-run-segment]")]
-  const template = dialog.querySelector("template[data-first-run-error]")
+  const errorModel = dialog.querySelector("[data-first-run-error] [data-error]")
   const url = dialog.dataset["validateUrl"]
   let index = Math.max(
     0,
     steps.findIndex((step) => step.dataset["step"] === dialog.dataset["initialStep"]),
   )
+  for (const step of steps) {
+    const questions = stepQuestions(step)
+    // One question to a step is the rule of the introduction: a step that asks more is split, not filled.
+    if (questions.length > 1) console.warn(`FirstRun: the step «${step.dataset["step"] ?? ""}» asks ${questions.length} things (${questions.join(", ")}). Ask one thing per step: give each its own step.`)
+  }
   let busy = false
   let checked = false
 
@@ -75,8 +82,7 @@ function enhance(id: string, modal: boolean): () => void {
 
   /** The error under its field, as the server draws it, or under the step's heading where the field is not in the step; returns the field to focus. */
   const showError = (step: HTMLElement, name: string, message: string): HTMLElement | null => {
-    // Drawn on the server, the model is in the template's content; drawn by React in the browser, it is a child of the template.
-    const model = template instanceof HTMLTemplateElement ? (template.content.firstElementChild ?? template.firstElementChild)?.cloneNode(true) : null
+    const model = errorModel?.cloneNode(true)
     if (!(model instanceof HTMLElement)) return null
     model.querySelector("[data-error-message]")?.replaceChildren(message)
     const found = form.elements.namedItem(name)
