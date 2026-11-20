@@ -33,7 +33,7 @@ Because it is source inside `node_modules`:
   Test what the project owns; the modules here have their tests here.
 
 A project without a build step (plain CSS and JS) takes only the tokens: read the two `:root` blocks of `src/theme.css` and the
-font files of `@fontsource-variable/geist` and `@fontsource-variable/jetbrains-mono`, as the hjemmeserver app of the Nextcloud
+font files of `@fontsource-variable/atkinson-hyperlegible-next` and `@fontsource-variable/atkinson-hyperlegible-mono`, as the hjemmeserver app of the Nextcloud
 repository does (`scripts/design-tokens.ts` there).
 
 ## What is here
@@ -335,6 +335,18 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.25
+
+**New typefaces: Atkinson Hyperlegible Next and Mono**, one superfamily from the Braille Institute, in place of Geist and JetBrains Mono.
+
+- All text and **every heading** is the sans (`font-heading` is now `font-sans`); the mono (`font-mono`) is only short uppercase labels
+  (`Heading look="label"`), code and status codes. Page titles are semibold with tight tracking.
+- Why, with the measurements of seven pairs: **Foundations / Typography**, «Typefaces». In short: one family shares x-height, capitals and
+  figures, so labels and titles agree; monospace made titles long and uneven; letters that look alike (I l 1, O 0) are told apart; 50 KB
+  of fonts in place of 68.
+- A project with its own font-face rules (the hjemmeserver app) takes the two new packages: `@fontsource-variable/atkinson-hyperlegible-next`
+  and `@fontsource-variable/atkinson-hyperlegible-mono`.
 
 ## 8.24
 

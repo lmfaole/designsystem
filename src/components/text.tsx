@@ -12,9 +12,9 @@ const SIZES = { xs: "text-xs", sm: "text-sm", base: "text-base", lg: "text-lg" }
 const TONES = { default: "", muted: "text-muted-foreground", destructive: "text-destructive" } as const
 const WEIGHTS = { normal: "", medium: "font-medium", semibold: "font-semibold" } as const
 const HEADINGS = {
-  page: "font-heading text-3xl font-medium text-balance 2xl:text-4xl",
+  page: "font-heading text-3xl font-semibold tracking-tight text-balance 2xl:text-4xl",
   section: "text-lg font-semibold",
-  label: "text-sm font-semibold tracking-widest text-muted-foreground uppercase",
+  label: "font-mono text-sm font-medium tracking-widest text-muted-foreground uppercase",
   item: "font-heading text-base font-medium",
 } as const
 

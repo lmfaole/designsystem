@@ -101,7 +101,7 @@ Durations and easings come from the `--motion-*` tokens. Entrances **move and ne
 
 - A `Picture` gets `sources` (the widths its API offers) so the browser takes the smallest sharp one; only the picture that leads the page
   is `priority`, every other is lazy.
-- No third-party script, font or CDN; no autoplay; two font families, `latin` only; motion from the tokens.
+- No third-party script, font or CDN; no autoplay; one font superfamily (Atkinson Hyperlegible Next and Mono), `latin` only, mono only for short labels and code; motion from the tokens.
 - An app runs `npx designsystem-budget dist` in CI: under 500 KB a page (150 script, 50 CSS, 100 fonts), with grams of CO2e per view.
 
 ## Before you write markup

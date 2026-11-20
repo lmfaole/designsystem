@@ -18,8 +18,8 @@ Measured on a built page of an app on the design system (`npx designsystem-budge
 | HTML | 2–3 KB | rendered on the server, gzip |
 | CSS | about 15 KB | one stylesheet, only the classes used (Tailwind) |
 | Script | 0 KB | a page with no island sends none |
-| Fonts | about 70 KB | Geist and JetBrains Mono, variable, `latin` files only |
-| **Total** | **about 85 KB** | about 0.013 g CO2e a view, rating A+ |
+| Fonts | about 50 KB | Atkinson Hyperlegible Next and Mono, variable, `latin` files only |
+| **Total** | **about 65 KB** | about 0.010 g CO2e a view, rating A+ |
 
 The pictures are the rest, and on a list of covers they are most of it: forty thumbnails of 20 KB are 800 KB. **The picture is the first
 thing to look at.**
@@ -46,9 +46,9 @@ Good is **LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1** at the 75th percentile of
 
 ## 4. Fonts [WSG 2.11]
 
-Two families, variable (one file for every weight), self-hosted (no third party sees the reader), `woff2`, and only the `latin` files are
+One superfamily in two widths, variable (one file for every weight), self-hosted (no third party sees the reader), `woff2`, and only the `latin` files are
 fetched by a Norwegian page (`unicode-range`). `font-display: swap`: the text is there at once. A third family, or a second weight file, is
-not added. An app may preload the one body font (Geist `latin`).
+not added. An app may preload the one body font (Atkinson Hyperlegible Next `latin`).
 
 ## 5. Script and CSS [WSG 3.2, 3.3, 3.7]
 

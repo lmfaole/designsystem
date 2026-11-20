@@ -39,7 +39,7 @@ export function FontToken({ family, token }: { family: string; token: string }) 
   return (
     <div>
       <code className="text-xs text-muted-foreground">{token}: {family}</code>
-      <p className={`${token} text-3xl`}>Blåbærsyltetøy på skiva, 0123456789</p>
+      <p className={`${token} text-3xl`}>Blåbærsyltetøy på skiva, Il1 O0, 0123456789</p>
     </div>
   )
 }

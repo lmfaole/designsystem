@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "@fontsource-variable/geist";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/atkinson-hyperlegible-next";
+@import "@fontsource-variable/atkinson-hyperlegible-mono";
 @import "./motion.css";
 @import "./shell.css";
 @import "./icon.css";
@@ -27,8 +27,13 @@
 }
 
 @theme inline {
-    --font-heading: 'JetBrains Mono Variable', ui-monospace, monospace;
-    --font-sans: 'Geist Variable', sans-serif;
+    /*
+     * One superfamily, drawn together for legibility (Braille Institute): the same x-height, capitals and figures in both, so I, l and 1
+     * and O and 0 are told apart everywhere. Sans for all text and every heading; mono only for short labels, code and technical values.
+     */
+    --font-heading: var(--font-sans);
+    --font-sans: 'Atkinson Hyperlegible Next Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Atkinson Hyperlegible Mono Variable', ui-monospace, monospace;
     --color-chart-5: var(--chart-5);
     --color-chart-4: var(--chart-4);
     --color-chart-3: var(--chart-3);

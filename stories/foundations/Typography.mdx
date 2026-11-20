@@ -18,7 +18,7 @@ rules are from GOV.UK, Primer, Atlassian, NAV Aksel, Carbon, Butterick's *Practi
 | `Text` tone | `default`, `muted`, `destructive` |
 | `Text` weight | `normal`, `medium`, `semibold` |
 | `Heading` look | `page`, `section`, `label`, `item` |
-| Typefaces | Geist for the interface, JetBrains Mono for headings and code (see **Tokens / Overview**) |
+| Typefaces | Atkinson Hyperlegible Next for all text and headings, its Mono for short labels and code (see **Typefaces** below) |
 
 `Heading` takes a `level` (the element, which makes the page's outline) and a `look` (how it looks), chosen apart: a section is an `h2` whatever it looks like, and a
 title is never made by making text bold or larger (Atlassian, Aksel).
@@ -79,6 +79,35 @@ There is **no fourth level of emphasis**. Bold is for what stops something or wh
 3. Cover everything but the left edge: is the name of each row the strongest part?
 4. Look at the longest paragraph: is it in `width="prose"`?
 
+## 8. Typefaces
+
+**Atkinson Hyperlegible Next** for all text and every heading, **Atkinson Hyperlegible Mono** for short uppercase labels, code and
+technical values. Chosen in 8.25 against six other pairs, measured on their `latin` files and set on the same page:
+
+| Pair | x-height (of the em) | Sans and mono alike | Weight of both | I l 1, O 0 |
+| --- | --- | --- | --- | --- |
+| Geist + JetBrains Mono (before) | 0.530 / 0.550 | no: the mono is larger | 68 KB | alike |
+| Geist + Geist Mono | 0.530 | yes | 51 KB | alike |
+| IBM Plex Sans + Plex Mono | 0.516 | yes | 59 KB, the mono static | told apart |
+| Source Sans 3 + Source Code Pro | 0.478 (small, narrow) | yes | 50 KB | told apart |
+| **Atkinson Hyperlegible Next + Mono** | **0.496** | **yes** | **50 KB** | **told apart, by design** |
+| Inter + JetBrains Mono | 0.546 / 0.550 | near | 87 KB | alike |
+| Mona Sans + Monaspace Neon | 0.517 / 0.513 | near | 82 KB | partly |
+
+Why this one:
+
+- **One superfamily.** Two members of one family share their skeleton, x-height, capitals and figures, so a mono label and the title above
+  it sit on the same line and read as one voice (Google Fonts, FontShop). Two families from two designers have to be tuned against each
+  other and never quite agree; the old pair's mono stood larger than its sans.
+- **No monospace headings.** Monospace is a spacing system for code, columns and alignment; in a title its even widths make an uneven rhythm
+  and a long line (a title broke in two where the sans keeps it on one). Mono is kept where it helps: a short label in capitals, code, a status code.
+- **Legibility is the point of it.** The Braille Institute drew it so letters that are easily confused are not: a tail on `l`, serifs on
+  `I`, a slashed `0`. That serves every reader and the low-vision reader most, which is what this system is for. Its tabular figures share
+  the mono's shapes, so a column of numbers and a line of code agree.
+- **Light.** One variable file per member, 50 KB for both in `latin`, 18 KB less than before.
+
+Its x-height is a little lower than Geist's, so 16 px reads a hair smaller; the sizes are kept, since its open shapes read clearly at them.
+
 ## Sources
 
 [GOV.UK type scale](https://design-system.service.gov.uk/styles/type-scale/),
@@ -93,5 +122,9 @@ There is **no fourth level of emphasis**. Bold is for what stops something or wh
 [Butterick, letterspacing](https://practicaltypography.com/letterspacing.html),
 [WCAG 1.4.12 text spacing](https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html),
 [WCAG 1.4.4 resize text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html),
+[Google Fonts, pairing within a superfamily](https://fonts.google.com/knowledge/choosing_type/pairing_typefaces_within_a_family_superfamily),
+[FontShop, how to mix type](https://www.fontshop.com/content/how-to-mix-type),
+[Fontsource, Atkinson Hyperlegible Mono](https://fontsource.org/fonts/atkinson-hyperlegible-mono/about),
+[Braille Institute and Applied Design, Atkinson Hyperlegible Next](https://lbbonline.com/news/applied-design-launches-atkinson-hyperlegible-next-typeface),
 [MDN, hyphens](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens),
 [Aksel, Skriveregler i Nav](https://aksel.nav.no/god-praksis/artikler/skriveregler-i-nav).
