@@ -176,6 +176,7 @@ export const ICON_SET = [
       ["search", "search"],
       ["filter", "filter"],
       ["sort", "arrow-up-down"],
+      ["drag", "grip-vertical"],
       ["copy", "copy"],
       ["add", "plus"],
       ["remove", "minus"],

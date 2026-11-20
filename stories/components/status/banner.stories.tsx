@@ -46,6 +46,9 @@ type Story = StoryObj<typeof meta>
 /** The default, polite banner with a title and one sentence. */
 export const Info: Story = {}
 /** A warning, still announced politely, for data that may be out of date. */
+/** What the reader did has worked: «Lagret» under the title of a settings page after the server saved it and sent the reader back (`?lagret=1`). */
+export const Success: Story = { args: { tone: "success", title: "Lagret", children: "Forsiden viser nå delene i rekkefølgen du valgte." } }
+
 export const Warning: Story = { args: { tone: "warning", title: "Data kan være gamle" } }
 /** The destructive banner, announced at once, for a failure that stops something. */
 export const Destructive: Story = { args: { tone: "destructive", title: "Kunne ikke hente pull requests", children: "GitHub svarte 401. Lag en ny token." } }

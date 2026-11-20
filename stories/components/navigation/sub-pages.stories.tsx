@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { PageColumn } from "../../../src/components/layout"
 import { PageHeader } from "../../../src/components/page-header"
 import { SubPages } from "../../../src/components/sub-pages"
+import { Button } from "../../../src/components/ui/button"
 
 const meta = {
   title: "Components/Navigation/SubPages",
@@ -36,12 +38,13 @@ top-level places (\`NavBar\`), or as cards or buttons.
 **You check**
 
 - \`label\` says whose pages these are ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
+- \`value\` (on a settings overview) says what is chosen there now, in words ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
 - \`description\` says what is on the page, so the link can be chosen from its text ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
 - The same pages in the same order every time the page is shown ([3.2.3 Consistent Navigation](https://www.w3.org/WAI/WCAG22/Understanding/consistent-navigation)).
 
 ### Content
 
-One line says what is on the page, not what it is called.
+One line says what is on the page, not what it is called. On a settings overview, \`value\` is what is chosen now in a few words («Mørkt · effekter av»), and the description may be left out.
 
 ### Related
 
@@ -60,5 +63,35 @@ export const UnderATitle: Story = {
       <PageHeader title="AdGuard" lead="Hva som blokkeres i nettet hjemme." />
       <SubPages {...args} />
     </>
+  ),
+}
+
+/**
+ * The settings overview («Innstillinger»): one subpage per kind of setting, each with what is chosen there now (`value`), and «Vis introen igjen» at the foot. Each subpage has
+ * its own small form (see SettingsSection, «Settings subpage»).
+ */
+export const SettingsOverview: Story = {
+  args: {
+    label: "Innstillinger",
+    pages: [
+      { href: "#konto", label: "Konto", icon: "person", value: "lmfaole" },
+      { href: "#repoer", label: "Repoer", icon: "repository", value: "withastro/astro og vercel/next.js" },
+      { href: "#forside", label: "Forsiden", icon: "home", value: "Været, Avganger, GitHub · 2 skjult" },
+      { href: "#tid", label: "Tid på døgnet", icon: "time", value: "Automatisk · 4 deler av døgnet" },
+      { href: "#posisjon", label: "Posisjon", icon: "place", value: "Tillatt" },
+      { href: "#utseende", label: "Utseende", icon: "settings", value: "Mørkt · effekter av" },
+      { href: "#app", label: "Appen", icon: "device", value: "Ikke installert" },
+    ],
+  },
+  render: (args) => (
+    <PageColumn>
+      <PageHeader title="Innstillinger" lead="Det du har valgt, i denne nettleseren." />
+      <SubPages {...args} />
+      <form method="post" action="#">
+        <Button type="submit" name="rerun" value="1" variant="outline">
+          Vis introen igjen
+        </Button>
+      </form>
+    </PageColumn>
   ),
 }

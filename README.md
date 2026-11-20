@@ -194,7 +194,7 @@ comes last, once for each place. A credit in running text («Værdata fra Yr») 
 
 **Navigation.** `NavBar` between the top-level places of an app, given to `PageLayout` as `nav`: a **bar at the foot of the screen on a
 phone** (an icon over a one-word label, in the reach of the thumb) and a **rail down the left side from tablet width up**. Three to
-five places, the same order on every page, the current one marked (`aria-current="page"`); on a detail page the list it belongs to
+five places is best; more scroll sideways on a phone (the current one in view), with «Innstillinger» last; the same order on every page, the current one marked (`aria-current="page"`); on a detail page the list it belongs to
 is the current place. It is **navigation, not tabs**: tabs switch between views of the *same content on one page* (GOV.UK: tabs
 "switch views within a page", service navigation "links across a service"; Material 3: a navigation bar and a rail for top-level
 places, tabs for secondary content), and the design system hides no content in tabs, so there is no tabs component.
@@ -204,7 +204,7 @@ a subpage or a detail.
 
 | Where | What |
 | --- | --- |
-| An app's top-level pages (front page, Status, AdGuard …) | `NavBar` (bar at the foot on a phone, rail from tablet width); at most five |
+| An app's top-level pages (front page, Status, AdGuard …) | `NavBar` (bar at the foot on a phone, rail from tablet width); five or so, «Innstillinger» last |
 | Every page that has a parent (a subpage, a detail, and a page of an app that belongs to a group) | `Breadcrumbs` at the top: the whole trail from tablet width, the parent alone as a way back on a phone. A page with nothing above it (a standalone app's front page) has none |
 | A page that has subpages | `SubPages` under the title: a list in ONE column (icon, name, one line of what is on it), never cards or buttons |
 | Moving between apps | The first crumb is the group (`Hjem`, `Medier`) and links to the page that lists its apps |
@@ -272,7 +272,7 @@ never by the text. It is the one way to show Markdown: **do not convert it to HT
 
 **Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
 icon is a *meaning* you ask for, and the components that show titles, rows, statuses, actions and errors take one.
-The set is **complete on purpose** (170 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
+The set is **complete on purpose** (171 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
 The full guide, with the catalogue of every meaning, is in Storybook (**Icons / Guide** and **Icons / Catalogue**).
 
 ```tsx
@@ -335,6 +335,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.51
+
+**Many places in the bar, the order of the front page, and settings on subpages.** `NavBar` takes more than five places: on a phone the bar scrolls sideways (each place at least 4.5 rem, snapping into place, no wrapping), the current place is scrolled into view when the page opens (`scroll-initial-target`, and `NavBarScroll`, a client part drawn inside the bar), and the side that has more is faded (`data-more-start` / `data-more-end`); the rail shows every place. «Innstillinger» (icon `settings`) is the last place in every app. `lib/preferences` keeps the visitor's order of the front page's sections (`Prefs.order`, `order=a,b,c`) and `orderSections(ids, order)` gives the ids in it: the saved ones first, new ones after in their own order, ones that are gone left out. `ReorderList` (`components/reorder-list`; `{ name, legend, items: { id, label, description?, icon? }[], hint? }`) is a client component with plain props (an island with `client:load` in Astro, drawn straight from a server component in Next.js): a handle to drag with a mouse or a finger, «Flytt X opp» / «Flytt X ned» buttons that keep the focus, «X flyttet til plass 2 av 5» in a polite live region, and the order in the hidden field `name` as comma ids. Without JavaScript the buttons are submit buttons `name="move" value="<id>:up|down"`, and the endpoint saves `applyMove(order, move)` from `lib/reorder` (with `parseMove` and `moveTo`) and redirects back. A story hydrates its server markup and fails on any hydration error. `ToggleMatrix` (`components/toggle-matrix`; `{ legend, rows, columns: { id, label }[], namePrefix, values?: Record<columnId, rowId[]>, hint?, error? }`) is native checkboxes named `<namePrefix>.<columnId>` with the row's id as value: a table from small-tablet width, each column a list of its own on a phone, one set of boxes laid out by grid and subgrid, each column a named group. `TimeField` (`{ name, label, value?, step? = 900, hint?, error?, min?, max? }`) is the native time field. `SubPages` items take `value` (what is chosen there now, under the name) and `description` is optional, for the settings overview; `Banner` has `tone="success"` (role `status`), the «Lagret» after a save. The icon set has `drag`.
 
 ## 8.50
 

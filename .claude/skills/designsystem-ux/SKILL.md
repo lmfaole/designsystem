@@ -47,15 +47,18 @@ that to decide. A thing that is one line (an hour of the forecast) has none. A d
 ## 4. Navigation
 
 - **`NavBar`** between the top-level places, as `nav` on `PageLayout`: a bar at the foot of the screen on a phone, a rail at the left from
-  tablet width. Three to five places, one-word labels, the same order on every page, the current one marked (on a detail page: the
-  list it belongs to).
+  tablet width. Three to five places is best (more scroll sideways on a phone), one-word labels, the same order on every page, the current one marked (on a detail page: the
+  list it belongs to). «Innstillinger» (the `settings` icon) is the last place in every app.
+- **Settings are an overview and subpages** when there are more than a few kinds: «Innstillinger» is a `SubPages` list with each kind's
+  current `value` («Mørkt · effekter av»); each subpage has `Breadcrumbs`, its own small form with «Lagre», and after the save a
+  `Banner tone="success"` («Lagret», `role="status"`) under the title.
 - **Navigation is not tabs.** Tabs switch views of the same content on one page; navigation goes to another page. Never build navigation
   as a row of tabs under the title, and never hide content in tabs: the design system has no tabs component.
 - **Breadcrumbs on every page that has a parent** (`Breadcrumbs`; a subpage, a detail, a page of an app in a group): the whole trail from tablet width, the parent alone as a way back on a
   phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading. The first crumb is the group
   (`Hjem`, `Medier`) and links to the page that lists its apps: that is how the reader moves between apps.
 - **A page with subpages shows them with `SubPages`** under the title: a list in ONE column (icon, name, one line of what is on it), never
-  cards, buttons or a second menu. Top-level pages are in the `NavBar` (at most five); everything else is a subpage or a detail.
+  cards, buttons or a second menu. Top-level pages are in the `NavBar` (five or so); everything else is a subpage or a detail.
 - A count in `SummaryBar` is a link to what it counts.
 
 ## 5. States

@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { Banner } from "../../../src/components/banner"
+import { Breadcrumbs } from "../../../src/components/breadcrumbs"
 import { PageColumn } from "../../../src/components/layout"
+import { PageHeader } from "../../../src/components/page-header"
+import { ReorderList } from "../../../src/components/reorder-list"
 import { SettingsSection } from "../../../src/components/settings-section"
 import { Heading } from "../../../src/components/text"
 import { Button } from "../../../src/components/ui/button"
@@ -14,7 +18,7 @@ const meta = {
   argTypes: { children: { control: false } },
   parameters: { docs: { description: { component: `### Use it when
 
-an app has a settings page («Innstillinger»): one section for each thing the visitor can change, under each other in the reading column, with the same fields as the first-run wizard (\`FirstRun\`).
+an app has a settings page («Innstillinger»). With more than a few kinds of setting, the page is an overview (\`SubPages\` with each one's \`value\`, see SubPages, «Settings overview») and each kind a subpage with breadcrumbs, its own small form with \`back\` set to the subpage, «Lagre», and a \`Banner tone="success"\` after the save. Otherwise one section for each thing the visitor can change, under each other in the reading column, with the same fields as the first-run wizard (\`FirstRun\`).
 
 ### Do not use it when
 
@@ -25,6 +29,7 @@ a page has one setting of its own (put the field on the page), or for parts of a
 **Handled by the component**
 
 - A section labelled by its \`h2\`, so the settings are in the outline and a screen reader can jump between them ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- After a save the server sends the reader back with \`?lagret=1\`, and the page shows \`Banner tone="success"\` («Lagret», \`role="status"\`) under the title, so it is seen and said ([4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages)).
 - \`id\` is a place to link to: «Bytt» on a \`UserChip\` can go to \`/innstillinger#github\`
 
 **You check**
@@ -75,6 +80,46 @@ export const SettingsPage: Story = {
               Vis introen igjen
             </Button>
           </div>
+        </SettingsSection>
+        <div>
+          <Button type="submit" size="lg">
+            Lagre
+          </Button>
+        </div>
+      </form>
+    </PageColumn>
+  ),
+}
+
+/**
+ * A settings subpage: the breadcrumbs back to «Innstillinger», a `Banner tone="success"` after the save (`?lagret=1`, `role="status"`), and one section in its own form that posts
+ * to the settings endpoint with `back` set to this subpage. The order is a `ReorderList`, the sections shown a `CheckboxList`.
+ */
+export const SettingsSubpage: Story = {
+  render: () => (
+    <PageColumn>
+      <Breadcrumbs
+        items={[
+          { label: "Innstillinger", href: "#innstillinger" },
+          { label: "Forsiden", href: "#forside" },
+        ]}
+      />
+      <PageHeader title="Forsiden" />
+      <Banner tone="success" title="Lagret" />
+      <form method="post" action="/start/api/innstillinger" className="grid gap-8">
+        <input type="hidden" name="back" value="/start/innstillinger/forside" />
+        <SettingsSection id="forside" title="Hva og i hvilken rekkefølge" body="Hvilke deler som står på forsiden, og hvilken som kommer først.">
+          {fields.sections()}
+          <ReorderList
+            name="order"
+            legend="Rekkefølgen"
+            hint="Dra i håndtaket, eller bruk pilene."
+            items={[
+              { id: "weather", label: "Været", icon: "weather" },
+              { id: "transport", label: "Avganger", icon: "bus" },
+              { id: "github", label: "GitHub", icon: "pull-request" },
+            ]}
+          />
         </SettingsSection>
         <div>
           <Button type="submit" size="lg">

@@ -6,14 +6,17 @@ export interface SubPage {
   label: string
   icon: IconName
   /** What the page is, in one line: the reader decides from it, so it says what is on the page, not what the page is called. */
-  description: string
+  description?: string
+  /** What is chosen there now, in a few words («Mørkt · effekter av», «snowpony69 og lmfaole»): the overview of a settings page. Shown under the name, before `description`. */
+  value?: string
 }
 
 /**
  * The pages under this page, as a list under the title: an icon, the name as a link, and one line of what is on it. It is the
  * ONE way a page with subpages shows them: not as cards, not as buttons, not in a second menu. One column, in the order they matter
  * (`ICONS` and `Rows` have the same look), so the reader chooses from a list they can read, not a grid they have to scan. The page
- * itself shows what is on it below the list; the list only says where else to go.
+ * itself shows what is on it below the list; the list only says where else to go. On a settings overview («Innstillinger») each row is a subpage with its `value`, what is
+ * chosen there now, so the reader sees the settings without opening them.
  */
 export function SubPages({ label, pages }: { label: string; pages: readonly SubPage[] }) {
   if (pages.length === 0) return null
@@ -28,7 +31,8 @@ export function SubPages({ label, pages }: { label: string; pages: readonly SubP
               </span>
               <span className="grid min-w-0 gap-0.5">
                 <span className="font-medium underline decoration-dotted underline-offset-4">{page.label}</span>
-                <span className="text-muted-foreground text-sm">{page.description}</span>
+                {page.value === undefined ? null : <span className="text-muted-foreground truncate text-sm">{page.value}</span>}
+                {page.description === undefined ? null : <span className="text-muted-foreground text-sm">{page.description}</span>}
               </span>
               <span className="pt-0.5">
                 <Icon name="chevron-right" size="sm" tone="muted" />

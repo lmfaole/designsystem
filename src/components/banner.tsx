@@ -5,6 +5,7 @@ import { Text } from "./text"
 
 const LOOKS = {
   info: { icon: "info", box: "border-border", role: "status" },
+  success: { icon: "success", box: "border-border", role: "status" },
   warning: { icon: "warning", box: "border-border", role: "status" },
   destructive: { icon: "warning", box: "border-destructive/40 text-destructive", role: "alert" },
 } as const
@@ -14,7 +15,8 @@ const LOOKS = {
  * failed, this is a snapshot. A message about one action or one field stands next to it, not here. It cannot be dismissed (what
  * matters stays until it is solved), there is no toast in the design system, and the symbol and the title say what kind it is, so
  * colour never carries it alone. `destructive` is only for what stops something and is announced at once (`role="alert"`);
- * `info` and `warning` are announced politely. A failed query is an `ErrorMessage`.
+ * `info`, `success` and `warning` are announced politely. `success` says that what the reader did has worked: «Lagret» on a settings page after the
+ * server saved it and sent the reader back (`?lagret=1`), under the page's title. A failed query is an `ErrorMessage`.
  */
 export function Banner({ tone = "info", title, children }: { tone?: keyof typeof LOOKS; title: string; children?: ReactNode }) {
   const look = LOOKS[tone]
