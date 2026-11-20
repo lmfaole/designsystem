@@ -33,6 +33,7 @@ description: Use when choosing which design system component to use for somethin
 | A number's shape over time | `Sparkline` beside the number; a chart `AreaChart`, `ColumnChart`, `RankedBarChart`, `StackedColumnChart`, `DonutChart` in a `ChartCard` |
 | A relation, a distribution, a rhythm or a change | `ScatterChart` (two measures), `Histogram` (many values of one thing), `BoxPlot` (spread of several groups), `CalendarHeatmap` (days), `Heatmap` (two categories), `DumbbellChart` (two moments) |
 | The weather hour by hour | `Meteogram`: temperature, rain and the sky on one time axis |
+| Departures from a stop (Entur) | `DepartureBoard`: a card per stop, a row per line with the next times, a time strip, the walk, delays and cancellations; a line alone `LineBadge` |
 | A value against a goal | `Progress`; pages of a long list with addresses `Pagination` |
 | The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |

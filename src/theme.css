@@ -117,6 +117,20 @@
     --temperature-warm: oklch(0.55 0.19 35);
     --temperature-cold: oklch(0.5 0.15 255);
     --precipitation: oklch(0.56 0.11 228);
+    /* Public transport (LineBadge, DepartureBoard): a line's colour by its kind, as Ruter paints them, with the text that stands on it; and the text of a late departure. */
+    --transit-bus: oklch(0.53 0.2 28);
+    --transit-bus-foreground: oklch(1 0 0);
+    --transit-tram: oklch(0.5 0.15 252);
+    --transit-tram-foreground: oklch(1 0 0);
+    --transit-metro: oklch(0.68 0.17 52);
+    --transit-metro-foreground: oklch(0.145 0 0);
+    --transit-rail: oklch(0.48 0.1 165);
+    --transit-rail-foreground: oklch(1 0 0);
+    --transit-ferry: oklch(0.5 0.085 215);
+    --transit-ferry-foreground: oklch(1 0 0);
+    --transit-other: oklch(0.48 0.03 270);
+    --transit-other-foreground: oklch(1 0 0);
+    --transit-late: oklch(0.52 0.11 62);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -154,6 +168,19 @@
     --temperature-warm: oklch(0.74 0.15 40);
     --temperature-cold: oklch(0.75 0.11 248);
     --precipitation: oklch(0.74 0.1 222);
+    --transit-bus: oklch(0.7 0.16 25);
+    --transit-bus-foreground: oklch(0.145 0 0);
+    --transit-tram: oklch(0.72 0.12 250);
+    --transit-tram-foreground: oklch(0.145 0 0);
+    --transit-metro: oklch(0.76 0.15 60);
+    --transit-metro-foreground: oklch(0.145 0 0);
+    --transit-rail: oklch(0.72 0.12 160);
+    --transit-rail-foreground: oklch(0.145 0 0);
+    --transit-ferry: oklch(0.74 0.09 205);
+    --transit-ferry-foreground: oklch(0.145 0 0);
+    --transit-other: oklch(0.72 0.03 270);
+    --transit-other-foreground: oklch(0.145 0 0);
+    --transit-late: oklch(0.8 0.13 75);
 }
 }
 
@@ -194,6 +221,19 @@
     --temperature-warm: oklch(0.74 0.15 40);
     --temperature-cold: oklch(0.75 0.11 248);
     --precipitation: oklch(0.74 0.1 222);
+    --transit-bus: oklch(0.7 0.16 25);
+    --transit-bus-foreground: oklch(0.145 0 0);
+    --transit-tram: oklch(0.72 0.12 250);
+    --transit-tram-foreground: oklch(0.145 0 0);
+    --transit-metro: oklch(0.76 0.15 60);
+    --transit-metro-foreground: oklch(0.145 0 0);
+    --transit-rail: oklch(0.72 0.12 160);
+    --transit-rail-foreground: oklch(0.145 0 0);
+    --transit-ferry: oklch(0.74 0.09 205);
+    --transit-ferry-foreground: oklch(0.145 0 0);
+    --transit-other: oklch(0.72 0.03 270);
+    --transit-other-foreground: oklch(0.145 0 0);
+    --transit-late: oklch(0.8 0.13 75);
 }
 
 @layer base {

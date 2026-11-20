@@ -112,6 +112,29 @@ for (const [mode, tokens] of Object.entries(MODES)) {
   })
 }
 
+const TRANSIT = ["bus", "tram", "metro", "rail", "ferry", "other"] as const
+
+for (const [mode, tokens] of Object.entries(MODES)) {
+  test(`${mode}: a line badge's text has 4.5:1 on its colour, the colour 3:1 on the page and the card (a time strip's dots), and a late time 4.5:1`, () => {
+    const low: string[] = []
+    for (const kind of TRANSIT) {
+      const text = ratio(tokens, `transit-${kind}-foreground`, `transit-${kind}`)
+      if (text < 4.5) low.push(`transit-${kind}-foreground on transit-${kind}: ${text.toFixed(2)}`)
+      for (const background of ["background", "card"]) {
+        const mark = ratio(tokens, `transit-${kind}`, background)
+        if (mark < 3) low.push(`transit-${kind} on ${background}: ${mark.toFixed(2)}`)
+      }
+      if (!inGamut(token(tokens, `transit-${kind}`))) low.push(`transit-${kind} is outside sRGB`)
+    }
+    for (const background of ["background", "card"]) {
+      const late = ratio(tokens, "transit-late", background)
+      if (late < 4.5) low.push(`transit-late on ${background}: ${late.toFixed(2)}`)
+    }
+    if (!inGamut(token(tokens, "transit-late"))) low.push("transit-late is outside sRGB")
+    assert.deepEqual(low, [], "darken or lighten the transit token in theme.css")
+  })
+}
+
 for (const [mode, tokens] of Object.entries(MODES)) {
   test(`${mode}: every default chart step (the grey steps of a stack, the strengths of a line, the steps of a heat map) keeps 3:1 on the page and on the card`, () => {
     const low: string[] = []

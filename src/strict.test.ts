@@ -28,8 +28,8 @@ const ALLOWED: Readonly<Record<string, readonly string[]>> = {
   "components/item-link.tsx": ["className?:"],
 }
 
-/** The components that draw a `Card`: a card is one item among its kind, or a frame around a chart. */
-const CARD_USERS: readonly string[] = ["components/picture-card.tsx", "components/chart-card.tsx"]
+/** The components that draw a `Card`: a card is one item among its kind (a picture, a stop among stops), or a frame around a chart. */
+const CARD_USERS: readonly string[] = ["components/picture-card.tsx", "components/chart-card.tsx", "components/departure-board.tsx"]
 
 test("no component has an open className, style or ComponentProps prop beyond ALLOWED", () => {
   const found: Record<string, string[]> = {}

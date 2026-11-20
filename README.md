@@ -272,7 +272,7 @@ never by the text. It is the one way to show Markdown: **do not convert it to HT
 
 **Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
 icon is a *meaning* you ask for, and the components that show titles, rows, statuses, actions and errors take one.
-The set is **complete on purpose** (159 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
+The set is **complete on purpose** (160 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
 The full guide, with the catalogue of every meaning, is in Storybook (**Icons / Guide** and **Icons / Catalogue**).
 
 ```tsx
@@ -335,6 +335,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.46
+
+**Departures from a stop.** `DepartureBoard` shows one stop's next departures as the signs at a stop do: a card with the stop's name (and «4 min å gå · 250 m»), a row for each line to one destination with its `LineBadge`, the destination and the platform, the next departure large («nå», «3 min», the clock from 20 minutes on or for a timetable time marked «Rutetid») and the next two smaller. Under each row a strip of the next hour puts a dot at each departure, hollow when cancelled. With `walkMinutes` the walk is hatched at the start of the strips, what cannot be reached is faint, each row says «Gå nå», «Gå om 4 min» or «Rekker ikke», and the rows come in the order you can catch them. A delay shows the timetable's time struck and «+3 min», a cancelled departure is struck with «Innstilt», and a deviation is a line under its row. Rendered on the server with no script; `now` is passed in, and `Freshness` beside it says how old the data is. `LineBadge` is a line by its own: the symbol and colour of its kind and its code, heard as «Buss 31». The grouping, the counts, the delays and the walk are pure functions in `lib/departures` (`groupDepartures`). New tokens `--transit-bus`, `-tram`, `-metro`, `-rail`, `-ferry`, `-other` with their `-foreground`, and `--transit-late`, keep their contrast in both themes (a test). A new icon meaning `rail` (a train), and `metro` is now the train in a tunnel.
 
 ## 8.45
 
