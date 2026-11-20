@@ -19,6 +19,8 @@ interface DumbbellChartProps {
   summary?: string
   showTable?: boolean
   emptyMessage?: string
+  /** The colour of the dots and the line, as CSS; the text's by default. */
+  color?: string
 }
 
 const sign = (delta: number): string => (delta > 0 ? "+" : delta < 0 ? "" : "±")
@@ -29,7 +31,7 @@ const sign = (delta: number): string => (delta > 0 ? "+" : delta < 0 ? "" : "±"
  * hollow ring and the end a smaller filled dot, so even two values that are the same still show both, so the direction is not told by colour; the change is also written as a number and its sign. Biggest change first.
  * For more than two moments it is a `LineChart`; for one value against a goal, `Progress`.
  */
-export function DumbbellChart({ rows, fromLabel, toLabel, ariaLabel, formatValue = formatChartValue, keepOrder = false, summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE }: DumbbellChartProps) {
+export function DumbbellChart({ rows, fromLabel, toLabel, ariaLabel, formatValue = formatChartValue, keepOrder = false, summary, showTable = false, emptyMessage = EMPTY_CHART_MESSAGE, color }: DumbbellChartProps) {
   if (rows.length === 0) return <ChartEmpty height={96} message={emptyMessage} />
   const shown = keepOrder ? [...rows] : sortByChange(rows)
   const { min, max } = axisRange(shown)
@@ -59,7 +61,7 @@ export function DumbbellChart({ rows, fromLabel, toLabel, ariaLabel, formatValue
                   {formatValue(row.from)} → {formatValue(row.to)} <span className="text-muted-foreground">({sign(delta)}{formatValue(delta)})</span>
                 </span>
               </div>
-              <div className="relative h-4">
+              <div className="relative h-4" style={color === undefined ? undefined : { color }}>
                 <span className="bg-border absolute inset-x-0 top-1/2 h-px" />
                 <span className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-current" style={{ left: `${Math.min(start, end)}%`, width: `${Math.abs(end - start)}%`, opacity: 0.55 }} />
                 <span className="bg-background absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-current" style={{ left: `${start}%` }} />

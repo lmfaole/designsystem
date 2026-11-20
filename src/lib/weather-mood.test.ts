@@ -2,7 +2,7 @@ import assert from "node:assert/strict"
 import { test } from "node:test"
 
 import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, PAGE_BACKDROP_OPACITY } from "./palette.ts"
-import { readSymbol, weatherPalette } from "./weather-mood.ts"
+import { readSymbol, weatherAccent, weatherPalette } from "./weather-mood.ts"
 
 const CODES = [
   "clearsky_day", "clearsky_night", "clearsky_polartwilight", "fair_day", "fair_night", "partlycloudy_day", "partlycloudy_night", "cloudy", "fog",
@@ -69,4 +69,10 @@ test("behind a whole page, muted text keeps 4.5:1 on every weather's backdrop to
       }
     }
   }
+})
+
+test("a weather's accent is its own first colour toward the text colour, so each kind of weather has a different one", () => {
+  const accents = new Set(["clearsky_day", "cloudy", "rain", "snow", "rainandthunder", "clearsky_night"].map(weatherAccent))
+  assert.equal(accents.size, 6)
+  assert.match(weatherAccent("rain"), /^color-mix\(in oklab, color\(srgb [\d.]+ [\d.]+ [\d.]+\) 68%, var\(--foreground\)\)$/)
 })

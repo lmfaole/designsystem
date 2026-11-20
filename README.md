@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.43
+
+**Colour from the weather.** `WeatherStage` sets `--weather-accent` (this weather's own colour, drawn toward the text colour so it holds on both themes) and `--weather-rain` beneath it, for the marks of what stands on it. `Sparkline` and `DumbbellChart` take a `color`, as the area and column charts already did, and only the marks are coloured: text stays the text colour. `weatherAccent(symbol)` gives the colour.
+
 ## 8.42
 
 **The weather's atmosphere, deeper.** Rain and snow are in two layers, far (short, slow, weak) and near (long, fast, strong), and rain falls behind drifting clouds; clouds are soft puffs side by side that drift slowly; a clear or partly cloudy day has a warm sun glow in the upper right corner (`SUN_GLOW`, weak enough that muted text keeps its contrast in both themes); a clear night keeps its stars. There is no flash for thunder (WCAG 2.3.1).

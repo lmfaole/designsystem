@@ -62,3 +62,14 @@ export function weatherPalette(code: string): [Rgb, Rgb, Rgb, Rgb] {
   const [a, b, c, d] = (period === "day" ? DAY : NIGHT)[kind]
   return [fromHsl(a), fromHsl(b), fromHsl(c), fromHsl(d)]
 }
+
+const unit = (channel: number): string => (channel / 255).toFixed(3)
+
+/**
+ * The colour of a weather as a mark on the page (a line, a column, a dot): the weather's own first colour, drawn toward the text colour by a third, so it keeps its hue and stays dark enough on the light page and light enough on the dark one.
+ * A CSS colour, for `color` on a chart or `--weather-accent`.
+ */
+export function weatherAccent(code: string): string {
+  const [r, g, b] = weatherPalette(code)[0]
+  return `color-mix(in oklab, color(srgb ${unit(r)} ${unit(g)} ${unit(b)}) 68%, var(--foreground))`
+}
