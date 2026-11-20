@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { acquireGlSlot } from "../lib/gl-budget"
 import { createAmbientRenderer, type AmbientRenderer } from "../lib/ambient-shader"
-import { lightStore } from "../lib/light"
+import { DEFAULT_LIGHT, lightStore } from "../lib/light"
 import { acquireLightInput } from "../lib/light-input"
 import { easeOut, mixPalette, PALETTE_MS, paletteOf, type Rgb } from "../lib/palette"
 import { fallbackOf, type PictureSource } from "../lib/picture-sources"
@@ -23,6 +23,7 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
   const canvas = useRef<HTMLCanvasElement>(null)
   const [ready, setReady] = useState(false)
   const apply = useRef<((palette: Palette) => void) | null>(null)
+  const fixed = palette !== undefined
   const shown = src ?? (sources === undefined ? undefined : fallbackOf(sources, 32)?.src)
 
   // The surface: a renderer for as long as the component is there, and the light it draws by.
@@ -31,7 +32,9 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
     if (target === null) return
     const slot = acquireGlSlot()
     if (slot === null) return
-    const release = acquireLightInput()
+    // A given palette (the weather) holds still: it does not follow the pointer or the tilt.
+    const follows = !fixed
+    const release = follows ? acquireLightInput() : () => {}
     let renderer: AmbientRenderer | null = null
     let current: Palette | null = null
     let from: Palette | null = null
@@ -52,7 +55,7 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
       }
       // Half a pixel in four: a blur needs no more, and the browser stretches it smooth.
       renderer.resize(Math.max(2, Math.round(target.clientWidth / 4)), Math.max(2, Math.round(target.clientHeight / 4)))
-      renderer.draw(lightStore.current)
+      renderer.draw(follows ? lightStore.current : DEFAULT_LIGHT)
       if (from !== null) raf = requestAnimationFrame(draw)
     }
     const schedule = () => {
@@ -88,7 +91,7 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
       renderer = null
       setReady(false)
     }
-    lightStore.listeners.add(schedule)
+    if (follows) lightStore.listeners.add(schedule)
     target.addEventListener("webglcontextlost", lost)
     target.addEventListener("webglcontextrestored", build)
     const observer = new ResizeObserver(schedule)
@@ -105,7 +108,7 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
       slot()
       setReady(false)
     }
-  }, [])
+  }, [fixed])
 
   // Colours given as they are (the weather's): handed to the surface the same way, and gone over to when they change.
   const given = palette === undefined ? null : palette.flat().join(",")

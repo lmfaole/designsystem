@@ -338,6 +338,8 @@ There is **no toast** and no tooltip: a toast disappears before it can be read, 
 
 ## 8.40
 
+**8.40.1:** the weather backdrop holds still: a backdrop given its colours (`WeatherStage`) no longer follows the pointer or the tilt.
+
 **`WeatherStage page`: the weather as the ground of a whole page.** The backdrop fixed to the screen behind everything, with no fade at the foot, laid on more weakly (`PAGE_BACKDROP_OPACITY`: 0.15 in the light theme, 0.18 in the dark) because muted text is on it too; a test measures 4.5:1 for muted text on every weather in both themes. `AmbientBackdrop` takes `page`.
 
 ## 8.39
