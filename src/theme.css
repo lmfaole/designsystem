@@ -28,6 +28,17 @@
 
 @theme inline {
     /*
+     * Tailwind's own transitions and pulse follow the motion tokens, so the generated shadcn parts (`transition-all`,
+     * `transition-colors`, the skeleton's `animate-pulse`) move on the system's timing without being edited. The pulse waits a
+     * second (a quick load never flickers) and beats twice, under five seconds (WCAG 2.2.2).
+     */
+    --default-transition-duration: var(--motion-duration-fast);
+    --default-transition-timing-function: var(--motion-ease-standard);
+    --ease-in: var(--motion-ease-exit);
+    --ease-out: var(--motion-ease-enter);
+    --ease-in-out: var(--motion-ease-in-out);
+    --animate-pulse: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) 1s 2;
+    /*
      * One superfamily, drawn together for legibility (Braille Institute): the same x-height, capitals and figures in both, so I, l and 1
      * and O and 0 are told apart everywhere. Sans for all text and every heading; mono only for short labels, code and technical values.
      */
@@ -176,7 +187,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring;
     }
   body {
     @apply bg-background text-foreground;
@@ -196,3 +207,12 @@
     --input: var(--muted-foreground);
   }
 }
+
+/*
+ * The focus ring of the generated shadcn parts is `ring-ring/50`: half of a colour that has 3:1 at full strength falls under it
+ * (WCAG 1.4.11). Unlayered, so it wins over their utilities, and the ring is drawn at full strength on whatever has focus.
+ */
+[data-slot]:focus-visible {
+  --tw-ring-color: var(--ring);
+}
+

@@ -336,6 +336,27 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.26
+
+**Motion and microinteractions**, from research on Carbon, Material 3, Atlassian, Fluent, Primer, NN/g, Saffer and WCAG
+(**Foundations / Motion**, rewritten: tokens by purpose, enter and exit, the state model of every control, response times, loops,
+opening and closing, what may move, reduced motion).
+
+- **Tokens by purpose**: `enter` 250, `exit` 200 (new: exits are shorter), `reveal` 300, `slow` 400 (was 450), `data` 700 (bars and
+  `CountUp`, in place of multipliers), and the easings `enter`, `exit` (softer than the old `ease-in`), `standard`, `spring` (`linear()`,
+  falls back to `enter`) and `linear`. `base`, `ease-out` and `ease-in` stay as aliases; nothing in an app has to change.
+- **Entrances are quicker**: a rise is 300 ms, the stagger 40 ms and five steps, so a list has settled within half a second.
+- **No loop over five seconds** (WCAG 2.2.2, level A): `LiveDot` beats twice and is still; the skeleton's pulse waits a second and
+  beats twice.
+- **Tailwind's transitions and pulse follow the tokens**, so the generated shadcn parts move on the system's timing.
+- **The focus ring is solid**: the global outline and shadcn's `ring-ring/50` were half strength, under 3:1 (WCAG 1.4.11).
+- **Overlays close on the exit timing**; `Disclosure` opens and closes smoothly where the browser can animate to `height: auto`.
+- **The page's view transition** is asked for only without a reduced-motion wish, runs on the tokens, and is in the safety net.
+- **Feedback**: `CopyButton` announces every copy and no longer lets an old timer clear a new «Kopiert»; `FilterChips` and links have a
+  pressed state; `CardLink look="block"` lifts under a pointer; `PeriodPicker` dims the page (`main[aria-busy]`) until the next one arrives;
+  `SectionSkeleton` drops `aria-busy`, which kept a screen reader from saying «Henter …».
+- `motion-lift` fades a shadow drawn once instead of animating `box-shadow`.
+
 ## 8.25
 
 **New typefaces: Atkinson Hyperlegible Next and Mono**, one superfamily from the Braille Institute, in place of Geist and JetBrains Mono.

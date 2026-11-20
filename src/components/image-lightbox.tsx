@@ -12,7 +12,7 @@ export function ImageLightbox({ src, name, children }: { src: string; name: stri
         {children}
       </CommandButton>
       <Overlay id={id} variant="dialog" title={name} hideTitle>
-        <img src={src} alt={name} loading="lazy" className="h-auto max-h-[70vh] w-full rounded-md object-contain" />
+        <img src={src} alt={name} loading="lazy" decoding="async" className="h-auto max-h-[70vh] w-full rounded-md object-contain" />
       </Overlay>
     </>
   )

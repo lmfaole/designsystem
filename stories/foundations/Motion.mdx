@@ -1,36 +1,126 @@
 import { Meta } from "@storybook/addon-docs/blocks"
 
-<Meta title="Foundations/Motion" />
+<Meta title="Foundations/Motion" summary="Motion and microinteractions: tokens by purpose, enter and exit, the state model every control keeps, response times, loops under five seconds, view transitions, reduced motion and what may move." />
 
-# Motion
+# Motion and microinteractions
 
 Motion orients; it does not decorate. If the reader sees it often, make it smaller or take it away (Carbon). Durations and easings are the
-`--motion-*` tokens in `motion.css`; app code never writes its own.
+`--motion-*` tokens in `motion.css`; app code never writes its own. A microinteraction is one small task (copy, choose, open, filter): a
+trigger, the rules of what happens, the **feedback** that says it did, and what it does when repeated (Saffer). The feedback is always in
+words, a symbol or a position, never motion alone.
 
-## 1. Tokens
+## 1. Tokens, by purpose
 
-| Token | Value |
-| --- | --- |
-| `--motion-duration-instant` | 100 ms |
-| `--motion-duration-fast` | 150 ms |
-| `--motion-duration-base` | 250 ms |
-| `--motion-duration-slow` | 450 ms |
-| `--motion-duration-live` | 2400 ms |
-| `--motion-ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` |
-| `--motion-ease-in` | `cubic-bezier(0.7, 0, 0.84, 0)` |
-| `--motion-ease-in-out` | `cubic-bezier(0.65, 0, 0.35, 1)` |
-| `--motion-distance` | 0.75 rem |
-| `--motion-stagger` | 60 ms |
+| Token | Value | For |
+| --- | --- | --- |
+| `--motion-duration-instant` | 100 ms | a press, a hover: the answer within 0.1 s |
+| `--motion-duration-fast` | 150 ms | a colour, a small part, the dimming of a refetch, a lift |
+| `--motion-duration-enter` | 250 ms | an overlay or a block opening |
+| `--motion-duration-exit` | 200 ms | the same, closing: shorter, the eye no longer needs it |
+| `--motion-duration-reveal` | 300 ms | a short rise into place (`Reveal`, `Stagger`) |
+| `--motion-duration-slow` | 400 ms | a large movement across the screen; rare |
+| `--motion-duration-data` | 700 ms | a bar growing, a number counting up (`CountUp`) |
+| `--motion-duration-live` | 2400 ms | one beat of a live pulse; it beats twice |
+| `--motion-ease-enter` | `cubic-bezier(0.16, 1, 0.3, 1)` | arriving: fast, then settling |
+| `--motion-ease-exit` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | leaving: accelerating away |
+| `--motion-ease-standard` | `cubic-bezier(0.2, 0, 0, 1)` | moving or changing within the page |
+| `--motion-ease-spring` | `linear(…)`, about 3 % overshoot | a press, a lift; never text or a large surface |
+| `--motion-ease-linear` | `linear` | progress, a spinner |
+| `--motion-distance` | 0.75 rem | how far an entrance travels |
+| `--motion-stagger` | 40 ms, five steps at most | between siblings rising in turn; the last has settled within half a second |
 
-The duration grows with the size of the change (Carbon): a hover is not a chart growing.
+The duration grows with the size of the change (Carbon, NN/g): a hover is not a chart growing. Most UI motion is 100–300 ms; 500 ms already
+«feels like a drag» (NN/g). The old names stay, for the apps: `base` is `enter`, `ease-out` is `ease-enter`, `ease-in` is `ease-exit`.
+Tailwind's own `transition-*` and `animate-pulse` follow the tokens too (`theme.css`), so the generated shadcn parts move on the same timing.
 
-## 2. Rules
+## 2. Enter and exit
 
-- **Entrances move and never fade text.** A fade hands a contrast checker half-transparent text.
+- **Entrances move and never fade text.** A fade hands a contrast checker half-transparent text. The one exception is the page's view
+  transition: the whole page, once, short.
+- **Exits are shorter than entrances** and use the exit curve: the reader asked for it to go (NN/g; Carbon and Material have separate
+  entrance and exit curves). The overlays open on `enter` and close on `exit`.
 - Motion tells where something came from or that something changed. Nothing moves for its own sake.
-- `Reveal`, `CountUp` and the staggered entrances are the shared movements; use them rather than a keyframe of your own.
+- `Reveal`, `Stagger`, `CountUp`, `motion-grow`, `motion-press`, `motion-lift`, `motion-pending` and `motion-collapse` are the shared
+  movements; use them rather than a keyframe of your own.
 
-## 3. Reduced motion
+## 3. The states every control keeps
 
-Under `prefers-reduced-motion: reduce` every duration is 0.01 ms and the stagger is 0, so nothing travels. What remains is static: a row that
-arrives is simply there, and what changed is said in text («ny»), never only by movement (Carbon: say it statically too).
+One model for every control, so a reader learns it once (Material 3 states, Fluent, Primer):
+
+| State | How it shows | Timing |
+| --- | --- | --- |
+| Rest | its own look | — |
+| Hover | a tint (`bg-muted/50`) or a solid underline; only where there is a real pointer (`@media (hover: hover)`, Tailwind's default) | `fast` |
+| Pressed | a stronger tint, down a pixel (`motion-press`), a thicker underline on a link | `instant`, at once |
+| Focus | a **solid** outline in `--ring`, 3:1 at least, never animated (WCAG 1.4.11, 2.4.7) | none |
+| Selected / current | a fill and medium weight, and `aria-current` or `aria-pressed` | `fast` |
+| Busy | the label stays, `aria-busy`, a second press is ignored rather than disabled; the part dims (`motion-pending`) | `fast` |
+| Done or failed | a sentence in a status region that was already there (WCAG 4.1.3): «Kopiert», «Kunne ikke kopiere» | — |
+| Disabled | rare: say why in text beside it | — |
+
+Each state is a tint or an outline, never a new layout. No ripple. A row in `Rows` has **no** hover of its own: only its name is a link,
+and a whole row that lights up would promise a bigger target than there is.
+
+## 4. Response times
+
+- **0.1 s**: the control answers (its pressed state) — within `instant` (NN/g).
+- **1 s**: the reader's flow holds. A page or a section that can take longer says it is on its way: `PeriodPicker` dims the page
+  (`main[aria-busy]`) until the next one arrives; a section streams in behind a `SectionSkeleton`, whose bars start to pulse only after a second,
+  so a quick load never flickers.
+- **10 s**: say how long it will take, or that it is still working.
+- Optimistic UI is not used: the apps read. Where a home app writes, the result shows when the owner's API has confirmed it.
+
+## 5. Loops
+
+**No loop runs longer than five seconds** (WCAG 2.2.2 Pause, Stop, Hide, level A, whatever the reduced-motion setting). `LiveDot` beats
+twice (2 × 2.4 s) and is still; the skeleton's pulse beats twice. A spinner that shows work in progress is the exception, marked
+`data-motion="essential"`.
+
+## 6. Opening and closing
+
+The browser's own elements, animated in CSS, so a page needs no script and an older browser simply skips the motion:
+
+- **Overlays** (`<dialog>`): `@starting-style` and `transition-behavior: allow-discrete`, enter and exit timing (`overlay.css`).
+- **Disclosure** (`<details>`): its content grows to `height: auto` where the browser can (`interpolate-size`, `::details-content`,
+  Chromium); elsewhere it opens at once.
+- **A change of page**: the view transition (`shell.css`), asked for only when the reader has not asked for less motion, on the tokens.
+
+## 7. What may move
+
+Only `transform`, `translate`, `scale`, `opacity` and registered numbers (`--share`, `--count-now`): the compositor moves them without laying
+out or painting the page again, which keeps INP low (web.dev). Never `transition-all` in our own code; a shadow that lifts is drawn once and
+fades in (`motion-lift`). Scroll-driven animations are not used for entrances: scrolling into view starts them by itself, and they invite
+parallax that makes some readers ill. No haptics: Safari has no `navigator.vibrate`, and feedback is visible anyway.
+
+## 8. Reduced motion
+
+Under `prefers-reduced-motion: reduce` every duration is 0.01 ms and the stagger is 0, so nothing travels; the safety net in `motion.css` also
+covers any shadcn part added later and the view transition. What remains is static: a row that arrives is simply there, and what changed is
+said in text («ny»), never only by movement (Carbon). The system removes motion rather than reducing it to a cross-fade (as Atlassian
+does); that is a choice, kept until a reader asks otherwise.
+
+## Sources
+
+[NN/g, animation duration](https://www.nngroup.com/articles/animation-duration/),
+[NN/g, the role of animation](https://www.nngroup.com/articles/animation-purpose-ux/),
+[NN/g, response times](https://www.nngroup.com/articles/response-times-3-important-limits/),
+[NN/g, microinteractions](https://www.nngroup.com/articles/microinteractions/),
+[NN/g, skeleton screens](https://www.nngroup.com/articles/skeleton-screens/),
+[Saffer, microinteractions](https://microinteractions.com/what-is-a-microinteraction/),
+[Carbon motion](https://carbondesignsystem.com/elements/motion/overview/),
+[Atlassian motion](https://atlassian.design/foundations/motion),
+[Fluent 2 motion](https://fluent2.microsoft.design/motion),
+[Material 3 states](https://m3.material.io/foundations/interaction/states),
+[Primer, motion and animation](https://primer.style/accessibility/design-guidance/motion-and-animation),
+[Primer, loading](https://primer.style/product/ui-patterns/loading/),
+[GOV.UK button](https://design-system.service.gov.uk/components/button/),
+[WCAG 2.2.2 Pause, Stop, Hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html),
+[WCAG 2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html),
+[WCAG 1.4.11 Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast),
+[WCAG 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages),
+[Chrome, CSS `linear()` easing](https://developer.chrome.com/docs/css-ui/css-linear-easing-function),
+[Chrome, animate to height auto](https://developer.chrome.com/docs/css-ui/animate-to-height-auto),
+[Chrome, cross-document view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/cross-document),
+[web.dev, high-performance animations](https://web.dev/articles/animations-guide),
+[Apple HIG, feedback](https://developer.apple.com/design/human-interface-guidelines/feedback),
+[caniuse, vibration](https://caniuse.com/vibration).

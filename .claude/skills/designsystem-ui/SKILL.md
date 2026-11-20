@@ -87,8 +87,19 @@ decoration, and not the same icon on every row (use it to tell kinds and states 
 
 ## Motion
 
-Durations and easings come from the `--motion-*` tokens. Entrances **move and never fade text**. Everything is off under
-`prefers-reduced-motion`. Motion is for orienting the reader (a new row, a change of page), never decoration.
+Durations and easings come from the `--motion-*` tokens, named by purpose (`instant` for a press, `fast`, `enter`, `exit`, `reveal`,
+`data`, `live`; the easings `enter`, `exit`, `standard`, `spring`). Entrances **move and never fade text**; exits are shorter, on the exit
+curve. Everything is off under `prefers-reduced-motion`. Motion is for orienting the reader (a new row, a change of page), never decoration.
+The guide is **Foundations / Motion**.
+
+- **Every control keeps one state model**: hover (a tint, pointer only), pressed (at once, `motion-press`), focus (a solid outline in
+  `--ring`, never animated), selected, busy (`aria-busy`, label kept, dimmed with `motion-pending`), done or failed (a sentence in a status
+  region). No ripple; a state never changes the layout.
+- **Answer within 0.1 s; over 1 s say it is on its way** (a skeleton, `main[aria-busy]`); over 10 s say how long.
+- **No loop longer than five seconds** (WCAG 2.2.2): a pulse beats twice and stops.
+- **Only compositor properties move** (`transform`, `translate`, `scale`, `opacity`, registered numbers); never `transition-all` in our code.
+- Opening and closing is CSS (`@starting-style`, `allow-discrete`, `::details-content`); a change of page is the view transition, never
+  a `Reveal` on top of it.
 
 ## Installed and server-rendered
 

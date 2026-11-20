@@ -115,17 +115,19 @@ dialog[data-overlay='page'] > [data-overlay-close] {
   }
 }
 
-/* Motion: open is the end state, closed (and the first frame of opening) is off screen or a little small. */
+/* Motion: open is the end state, closed (and the first frame of opening) is off screen or a little small. Closing runs on the
+   exit timing, shorter and accelerating away; opening on the enter timing, decelerating into place. */
 dialog[data-overlay] {
   transition:
-    translate var(--motion-duration-base) var(--motion-ease-in),
-    scale var(--motion-duration-fast) var(--motion-ease-in),
-    overlay var(--motion-duration-base) allow-discrete,
-    display var(--motion-duration-base) allow-discrete;
+    translate var(--motion-duration-exit) var(--motion-ease-exit),
+    scale var(--motion-duration-exit) var(--motion-ease-exit),
+    overlay var(--motion-duration-exit) allow-discrete,
+    display var(--motion-duration-exit) allow-discrete;
 }
 
 dialog[data-overlay][open] {
-  transition-timing-function: var(--motion-ease-out);
+  transition-duration: var(--motion-duration-enter), var(--motion-duration-fast), var(--motion-duration-enter), var(--motion-duration-enter);
+  transition-timing-function: var(--motion-ease-enter);
 }
 
 dialog[data-overlay='sheet']:not([open]),
@@ -152,13 +154,15 @@ dialog[data-overlay]::backdrop {
   background: color-mix(in oklch, var(--foreground) 20%, transparent);
   opacity: 0;
   transition:
-    opacity var(--motion-duration-base) var(--motion-ease-in),
-    overlay var(--motion-duration-base) allow-discrete,
-    display var(--motion-duration-base) allow-discrete;
+    opacity var(--motion-duration-exit) var(--motion-ease-exit),
+    overlay var(--motion-duration-exit) allow-discrete,
+    display var(--motion-duration-exit) allow-discrete;
 }
 
 dialog[data-overlay][open]::backdrop {
   opacity: 1;
+  transition-duration: var(--motion-duration-enter);
+  transition-timing-function: var(--motion-ease-enter);
 }
 
 @starting-style {

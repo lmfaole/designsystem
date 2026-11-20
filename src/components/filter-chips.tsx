@@ -6,7 +6,8 @@ export interface FilterChip {
   current: boolean
 }
 
-const CHIP = "inline-flex min-h-12 items-center rounded-full border px-4 text-sm hover:bg-muted/50 aria-[current=true]:bg-muted aria-[current=true]:font-medium"
+const CHIP =
+  "motion-press inline-flex min-h-12 items-center rounded-full border px-4 text-sm hover:bg-muted/50 active:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-[current=true]:bg-muted aria-[current=true]:font-medium"
 
 /** A row of links that narrows a list to one kind (a category); they are plain links, so it works without a script. */
 export function FilterChips({ label, chips }: { label: string; chips: readonly FilterChip[] }) {

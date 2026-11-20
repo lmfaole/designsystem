@@ -5,17 +5,19 @@
  * The viewport meta has `viewport-fit=cover`, so without these the header
  * would sit under the notch.
  *
- * A change of page is a view transition, the browser's own cross-fade, with no script: it works on a
- * full page load and on every same-origin link, and is off under reduced motion (below).
+ * A change of page is a view transition, the browser's own cross-fade, with no script (Chrome 126+, Safari 18.2+; elsewhere the
+ * page simply changes). It is the one fade of text the system allows: the whole page, once, short. It is asked for only when the
+ * reader has not asked for less motion, and runs on the tokens. A page that cross-fades does not also `Reveal` its content.
  */
-@view-transition {
-  navigation: auto;
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  @view-transition {
-    navigation: none;
-  }
+::view-transition-group(root) {
+  animation-duration: var(--motion-duration-enter);
+  animation-timing-function: var(--motion-ease-standard);
 }
 
 :root {

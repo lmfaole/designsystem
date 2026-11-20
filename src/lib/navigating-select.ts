@@ -42,11 +42,26 @@ export function enableNavigatingSelects(doc: Document = document): () => void {
     const { go, state } = decide(states.get(select) ?? { keyed: false, pending: false }, seen)
     states.set(select, state)
     const href = select.selectedOptions[0]?.dataset.href
-    if (go && href !== undefined) window.location.assign(href)
+    if (!go || href === undefined) return
+    // The next page can take more than a second: the page says it is on its way (dimmed, `aria-busy`) until it arrives.
+    busy(doc, true)
+    window.location.assign(href)
   }
+  // Back to a page kept in the back/forward cache: it is not on its way any more.
+  const onShow = (event: PageTransitionEvent) => {
+    if (event.persisted) busy(doc, false)
+  }
+  doc.defaultView?.addEventListener("pageshow", onShow)
   const types = ["keydown", "change", "focusout"] as const
   for (const type of types) doc.addEventListener(type, on)
   return () => {
     for (const type of types) doc.removeEventListener(type, on)
+    doc.defaultView?.removeEventListener("pageshow", onShow)
   }
+}
+
+function busy(doc: Document, on: boolean): void {
+  const main = doc.querySelector("main")
+  if (on) main?.setAttribute("aria-busy", "true")
+  else main?.removeAttribute("aria-busy")
 }

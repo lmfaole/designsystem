@@ -1,34 +1,52 @@
 /*
- * The motion system: tokens, the small shared movements and the reduced-motion
- * safety net. Imported by `theme.css`, so every app has it. The rules for when
- * to animate and when not to are in `docs/MOTION.md`; app code takes durations
- * and easings from the tokens below and never writes its own.
+ * The motion system: tokens, the small shared movements and the reduced-motion safety net. Imported by `theme.css`, so every
+ * app has it. When to animate and when not to is the guide «Foundations / Motion» in Storybook; app code takes durations and
+ * easings from the tokens below and never writes its own.
  *
- * Entrances move and never fade: a fade hands a contrast checker
- * half-transparent text.
+ * Tokens are named by purpose. Entrances move and never fade: a fade hands a contrast checker half-transparent text. Exits are
+ * shorter than entrances (NN/g). Only `transform`, `translate`, `scale`, `opacity` and registered numbers move, so nothing lays
+ * the page out again on every frame. No loop runs longer than five seconds (WCAG 2.2.2).
  */
 
 :root {
-  --motion-duration-instant: 100ms;
-  --motion-duration-fast: 150ms;
-  --motion-duration-base: 250ms;
-  --motion-duration-slow: 450ms;
-  --motion-duration-live: 2400ms;
+  /* Durations, by what they are for. */
+  --motion-duration-instant: 100ms; /* a press, a hover: the answer within 0.1 s */
+  --motion-duration-fast: 150ms; /* a colour, a small part, the dimming of a refetch */
+  --motion-duration-enter: 250ms; /* an overlay or a block opening */
+  --motion-duration-exit: 200ms; /* the same, leaving: shorter, the eye no longer needs it */
+  --motion-duration-reveal: 300ms; /* a short rise into place */
+  --motion-duration-slow: 400ms; /* a large movement, across a good part of the screen */
+  --motion-duration-data: 700ms; /* a bar growing, a number counting up */
+  --motion-duration-live: 2400ms; /* one beat of a live pulse; it beats twice */
+  --motion-duration-base: var(--motion-duration-enter); /* the old name, kept for the apps */
 
-  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  /* Easings. `enter` decelerates into place, `exit` accelerates away, `standard` moves within the page. */
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-exit: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --motion-ease-linear: linear;
+  /* A light spring (about 3 % overshoot), for a press and a lift only, never text or a large surface. Falls back to `enter`. */
+  --motion-ease-spring: var(--motion-ease-enter);
+  --motion-ease-spring: linear(0, 0.029, 0.101, 0.198, 0.308, 0.42, 0.528, 0.627, 0.714, 0.789, 0.852, 0.903, 0.942, 0.973, 0.995, 1.01, 1.02, 1.026, 1.028, 1.028, 1.027, 1.024, 1.021, 1.018, 1);
+  /* The old names, kept for the apps: `out` is `enter`, `in` is `exit` (softer than the old one, which barely moved for its first half). */
+  --motion-ease-out: var(--motion-ease-enter);
+  --motion-ease-in: var(--motion-ease-exit);
   --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
   --motion-distance: 0.75rem;
-  --motion-stagger: 60ms;
+  /* Between siblings rising in turn: five steps at most, so the last has settled within half a second. */
+  --motion-stagger: 40ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --motion-duration-instant: 0.01ms;
     --motion-duration-fast: 0.01ms;
-    --motion-duration-base: 0.01ms;
+    --motion-duration-enter: 0.01ms;
+    --motion-duration-exit: 0.01ms;
+    --motion-duration-reveal: 0.01ms;
     --motion-duration-slow: 0.01ms;
+    --motion-duration-data: 0.01ms;
     --motion-duration-live: 0.01ms;
     --motion-stagger: 0ms;
   }
@@ -62,60 +80,77 @@
 @layer components {
   /* One element rising into place on arrival. */
   .motion-reveal {
-    animation: motion-rise var(--motion-duration-slow) var(--motion-ease-out) both;
+    animation: motion-rise var(--motion-duration-reveal) var(--motion-ease-enter) both;
   }
 
-  /* The children of a list or grid rising in one after the other, six steps at most. */
+  /* The children of a list or grid rising in one after the other, five steps at most. */
   .motion-stagger > * {
-    animation: motion-rise var(--motion-duration-slow) var(--motion-ease-out) both;
+    animation: motion-rise var(--motion-duration-reveal) var(--motion-ease-enter) both;
   }
 
   .motion-stagger > :nth-child(2) { animation-delay: calc(var(--motion-stagger) * 1); }
   .motion-stagger > :nth-child(3) { animation-delay: calc(var(--motion-stagger) * 2); }
   .motion-stagger > :nth-child(4) { animation-delay: calc(var(--motion-stagger) * 3); }
   .motion-stagger > :nth-child(5) { animation-delay: calc(var(--motion-stagger) * 4); }
-  .motion-stagger > :nth-child(6) { animation-delay: calc(var(--motion-stagger) * 5); }
-  .motion-stagger > :nth-child(n + 7) { animation-delay: calc(var(--motion-stagger) * 6); }
+  .motion-stagger > :nth-child(n + 6) { animation-delay: calc(var(--motion-stagger) * 5); }
 
   /* A bar or ring whose `--share` (0 to 1) grows from nothing. */
   .motion-grow {
-    animation: motion-grow calc(var(--motion-duration-slow) * 1.5) var(--motion-ease-out) both;
+    animation: motion-grow var(--motion-duration-data) var(--motion-ease-enter) both;
   }
 
-  /* The pulse of something live. The only loop the system allows. */
+  /* The pulse of something live: two beats, under five seconds (WCAG 2.2.2), then still. Say «live» in words beside it. */
   .motion-live {
-    animation: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) infinite;
+    animation: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) 2;
   }
 
-  /* A container that is refetching: dimmed while `aria-busy`, back when it settles. */
-  .motion-pending {
-    transition: opacity var(--motion-duration-fast) var(--motion-ease-in-out);
+  /* A container that is refetching: dimmed while `aria-busy`, back when it settles. A page on its way (`main[aria-busy]`) too. */
+  .motion-pending,
+  main {
+    transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
   }
 
-  .motion-pending[aria-busy='true'] {
+  .motion-pending[aria-busy='true'],
+  main[aria-busy='true'] {
     opacity: 0.5;
   }
 
-  /* Pressed feedback for anything clickable that is not already a Button. */
+  /* Pressed feedback for anything clickable that is not already a Button: down a pixel at once, back on a light spring. */
   .motion-press {
-    transition: transform var(--motion-duration-instant) var(--motion-ease-out);
+    transition: translate var(--motion-duration-instant) var(--motion-ease-spring);
   }
 
   .motion-press:active {
-    transform: translateY(1px);
+    translate: 0 1px;
   }
 
-  /* A card that lifts under a real pointer, never on touch where hover sticks. */
+  /*
+   * A card that lifts under a real pointer, never on touch where hover sticks. The shadow is drawn once on `::after` and only its
+   * opacity changes: a `box-shadow` that changes is painted again on every frame.
+   */
   .motion-lift {
-    transition:
-      translate var(--motion-duration-base) var(--motion-ease-out),
-      box-shadow var(--motion-duration-base) var(--motion-ease-out);
+    position: relative;
+    transition: translate var(--motion-duration-fast) var(--motion-ease-spring);
+  }
+
+  .motion-lift::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0.5rem 1rem -0.5rem color-mix(in oklch, currentColor 30%, transparent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--motion-duration-fast) var(--motion-ease-standard);
   }
 
   @media (hover: hover) {
     .motion-lift:hover {
       translate: 0 -2px;
-      box-shadow: 0 0.5rem 1rem -0.5rem color-mix(in oklch, currentColor 30%, transparent);
+    }
+
+    .motion-lift:hover::after {
+      opacity: 1;
     }
   }
 
@@ -123,7 +158,7 @@
   .motion-collapse {
     display: grid;
     grid-template-rows: 1fr;
-    transition: grid-template-rows var(--motion-duration-base) var(--motion-ease-in-out);
+    transition: grid-template-rows var(--motion-duration-enter) var(--motion-ease-standard);
   }
 
   .motion-collapse[data-state='closed'] {
@@ -137,10 +172,33 @@
 }
 
 /*
- * The safety net. Loops stop, movement and fades land at once, and that also
- * covers any shadcn component added later (sheet, dialog, menus), which animate
- * with their own durations. A spinner is feedback that something is working,
- * not decoration, so `data-motion="essential"` keeps it turning.
+ * A `<details>` that opens and closes smoothly (`Disclosure`), where the browser can animate to `height: auto`
+ * (`interpolate-size`, `::details-content`; Chromium in 2026). Elsewhere it opens at once, which is no loss.
+ */
+@supports (interpolate-size: allow-keywords) and selector(::details-content) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  details[data-motion='disclosure']::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size var(--motion-duration-exit) var(--motion-ease-exit),
+      content-visibility var(--motion-duration-exit) allow-discrete;
+  }
+
+  details[data-motion='disclosure'][open]::details-content {
+    block-size: auto;
+    transition-duration: var(--motion-duration-enter);
+    transition-timing-function: var(--motion-ease-enter);
+  }
+}
+
+/*
+ * The safety net. Loops stop, movement and fades land at once, and that also covers any shadcn component added later (sheet,
+ * dialog, menus) and the page's view transition. A spinner is feedback that something is working, not decoration, so
+ * `data-motion="essential"` keeps it turning.
  */
 @media (prefers-reduced-motion: reduce) {
   .motion-reveal,
@@ -153,7 +211,10 @@
   *:not([data-motion='essential']),
   *:not([data-motion='essential'])::before,
   *:not([data-motion='essential'])::after,
-  *::backdrop {
+  *::backdrop,
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -184,7 +245,7 @@
 .count-up-climb {
   visibility: hidden;
   counter-reset: climb var(--count-now);
-  animation: count-climb calc(var(--motion-duration-slow) * 2) var(--motion-ease-out);
+  animation: count-climb var(--motion-duration-data) var(--motion-ease-enter);
 }
 
 .count-up-climb::before {
@@ -192,7 +253,7 @@
 }
 
 .count-up-final {
-  animation: count-final calc(var(--motion-duration-slow) * 2) steps(1, end);
+  animation: count-final var(--motion-duration-data) steps(1, end);
 }
 
 @keyframes count-climb {

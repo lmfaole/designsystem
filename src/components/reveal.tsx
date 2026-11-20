@@ -5,7 +5,7 @@ type Tag = "div" | "section" | "ul" | "ol" | "dl"
 /**
  * One block rising into place when it first shows. Movement only, no fade.
  * Use it once per mount for a block the page arrives on, never for content
- * that changes on a refetch, a sort or a filter (`docs/MOTION.md`).
+ * that changes on a refetch, a sort or a filter (the guide «Foundations / Motion»).
  */
 export function Reveal({ as = "div", children }: { as?: Tag; children?: React.ReactNode }) {
   return React.createElement(as, { className: "motion-reveal" }, children)
