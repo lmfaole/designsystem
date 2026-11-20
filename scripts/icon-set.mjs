@@ -32,6 +32,7 @@ export const ICON_SET = [
       ["reopen", "rotate-ccw"],
       ["draft", "file-pen-line"],
       ["assign", "user-plus"],
+      ["force-push", "arrow-big-up-dash"],
     ],
   ],
   [
