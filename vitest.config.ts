@@ -14,6 +14,8 @@ const executablePath = process.env["CHROMIUM"]
 export default defineConfig({
   plugins: [tailwindcss()],
   test: {
+    // The visual project writes the pictures of new stories (CI makes them): Vitest 4 leaves file writing off unless it is asked for.
+    api: { allowWrite: true },
     // The stories twice, in the light theme and in the dark one (the toolbar's global, set per project), since a contrast that holds in one can fail in the other.
     projects: [...(["light", "dark"] as const).map((theme) => ({
       extends: true,
@@ -38,6 +40,7 @@ export default defineConfig({
         browser: {
           enabled: true,
           headless: true,
+          api: { allowWrite: true },
           provider: playwright(executablePath === undefined ? {} : { launchOptions: { executablePath } }),
           instances: [{ browser: "chromium" as const, viewport: { width: 1024, height: 768 } }],
           expect: { toMatchScreenshot: { comparatorName: "pixelmatch", comparatorOptions: { threshold: 0.2, allowedMismatchedPixelRatio: 0.01 } } },
