@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { createDiscRenderer, type DiscRenderer } from "../lib/disc-shader"
 import { lightStore } from "../lib/light"
+import { acquireLightInput } from "../lib/light-input"
 import { DRAWN, FRAMES, type Size } from "../lib/picture-frames"
 import { fallbackOf, srcSetOf, type PictureSource } from "../lib/picture-sources"
 import { cn } from "../lib/utils"
@@ -27,6 +28,8 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
   const canvas = useRef<HTMLCanvasElement>(null)
   const pausedNow = useRef(false)
   pausedNow.current = paused
+
+  useEffect(() => acquireLightInput(), [])
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -112,7 +115,7 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
       <canvas ref={canvas} aria-hidden="true" className={cn("absolute inset-0 size-full", !lit && "hidden")} />
     </>
   )
-  const shape = cn("relative shrink-0 overflow-hidden rounded-full bg-muted", FRAMES.square[size], size === "hero" && "elevation-2")
+  const shape = cn("relative shrink-0 overflow-hidden rounded-full bg-muted", FRAMES.square[size], size === "hero" && "lit-frame")
   if (reduced) {
     return (
       <span ref={frame} aria-hidden="true" className={shape}>

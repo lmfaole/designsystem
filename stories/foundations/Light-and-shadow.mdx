@@ -20,16 +20,33 @@ two numbers, so every shadow and every reflection on a page agree and move toget
 
 ## 2. What moves the light
 
-`LightSource` (put one on a page that has something lit; `NowPlayingCard` carries its own):
+`LightSource` (every lit `Picture size="hero"` and `NowPlayingCard` carries one, so a page needs none of its own; any number is the same as one):
 
 - **The pointer**: the light is at the pointer, across the whole screen, smoothed (half the distance in 120 ms, whatever the frame rate).
-- **A phone's tilt** (`deviceorientation`): how it is held moves the light across the screen. iOS asks first: one button, «La lyset følge telefonen».
+- **A phone's tilt** (`deviceorientation`): how it is held moves the light across the screen. iOS asks first: one `TiltButton`, «La lyset følge telefonen», and the answer is kept (see 3).
 - **Neither**: it stays at the default.
 
 The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromTilt`, `approach`, `shadowOffset`, `lightAngle`. The current light is
 `lightStore.current`, read by the CSS variables and by the discs, once for the whole bundle.
 
-## 3. Rules
+## 3. Where the light goes
+
+**The page's main visual element, and only it.** A page has one thing that leads it with a picture, and that is the one that is lit; a row's thumbnail or a card's small cover never is. Lit means two things, chosen by what the picture is.
+
+| The main picture is | It is lit by | How |
+| --- | --- | --- |
+| any `Picture size="hero"` (a poster, a portrait, a cover on a page of its own) | **its frame**, automatically (`lit-frame`) | a shadow that falls away from the light and a thin rim of light on the side that faces it: both **outside** the picture, nothing painted over it |
+| the record of what plays now (`NowPlayingCard`, `Picture disc`) | **its surface** as well | reflections on the disc, in WebGL, that follow the light |
+
+- **Frame by default.** A hero `Picture` carries the light's source with it (`LightSource`), so a page needs nothing of its own for the light to follow the pointer. Do not add a shadow of your own to a hero.
+- **Surface only where the picture may be altered.** A reflection over a picture is an overlay, and a disc is a crop: use them only on pictures the app may alter (Last.fm's covers, an app's own). Where a source's terms
+  say its pictures may not be cropped or overlaid (Spotify's covers and artist pictures), use the frame and nothing else; a test keeps the reflection to the disc alone.
+- **One tilt button, once.** Put a `TiltButton` by the main picture, where the page leads with one; on an iPhone it asks to let the light follow how it is held, and nowhere else shows it. The answer is kept in the
+  browser (`localStorage`, `ds-light-tilt`: `on` or `denied`), so a reader is asked once and not at every visit: a yes is listened to at once the next time, and if iOS has forgotten it, the next tap on the page asks
+  again (a permission can only be asked in a tap); a no is not asked again. Where storage is blocked, nothing is kept and the reader is asked again, which is all that is lost.
+- **Not a row.** The 40 px picture of a row is not lit, and a page with many pictures does not light them all.
+
+## 4. Rules
 
 - **Depth, never information.** A shadow or a reflection says how far something is from the page, never what it is: nothing says anything by where a shadow falls, how bright a
   reflection is or what colour its spectrum has. Remove all of it, and the page says the same.
@@ -41,7 +58,7 @@ The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromT
 - **Cheap where it counts.** WebGL is a quad and one texture; it stops when the disc is off the screen or the tab is hidden, takes 2× pixels at most and asks for the low-power GPU.
   The cover must be readable by WebGL (CORS); where it is not, the CSS disc is shown.
 
-## 4. Not yet
+## 5. Not yet
 
 The shadows of `shadow-md` and its likes (a hero picture, an overlay) do not read the light yet: they are moved onto `elevation-*` when they are next touched, so that no picture of a
 page changes without anybody having asked.

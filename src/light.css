@@ -9,6 +9,8 @@
   --light-x: -0.5;
   --light-y: -0.7;
   --shadow-color: oklch(0.2 0 0 / 0.3);
+  /* The rim of light on the side of a lit frame that faces the light. White: it shows on a dark page and is lost on a white one, which is as it should be. */
+  --rim-color: oklch(1 0 0 / 0.9);
   /* What a record's grooves spread a bright light into. */
   --spectrum-violet: oklch(0.66 0.24 305);
   --spectrum-cyan: oklch(0.82 0.13 205);
@@ -19,11 +21,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --shadow-color: oklch(0 0 0 / 0.6);
+    --rim-color: oklch(1 0 0 / 0.3);
   }
 }
 
 :root[data-theme='dark'] {
   --shadow-color: oklch(0 0 0 / 0.6);
+  --rim-color: oklch(1 0 0 / 0.3);
 }
 
 @layer components {
@@ -34,6 +38,16 @@
 
   .elevation-2 {
     box-shadow: calc(var(--light-x) * -6px) calc(var(--light-y) * -6px) 14px var(--shadow-color);
+  }
+
+  /*
+   * The frame of the page's main picture (`Picture size="hero"`): a shadow that falls away from the light and a thin rim of light on the side that faces it. Both are OUTSIDE the picture,
+   * so nothing is painted over it: that is what lets it be used on pictures whose source says they may not be overlaid (Spotify's).
+   */
+  .lit-frame {
+    box-shadow:
+      calc(var(--light-x) * 1.5px) calc(var(--light-y) * 1.5px) 0 0 var(--rim-color),
+      calc(var(--light-x) * -7px) calc(var(--light-y) * -7px) 16px var(--shadow-color);
   }
 
   .elevation-3 {

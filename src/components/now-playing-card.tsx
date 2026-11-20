@@ -2,14 +2,14 @@ import type { ReactNode } from "react"
 
 import type { PictureSource } from "../lib/picture-sources"
 import { Inline, Stack } from "./layout"
-import { LightSource } from "./light-source"
+import { TiltButton } from "./tilt-button"
 import { LiveDot } from "./live-dot"
 import { Picture } from "./picture"
 import { Text } from "./text"
 
 /**
  * What plays now, large: the record as a disc that turns under the page's light (`Picture disc`, drawn in WebGL, a tap pauses it), the words «Spilles nå» with the pulsing dot, the title and a line under it.
- * The disc is lit by the pointer and, on a phone, by how it is held (`LightSource`, which this carries). Put it first on the page, once: it is the one thing that moves.
+ * The disc is lit by the pointer and, on a phone, by how it is held (`LightSource` is in the disc; the `TiltButton` here lets an iPhone switch it on, once). Put it first on the page, once: it is the one thing that moves.
  */
 export function NowPlayingCard({ picture, sources, title, detail, label = "Spilles nå" }: { picture?: string | null; sources?: readonly PictureSource[]; /** What plays: a name, a link. */ title: ReactNode; /** Under the title: by whom, from which album. */ detail?: ReactNode; /** What says it is playing now, with the dot. */ label?: string }) {
   return (
@@ -30,7 +30,7 @@ export function NowPlayingCard({ picture, sources, title, detail, label = "Spill
             {detail}
           </Text>
         )}
-        <LightSource />
+        <TiltButton />
       </Stack>
     </Inline>
   )

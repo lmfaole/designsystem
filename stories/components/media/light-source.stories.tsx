@@ -27,7 +27,7 @@ nothing on the page is lit: it listens for the pointer and the tilt for as long 
 
 - Under \`prefers-reduced-motion\` nothing moves the light: it stays at the upper left ([2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)).
 - The light only moves reflections and shadows, which are depth and never information; text and its contrast do not depend on it.
-- The permission button is a real button with its words, reached by keyboard ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)).
+- It draws nothing: there is no button here to reach, only in \`TiltButton\`.
 
 **You check**
 
@@ -35,7 +35,7 @@ nothing on the page is lit: it listens for the pointer and the tilt for as long 
 
 ### Content
 
-«La lyset følge telefonen»: change it only for another language.
+None: it draws nothing.
 
 ### Related
 

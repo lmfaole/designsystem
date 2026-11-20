@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.33
+
+**The main picture is lit; the tilt answer is kept.** A `Picture size="hero"` (and the record of `NowPlayingCard`) is the one thing a page lights: a hero is lit on its **frame**, automatically (`lit-frame`: a shadow away from the light and a rim of light towards it, both outside the picture, nothing painted over it), and carries the light's source with it, so the light follows the pointer with nothing added to the page. A reflection over a picture stays the disc's alone: where a source's terms forbid cropping or overlays (Spotify), the frame is all there is. `TiltButton` (put one by the main picture; `NowPlayingCard` has one) lets the light follow how a phone is held, and the answer is kept in `localStorage` (`ds-light-tilt`: `on` or `denied`): asked once, not at every visit; allowed before, it is listened to at once, and if iOS has forgotten, the next tap asks. `LightSource` no longer draws a button. The shadow of a hero is no longer `shadow-md`. «Foundations / Light and shadow» has the rules, «Where the light goes».
+
 ## 8.32
 
 **A system for light and shadow** («Foundations / Light and shadow»). A page has one light (`--light-x`, `--light-y`, `lib/light.ts`, `light.css`): `elevation-1` to `-3` are shadows that fall away from it, and `LightSource` moves it with the pointer and, on a phone, with its tilt (iOS asks first). `Picture disc` is now a WebGL record: the cover turns, the reflections stand on the line from the light and move with it, a tap pauses it (WCAG 2.2.2), and it is the same in CSS where WebGL is not there. `NowPlayingCard` is the record large, with «Spilles nå», the dot, the title and a line under it. Light and shadow are depth, never information, and still under `prefers-reduced-motion`.

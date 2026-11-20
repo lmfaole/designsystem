@@ -42,7 +42,7 @@ type Story = StoryObj<typeof meta>
 export const Poster: Story = {}
 /** The square frame, for a cover or an avatar. */
 export const Square: Story = { args: { ratio: "square", src: square(100) } }
-/** The size that heads the thing's own page. */
+/** The size that heads the thing's own page: the page's main picture, and the one thing a page lights. Its frame throws a shadow away from the light and has a rim of light towards it, both outside the picture (move the pointer over the page); nothing is painted over the picture. */
 export const Hero: Story = { args: { size: "hero" } }
 /** As wide as its cell, for a gallery tile. */
 export const Fill: Story = { args: { size: "fill" }, decorators: [(Story) => <div className="w-40"><Story /></div>] }
