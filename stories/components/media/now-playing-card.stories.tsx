@@ -12,7 +12,7 @@ const meta = {
 
 what plays now should be the first thing on a page, once: a record as a disc that turns slowly under the page's light, with the words «Spilles nå», a pulsing dot, the title and a line under it.
 
-The disc is drawn in WebGL (the cover turns, the reflections do not) and follows the page's one light: move the pointer over the page, or tilt the phone (\`LightSource\`, which the card carries; iOS asks first, with a button). A tap on the disc pauses it. Where WebGL is not there, it is the same in CSS.
+The disc is drawn in WebGL (the cover turns, the reflections do not, and the cover shapes them: its hue where the spectrum starts and how much of its colour is in it, how vivid it is how tight the bands are, how light it is how much it shines) and follows the page's one light: move the pointer over the page, or tilt the phone (\`LightSource\`, which the card carries; iOS asks first, with a button). A tap on the disc pauses it. Where WebGL is not there, it is the same in CSS.
 
 ### Do not use it when
 
@@ -45,5 +45,7 @@ type Story = StoryObj<typeof meta>
 
 /** The card on a page: move the pointer to move the light; a tap on the disc pauses it. */
 export const Default: Story = {}
+/** A cover that may not be cropped or have anything on it (Spotify's): `disc` off, and it is shown as it is, sharp and still. */
+export const WithoutDisc: Story = { args: { disc: false } }
 /** With the title as a link, as on a page. */
 export const WithLink: Story = { args: { title: <a href="#hard" className="underline">Hard</a> } }

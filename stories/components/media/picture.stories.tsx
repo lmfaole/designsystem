@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { Inline } from "../../../src/components/layout"
 import { Picture } from "../../../src/components/picture"
 import { poster, square } from "../../sample"
 
@@ -75,3 +76,18 @@ export const WithSources: Story = {
 export const Priority: Story = { args: { size: "hero", priority: true } }
 /** `disc`: a record playing now, round with a hole in the middle. It turns slowly for as long as it plays (12 s a turn), and is still for anyone who asks for less motion; the words «Spilles nå» always stand beside it. */
 export const Disc: Story = { args: { ratio: "square", disc: true, src: poster(40, "A") } }
+
+const cover = (stops: [string, string, string], dark: string): string =>
+  `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${stops[0]}"/><stop offset=".55" stop-color="${stops[1]}"/><stop offset="1" stop-color="${stops[2]}"/></linearGradient></defs><rect width="200" height="200" fill="url(#g)"/><circle cx="130" cy="70" r="38" fill="${dark}"/></svg>`)}`
+
+/** The same light on four covers: the cover shapes the reflections (its hue where the spectrum starts and how much of its colour is in it, how vivid it is how tight the bands are, how light it is how much it shines), so no two discs shine alike. */
+export const DiscCovers: Story = {
+  render: () => (
+    <Inline gap="md">
+      <Picture ratio="square" size="hero" disc src={cover(["#1a0b2e", "#5b1a8f", "#e0245e"], "#f5c542")} />
+      <Picture ratio="square" size="hero" disc src={cover(["#f6efe6", "#f3e1d0", "#ecd5c2"], "#ffffff")} />
+      <Picture ratio="square" size="hero" disc src={cover(["#0b1d2a", "#10425c", "#1bb5a8"], "#d9f2ee")} />
+      <Picture ratio="square" size="hero" disc src={cover(["#3a3a3a", "#8a8a8a", "#cfcfcf"], "#222222")} />
+    </Inline>
+  ),
+}

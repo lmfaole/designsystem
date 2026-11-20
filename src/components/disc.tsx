@@ -3,11 +3,27 @@
 import { useEffect, useRef, useState } from "react"
 
 import { createDiscRenderer, type DiscRenderer } from "../lib/disc-shader"
+import { coverTraits, NEUTRAL_TRAITS } from "../lib/palette"
 import { lightStore } from "../lib/light"
 import { acquireLightInput } from "../lib/light-input"
 import { DRAWN, FRAMES, type Size } from "../lib/picture-frames"
 import { fallbackOf, srcSetOf, type PictureSource } from "../lib/picture-sources"
 import { cn } from "../lib/utils"
+
+/** What the cover is like (its hue, how vivid and how light), from a small copy of it: it shapes the reflections, so no two covers shine alike. Neutral where the copy may not be read. */
+function traitsOf(image: HTMLImageElement) {
+  try {
+    const small = document.createElement("canvas")
+    small.width = 16
+    small.height = 16
+    const context = small.getContext("2d", { willReadFrequently: true })
+    if (context === null) return NEUTRAL_TRAITS
+    context.drawImage(image, 0, 0, 16, 16)
+    return coverTraits(context.getImageData(0, 0, 16, 16).data, 16)
+  } catch {
+    return NEUTRAL_TRAITS
+  }
+}
 
 /** How long one turn takes, in milliseconds: the same as `--motion-duration-disc`. */
 const TURN_MS = 12_000
@@ -73,7 +89,7 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
     image.crossOrigin = "anonymous"
     image.onload = () => {
       if (cancelled) return
-      renderer = createDiscRenderer(target, image)
+      renderer = createDiscRenderer(target, image, traitsOf(image))
       if (renderer === null) return
       setLit(true)
       start()

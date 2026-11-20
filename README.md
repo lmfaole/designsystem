@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.35
+
+**The cover shapes the disc's light.** The reflections of a `Picture disc` are no longer the same on every cover: the cover's hue sets where the spectrum starts and how much of its own colour is in it, how vivid it is sets how tight the bands are, and its lightness (point by point) decides how much a spot shines (a dark cover shines, a bright one washes out). `lib/palette.ts` `coverTraits`. `NowPlayingCard` takes `disc` (off: the cover as it is, sharp and still, for covers that may not be cropped). `LiveRegion`: a part of the page that changes by itself, told politely to a screen reader.
+
 ## 8.34
 
 **`DetailHeader`: the head of a page of a thing, composed.** The main picture (`Picture size="hero"`, lit on its frame) and the name together, the picture beside the name on a phone and not above it with a gap of page around it, on a stage whose ground is four colours taken from the picture (`lib/palette.ts`) and drawn in WebGL (`AmbientBackdrop`, `lib/ambient-shader.ts`) that move with the page's light. Only colours are taken from the picture, never the picture, so it is safe for sources that forbid altering pictures (Spotify's); the backdrop is drawn when the light changes and at no other time, so nothing loops. It is the page's `<h1>`. `lightStore.listeners` are called whenever the light has moved.

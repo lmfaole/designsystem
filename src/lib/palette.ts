@@ -62,3 +62,27 @@ export const BACKDROP_OPACITY = { light: 0.5, dark: 0.4 } as const
 
 /** How much the light adds at the brightest spot of the backdrop, in the shader (`lib/ambient-shader.ts`), as a share of white. */
 export const BACKDROP_HIGHLIGHT = 0.16
+
+/** What a picture is like as a whole, three numbers from 0 to 1: its main hue (a share of a turn), how saturated it is, and how light. The disc lets them shape what its reflections do. */
+export interface CoverTraits {
+  hue: number
+  saturation: number
+  lightness: number
+}
+
+/** The traits of a `size` × `size` square of RGBA pixels: the mean colour of the whole, as a hue, a saturation and a lightness. */
+export function coverTraits(pixels: ArrayLike<number>, size: number): CoverTraits {
+  const quarters = [0, 1, 2, 3].map((quarter) => quarterMean(pixels, size, quarter))
+  const [r, g, b] = [0, 1, 2].map((channel) => quarters.reduce((sum, colour) => sum + (colour[channel] ?? 0), 0) / 4 / 255) as [number, number, number]
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const lightness = (max + min) / 2
+  const delta = max - min
+  const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(2 * lightness - 1))
+  let hue = 0
+  if (delta !== 0) hue = (max === r ? ((g - b) / delta + 6) % 6 : max === g ? (b - r) / delta + 2 : (r - g) / delta + 4) / 6
+  return { hue, saturation: Math.min(1, saturation), lightness }
+}
+
+/** Traits for a cover that could not be read: nothing leans one way or the other. */
+export const NEUTRAL_TRAITS: CoverTraits = { hue: 0.1, saturation: 0.4, lightness: 0.5 }

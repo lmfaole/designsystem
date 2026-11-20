@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, lively, paletteOf, quarterMean } from "./palette.ts"
+import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, coverTraits, lively, paletteOf, quarterMean } from "./palette.ts"
 
 const square = (size: number, colour: (x: number, y: number) => [number, number, number, number]): number[] => {
   const pixels: number[] = []
@@ -66,4 +66,16 @@ test("the head's text keeps 4.5:1 on the backdrop, on the worst colour a picture
       }
     }
   }
+})
+
+test("a picture has a main hue, a saturation and a lightness, and covers that differ give traits that differ", () => {
+  const red = coverTraits(square(8, () => [200, 20, 20, 255]), 8)
+  const blue = coverTraits(square(8, () => [20, 40, 200, 255]), 8)
+  const grey = coverTraits(square(8, () => [128, 128, 128, 255]), 8)
+  const dark = coverTraits(square(8, () => [20, 20, 25, 255]), 8)
+  assert.ok(red.hue < 0.05 || red.hue > 0.95)
+  assert.ok(Math.abs(blue.hue - 0.64) < 0.05)
+  assert.ok(red.saturation > 0.7 && grey.saturation < 0.01)
+  assert.ok(dark.lightness < 0.15 && grey.lightness > 0.45 && grey.lightness < 0.55)
+  assert.notEqual(red.hue.toFixed(2), blue.hue.toFixed(2))
 })
