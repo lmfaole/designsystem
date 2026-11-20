@@ -29,6 +29,7 @@ description: Use when choosing which design system component to use for somethin
 | Fresh data, offline, streamed parts | `Freshness` (when it was made, and when it is old), `ConnectionBanner`, `StreamedSection` with `SectionSkeleton` |
 | A time | `Time` (relative when recent, a date later, the exact time always at hand) |
 | Code | `Code` (inline or a block), `CopyButton` for a value to copy; long content out of the way `Disclosure` |
+| The first visit (onboarding) | whose data `UsernameForm` and `UserChip`; a word about a page `IntroCallout`; a permission `PermissionCard` with `usePermissionState`; what is new `NewBadge` with `MarkSeen`; installing `InstallPrompt`; what was seen in the `seen` cookie (`parseSeen`, `isSeen`) |
 | A form (rare) | `TextField`, `SearchField`, `FormErrorSummary`; a choice from a list `NativeSelect`; a sort `SortHeader` |
 | A number's shape over time | `Sparkline` beside the number; a chart `AreaChart`, `ColumnChart`, `RankedBarChart`, `StackedColumnChart`, `DonutChart` in a `ChartCard` |
 | A relation, a distribution, a rhythm or a change | `ScatterChart` (two measures), `Histogram` (many values of one thing), `BoxPlot` (spread of several groups), `CalendarHeatmap` (days), `Heatmap` (two categories), `DumbbellChart` (two moments) |
@@ -106,4 +107,4 @@ tag `vX.Y.Z` (`git tag vX.Y.Z && git push origin vX.Y.Z`); projects pin a tag or
 
 ## Server and client
 
-A component renders on the server by default. One that uses a hook or a handler starts with `"use client"` (a test checks this) and its first render matches the server: no clock, random number or `window` in render, and time is passed in (`now`). Client components: `ChartFrame`, `CommandButton`, `CopyButton`, `FormErrorSummary`, `Freshness`, `ConnectionBanner`, `Overlay`, `SegmentedToggle`, `VirtualTbody`, `LightSource`, `TiltButton`, `AlbumSleeve`, `AmbientBackdrop` (inside `Stage`, which `DetailHeader` and `NowPlayingCard` stand on), `Disc` (inside `Picture disc`). Guide: **Server rendering**.
+A component renders on the server by default. One that uses a hook or a handler starts with `"use client"` (a test checks this) and its first render matches the server: no clock, random number or `window` in render, and time is passed in (`now`). Client components: `ChartFrame`, `CommandButton`, `CopyButton`, `FormErrorSummary`, `Freshness`, `ConnectionBanner`, `Overlay`, `SegmentedToggle`, `VirtualTbody`, `LightSource`, `TiltButton`, `AlbumSleeve`, `IntroCallout`, `InstallPrompt`, `MarkSeen`, `AmbientBackdrop` (inside `Stage`, which `DetailHeader` and `NowPlayingCard` stand on), `Disc` (inside `Picture disc`). Guide: **Server rendering**.

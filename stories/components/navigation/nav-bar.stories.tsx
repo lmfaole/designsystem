@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { NavBar } from "../../../src/components/nav-bar"
+import { NewBadge } from "../../../src/components/new-badge"
 import { PageHeader } from "../../../src/components/page-header"
 import { PageLayout } from "../../../src/components/page-layout"
 import { Text } from "../../../src/components/text"
@@ -63,6 +64,17 @@ export const Default: Story = {
     <PageLayout nav={<NavBar {...args} />}>
       <PageHeader title="Forside" lead="onsdag 18. november" />
       <Text>The page leaves room for the bar at the foot, and for the rail at the left.</Text>
+    </PageLayout>
+  ),
+}
+
+/** A place that is new carries a `NewBadge` as its `badge`: over the icon on a phone, after the label on the rail. */
+export const WithNewBadge: Story = {
+  args: { items: items.map((item) => (item.key === "weather" ? { ...item, badge: <NewBadge until="2027-01-01T00:00:00Z" now="2026-11-20T12:00:00Z" /> } : item)) },
+  render: (args) => (
+    <PageLayout nav={<NavBar {...args} />}>
+      <PageHeader title="Forside" lead="onsdag 18. november" />
+      <Text>«Vær» is new until the new year.</Text>
     </PageLayout>
   ),
 }

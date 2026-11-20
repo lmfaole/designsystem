@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { EmptyState } from "../../../src/components/empty-state"
+import { UsernameForm } from "../../../src/components/username-form"
 
 const meta = {
   title: "Components/States/EmptyState",
@@ -47,3 +48,12 @@ export const Default: Story = {}
 export const WithAction: Story = { args: { icon: "search", title: "Ingen treff", description: "Prøv færre filtre.", action: { href: "#", label: "Nullstill filtre" } } }
 /** The title alone, where nothing more needs saying. */
 export const TitleOnly: Story = { args: { description: undefined } }
+/** The next step as another component when it is not a link: here a form that asks for the username. */
+export const WithComponentAction: Story = {
+  args: {
+    icon: "person",
+    title: "Ingen pull requests å vise ennå",
+    description: "Skriv inn et GitHub-brukernavn, så henter vi de offentlige pull requestene.",
+    action: <UsernameForm title="Hvem skal vi hente data for?" action="#" back="/" headingLevel={3} fields={[{ name: "github", label: "GitHub-brukernavn" }]} />,
+  },
+}

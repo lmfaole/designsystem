@@ -19,8 +19,11 @@ reader. The rules are from web.dev, MDN, the WebKit blog and the W3C manifest sp
 
 ## 2. Installing is the browser's own
 
-There is **no install button** (our rule). Chrome offers installing when the manifest is right and the page is served over HTTPS (web.dev install criteria); on iOS the reader uses
-Share and «Legg til på Hjem-skjerm», and no install prompt exists there. A change to the manifest reaches an installed copy on Android when the app is opened and on iOS only when it is installed again.
+Chrome offers installing when the manifest is right and the page is served over HTTPS (web.dev install criteria); on iOS the reader uses
+Share and «Legg til på Hjem-skjerm», and no install prompt exists there. An app may offer it **once, on its front page**, with
+[`InstallPrompt`](?path=/docs/components-onboarding-installprompt--docs): «Installer» opens the browser's own dialog where it has one
+(`beforeinstallprompt`), Safari on an iPhone or iPad gets the way to do it by hand, and nothing shows in the installed app, on the
+server or after «Ikke nå» (the `seen` cookie). A change to the manifest reaches an installed copy on Android when the app is opened and on iOS only when it is installed again.
 
 ## 3. The service worker
 

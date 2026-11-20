@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+
 import { Icon } from "./icon"
 import type { IconName } from "../lib/icons"
 
@@ -9,6 +11,8 @@ export interface NavItem {
   icon: IconName
   /** The place you are in (for a detail page, the list it belongs to). */
   current: boolean
+  /** A mark beside the place, such as a `NewBadge` for a place that is new: over the icon on a phone, after the label on the rail. */
+  badge?: ReactNode
 }
 
 /**
@@ -36,10 +40,12 @@ export function NavBar({ label, title, items }: { label: string; /** The app's n
               {...(item.current ? { "aria-current": "page" as const } : {})}
             >
               {/* On a phone the current place is the icon on a pill (the indicator of a navigation bar); on the rail the whole row is. */}
-              <span className="group-aria-[current=page]:bg-muted rounded-full px-4 py-1 md:p-0 md:group-aria-[current=page]:bg-transparent">
+              <span className="group-aria-[current=page]:bg-muted relative rounded-full px-4 py-1 md:p-0 md:group-aria-[current=page]:bg-transparent">
                 <Icon name={item.icon} />
+                {item.badge === undefined ? null : <span className="bg-background absolute -top-2 left-1/2 rounded-full md:hidden">{item.badge}</span>}
               </span>
               <span className="truncate">{item.label}</span>
+              {item.badge === undefined ? null : <span className="hidden md:ml-auto md:inline-flex">{item.badge}</span>}
             </a>
           </li>
         ))}

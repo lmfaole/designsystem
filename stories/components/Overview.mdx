@@ -152,6 +152,18 @@ What a section shows while it loads, when it is empty and when it failed.
 | Nothing to show; a failed query | [`EmptyState`](?path=/docs/components-states-emptystate--docs), [`ErrorMessage`](?path=/docs/components-states-errormessage--docs) |
 | Loading | [`Skeleton`](?path=/docs/components-states-skeleton--docs), [`SectionSkeleton`](?path=/docs/components-states-sectionskeleton--docs), [`StreamedSection`](?path=/docs/components-states-streamedsection--docs) |
 
+## Onboarding
+
+The first visit: whose data, what a page is for, a permission, what is new, and the offer to install. What has been seen is kept in the `seen` cookie (`lib/onboarding`), read on the server.
+
+| You need | Use |
+| --- | --- |
+| Whose data to fetch; whose is shown | [`UsernameForm`](?path=/docs/components-onboarding-usernameform--docs), [`UserChip`](?path=/docs/components-onboarding-userchip--docs) |
+| A word about a page on the first visit | [`IntroCallout`](?path=/docs/components-onboarding-introcallout--docs) |
+| A permission of the browser (position, notifications) | [`PermissionCard`](?path=/docs/components-onboarding-permissioncard--docs) |
+| A place or section that has just come | [`NewBadge`](?path=/docs/components-onboarding-newbadge--docs) |
+| The offer to install the app | [`InstallPrompt`](?path=/docs/components-onboarding-installprompt--docs) |
+
 ## Overlays
 
 Over the page or folded into it.
