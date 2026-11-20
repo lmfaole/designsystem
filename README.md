@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.41
+
+**The weather as particles.** `WeatherStage` (card and `page`) now shows the weather moving on a 2D canvas (`WeatherParticles`): rain and thunder as streaks falling aslant, snow as drifting flakes, sleet as both, fog and cloud as slow mist, a clear night as twinkling stars, a clear day as a few rising motes. In the text colour at low strength, behind the content, never following the pointer. It is drawn once and still under `prefers-reduced-motion`, and does not run in a hidden tab. Unlike the rest of the light, it moves for as long as the page is open: it is the weather's own picture, and it is decoration, hidden from assistive technology.
+
 ## 8.40
 
 **8.40.1:** the weather backdrop holds still: a backdrop given its colours (`WeatherStage`) no longer follows the pointer or the tilt.
