@@ -23,7 +23,7 @@ const meta = {
   ),
   parameters: { docs: { description: { component: `### Use it when
 
-the page or part of a page is about the weather: what it is now, today, tomorrow. The ground behind it is the weather's own colours (clear and warm, grey cloud, dark blue rain, pale snow, a night sky after dark), drawn in WebGL and moving with the page's light, as a picture's colours are under \`DetailHeader\`.
+the page or part of a page is about the weather (\`page\`: the whole page, as its ground, fixed behind everything and laid on more weakly so muted text holds 4.5:1 too): what it is now, today, tomorrow. The ground behind it is the weather's own colours (clear and warm, grey cloud, dark blue rain, pale snow, a night sky after dark), drawn in WebGL and moving with the page's light, as a picture's colours are under \`DetailHeader\`.
 
 \`symbol\` is Yr's \`symbol_code\` as it comes (\`clearsky_day\`, \`lightrainshowers_night\`, \`heavysnow\`): the kind of weather and day or night are read from it, and what Yr adds (light, heavy, showers, thunder) does not change the colours. When it changes, the colours go over to the new weather's in one move of 0.7 s, and nothing loops.
 
@@ -65,3 +65,15 @@ export const Thunder: Story = { args: { symbol: "rainandthunder" } }
 export const Fog: Story = { args: { symbol: "fog" } }
 /** A clear night: deep blue and violet. */
 export const ClearNight: Story = { args: { symbol: "clearsky_night" } }
+/** `page`: the ground of the whole page, fixed behind everything and weaker, so muted text holds 4.5:1 on it too (this story is a page in a box: the backdrop is fixed to the screen). */
+export const PageGround: Story = {
+  args: { symbol: "heavyrain" },
+  render: (args) => (
+    <WeatherStage symbol={args.symbol} page>
+      <div className="grid max-w-xl gap-1">
+        <Heading level={1}>Vær i Oslo</Heading>
+        <Text tone="muted">Meldingen fra Yr: i dag, i morgen og de neste dagene.</Text>
+      </div>
+    </WeatherStage>
+  ),
+}

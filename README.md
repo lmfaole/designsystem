@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.40
+
+**`WeatherStage page`: the weather as the ground of a whole page.** The backdrop fixed to the screen behind everything, with no fade at the foot, laid on more weakly (`PAGE_BACKDROP_OPACITY`: 0.15 in the light theme, 0.18 in the dark) because muted text is on it too; a test measures 4.5:1 for muted text on every weather in both themes. `AmbientBackdrop` takes `page`.
+
 ## 8.39
 
 **`WeatherStage`: the weather's own colours as the ground.** A `Stage` whose backdrop is four colours of the weather (clear and warm, grey cloud, dark blue rain, pale snow, a night sky after dark) in place of a picture's, drawn in WebGL and moving with the page's light (`lib/weather-mood.ts`, from Yr's `symbol_code`; `AmbientBackdrop` and `Stage` take a `palette`). Every colour keeps its lightness in the band a picture's do, and a test measures 4.5:1 for the text on every weather in both themes. The colours go over to a new weather's in one move; nothing loops.

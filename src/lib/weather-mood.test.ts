@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY } from "./palette.ts"
+import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, PAGE_BACKDROP_OPACITY } from "./palette.ts"
 import { readSymbol, weatherPalette } from "./weather-mood.ts"
 
 const CODES = [
@@ -46,6 +46,20 @@ const ratio = (a: number[], b: number[]): number => {
 
 test("the text keeps 4.5:1 on every weather's backdrop, with the light's highlight on it, in both themes", () => {
   for (const [bg, text, opacity] of [[[10, 10, 10], [250, 250, 250], BACKDROP_OPACITY.dark], [[255, 255, 255], [10, 10, 10], BACKDROP_OPACITY.light]] as const) {
+    for (const code of CODES) {
+      for (const colour of weatherPalette(code)) {
+        for (const shown of [colour, colour.map((v) => Math.min(255, v + BACKDROP_HIGHLIGHT * 255))]) {
+          const blended = shown.map((v, index) => v * opacity + (bg[index] ?? 0) * (1 - opacity))
+          assert.ok(ratio([...text], blended) >= 4.5, `${code} on ${bg[0]} gave ${ratio([...text], blended).toFixed(2)}`)
+        }
+      }
+    }
+  }
+})
+
+test("behind a whole page, muted text keeps 4.5:1 on every weather's backdrop too, in both themes", () => {
+  // The muted text colours of theme.css (oklch 0.5 and 0.708) on the page backgrounds (oklch 1 and 0.145).
+  for (const [bg, text, opacity] of [[[10, 10, 10], [161, 161, 161], PAGE_BACKDROP_OPACITY.dark], [[255, 255, 255], [99, 99, 99], PAGE_BACKDROP_OPACITY.light]] as const) {
     for (const code of CODES) {
       for (const colour of weatherPalette(code)) {
         for (const shown of [colour, colour.map((v) => Math.min(255, v + BACKDROP_HIGHLIGHT * 255))]) {

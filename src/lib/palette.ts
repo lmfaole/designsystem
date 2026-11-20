@@ -60,6 +60,9 @@ export function paletteOf(pixels: ArrayLike<number>, size: number): [Rgb, Rgb, R
  */
 export const BACKDROP_OPACITY = { light: 0.5, dark: 0.4 } as const
 
+/** The same for a backdrop behind a whole page (`WeatherStage page`): muted text (4.6:1 on a plain page, a little more in the light theme) is on it too, so it is laid on much more weakly. A test measures it. */
+export const PAGE_BACKDROP_OPACITY = { light: 0.15, dark: 0.18 } as const
+
 /** How much the light adds at the brightest spot of the backdrop, in the shader (`lib/ambient-shader.ts`), as a share of white. */
 export const BACKDROP_HIGHLIGHT = 0.16
 
