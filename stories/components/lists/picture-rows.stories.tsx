@@ -51,3 +51,8 @@ type Story = StoryObj<typeof meta>
 export const Poster: Story = {}
 /** The same rows with square pictures, as for albums. */
 export const Square: Story = { args: { ratio: "square" } }
+/** A list of people: round, each row a person (\`corners="round"\` with \`ratio="square"\`); a row can differ from the list by its own \`corners\`. */
+export const People: Story = { args: { ratio: "square", corners: "round", rows: [
+  { key: "1", picture: poster(40, "A"), title: "Al Pacino", detail: details(["Vincent Hanna"]), aside: "Nr. 1" },
+  { key: "2", picture: poster(80, "B"), title: "Robert De Niro", detail: details(["Neil McCauley"]), aside: "Nr. 2" },
+] } }

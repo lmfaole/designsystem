@@ -12,6 +12,10 @@ const meta = {
 
 one thing's picture in a frame of its own, at the size of a row or a page.
 
+**The shape says what kind of thing it is** (\`corners\`): a reader tells a person from a record from a film before reading a word. Choose one shape for each kind of thing in an app and keep it everywhere that kind shows,
+in a row and on its own page: \`round\` for a person or a band (with \`ratio="square"\`), \`sharp\` for a record's cover or a plate, \`soft\` for a single or a tile, \`normal\` (the default) for a poster. A kind has one shape; a shape
+never means two kinds, and is never decoration. Where a source's terms say its pictures may not be cropped, do not use \`round\` for them.
+
 ### Do not use it when
 
 decoration, or a picture that carries information (give that its own text).
@@ -42,6 +46,23 @@ export const Square: Story = { args: { ratio: "square", src: square(100) } }
 export const Hero: Story = { args: { size: "hero" } }
 /** As wide as its cell, for a gallery tile. */
 export const Fill: Story = { args: { size: "fill" }, decorators: [(Story) => <div className="w-40"><Story /></div>] }
+/** A sleeve or a plate: a record's cover. */
+export const Sharp: Story = { args: { ratio: "square", corners: "sharp", src: square(100) } }
+/** A tile with large corners: a single, a song. */
+export const Soft: Story = { args: { ratio: "square", corners: "soft", src: square(100) } }
+/** A person or a band: a circle, with the top of the picture kept (a portrait's face is there). */
+export const Round: Story = { args: { ratio: "square", corners: "round", src: poster(40, "P") } }
+/** All four, side by side: one kind of thing each. */
+export const Shapes: Story = {
+  render: () => (
+    <div className="flex gap-4">
+      <Picture ratio="poster" src={poster(10, "F")} />
+      <Picture ratio="square" corners="sharp" src={square(100)} />
+      <Picture ratio="square" corners="soft" src={square(160)} />
+      <Picture ratio="square" corners="round" src={poster(40, "P")} />
+    </div>
+  ),
+}
 /** No picture: the frame stays, so rows stay level. */
 export const NoPicture: Story = { args: { src: null } }
 

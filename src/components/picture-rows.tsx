@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react"
 
 import type { PictureSource } from "../lib/picture-sources"
-import { Picture } from "./picture"
+import { Picture, type PictureCorners } from "./picture"
 import { SrTableHead } from "./sr-table-head"
 
 /** One row of a list of things with a picture: the picture, what it is, a line under it, and a short note (a date, a count) at the end of that line. */
@@ -11,6 +11,8 @@ export interface PictureRow {
   picture: string | null
   /** The same picture in the widths its source offers, so a thumbnail takes the small file (`Picture`'s `sources`). */
   sources?: readonly PictureSource[]
+  /** This row's shape, where it differs from the list's (`PictureRows` `corners`): a song with Spotify's cover among rows with Last.fm's. */
+  corners?: PictureCorners
   title: ReactNode
   /** Under the title: whatever is worth a line (by whom, a rating, a place). Build it with `details`. */
   detail: ReactNode
@@ -36,7 +38,7 @@ const AREAS = "grid grid-cols-[auto_minmax(0,max-content)_auto_1fr] items-center
  * Rows with a picture in one layout: the picture, the title, and under it a line that ends with a short note. A table for a
  * screen reader, which hears each cell with its column; the layout is a grid.
  */
-export function PictureRows({ rows, ratio }: { rows: readonly PictureRow[]; ratio: "poster" | "square" }) {
+export function PictureRows({ rows, ratio, corners = "normal" }: { rows: readonly PictureRow[]; ratio: "poster" | "square"; /** What kind of thing the list is of, as a shape (`PictureCorners`): the same for every row unless a row says otherwise. */ corners?: PictureCorners }) {
   return (
     <table role="table" className="block">
       <SrTableHead columns={["Bilde", "Tittel", "Detaljer", "Notat"]} />
@@ -44,7 +46,7 @@ export function PictureRows({ rows, ratio }: { rows: readonly PictureRow[]; rati
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
             <td role="cell" className="mr-2 [grid-area:picture]">
-              <Picture ratio={ratio} src={row.picture} {...(row.sources === undefined ? {} : { sources: row.sources })} />
+              <Picture ratio={ratio} corners={row.corners ?? corners} src={row.picture} {...(row.sources === undefined ? {} : { sources: row.sources })} />
             </td>
             <td role="rowheader" className="min-w-0 truncate font-medium [grid-area:title]">
               {row.title}

@@ -336,6 +336,12 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.27
+
+**Shape language for pictures.** `Picture` and `PictureRows` take `corners`: `normal` (the default, as before), `sharp` (a sleeve or a plate), `soft` (a tile with large corners) and `round` (a person or a band; with `ratio="square"`, the top
+of the picture kept). The shape says what kind of thing the picture is of, so a reader tells a person from a record from a film before reading a word: choose one shape for each kind in an app and keep it wherever that kind
+shows, in a row and on its own page. A row can differ from its list (`PictureRow.corners`). Where a source's terms forbid cropping its pictures, do not use `round` for them.
+
 ## 8.26
 
 **Motion and microinteractions**, from research on Carbon, Material 3, Atlassian, Fluent, Primer, NN/g, Saffer and WCAG

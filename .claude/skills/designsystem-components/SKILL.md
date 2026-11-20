@@ -35,7 +35,7 @@ description: Use when choosing which design system component to use for somethin
 | A value against a goal | `Progress`; pages of a long list with addresses `Pagination` |
 | The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
-| A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos` |
+| A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos`; its shape says what kind of thing it is (`corners`: `round` a person or band, `sharp` a record, `soft` a single, `normal` a poster): one shape for each kind, everywhere that kind shows |
 | A person named (reviewers, authors, who wrote last) | `Person`: the name with their round picture beside it |
 | A card | `Card` (see the cards rule), `ChartCard` for a chart |
 | A chart | `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart`, `RankedBarChart`, in a `ChartFrame` |
