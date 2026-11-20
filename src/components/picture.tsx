@@ -10,7 +10,7 @@ type Ratio = 'poster' | 'square'
  */
 export type PictureCorners = 'sharp' | 'normal' | 'soft' | 'round'
 
-const CORNERS: Record<PictureCorners, string> = { sharp: 'rounded-sm', normal: 'rounded-md', soft: 'rounded-[22%]', round: 'rounded-full' }
+const CORNERS: Record<PictureCorners, string> = { sharp: 'rounded-sm', normal: 'rounded-md', soft: 'rounded-[30%]', round: 'rounded-full' }
 
 /** `row` stands in front of a row of a list; `hero` heads the page of the thing itself; `fill` is a tile of a gallery, as wide as its cell. */
 type Size = 'row' | 'hero' | 'fill'

@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.27.1
+
+`Picture corners="soft"` has corners of 30 % of its width, not 22 %: at the size of a row the soft tile and the sharp plate were hard to tell apart.
+
 ## 8.27
 
 **Shape language for pictures.** `Picture` and `PictureRows` take `corners`: `normal` (the default, as before), `sharp` (a sleeve or a plate), `soft` (a tile with large corners) and `round` (a person or a band; with `ratio="square"`, the top
