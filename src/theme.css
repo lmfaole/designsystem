@@ -113,6 +113,10 @@
     --series-4: oklch(0.66 0.20 299);
     --series-5: oklch(0.49 0.15 40);
     --series-6: oklch(0.36 0.20 287);
+    /* The weather's marks (Meteogram): the temperature above and below zero, and what falls. */
+    --temperature-warm: oklch(0.55 0.19 35);
+    --temperature-cold: oklch(0.5 0.15 255);
+    --precipitation: oklch(0.56 0.11 228);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -147,6 +151,9 @@
     --series-4: oklch(0.62 0.18 295);
     --series-5: oklch(0.90 0.15 175);
     --series-6: oklch(0.90 0.18 105);
+    --temperature-warm: oklch(0.74 0.15 40);
+    --temperature-cold: oklch(0.75 0.11 248);
+    --precipitation: oklch(0.74 0.1 222);
 }
 }
 
@@ -184,6 +191,9 @@
     --series-4: oklch(0.62 0.18 295);
     --series-5: oklch(0.90 0.15 175);
     --series-6: oklch(0.90 0.18 105);
+    --temperature-warm: oklch(0.74 0.15 40);
+    --temperature-cold: oklch(0.75 0.11 248);
+    --precipitation: oklch(0.74 0.1 222);
 }
 
 @layer base {

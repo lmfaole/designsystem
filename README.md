@@ -272,7 +272,7 @@ never by the text. It is the one way to show Markdown: **do not convert it to HT
 
 **Use an icon wherever it makes something quicker to find or to understand.** The design system makes it the easy way: an
 icon is a *meaning* you ask for, and the components that show titles, rows, statuses, actions and errors take one.
-The set is **complete on purpose** (157 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
+The set is **complete on purpose** (159 meanings in eleven groups), so a page never waits for an icon; a meaning that is missing is added at once in `scripts/icon-set.mjs` and `npm run icons` regenerates the shapes (`src/lib/icon-nodes.ts`), the types and the Catalogue. An icon is an inline `<svg>` rendered as plain HTML with its look in CSS (`src/icon.css`: a size property, `currentColor`, mirroring under `:dir(rtl)`); no icon component runs in the browser.
 The full guide, with the catalogue of every meaning, is in Storybook (**Icons / Guide** and **Icons / Catalogue**).
 
 ```tsx
@@ -335,6 +335,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.44
+
+**The weather hour by hour.** `Meteogram` draws a forecast as Yr and meteoblue do, in bands on one time axis: the sky as a symbol every third hour (`symbolEvery`), the temperature as a line, warm above 0° and cold below it with the zero line drawn and signed degrees on its own axis, and the precipitation as columns in millimetres (or «Ingen nedbør»). Plain SVG and positioned text rendered on the server: it takes the width of its room with its text at its size and leaves out every other label in a narrow room. Under it a summary (lowest and highest with their hours, the precipitation in all and the wettest hour) and every hour as a table (`showTable`). New tokens `--temperature-warm`, `--temperature-cold` and `--precipitation` keep 3:1 in both themes (a test); on a `WeatherStage` the columns take `--weather-rain`. Two icon meanings: `weather-night` (partly cloudy at night) and `sleet`. The helpers (scales, the zero line, Yr's symbols in words and as icons, the summary) are pure, in `lib/meteogram.ts`, with tests.
 
 ## 8.43
 

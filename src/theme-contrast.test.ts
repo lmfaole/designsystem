@@ -72,6 +72,7 @@ const MARKS: readonly (readonly [string, string])[] = [
   ["muted-foreground", "card"],
   ["destructive", "background"],
   ...[1, 2, 3, 4, 5, 6].flatMap((n): [string, string][] => [[`series-${n}`, "background"], [`series-${n}`, "card"]]),
+  ...["temperature-warm", "temperature-cold", "precipitation"].flatMap((name): [string, string][] => [[name, "background"], [name, "card"]]),
 ]
 
 for (const [mode, tokens] of Object.entries(MODES)) {

@@ -28,9 +28,10 @@ series are the foreground at falling strength (100, 66 and 44 %; a fourth series
 | Rhythm over days, weeks and months | `CalendarHeatmap` (Monday first, four quantile steps, the months as a table) | |
 | Two categories meeting, for the pattern | `Heatmap` (weekday by hour); `showValues` for a small matrix | |
 | How several things changed between two moments | `DumbbellChart`: a ring at the start, a filled dot at the end, biggest change first | |
+| The weather hour by hour | `Meteogram`: the sky, the temperature (warm above 0°, cold below, the zero line drawn) and the precipitation in bands on one time axis, each band with its own scale | |
 | Exact values | A table (`showTable`) | |
 
-**Not drawn** (GOV.UK, NN/G, Datawrapper): 3D charts, radial gauges (a linear `Progress` is the bullet), a pie or donut of more than five slices, two value axes in one chart, a truncated bar axis, colour as the measure of size, and a chart of fewer than three points (the number says it better).
+**Not drawn** (GOV.UK, NN/G, Datawrapper): 3D charts, radial gauges (a linear `Progress` is the bullet), a pie or donut of more than five slices, two value axes in one chart (a `Meteogram` stacks its measures in bands of their own instead), a truncated bar axis, colour as the measure of size, and a chart of fewer than three points (the number says it better).
 More than four series is a table, or one `AreaChart` each in a list, which fits the one-column rule better than a grid of small charts.
 
 **Why these, and how they are drawn** (Cleveland and McGill's ranking of what a person reads accurately: position on a common scale first, then length, then angle and area, then colour).

@@ -32,13 +32,14 @@ description: Use when choosing which design system component to use for somethin
 | A form (rare) | `TextField`, `SearchField`, `FormErrorSummary`; a choice from a list `NativeSelect`; a sort `SortHeader` |
 | A number's shape over time | `Sparkline` beside the number; a chart `AreaChart`, `ColumnChart`, `RankedBarChart`, `StackedColumnChart`, `DonutChart` in a `ChartCard` |
 | A relation, a distribution, a rhythm or a change | `ScatterChart` (two measures), `Histogram` (many values of one thing), `BoxPlot` (spread of several groups), `CalendarHeatmap` (days), `Heatmap` (two categories), `DumbbellChart` (two moments) |
+| The weather hour by hour | `Meteogram`: temperature, rain and the sky on one time axis |
 | A value against a goal | `Progress`; pages of a long list with addresses `Pagination` |
 | The way between pages | top-level pages `NavBar` (bar at the foot on a phone, rail from tablet width; given to `PageLayout` as `nav`); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos`; its shape says what kind of thing it is (`corners`: `round` a person or band, `sharp` a record, `soft` a single, `normal` a poster): one shape for each kind, everywhere that kind shows |
 | A person named (reviewers, authors, who wrote last) | `Person`: the name with their round picture beside it |
 | A card | `Card` (see the cards rule), `ChartCard` for a chart |
-| A chart | `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart`, `RankedBarChart`, in a `ChartFrame` |
+| A chart | `AreaChart`, `ColumnChart`, `StackedColumnChart`, `DonutChart`, `RankedBarChart`, in a `ChartFrame`; the weather hour by hour `Meteogram` |
 | An error, not found | `ErrorMessage`, `ErrorPage`, `NotFoundPage`, `ServerErrorPage` |
 | A dialog, a sheet, a popover | `Overlay`, `CommandButton` |
 | A choice from a list | `NativeSelect`, never a drawn menu; switching period `PeriodPicker` |
