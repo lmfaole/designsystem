@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.38
+
+**The record playing now is a real object.** The disc (`Picture disc`, `NowPlayingCard`) is now a 3D mesh with a thickness (a face, an edge and the wall of its hole, `lib/disc-geometry.ts`), seen a little from above and tilted a little toward the light so that its edge shows, and it reflects its surroundings: a studio (the light itself, a soft box, a cool sky over a dark floor) with more reflection at a glancing angle, and the round grooves' spectrum in two bands that move with the light and the angle (anisotropic). The cover still shapes it (its hue, vividness and lightness), and the frame is transparent where the disc is, so the hole shows what is behind. Same API; the CSS version is unchanged.
+
 ## 8.37
 
 **`AlbumSleeve`: an album's cover in 3D.** The cover whole and upright on a slab of plastic with a record pulled half out of it (the label is the cover's most vivid colour), that tilts toward the page's light (the pointer, a phone's tilt) and catches it, drawn in WebGL with a box, a quad and one texture (`lib/mat4.ts`, `lib/sleeve-shader.ts`, no library). `DetailHeader` takes it with `sleeve`. It adds something to the cover, so it is for covers the app may alter (Last.fm's), never Spotify's; before WebGL is ready, where it is not there and under reduced motion it is the cover alone as a sharp square in the same place. It is drawn when the light changes and at no other time. Also: the visual tests wait for the WebGL of a story to be drawn before the picture is taken.

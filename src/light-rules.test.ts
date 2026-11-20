@@ -63,3 +63,12 @@ test("the sleeve in 3D is only drawn when the light changes, has a slot in the W
   assert.match(sleeve, /prefers-reduced-motion/)
   assert.match(source("detail-header.tsx"), /sleeve && ratio === "square"/)
 })
+
+test("the disc is a mesh with a thickness that reflects a studio, and it is still drawn with a slot and a CSS version", () => {
+  const shader = readFileSync(join(import.meta.dirname, "lib", "disc-shader.ts"), "utf8")
+  assert.match(shader, /discMesh\(/)
+  assert.match(shader, /vec3 env\(vec3 d\)/)
+  assert.match(shader, /reflect\(-V,N\)/)
+  assert.match(source("disc.tsx"), /acquireGlSlot\(\)/)
+  assert.match(source("disc.tsx"), /light-sheen/)
+})

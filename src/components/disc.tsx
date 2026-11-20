@@ -158,7 +158,7 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
       <canvas ref={canvas} aria-hidden="true" className={cn("absolute inset-0 size-full", !lit && "hidden")} />
     </>
   )
-  const shape = cn("relative shrink-0 overflow-hidden rounded-full bg-muted", FRAMES.square[size], size === "hero" && "lit-frame")
+  const shape = cn("relative shrink-0 overflow-hidden rounded-full", !lit && "bg-muted", FRAMES.square[size], size === "hero" && "lit-frame")
   if (reduced) {
     return (
       <span ref={(node) => { frame.current = node }} aria-hidden="true" className={shape}>
