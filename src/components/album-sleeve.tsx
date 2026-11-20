@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { acquireGlSlot } from "../lib/gl-budget"
 import { lightStore } from "../lib/light"
 import { acquireLightInput } from "../lib/light-input"
-import { paletteOf, type Rgb } from "../lib/palette"
+import { easeOut, paletteOf, type Rgb } from "../lib/palette"
 import { DRAWN } from "../lib/picture-frames"
 import { fallbackOf, type PictureSource } from "../lib/picture-sources"
 import { createSleeveRenderer, type SleeveRenderer } from "../lib/sleeve-shader"
@@ -28,10 +28,14 @@ function labelOf(image: HTMLImageElement): Rgb {
   }
 }
 
+/** How long the record takes to slide out of the sleeve when it is first drawn, in milliseconds. */
+const SLIDE_MS = 900
+
 /**
  * An album's sleeve in 3D (the main picture of the page of an album): the cover whole on a slab of plastic with a record pulled half out of it, that tilts toward the page's light (the pointer, and on a phone how it is
  * held) and catches it. It is the cover with something added (a record, a gleam), so it is for covers the app may alter (Last.fm's), never for Spotify's. Until WebGL is ready, and where it is not there or under
- * `prefers-reduced-motion`, it is the cover alone as a sharp square (`Picture`), in the same place, so nothing moves when it takes over. It is drawn when the light changes and at no other time: nothing loops.
+ * `prefers-reduced-motion`, it is the cover alone as a sharp square (`Picture`), in the same place, so nothing moves when it takes over: the record is inside the sleeve then, and slides out once (`SLIDE_MS`).
+ * After that it is drawn when the light changes and at no other time: nothing loops.
  */
 export function AlbumSleeve({ src, sources }: { src?: string | null; sources?: readonly PictureSource[] }) {
   const canvas = useRef<HTMLCanvasElement>(null)
@@ -48,11 +52,17 @@ export function AlbumSleeve({ src, sources }: { src?: string | null; sources?: r
     let loaded: { image: HTMLImageElement; label: Rgb } | null = null
     let raf = 0
     let cancelled = false
+    // When the record began to slide out; `null` before it is first drawn. A context given back draws it out at once: the slide is shown once.
+    let slideStart: number | null = null
     const draw = () => {
       raf = 0
       if (renderer === null) return
+      slideStart ??= performance.now()
+      const out = easeOut((performance.now() - slideStart) / SLIDE_MS)
       renderer.resize(Math.max(2, Math.round(target.clientHeight * Math.min(window.devicePixelRatio || 1, 2))))
-      renderer.draw(lightStore.current)
+      renderer.draw(lightStore.current, out)
+      // The one move it makes: frames go on only until the record is out, then it waits for the light again.
+      if (out < 1) schedule()
     }
     const schedule = () => {
       if (raf === 0 && renderer !== null) raf = requestAnimationFrame(draw)

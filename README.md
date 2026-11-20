@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.45
+
+**The record comes out of the sleeve.** In 3D, `AlbumSleeve` (the album `DetailHeader`) starts with the record inside the sleeve when the page opens and slides it out over 0.9 s, turning the label as it goes; then it is drawn only when the light changes again. The vinyl takes the colour of the cover, with light through its rim and a pale label, and its reflection is in the cover's colour too. The film over the sleeve is more like shrink-wrap: a broad and a thin streak that follow the light, haze toward the edges, small creases and a highlight on the folded edge, weaker on a pale cover. Under reduced motion nothing moves, as before.
+
 ## 8.44
 
 **The weather hour by hour.** `Meteogram` draws a forecast as Yr and meteoblue do, in bands on one time axis: the sky as a symbol every third hour (`symbolEvery`), the temperature as a line, warm above 0° and cold below it with the zero line drawn and signed degrees on its own axis, and the precipitation as columns in millimetres (or «Ingen nedbør»). Plain SVG and positioned text rendered on the server: it takes the width of its room with its text at its size and leaves out every other label in a narrow room. Under it a summary (lowest and highest with their hours, the precipitation in all and the wettest hour) and every hour as a table (`showTable`). New tokens `--temperature-warm`, `--temperature-cold` and `--precipitation` keep 3:1 in both themes (a test); on a `WeatherStage` the columns take `--weather-rain`. Two icon meanings: `weather-night` (partly cloudy at night) and `sleet`. The helpers (scales, the zero line, Yr's symbols in words and as icons, the summary) are pure, in `lib/meteogram.ts`, with tests.
