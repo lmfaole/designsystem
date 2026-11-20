@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { DetailHeader } from "../../../src/components/detail-header"
 import { Text } from "../../../src/components/text"
-import { poster } from "../../sample"
+import { albumCover, poster } from "../../sample"
 
 const meta = {
   title: "Components/Layout/DetailHeader",
@@ -53,5 +53,7 @@ export const Artist: Story = { args: { children: <Text size="sm">Fra Spotify</Te
 export const Poster: Story = { args: { kind: "Film · 1995", title: "Heat", ratio: "poster", corners: "normal", picture: poster(150, "H") } }
 /** A long name and a line under it: the name wraps beside the picture and never leaves its column. */
 export const LongName: Story = { args: { kind: "Album", title: "Hyperdimensional Rhapsody of the Unfathomably Extended Edition", corners: "sharp", picture: poster(300, "R"), children: <Text size="sm">Shygirl</Text> } }
+/** An album: with `sleeve` its cover is a sleeve in 3D with a record half out, tilting with the light, on a stage of the cover's colours. For Last.fm's covers, never Spotify's. */
+export const Album: Story = { args: { kind: "Album", title: "Rated R", ratio: "square", corners: "sharp", sleeve: true, picture: albumCover("#1a0b2e", "#5b1a8f", "#e0245e", "#f5c542"), children: <Text size="sm">av Rihanna</Text> } }
 /** No picture: the plain tinted ground and the name. */
 export const WithoutPicture: Story = { args: { picture: null, title: "Ukjent artist" } }

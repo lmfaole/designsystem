@@ -12,3 +12,9 @@ export const MONTHS = ["jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "
   label,
   value: [12, 18, 9, 24, 31, 27, 15, 22, 38, 33, 19, 26][index] ?? 0,
 }))
+
+/** A made-up album cover with a gradient and a disc of colour on it, so a sleeve in 3D has something to catch the light on. */
+export function albumCover(from: string, middle: string, to: string, spot: string): string {
+  const body = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${from}"/><stop offset=".55" stop-color="${middle}"/><stop offset="1" stop-color="${to}"/></linearGradient></defs><rect width="300" height="300" fill="url(#g)"/><circle cx="190" cy="105" r="58" fill="${spot}"/><rect x="28" y="230" width="150" height="14" fill="white" opacity=".85"/><rect x="28" y="252" width="96" height="9" fill="white" opacity=".6"/></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(body)}`
+}

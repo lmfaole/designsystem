@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 
 import type { PictureCorners } from "../lib/picture-frames"
 import type { PictureSource } from "../lib/picture-sources"
+import { AlbumSleeve } from "./album-sleeve"
 import { Picture } from "./picture"
 import { Stage } from "./stage"
 import { Heading, Text } from "./text"
@@ -11,11 +12,11 @@ import { Heading, Text } from "./text"
  * It is the page's `<h1>`, so the page leaves out its own title. On a phone the picture stands beside the name and not above it, so neither is alone; the picture is the lit main picture
  * (`Picture size="hero"`, lit on its frame), and nothing is painted over it. What belongs to the head goes in `children`, under the name: by whom, an attribution. Text in the head is the full text colour, never `muted`: the ground is tinted, and muted text would fall under 4.5:1.
  */
-export function DetailHeader({ kind, title, picture, sources, ratio = "square", corners = "normal", children }: { /** What kind of thing it is, in words above the name: «Artist», «Album», «Film». */ kind: string; /** Its name: the page's `<h1>`. */ title: string; picture?: string | null; sources?: readonly PictureSource[]; ratio?: "poster" | "square"; /** What kind of thing it is, as a shape (see `PictureCorners`). */ corners?: PictureCorners; children?: ReactNode }) {
+export function DetailHeader({ kind, title, picture, sources, ratio = "square", corners = "normal", sleeve = false, children }: { /** What kind of thing it is, in words above the name: «Artist», «Album», «Film». */ kind: string; /** Its name: the page's `<h1>`. */ title: string; picture?: string | null; sources?: readonly PictureSource[]; ratio?: "poster" | "square"; /** What kind of thing it is, as a shape (see `PictureCorners`). */ corners?: PictureCorners; /** An album: its cover as a sleeve in 3D with a record pulled half out (`AlbumSleeve`), under the light. For a cover the app may alter (Last.fm's), never Spotify's; needs `ratio="square"`. */ sleeve?: boolean; children?: ReactNode }) {
   return (
     <Stage as="header" picture={picture ?? null} {...(sources === undefined ? {} : { sources })}>
       <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-4 @3xl:gap-x-8">
-        <Picture src={picture ?? null} {...(sources === undefined ? {} : { sources })} ratio={ratio} corners={corners} size="hero" priority />
+        {sleeve && ratio === "square" ? <AlbumSleeve src={picture ?? null} {...(sources === undefined ? {} : { sources })} /> : <Picture src={picture ?? null} {...(sources === undefined ? {} : { sources })} ratio={ratio} corners={corners} size="hero" priority />}
         <div className="grid min-w-0 gap-1 [overflow-wrap:anywhere]">
           <Text size="sm" weight="medium">
             {kind}

@@ -63,7 +63,7 @@ The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromT
 
 ## 5. WebGL in the system
 
-Two surfaces draw in WebGL, both lit by the page's one light: the **disc** (`Picture disc`, the record playing now) and the **backdrop** of a **stage** (`Stage`, under `DetailHeader` and `NowPlayingCard`: four colours taken from the picture). What they have in common is the rules:
+Three surfaces draw in WebGL, all lit by the page's one light: the **disc** (`Picture disc`, the record playing now), the **backdrop** of a **stage** (`Stage`, under `DetailHeader` and `NowPlayingCard`: four colours taken from the picture) and the **sleeve** (`AlbumSleeve`, the main picture of the page of an album: the cover whole on a slab of plastic, in 3D, with a record half out of it, tilting toward the light). What they have in common is the rules:
 
 - **A few, at most.** A page has at most four WebGL surfaces at once (`lib/gl-budget.ts`): a browser drops the oldest context when a page asks for more, and every one costs memory and battery. A surface that gets no slot shows its CSS version, which every one has.
 - **CSS first.** Each has a version in CSS (the disc's `light-sheen`, the stage's plain tinted ground) that shows before WebGL is ready, where it is not there, where the picture may not be read (no CORS), and under `prefers-reduced-motion`.
@@ -71,7 +71,8 @@ Two surfaces draw in WebGL, both lit by the page's one light: the **disc** (`Pic
 - **Asks for less on a machine that cannot keep up.** A surface times its frames (`lib/gl-quality.ts`): slower than 24 ms a frame on average, it draws at fewer pixels, then every other frame. It never asks for more again.
 - **Draws only when it must.** A surface that is off the screen or in a hidden tab does not draw; the backdrop draws only when the light changes. The disc is the one loop (see 4), and it can be paused.
 - **Finite moves only.** When the picture changes (what plays changes), the backdrop's colours go over to the new ones in one move of 0.7 s and settle (`mixPalette`, `easeOut`); never a loop, and no move at all under `prefers-reduced-motion`.
-- **Never the picture itself.** The backdrop takes four colours from a picture and draws those; the disc is only made of a cover the app may alter. A picture whose source forbids altering it is shown as it is.
+- **Never the picture itself.** The backdrop takes four colours from a picture and draws those; the disc and the sleeve add something to a cover (a crop, a record, a gleam of plastic), so they are only made of a cover the app may alter (Last.fm's, its own). A picture whose source forbids altering it is shown as it is, on its frame (and a stage may take its colours).
+- **3D is little and honest.** A sleeve is a box, a quad and one texture (`lib/mat4.ts`, `lib/sleeve-shader.ts`): no library. It tilts only toward the light (the pointer, a phone's tilt) and is drawn when the light changes; it never turns by itself.
 - **The head's text is the full text colour** on a stage (a test measures 4.5:1 on the worst colour a picture can give).
 
 ## 6. Not yet

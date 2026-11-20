@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.37
+
+**`AlbumSleeve`: an album's cover in 3D.** The cover whole and upright on a slab of plastic with a record pulled half out of it (the label is the cover's most vivid colour), that tilts toward the page's light (the pointer, a phone's tilt) and catches it, drawn in WebGL with a box, a quad and one texture (`lib/mat4.ts`, `lib/sleeve-shader.ts`, no library). `DetailHeader` takes it with `sleeve`. It adds something to the cover, so it is for covers the app may alter (Last.fm's), never Spotify's; before WebGL is ready, where it is not there and under reduced motion it is the cover alone as a sharp square in the same place. It is drawn when the light changes and at no other time. Also: the visual tests wait for the WebGL of a story to be drawn before the picture is taken.
+
 ## 8.36
 
 **WebGL, more robust and further.** Rules for every WebGL surface («Foundations / Light and shadow», «WebGL in the system»): at most four at once (`lib/gl-budget.ts`; a surface with no slot shows its CSS version), a lost context is drawn again when the browser gives it back, and a machine that cannot keep up is asked for less (`lib/gl-quality.ts`: fewer pixels, then every other frame). The backdrop's colours go over to a new picture's in one move of 0.7 s (`mixPalette`, `easeOut`; none under reduced motion). `Stage` is the ground the main thing stands on (the backdrop of the picture's colours), now also under `NowPlayingCard`, whose text is the full text colour.

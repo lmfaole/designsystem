@@ -53,3 +53,13 @@ test("the backdrop's strength in the component is the one the contrast test meas
   const backdrop = source("ambient-backdrop.tsx")
   assert.ok(backdrop.includes(`opacity-${Math.round(BACKDROP_OPACITY.light * 100)} dark:opacity-${Math.round(BACKDROP_OPACITY.dark * 100)}`))
 })
+
+test("the sleeve in 3D is only drawn when the light changes, has a slot in the WebGL budget, and falls back to the cover alone", () => {
+  const sleeve = source("album-sleeve.tsx")
+  assert.equal(sleeve.match(/requestAnimationFrame\(/g)?.length, 1, "the one frame it asks for is the draw the light asked for")
+  assert.match(sleeve, /acquireGlSlot\(\)/)
+  assert.match(sleeve, /lightStore\.listeners\.add/)
+  assert.match(sleeve, /<Picture ratio="square" size="hero" corners="sharp"/)
+  assert.match(sleeve, /prefers-reduced-motion/)
+  assert.match(source("detail-header.tsx"), /sleeve && ratio === "square"/)
+})
