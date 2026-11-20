@@ -74,6 +74,11 @@ export const PageGround: Story = {
         <Heading level={1}>Vær i Oslo</Heading>
         <Text tone="muted">Meldingen fra Yr: i dag, i morgen og de neste dagene.</Text>
       </div>
+      <div className="@container mt-6 max-w-xl">
+        <WeatherStage symbol={args.symbol}>
+          <Text size="sm">Et kort med været på en side med været: tett, så sidens vær ikke skinner gjennom.</Text>
+        </WeatherStage>
+      </div>
     </WeatherStage>
   ),
 }

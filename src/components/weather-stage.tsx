@@ -16,7 +16,7 @@ export function WeatherStage({ symbol, page = false, as, children }: { /** Yr's 
   const colours: CSSProperties & Record<`--${string}`, string> = { "--weather-accent": weatherAccent(symbol), "--weather-rain": weatherAccent("rain") }
   if (page)
     return (
-      <div className="contents" style={colours}>
+      <div className="contents" data-weather-ground="" style={colours}>
         <AmbientBackdrop palette={palette} page />
         <WeatherParticles symbol={symbol} page />
         {children}

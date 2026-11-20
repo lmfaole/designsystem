@@ -7,8 +7,8 @@ import type { CoverTraits } from "./palette"
  * A record, in 3D: a face with the cover printed on it, a thick edge that catches light and a deep hole (`lib/disc-geometry.ts`), seen from a little above and tilted a little toward the page's light, so that the edge shows.
  * The cover turns with the disc and the light does not: the grooves are round, so a reflection does not turn with the disc. Two things are reflected. The grooves reflect the light in two opposite bands with the spectrum
  * spread along them (anisotropic: the bands stand where the reflection is across the grooves, so they move with the light and with the angle, as on a real disc). And the surface reflects a studio around it (the light itself,
- * a soft box, a cool sky over a dark floor), more at a glancing angle (Fresnel), so the face, the edge and the wall of the hole shine as lacquer and chrome do. The cover shapes it: a vivid cover gives tighter bands, a dark
- * one shines and a pale one washes out, and its hue sets where the spectrum starts. A mesh, one program, one texture: no library.
+ * a soft box, a cool sky over a dark floor), more at a glancing angle (Fresnel), so the face, the edge and the wall of the hole shine as lacquer and chrome do. The cover shapes it: a vivid cover gives tighter bands in more of its own colour, a dark
+ * one shines and a pale one washes out; the bands are the cover's colour where they fall, with a trace of the spectrum whose start its hue sets. A mesh, one program, one texture: no library.
  */
 
 const VERTEX = `attribute vec3 p;attribute vec3 n;attribute vec2 t;attribute float k;
@@ -56,10 +56,11 @@ void main(){
   float th=dot(T,H);
   float aniso=pow(sqrt(max(1.-th*th,0.)),mix(16.,44.,trait.y));
   float side=.25+.75*max(dot(radial.xy,normalize(light.xy+1e-4)),0.);
-  vec3 rain=hue(fract(r*2.2+trait.x+th*.4));
-  rain=mix(rain,clamp(col/max(max(col.r,max(col.g,col.b)),.2),0.,1.),.45*trait.y);
+  // The bands take the colour of the cover under them, brightened as a sheen is, with only a trace of the spectrum: a red cover shines red, not in a rainbow.
+  vec3 tint=clamp(col/max(max(col.r,max(col.g,col.b)),.2),0.,1.);
+  vec3 band=mix(mix(vec3(1.),tint,.35+.55*trait.y),hue(fract(r*2.2+trait.x+th*.4)),.12);
   vec3 outc=col*(.84+.16*max(dot(N,light),0.));
-  outc+=aniso*side*fall*gloss*(.5+.5*rain)*.95;
+  outc+=aniso*side*fall*gloss*band*.42;
   // Lacquer: the studio in the face, strongest at a glancing angle, and not on the printed label.
   float lacquer=smoothstep(.3,.42,r);
   outc+=env(reflect(-V,N))*(.04+fres*.32)*gloss*lacquer*(1.-.45*lum);

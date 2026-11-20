@@ -19,7 +19,7 @@ type Palette = readonly [Rgb, Rgb, Rgb, Rgb]
  * has a few WebGL surfaces at most (`lib/gl-budget.ts`); a context the browser takes away is made again when it is given back. Where WebGL is not there, or the picture may not be read (no CORS), the stage has
  * its plain tinted ground. It is decoration, hidden from assistive technology.
  */
-export function AmbientBackdrop({ src, sources, palette, page = false }: { src?: string | null; sources?: readonly PictureSource[]; /** Four colours to draw as they are, instead of taking them from a picture (`WeatherStage`). */ palette?: Palette; /** Behind the whole page, not one stage: fixed to the screen, weaker (`PAGE_BACKDROP_OPACITY`, so muted text holds 4.5:1 on it too) and with no fade at the foot. */ page?: boolean }) {
+export function AmbientBackdrop({ src, sources, palette, page = false }: { src?: string | null; sources?: readonly PictureSource[]; /** Four colours to draw as they are, instead of taking them from a picture (`WeatherStage`). */ palette?: Palette; /** Behind the whole page, not one stage: fixed to the screen, weaker (`PAGE_BACKDROP_OPACITY`, so muted text holds 4.5:1 on it too). */ page?: boolean }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const [ready, setReady] = useState(false)
   const apply = useRef<((palette: Palette) => void) | null>(null)
@@ -154,7 +154,7 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
       aria-hidden="true"
       className={cn(
         "-z-10 size-full opacity-0 transition-opacity",
-        page ? "pointer-events-none fixed inset-0" : "absolute inset-0 [mask-image:linear-gradient(to_bottom,black_60%,transparent)]",
+        page ? "pointer-events-none fixed inset-0" : "absolute inset-0",
         ready && (page ? "opacity-15 dark:opacity-[0.18]" : "opacity-50 dark:opacity-40"),
       )}
     />

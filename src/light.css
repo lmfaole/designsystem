@@ -59,20 +59,21 @@
    * (the grooves are round, so the reflection does not turn). The bands sit on the line from the light through the middle of the disc.
    */
   .light-sheen {
-    mix-blend-mode: screen;
+    /* Soft light, not screen: a band brightens the cover in its own colour instead of laying white and a rainbow over it, with only a trace of the spectrum left. */
+    mix-blend-mode: soft-light;
     background:
-      conic-gradient(from calc(atan2(var(--light-y), var(--light-x)) + 47deg), transparent 0 8%, oklch(1 0 0 / 0.5) 12%, transparent 18% 50%, oklch(1 0 0 / 0.35) 62%, transparent 68%),
+      conic-gradient(from calc(atan2(var(--light-y), var(--light-x)) + 47deg), transparent 0 8%, oklch(1 0 0 / 0.7) 12%, transparent 18% 50%, oklch(1 0 0 / 0.5) 62%, transparent 68%),
       conic-gradient(
         from calc(atan2(var(--light-y), var(--light-x)) + 47deg),
         transparent 0 6%,
-        color-mix(in oklch, var(--spectrum-violet) 40%, transparent) 9%,
-        color-mix(in oklch, var(--spectrum-cyan) 40%, transparent) 12%,
-        color-mix(in oklch, var(--spectrum-yellow) 40%, transparent) 15%,
-        color-mix(in oklch, var(--spectrum-pink) 30%, transparent) 18%,
+        color-mix(in oklch, var(--spectrum-violet) 12%, transparent) 9%,
+        color-mix(in oklch, var(--spectrum-cyan) 12%, transparent) 12%,
+        color-mix(in oklch, var(--spectrum-yellow) 12%, transparent) 15%,
+        color-mix(in oklch, var(--spectrum-pink) 10%, transparent) 18%,
         transparent 21% 48%,
-        color-mix(in oklch, var(--spectrum-violet) 30%, transparent) 58%,
-        color-mix(in oklch, var(--spectrum-cyan) 30%, transparent) 62%,
-        color-mix(in oklch, var(--spectrum-yellow) 30%, transparent) 66%,
+        color-mix(in oklch, var(--spectrum-violet) 10%, transparent) 58%,
+        color-mix(in oklch, var(--spectrum-cyan) 10%, transparent) 62%,
+        color-mix(in oklch, var(--spectrum-yellow) 10%, transparent) 66%,
         transparent 70%
       );
   }
