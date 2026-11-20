@@ -22,11 +22,12 @@ the chart is the page's only content (use \`PageSection\`), or there is a single
 **Handled by the component**
 
 - The description is visible text under the title, in the muted token ([1.4.3 Contrast (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum))
+- The title is a heading, \`<h3>\` by default (\`level\`), so the card is in the page's outline ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
 - With \`empty\`, a sentence takes the chart's place, so nothing is an empty frame ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
 
 **You check**
 
-- The title is not a heading element: where the page outline needs one, give the card a heading of the right level ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
+- \`level\` fits the outline: \`3\` under a section's \`<h2>\`, \`2\` straight under the page's title ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
 - The title states what the chart shows ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels))
 - The chart inside still has its own \`ariaLabel\` ([1.1.1 Non-text Content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content))
 - \`emptyMessage\` says why there is nothing to chart

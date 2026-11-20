@@ -23,10 +23,10 @@ a free date (a native date field).
 - The keyboard and the picker are the platform's own ([2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard)).
 - The focus ring of \`NativeSelect\` ([2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible)).
 - 48 px high ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
+- Says in advance that a choice changes the page («Siden bytter til perioden du velger.», its description), and the arrow keys of a closed select step through the periods without leaving: the page changes on Enter or when focus leaves ([3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input)).
 
 **You check**
 
-- Choosing an option loads another page: say so by the picker, since it changes context on input ([3.2.2 On Input](https://www.w3.org/WAI/WCAG22/Understanding/on-input)).
 - The name is only for a screen reader: where the options do not say what they are, show a label ([3.3.2 Labels or Instructions](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions)).
 - \`formatLabel\` gives words a reader knows («november 2026», not «2026-11») ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
 - The page runs \`enableNavigatingSelects\` once, or choosing does nothing.

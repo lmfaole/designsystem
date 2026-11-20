@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 
 import { ENTITY_LINK } from "../lib/link-style"
+import { ExternalMark } from "./external-link"
 
 /**
  * Text in the few forms the design system has, so an app never sets a size, a weight or a colour itself
@@ -49,13 +50,23 @@ export function Heading({ level, look = level === 1 ? "page" : level === 2 ? "se
 }
 
 /**
+ * The heading inside a card's title (`CardTitle` is a plain `<div>` from shadcn): the outline gets the card, and the look stays the
+ * title's own, so nothing is drawn twice.
+ */
+export function CardHeading({ level, children }: { level: 2 | 3 | 4; children: ReactNode }) {
+  const Tag = `h${level}` as const
+  return <Tag className="[font:inherit]">{children}</Tag>
+}
+
+/**
  * A link in or beside text, with the look every name that has a page shares (`ENTITY_LINK`). `external` is a link out
- * to another site, opened without handing the new page a `window.opener`.
+ * to another site, marked as one (`ExternalMark`) and opened without handing the new page a `window.opener`.
  */
 export function TextLink({ href, external = false, children }: { href: string; external?: boolean; children: ReactNode }) {
   return (
     <a href={href} className={ENTITY_LINK} {...(external ? { rel: "noopener noreferrer" } : {})}>
       {children}
+      {external ? <ExternalMark /> : null}
     </a>
   )
 }

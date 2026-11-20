@@ -26,7 +26,7 @@ a thing that does not exist but whose page does (show it empty with \`EmptyState
 
 - The document's \`<title>\` says the page was not found ([2.4.2 Page Titled](https://www.w3.org/WAI/WCAG22/Understanding/page-titled))
 - No other \`<h1>\` on the page ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships))
-- The link goes to \`/\`: under a base path, check that it reaches the app's front page
+- Under a base path, \`home\` is the app's front page (\`/start/\`); without it the link goes to the site's root \`/\` ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context))
 
 ### Content
 

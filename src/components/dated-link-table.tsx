@@ -1,3 +1,4 @@
+import { ExternalMark } from "./external-link"
 import { ENTITY_LINK } from "../lib/link-style"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
 
@@ -26,8 +27,9 @@ export function DatedLinkTable({ rows, dayHead, titleHead }: { rows: readonly Da
           <TableRow key={row.key}>
             <TableCell className="whitespace-nowrap text-muted-foreground">{row.day}</TableCell>
             <TableCell className="min-w-0 whitespace-normal [overflow-wrap:anywhere]">
-              <a href={row.href} rel="noreferrer" className={ENTITY_LINK}>
+              <a href={row.href} rel="noopener noreferrer" className={ENTITY_LINK}>
                 {row.title}
+                <ExternalMark />
               </a>
               <span className="block text-sm text-muted-foreground">{row.source}</span>
             </TableCell>

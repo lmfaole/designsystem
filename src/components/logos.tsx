@@ -3,9 +3,12 @@ const LOGO = "h-12 w-auto max-w-44 rounded-md bg-logo-plate object-contain p-1.5
 /** In a list, on the card's own ground, with no plate. */
 const BARE = "h-9 w-auto max-w-36 object-contain"
 
-/** One logo, the name as its alt text and tooltip. */
-export function Logo({ name, src, plate = true }: { name: string; src: string; plate?: boolean }) {
-  return <img src={src} alt={name} title={name} decoding="async" className={plate ? LOGO : BARE} />
+/**
+ * One logo, the name as its alt text and tooltip. `decorative` is a logo beside its own name in text: it is then hidden from a
+ * screen reader (`alt=""`), which would otherwise read the name twice.
+ */
+export function Logo({ name, src, plate = true, decorative = false }: { name: string; src: string; plate?: boolean; decorative?: boolean }) {
+  return <img src={src} alt={decorative ? "" : name} title={decorative ? undefined : name} decoding="async" className={plate ? LOGO : BARE} />
 }
 
 /** Logos side by side, for the head of a page; none where there are none. */

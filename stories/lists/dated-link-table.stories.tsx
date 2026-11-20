@@ -22,12 +22,12 @@ things that have a page of their own in the app (\`Rows\`).
 - A real table with a header row from \`dayHead\` and \`titleHead\`, so each cell is read with its column ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
 - The day comes before the title in the DOM, and the source after it, the order they are read in ([1.3.2 Meaningful Sequence](https://www.w3.org/WAI/WCAG22/Understanding/meaningful-sequence)).
 - Long titles wrap instead of widening the table ([1.4.10 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow)).
+- Each title link says it leaves the site: the external symbol and «(eksternt nettsted)» for a screen reader ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
 - Each title link is at least 24 px high ([2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum)).
 
 **You check**
 
 - \`dayHead\` and \`titleHead\` name the columns ([2.4.6 Headings and Labels](https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels)).
-- The links are NOT marked as external (no symbol, no screen reader text): say near the table that they lead to other sites ([2.4.4 Link Purpose (In Context)](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context)).
 - The table has no caption: put a heading right before it that says what it lists ([1.3.1 Info and Relationships](https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships)).
 
 ### Content

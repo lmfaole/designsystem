@@ -1,3 +1,5 @@
+import { useId } from "react"
+
 import { NativeSelect, NativeSelectOption } from "./ui/native-select"
 
 interface PeriodPickerProps {
@@ -14,21 +16,29 @@ interface PeriodPickerProps {
 /**
  * Switches the time frame of a page: a native `<select>` with every period, so the list is the platform's own picker (the
  * wheel or sheet of a phone, the menu of a desktop), never a menu drawn here. Each option carries its address (`data-href`), and `enableNavigatingSelects` (`lib/navigating-select`), run once by the page,
- * goes there on a change: the page stays plain HTML, with nothing to hydrate.
+ * goes there on a choice: the page stays plain HTML, with nothing to hydrate. A screen reader is told in advance that a choice
+ * changes the page, and the arrow keys of a closed select step without leaving until Enter or Tab (WCAG 3.2.2).
  */
 export function PeriodPicker({ periods, selected, hrefTo, formatLabel, label = "Periode" }: PeriodPickerProps) {
+  const hint = useId()
   return (
-    <NativeSelect
-      aria-label={label}
-      defaultValue={selected}
-      data-navigates=""
-      className="min-w-40 [&_select]:h-12 [&_select]:rounded-xl [&_select]:pl-3 [&_select]:text-base"
-    >
-      {periods.map((period) => (
-        <NativeSelectOption key={period} value={period} data-href={hrefTo(period)}>
-          {formatLabel(period)}
-        </NativeSelectOption>
-      ))}
-    </NativeSelect>
+    <>
+      <span id={hint} hidden>
+        Siden bytter til perioden du velger.
+      </span>
+      <NativeSelect
+        aria-label={label}
+        aria-describedby={hint}
+        defaultValue={selected}
+        data-navigates=""
+        className="min-w-40 [&_select]:h-12 [&_select]:rounded-xl [&_select]:pl-3 [&_select]:text-base"
+      >
+        {periods.map((period) => (
+          <NativeSelectOption key={period} value={period} data-href={hrefTo(period)}>
+            {formatLabel(period)}
+          </NativeSelectOption>
+        ))}
+      </NativeSelect>
+    </>
   )
 }

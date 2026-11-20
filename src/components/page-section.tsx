@@ -15,11 +15,11 @@ function Title({ icon, children }: { icon: IconName | undefined; children: strin
 }
 
 /** A titled block of a page (a ranked list, the latest plays): the small capitals heading and the content under it, labelled for a screen reader by it. */
-export function PageSection({ id, title, icon, more, children }: { id: string; title: string; /** What the section is about, in front of its title: a section is found at a glance. */ icon?: IconName; /** The page with all of it, when the section shows only the first of a list. */ more?: More; children: ReactNode }) {
+export function PageSection({ id, title, icon, more, level = 2, children }: { id: string; title: string; /** What the section is about, in front of its title: a section is found at a glance. */ icon?: IconName; /** The page with all of it, when the section shows only the first of a list. */ more?: More; /** `3` for a section under another heading than the page's own, so the outline has no gap and no jump. */ level?: 2 | 3; children: ReactNode }) {
   return (
     <section aria-labelledby={id} className="grid content-start gap-4">
       <Head more={more}>
-        <Heading level={2} look="label" id={id}>
+        <Heading level={level} look="label" id={id}>
           <Title icon={icon}>{title}</Title>
         </Heading>
       </Head>

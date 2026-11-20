@@ -1,17 +1,52 @@
 /** The selector of a native `<select>` whose options are addresses (`PeriodPicker`): the one a page's script listens to. */
 export const NAVIGATING_SELECT = "select[data-navigates]"
 
+/** Keys that move the choice of a closed `<select>` one step, each firing `change` on the way (Chrome, Safari on desktop). */
+const MOVE_KEYS = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End", "PageUp", "PageDown"])
+
+/** What a navigating select has seen since it was last left alone: a choice moved by the keyboard and not yet gone to. */
+export interface SelectState {
+  keyed: boolean
+  pending: boolean
+}
+
+export type SelectEvent = { type: "keydown"; key: string } | { type: "change" } | { type: "focusout" }
+
 /**
- * Makes every `select[data-navigates]` go to the `data-href` of the option chosen. One listener on the document, so it
- * covers selects of a page that is plain HTML with no island to hydrate. Returns what removes it.
+ * Whether the page goes to the chosen option now, and the state after. A choice made with the pointer, or in the open list,
+ * goes at once; one stepped to with the arrow keys of a closed select waits for Enter or for focus to leave it, so a keyboard
+ * reader can pass the options they did not want (WCAG 3.2.2 On input).
+ */
+export function decide(state: SelectState, event: SelectEvent): { go: boolean; state: SelectState } {
+  switch (event.type) {
+    case "keydown":
+      if (event.key === "Enter" && state.pending) return { go: true, state: { keyed: false, pending: false } }
+      return { go: false, state: { ...state, keyed: MOVE_KEYS.has(event.key) || (event.key.length === 1 && event.key !== " ") } }
+    case "change":
+      return state.keyed ? { go: false, state: { keyed: false, pending: true } } : { go: true, state: { keyed: false, pending: false } }
+    case "focusout":
+      return { go: state.pending, state: { keyed: false, pending: false } }
+  }
+}
+
+/**
+ * Makes every `select[data-navigates]` go to the `data-href` of the option chosen (`decide` says when). Listeners on the
+ * document, so they cover selects of a page that is plain HTML with no island to hydrate. Returns what removes them.
  */
 export function enableNavigatingSelects(doc: Document = document): () => void {
-  const onChange = (event: Event) => {
+  const states = new WeakMap<HTMLSelectElement, SelectState>()
+  const on = (event: Event) => {
     const select = event.target
     if (!(select instanceof HTMLSelectElement) || !select.matches(NAVIGATING_SELECT)) return
+    const seen: SelectEvent = event instanceof KeyboardEvent ? { type: "keydown", key: event.key } : event.type === "change" ? { type: "change" } : { type: "focusout" }
+    const { go, state } = decide(states.get(select) ?? { keyed: false, pending: false }, seen)
+    states.set(select, state)
     const href = select.selectedOptions[0]?.dataset.href
-    if (href !== undefined) window.location.assign(href)
+    if (go && href !== undefined) window.location.assign(href)
   }
-  doc.addEventListener("change", onChange)
-  return () => doc.removeEventListener("change", onChange)
+  const types = ["keydown", "change", "focusout"] as const
+  for (const type of types) doc.addEventListener(type, on)
+  return () => {
+    for (const type of types) doc.removeEventListener(type, on)
+  }
 }

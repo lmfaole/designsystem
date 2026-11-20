@@ -14,10 +14,22 @@ export function ExternalLink({ href, look = "text", children }: { href: string; 
   return (
     <a href={href} className={cn(look === "pill" ? "rounded-full border px-3 py-1 no-underline hover:bg-muted" : "underline underline-offset-4")} rel="noopener noreferrer">
       {children}
+      <ExternalMark />
+    </a>
+  )
+}
+
+/**
+ * What says a link leaves the site, at the end of its text: the external symbol for the eye and «(eksternt nettsted)» for a
+ * screen reader, so both know before they follow it. Every link out in the design system ends with it.
+ */
+export function ExternalMark() {
+  return (
+    <>
       <span className="ml-1 inline-block align-text-bottom">
         <Icon name="external" size="sm" tone="muted" />
       </span>
       <span className="sr-only"> (eksternt nettsted)</span>
-    </a>
+    </>
   )
 }

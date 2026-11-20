@@ -336,6 +336,20 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.23
+
+The gaps 8.21 left under «You check» are closed:
+
+- **`ChartCard` and `PictureCard` titles are headings**, `<h3>` by default, with `level` (`2 | 3 | 4`) to fit the outline (`CardHeading`
+  inside shadcn's `CardTitle`, which stays a `<div>`). A page that put its own heading around a card's title drops it.
+- **Every link out says so**: `ExternalMark` (the external symbol and «(eksternt nettsted)» for a screen reader) ends `ExternalLink`,
+  `TextLink external`, and the links of `DatedLinkTable` and `StoryList`.
+- **`Logo decorative`**: `alt=""` for a logo beside its own name.
+- **`PeriodPicker` keeps WCAG 3.2.2**: it says in advance that a choice changes the page, and `enableNavigatingSelects` lets the arrow
+  keys of a closed select step through the periods, going on Enter or when focus leaves (`decide`, tested); a pointer choice goes at once.
+- **`PageSection level={3}`** for a section under another heading.
+- **`NotFoundPage` and `ServerErrorPage` take `home`**, the app's front page under a base path (`/start/`); `/` by default.
+
 ## 8.22
 
 Performance and sustainability, researched against web.dev, the Web Almanac 2025, the W3C Web Sustainability Guidelines, the Sustainable

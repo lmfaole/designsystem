@@ -2,7 +2,7 @@ import { Button } from "./ui/button"
 import { ErrorPage } from "./error-page"
 
 /** 500 for a page that crashed while rendering. The Worker's 500 page draws it. */
-export function ServerErrorPage() {
+export function ServerErrorPage({ home = "/" }: { /** The app's front page, with its base path (`/start/`): the site's root is not always it. */ home?: string }) {
   return (
     <ErrorPage
       status={500}
@@ -15,7 +15,7 @@ export function ServerErrorPage() {
             <a href="">Last siden på nytt</a>
           </Button>
           <Button asChild variant="outline">
-            <a href="/">Gå til forsiden</a>
+            <a href={home}>Gå til forsiden</a>
           </Button>
         </>
       }

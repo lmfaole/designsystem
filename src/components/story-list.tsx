@@ -1,3 +1,4 @@
+import { ExternalMark } from "./external-link"
 import { ENTITY_LINK } from "../lib/link-style"
 
 export interface Story {
@@ -14,8 +15,9 @@ export function StoryList({ stories }: { stories: readonly Story[] }) {
     <ol className="grid gap-4">
       {stories.map((story) => (
         <li key={story.key} className="grid gap-1">
-          <a href={story.href} rel="noreferrer" className={`${ENTITY_LINK} font-heading text-lg font-medium`}>
+          <a href={story.href} rel="noopener noreferrer" className={`${ENTITY_LINK} font-heading text-lg font-medium`}>
             {story.title}
+            <ExternalMark />
           </a>
           <p className="text-sm text-muted-foreground">{story.byline}</p>
         </li>
