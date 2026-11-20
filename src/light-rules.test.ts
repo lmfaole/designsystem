@@ -38,10 +38,14 @@ test("the head of a page of a thing is the page's h1 with the lit main picture a
   const header = source("detail-header.tsx")
   assert.match(header, /<Heading level=\{1\}/)
   assert.match(header, /size="hero"/)
-  assert.match(header, /<AmbientBackdrop/)
+  assert.match(header, /<Stage /)
+  assert.match(source("stage.tsx"), /<AmbientBackdrop/)
+  assert.match(source("now-playing-card.tsx"), /<Stage /)
   const backdrop = source("ambient-backdrop.tsx")
   assert.match(backdrop, /lightStore\.listeners\.add/)
-  assert.equal(backdrop.match(/requestAnimationFrame\(/g)?.length, 1, "the one frame it asks for is the draw the light asked for, and the draw asks for no other: nothing loops")
+  // One frame for a change of light, and one that goes on only while the colours go over to a new picture's (`from !== null`): nothing else asks for a frame, so at rest nothing loops.
+  assert.equal(backdrop.match(/requestAnimationFrame\(/g)?.length, 2)
+  assert.match(backdrop, /if \(from !== null\) raf = requestAnimationFrame\(draw\)/)
 })
 
 test("the backdrop's strength in the component is the one the contrast test measured", async () => {

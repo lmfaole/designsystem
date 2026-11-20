@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, coverTraits, lively, paletteOf, quarterMean } from "./palette.ts"
+import { BACKDROP_HIGHLIGHT, BACKDROP_OPACITY, coverTraits, easeOut, lively, mixPalette, paletteOf, quarterMean } from "./palette.ts"
 
 const square = (size: number, colour: (x: number, y: number) => [number, number, number, number]): number[] => {
   const pixels: number[] = []
@@ -78,4 +78,18 @@ test("a picture has a main hue, a saturation and a lightness, and covers that di
   assert.ok(red.saturation > 0.7 && grey.saturation < 0.01)
   assert.ok(dark.lightness < 0.15 && grey.lightness > 0.45 && grey.lightness < 0.55)
   assert.notEqual(red.hue.toFixed(2), blue.hue.toFixed(2))
+})
+
+test("a palette changes colour by shares of the way, and the move settles", () => {
+  const a: [number, number, number][] = [[0, 0, 0], [100, 0, 0], [0, 100, 0], [0, 0, 100]]
+  const b: [number, number, number][] = [[200, 200, 200], [100, 100, 0], [0, 0, 0], [50, 50, 50]]
+  const pair = (list: [number, number, number][]) => list as [[number, number, number], [number, number, number], [number, number, number], [number, number, number]]
+  assert.deepEqual(mixPalette(pair(a), pair(b), 0), pair(a))
+  assert.deepEqual(mixPalette(pair(a), pair(b), 1), pair(b))
+  assert.deepEqual(mixPalette(pair(a), pair(b), 0.5)[0], [100, 100, 100])
+  assert.deepEqual(mixPalette(pair(a), pair(b), 9), pair(b))
+  assert.equal(easeOut(0), 0)
+  assert.equal(easeOut(1), 1)
+  assert.ok(easeOut(0.5) > 0.5, "fast at first")
+  assert.ok(easeOut(0.9) - easeOut(0.8) < easeOut(0.2) - easeOut(0.1), "settles")
 })

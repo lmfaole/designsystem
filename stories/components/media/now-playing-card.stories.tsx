@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { useState } from "react"
+
+import { Stack } from "../../../src/components/layout"
 import { NowPlayingCard } from "../../../src/components/now-playing-card"
+import { Button } from "../../../src/components/ui/button"
 import { poster } from "../../sample"
 
 const meta = {
@@ -10,7 +14,7 @@ const meta = {
   args: { picture: poster(10, "A"), title: "Hard", detail: "Rihanna, Jeezy · Rated R" },
   parameters: { docs: { description: { component: `### Use it when
 
-what plays now should be the first thing on a page, once: a record as a disc that turns slowly under the page's light, with the words «Spilles nå», a pulsing dot, the title and a line under it.
+what plays now should be the first thing on a page, once: a record as a disc that turns slowly under the page's light, on a stage of the cover's own colours, with the words «Spilles nå», a pulsing dot, the title and a line under it. When the song changes, the colours of the stage go over to the new cover's and settle (one move of 0.7 s), and the disc takes the new cover.
 
 The disc is drawn in WebGL (the cover turns, the reflections do not, and the cover shapes them: its hue where the spectrum starts and how much of its colour is in it, how vivid it is how tight the bands are, how light it is how much it shines) and follows the page's one light: move the pointer over the page, or tilt the phone (\`LightSource\`, which the card carries; iOS asks first, with a button). A tap on the disc pauses it. Where WebGL is not there, it is the same in CSS.
 
@@ -49,3 +53,24 @@ export const Default: Story = {}
 export const WithoutDisc: Story = { args: { disc: false } }
 /** With the title as a link, as on a page. */
 export const WithLink: Story = { args: { title: <a href="#hard" className="underline">Hard</a> } }
+
+/** The song changes while the page is open: the stage's colours go over to the new cover's in one move of 0.7 s and settle, and the disc takes the new cover. */
+export const SongChange: Story = {
+  render: () => {
+    const songs = [
+      { title: "Hard", detail: "Rihanna, Jeezy · Rated R", picture: poster(10, "A") },
+      { title: "Alyse", detail: "Shygirl · Alyse", picture: poster(200, "B") },
+      { title: "Submit", detail: "Shygirl · Alias", picture: poster(120, "C") },
+    ]
+    const [index, setIndex] = useState(0)
+    const song = songs[index % songs.length] ?? songs[0]
+    return (
+      <Stack gap="md">
+        <NowPlayingCard picture={song?.picture ?? null} title={song?.title ?? ""} detail={song?.detail} />
+        <Button type="button" variant="outline" onClick={() => setIndex((now) => now + 1)}>
+          Neste sang
+        </Button>
+      </Stack>
+    )
+  },
+}

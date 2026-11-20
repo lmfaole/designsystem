@@ -86,3 +86,16 @@ export function coverTraits(pixels: ArrayLike<number>, size: number): CoverTrait
 
 /** Traits for a cover that could not be read: nothing leans one way or the other. */
 export const NEUTRAL_TRAITS: CoverTraits = { hue: 0.1, saturation: 0.4, lightness: 0.5 }
+
+/** The palette a share `t` (0 to 1) of the way from one to another: what a backdrop is while it changes colour when the picture changes. */
+export function mixPalette(from: readonly [Rgb, Rgb, Rgb, Rgb], to: readonly [Rgb, Rgb, Rgb, Rgb], t: number): [Rgb, Rgb, Rgb, Rgb] {
+  const share = Math.min(1, Math.max(0, t))
+  const mixed = (a: Rgb, b: Rgb): Rgb => [a[0] + (b[0] - a[0]) * share, a[1] + (b[1] - a[1]) * share, a[2] + (b[2] - a[2]) * share]
+  return [mixed(from[0], to[0]), mixed(from[1], to[1]), mixed(from[2], to[2]), mixed(from[3], to[3])]
+}
+
+/** A move that is fast at first and settles (cubic ease-out), for a share of the way `t` from 0 to 1. */
+export const easeOut = (t: number): number => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3)
+
+/** How long a backdrop takes to change colour, in milliseconds: one move, then it is still. */
+export const PALETTE_MS = 700

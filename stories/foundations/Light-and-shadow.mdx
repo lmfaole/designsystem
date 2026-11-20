@@ -61,7 +61,20 @@ The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromT
 - **Cheap where it counts.** WebGL is a quad and one texture; it stops when the disc is off the screen or the tab is hidden, takes 2× pixels at most and asks for the low-power GPU.
   The cover must be readable by WebGL (CORS); where it is not, the CSS disc is shown.
 
-## 5. Not yet
+## 5. WebGL in the system
+
+Two surfaces draw in WebGL, both lit by the page's one light: the **disc** (`Picture disc`, the record playing now) and the **backdrop** of a **stage** (`Stage`, under `DetailHeader` and `NowPlayingCard`: four colours taken from the picture). What they have in common is the rules:
+
+- **A few, at most.** A page has at most four WebGL surfaces at once (`lib/gl-budget.ts`): a browser drops the oldest context when a page asks for more, and every one costs memory and battery. A surface that gets no slot shows its CSS version, which every one has.
+- **CSS first.** Each has a version in CSS (the disc's `light-sheen`, the stage's plain tinted ground) that shows before WebGL is ready, where it is not there, where the picture may not be read (no CORS), and under `prefers-reduced-motion`.
+- **A lost context comes back.** When the browser takes a context away, the surface falls back to CSS, and is drawn again when it is given back (`webglcontextrestored`).
+- **Asks for less on a machine that cannot keep up.** A surface times its frames (`lib/gl-quality.ts`): slower than 24 ms a frame on average, it draws at fewer pixels, then every other frame. It never asks for more again.
+- **Draws only when it must.** A surface that is off the screen or in a hidden tab does not draw; the backdrop draws only when the light changes. The disc is the one loop (see 4), and it can be paused.
+- **Finite moves only.** When the picture changes (what plays changes), the backdrop's colours go over to the new ones in one move of 0.7 s and settle (`mixPalette`, `easeOut`); never a loop, and no move at all under `prefers-reduced-motion`.
+- **Never the picture itself.** The backdrop takes four colours from a picture and draws those; the disc is only made of a cover the app may alter. A picture whose source forbids altering it is shown as it is.
+- **The head's text is the full text colour** on a stage (a test measures 4.5:1 on the worst colour a picture can give).
+
+## 6. Not yet
 
 The shadows of `shadow-md` and its likes (a hero picture, an overlay) do not read the light yet: they are moved onto `elevation-*` when they are next touched, so that no picture of a
 page changes without anybody having asked.

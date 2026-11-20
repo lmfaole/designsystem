@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.36
+
+**WebGL, more robust and further.** Rules for every WebGL surface («Foundations / Light and shadow», «WebGL in the system»): at most four at once (`lib/gl-budget.ts`; a surface with no slot shows its CSS version), a lost context is drawn again when the browser gives it back, and a machine that cannot keep up is asked for less (`lib/gl-quality.ts`: fewer pixels, then every other frame). The backdrop's colours go over to a new picture's in one move of 0.7 s (`mixPalette`, `easeOut`; none under reduced motion). `Stage` is the ground the main thing stands on (the backdrop of the picture's colours), now also under `NowPlayingCard`, whose text is the full text colour.
+
 ## 8.35
 
 **The cover shapes the disc's light.** The reflections of a `Picture disc` are no longer the same on every cover: the cover's hue sets where the spectrum starts and how much of its own colour is in it, how vivid it is sets how tight the bands are, and its lightness (point by point) decides how much a spot shines (a dark cover shines, a bright one washes out). `lib/palette.ts` `coverTraits`. `NowPlayingCard` takes `disc` (off: the cover as it is, sharp and still, for covers that may not be cropped). `LiveRegion`: a part of the page that changes by itself, told politely to a screen reader.

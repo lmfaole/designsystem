@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react"
 
 import { createDiscRenderer, type DiscRenderer } from "../lib/disc-shader"
+import { acquireGlSlot } from "../lib/gl-budget"
+import { FULL, measure, nextQuality, START, type Meter, type Quality } from "../lib/gl-quality"
 import { coverTraits, NEUTRAL_TRAITS } from "../lib/palette"
 import { lightStore } from "../lib/light"
 import { acquireLightInput } from "../lib/light-input"
@@ -59,12 +61,18 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
     const target = canvas.current
     // Read here, not from state: the state is set in an effect of its own, after this one has run once.
     if (reduced || shown === undefined || target === null || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const slot = acquireGlSlot()
+    if (slot === null) return
     let renderer: DiscRenderer | null = null
+    let loaded: { image: HTMLImageElement; traits: ReturnType<typeof traitsOf> } | null = null
     let raf = 0
     let last = 0
     let turn = 0
+    let frames = 0
     let onScreen = true
     let cancelled = false
+    let quality: Quality = FULL
+    let meter: Meter = START
     const stop = () => {
       if (raf !== 0) cancelAnimationFrame(raf)
       raf = 0
@@ -73,10 +81,17 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
       raf = 0
       if (renderer === null) return
       const elapsed = last === 0 ? 0 : Math.min(now - last, 100)
+      // A machine that cannot keep up is asked for less: fewer pixels, then every other frame (`lib/gl-quality.ts`).
+      const timed = measure(meter, last === 0 ? 0 : (now - last) / quality.every)
+      meter = timed.meter
+      if (timed.average !== null) quality = nextQuality(quality, timed.average)
       last = now
       if (!pausedNow.current) turn += (elapsed / TURN_MS) * Math.PI * 2
-      renderer.resize(Math.max(1, Math.round(target.clientWidth * Math.min(window.devicePixelRatio || 1, 2))))
-      renderer.draw(turn, lightStore.current)
+      frames += 1
+      if (frames % quality.every === 0) {
+        renderer.resize(Math.max(1, Math.round(target.clientWidth * Math.min(window.devicePixelRatio || 1, quality.pixelRatio))))
+        renderer.draw(turn, lightStore.current)
+      }
       if (onScreen && !document.hidden) raf = requestAnimationFrame(loop)
     }
     const start = () => {
@@ -85,16 +100,21 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
         raf = requestAnimationFrame(loop)
       }
     }
+    // Made once the cover is there, and again when the browser gives a lost context back.
+    const build = () => {
+      if (loaded === null || cancelled) return
+      renderer = createDiscRenderer(target, loaded.image, loaded.traits)
+      if (renderer === null) return
+      setLit(true)
+      start()
+    }
     const image = new Image()
     image.crossOrigin = "anonymous"
     image.addEventListener(
       "load",
       () => {
-        if (cancelled) return
-        renderer = createDiscRenderer(target, image, traitsOf(image))
-        if (renderer === null) return
-        setLit(true)
-        start()
+        loaded = { image, traits: traitsOf(image) }
+        build()
       },
       { once: true },
     )
@@ -114,13 +134,16 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
     }
     document.addEventListener("visibilitychange", visibility)
     target.addEventListener("webglcontextlost", lost)
+    target.addEventListener("webglcontextrestored", build)
     return () => {
       cancelled = true
       stop()
       observer.disconnect()
       document.removeEventListener("visibilitychange", visibility)
       target.removeEventListener("webglcontextlost", lost)
+      target.removeEventListener("webglcontextrestored", build)
       renderer?.dispose()
+      slot()
       setLit(false)
     }
   }, [shown, reduced])

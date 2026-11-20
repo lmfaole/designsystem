@@ -2,8 +2,8 @@ import type { ReactNode } from "react"
 
 import type { PictureCorners } from "../lib/picture-frames"
 import type { PictureSource } from "../lib/picture-sources"
-import { AmbientBackdrop } from "./ambient-backdrop"
 import { Picture } from "./picture"
+import { Stage } from "./stage"
 import { Heading, Text } from "./text"
 
 /**
@@ -13,8 +13,7 @@ import { Heading, Text } from "./text"
  */
 export function DetailHeader({ kind, title, picture, sources, ratio = "square", corners = "normal", children }: { /** What kind of thing it is, in words above the name: «Artist», «Album», «Film». */ kind: string; /** Its name: the page's `<h1>`. */ title: string; picture?: string | null; sources?: readonly PictureSource[]; ratio?: "poster" | "square"; /** What kind of thing it is, as a shape (see `PictureCorners`). */ corners?: PictureCorners; children?: ReactNode }) {
   return (
-    <header className="bg-muted/30 relative isolate overflow-hidden rounded-2xl p-5 @3xl:p-8">
-      <AmbientBackdrop src={picture ?? null} {...(sources === undefined ? {} : { sources })} />
+    <Stage as="header" picture={picture ?? null} {...(sources === undefined ? {} : { sources })}>
       <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-4 @3xl:gap-x-8">
         <Picture src={picture ?? null} {...(sources === undefined ? {} : { sources })} ratio={ratio} corners={corners} size="hero" priority />
         <div className="grid min-w-0 gap-1 [overflow-wrap:anywhere]">
@@ -25,6 +24,6 @@ export function DetailHeader({ kind, title, picture, sources, ratio = "square", 
           {children}
         </div>
       </div>
-    </header>
+    </Stage>
   )
 }

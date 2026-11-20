@@ -33,6 +33,8 @@ void main(){
 }`
 
 export interface AmbientRenderer {
+  /** The four colours it draws with (`mixPalette` between two of them is a change of colour). */
+  setPalette(palette: readonly [Rgb, Rgb, Rgb, Rgb]): void
   draw(light: Light): void
   /** Sets the size of the drawing in pixels (the page stretches it to the size of the head). */
   resize(width: number, height: number): void
@@ -66,10 +68,13 @@ export function createAmbientRenderer(canvas: HTMLCanvasElement, palette: readon
   const position = gl.getAttribLocation(program, "p")
   gl.enableVertexAttribArray(position)
   gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
-  palette.forEach(([r, g, b], index) => gl.uniform3f(gl.getUniformLocation(program, `c${index}`), r / 255, g / 255, b / 255))
+  const colours = [0, 1, 2, 3].map((index) => gl.getUniformLocation(program, `c${index}`))
+  const setPalette = (next: readonly [Rgb, Rgb, Rgb, Rgb]) => next.forEach(([r, g, b], index) => gl.uniform3f(colours[index] ?? null, r / 255, g / 255, b / 255))
+  setPalette(palette)
   const lightAt = gl.getUniformLocation(program, "light")
   const aspectAt = gl.getUniformLocation(program, "aspect")
   return {
+    setPalette,
     draw(light) {
       gl.viewport(0, 0, canvas.width, canvas.height)
       gl.uniform2f(lightAt, light.x, light.y)
