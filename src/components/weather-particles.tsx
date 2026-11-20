@@ -81,6 +81,8 @@ export function WeatherParticles({ symbol, page = false }: { /** Yr's `symbol_co
     let raf = 0
     let last = 0
     let color = "currentColor"
+    // The visual tests ask for a still picture (`data-still` on the page), so the reference is the same every time.
+    const still = document.documentElement.hasAttribute("data-still")
 
     const build = () => {
       const width = target.clientWidth
@@ -112,7 +114,7 @@ export function WeatherParticles({ symbol, page = false }: { /** Yr's `symbol_co
     const sync = () => {
       stop()
       if (specs.length === 0) return
-      if (reduced.matches || document.hidden) paint(0)
+      if (reduced.matches || still || document.hidden) paint(0)
       else raf = requestAnimationFrame(frame)
     }
     const resize = () => {

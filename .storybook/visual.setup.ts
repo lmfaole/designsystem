@@ -1,6 +1,9 @@
 import { afterEach, expect } from "vitest"
 import { page } from "vitest/browser"
 
+// What moves of itself (the particles of the weather) stands still, so the picture is the same every time.
+document.documentElement.dataset.still = ""
+
 /**
  * The visual project (`npm run test:visual`): after each story has rendered and passed its own test, a picture of it is compared with the
  * one kept in `__screenshots__` next to the story file. The pictures are made and kept by CI only (`.github/workflows/visual.yml`): a font
