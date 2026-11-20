@@ -1,0 +1,65 @@
+/*
+ * Light and shadow. One light for the whole page (`lib/light.ts`), where it is is `--light-x` and `--light-y` (-1 to 1 across the screen, x to the right, y down,
+ * the place the light is FROM). `LightSource` moves them with the pointer and the tilt of a phone; with neither, and under `prefers-reduced-motion`, they stay at the
+ * upper left. A shadow falls away from the light, so every elevation below moves with it, and nothing says anything by its shadow alone: a shadow is
+ * depth, never information.
+ */
+
+:root {
+  --light-x: -0.5;
+  --light-y: -0.7;
+  --shadow-color: oklch(0.2 0 0 / 0.3);
+  /* What a record's grooves spread a bright light into. */
+  --spectrum-violet: oklch(0.66 0.24 305);
+  --spectrum-cyan: oklch(0.82 0.13 205);
+  --spectrum-yellow: oklch(0.92 0.17 100);
+  --spectrum-pink: oklch(0.7 0.22 5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --shadow-color: oklch(0 0 0 / 0.6);
+  }
+}
+
+:root[data-theme='dark'] {
+  --shadow-color: oklch(0 0 0 / 0.6);
+}
+
+@layer components {
+  /* Three heights: a card on the page, a thing lifted off it, a thing floating over it. The offset is away from the light; the blur grows with the height. */
+  .elevation-1 {
+    box-shadow: calc(var(--light-x) * -2px) calc(var(--light-y) * -2px) 4px var(--shadow-color);
+  }
+
+  .elevation-2 {
+    box-shadow: calc(var(--light-x) * -6px) calc(var(--light-y) * -6px) 14px var(--shadow-color);
+  }
+
+  .elevation-3 {
+    box-shadow: calc(var(--light-x) * -12px) calc(var(--light-y) * -12px) 28px var(--shadow-color);
+  }
+
+  /*
+   * What a disc shows where WebGL is not (and before it is): two bands of light and the spectrum they spread, on top of the cover, standing still as the disc turns under them
+   * (the grooves are round, so the reflection does not turn). The bands sit on the line from the light through the middle of the disc.
+   */
+  .light-sheen {
+    mix-blend-mode: screen;
+    background:
+      conic-gradient(from calc(atan2(var(--light-y), var(--light-x)) + 47deg), transparent 0 8%, oklch(1 0 0 / 0.5) 12%, transparent 18% 50%, oklch(1 0 0 / 0.35) 62%, transparent 68%),
+      conic-gradient(
+        from calc(atan2(var(--light-y), var(--light-x)) + 47deg),
+        transparent 0 6%,
+        color-mix(in oklch, var(--spectrum-violet) 40%, transparent) 9%,
+        color-mix(in oklch, var(--spectrum-cyan) 40%, transparent) 12%,
+        color-mix(in oklch, var(--spectrum-yellow) 40%, transparent) 15%,
+        color-mix(in oklch, var(--spectrum-pink) 30%, transparent) 18%,
+        transparent 21% 48%,
+        color-mix(in oklch, var(--spectrum-violet) 30%, transparent) 58%,
+        color-mix(in oklch, var(--spectrum-cyan) 30%, transparent) 62%,
+        color-mix(in oklch, var(--spectrum-yellow) 30%, transparent) 66%,
+        transparent 70%
+      );
+  }
+}

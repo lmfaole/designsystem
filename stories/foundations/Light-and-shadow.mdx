@@ -1,0 +1,47 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Foundations/Light and shadow" summary="One light for the whole page: where it is, what it moves (shadows, reflections), what moves it (pointer, tilt), and the rules: depth only, never information; still under reduced motion." />
+
+# Light and shadow
+
+A page has **one light**. Where it is is two numbers, `--light-x` and `--light-y`, from -1 to 1 across the screen (x to the right, y down), and they are
+where the light is **from**: at the upper left (the default, `-0.5 / -0.7`), shadows fall to the lower right. Everything that is lit reads the same
+two numbers, so every shadow and every reflection on a page agree and move together.
+
+## 1. What reads the light
+
+| What | How |
+| --- | --- |
+| `elevation-1`, `-2`, `-3` (a class of `light.css`) | a shadow that falls away from the light: 2, 6 and 12 px away, 4, 14 and 28 px soft. A card on the page, a thing lifted off it, a thing floating over it |
+| `--shadow-color` | the colour of every shadow: a soft dark in light, a deeper one in dark, where a shadow is hard to see |
+| `Picture disc`, `NowPlayingCard` | a record: drawn in WebGL, the cover turns and the reflections do not (the grooves are round), so two bands of light and their spectrum stand on the line from the light through the middle, and move when the light does |
+| `.light-sheen` | the same two bands in CSS, for the disc before WebGL is ready or where it is not there |
+| `--spectrum-violet`, `-cyan`, `-yellow`, `-pink` | what a bright reflection is spread into, as a token |
+
+## 2. What moves the light
+
+`LightSource` (put one on a page that has something lit; `NowPlayingCard` carries its own):
+
+- **The pointer**: the light is at the pointer, across the whole screen, smoothed (half the distance in 120 ms, whatever the frame rate).
+- **A phone's tilt** (`deviceorientation`): how it is held moves the light across the screen. iOS asks first: one button, «La lyset følge telefonen».
+- **Neither**: it stays at the default.
+
+The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromTilt`, `approach`, `shadowOffset`, `lightAngle`. The current light is
+`lightStore.current`, read by the CSS variables and by the discs, once for the whole bundle.
+
+## 3. Rules
+
+- **Depth, never information.** A shadow or a reflection says how far something is from the page, never what it is: nothing says anything by where a shadow falls, how bright a
+  reflection is or what colour its spectrum has. Remove all of it, and the page says the same.
+- **Never text.** Light and shadow do not touch text or its contrast (WCAG 1.4.3). A reflection is on a picture, a shadow is under a surface.
+- **Still under `prefers-reduced-motion`.** The light stays at the upper left, `LightSource` listens to nothing, and a disc does not turn.
+- **Nothing flashes.** Reflections are large and soft, and move at the pace of a hand (WCAG 2.3.1).
+- **What loops can be paused.** The disc turns for as long as it plays, which is a loop past five seconds: it is a button, and a tap pauses it (WCAG 2.2.2).
+- **One that moves.** A page has one thing that turns and shines. Several at once are noise.
+- **Cheap where it counts.** WebGL is a quad and one texture; it stops when the disc is off the screen or the tab is hidden, takes 2× pixels at most and asks for the low-power GPU.
+  The cover must be readable by WebGL (CORS); where it is not, the CSS disc is shown.
+
+## 4. Not yet
+
+The shadows of `shadow-md` and its likes (a hero picture, an overlay) do not read the light yet: they are moved onto `elevation-*` when they are next touched, so that no picture of a
+page changes without anybody having asked.

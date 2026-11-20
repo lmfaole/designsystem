@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.32
+
+**A system for light and shadow** («Foundations / Light and shadow»). A page has one light (`--light-x`, `--light-y`, `lib/light.ts`, `light.css`): `elevation-1` to `-3` are shadows that fall away from it, and `LightSource` moves it with the pointer and, on a phone, with its tilt (iOS asks first). `Picture disc` is now a WebGL record: the cover turns, the reflections stand on the line from the light and move with it, a tap pauses it (WCAG 2.2.2), and it is the same in CSS where WebGL is not there. `NowPlayingCard` is the record large, with «Spilles nå», the dot, the title and a line under it. Light and shadow are depth, never information, and still under `prefers-reduced-motion`.
+
 ## 8.31
 
 **The disc turns for as long as it plays.** Slow (12 s a turn) and forever, instead of three turns that slow to a stop; still under `prefers-reduced-motion`. See «Foundations / Motion», loops.

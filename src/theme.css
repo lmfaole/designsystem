@@ -2,6 +2,7 @@
 @import "@fontsource-variable/atkinson-hyperlegible-next";
 @import "@fontsource-variable/atkinson-hyperlegible-mono";
 @import "./motion.css";
+@import "./light.css";
 @import "./shell.css";
 @import "./icon.css";
 @import "./overlay.css";
