@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from "react"
 
 import type { PictureSource } from "../lib/picture-sources"
+import { LiveDot } from "./live-dot"
 import { Picture, type PictureCorners } from "./picture"
 import { SrTableHead } from "./sr-table-head"
 
@@ -18,6 +19,8 @@ export interface PictureRow {
   detail: ReactNode
   /** Ends the line under the title: a day, a time, a count. */
   aside: string
+  /** Playing now: the picture is a spinning disc (`Picture disc`, needs a square list) and the aside, with a dot, is what says it («Spilles nå»). */
+  live?: boolean
 }
 
 /** The parts of a row's line under the title, those it has, set apart by « · ». */
@@ -46,7 +49,7 @@ export function PictureRows({ rows, ratio, corners = "normal" }: { rows: readonl
         {rows.map((row) => (
           <tr role="row" key={row.key} className={AREAS}>
             <td role="cell" className="mr-2 [grid-area:picture]">
-              <Picture ratio={ratio} corners={row.corners ?? corners} src={row.picture} {...(row.sources === undefined ? {} : { sources: row.sources })} />
+              <Picture ratio={ratio} corners={row.corners ?? corners} disc={row.live === true} src={row.picture} {...(row.sources === undefined ? {} : { sources: row.sources })} />
             </td>
             <td role="rowheader" className="min-w-0 truncate font-medium [grid-area:title]">
               {row.title}
@@ -54,9 +57,16 @@ export function PictureRows({ rows, ratio, corners = "normal" }: { rows: readonl
             <td role="cell" className="min-w-0 truncate text-sm text-muted-foreground [grid-area:detail]">
               {row.detail}
             </td>
-            <td role="cell" className="text-sm whitespace-nowrap text-muted-foreground [grid-area:aside] before:content-['·_']">
-              {row.aside}
-            </td>
+            {row.live === true ? (
+              <td role="cell" className="text-foreground inline-flex items-center gap-1.5 text-sm font-medium whitespace-nowrap [grid-area:aside] before:content-['·_']">
+                <LiveDot />
+                {row.aside}
+              </td>
+            ) : (
+              <td role="cell" className="text-sm whitespace-nowrap text-muted-foreground [grid-area:aside] before:content-['·_']">
+                {row.aside}
+              </td>
+            )}
           </tr>
         ))}
       </tbody>

@@ -73,3 +73,5 @@ export const WithSources: Story = {
 
 /** The picture that leads a detail page: fetched at once and first (`priority`), the only one on the page. */
 export const Priority: Story = { args: { size: "hero", priority: true } }
+/** `disc`: a record playing now, round with a hole in the middle. It spins three times and slows to a stop within five seconds (WCAG 2.2.2), and is still for anyone who asks for less motion; the words «Spilles nå» always stand beside it. */
+export const Disc: Story = { args: { ratio: "square", disc: true, src: poster(40, "A") } }

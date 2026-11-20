@@ -35,7 +35,7 @@ const DRAWN: Record<Ratio, Record<Size, number>> = {
  * no picture or it fails to load: it is then just not drawn in it, with no script to find out. Decorative: the name beside it
  * says what it is. `src` is the address as the browser asks for it; resolving it (a base path, a CDN) is the project's.
  */
-export function Picture({ src, sources, priority = false, ratio = 'poster', size = 'row', corners = 'normal' }: {
+export function Picture({ src, sources, priority = false, ratio = 'poster', size = 'row', corners = 'normal', disc = false }: {
   src: string | null | undefined
   /** The same picture in the widths its source offers: the browser takes the smallest that is sharp here (`srcset`), not the largest. */
   sources?: readonly PictureSource[]
@@ -45,14 +45,17 @@ export function Picture({ src, sources, priority = false, ratio = 'poster', size
   size?: Size
   /** What kind of thing it is, as a shape (see `PictureCorners`). */
   corners?: PictureCorners
+  /** A record playing now: round with a hole in the middle, and it spins three times and slows to a stop (under five seconds, then still). Needs `ratio="square"`; always with the words «playing now» beside it. */
+  disc?: boolean
 }) {
   const [width, height] = SIZES[ratio][size]
   const drawn = DRAWN[ratio][size]
   const set = srcSetOf(sources, drawn)
   const shown = src ?? (sources === undefined ? undefined : fallbackOf(sources, drawn)?.src)
-  const shape = corners === 'round' && ratio === 'poster' ? 'soft' : corners
+  const spinning = disc && ratio === 'square'
+  const shape = spinning ? 'round' : corners === 'round' && ratio === 'poster' ? 'soft' : corners
   return (
-    <div aria-hidden="true" className={cn('shrink-0 overflow-hidden bg-muted', CORNERS[shape], FRAMES[ratio][size], size === 'hero' && 'shadow-md')}>
+    <div aria-hidden="true" className={cn('shrink-0 overflow-hidden bg-muted', CORNERS[shape], FRAMES[ratio][size], size === 'hero' && 'shadow-md', spinning && 'motion-disc relative')}>
       {shown ? (
         <img
           src={shown}
@@ -66,6 +69,7 @@ export function Picture({ src, sources, priority = false, ratio = 'poster', size
           className={cn('size-full object-cover', shape === 'round' && 'object-top')}
         />
       ) : null}
+      {spinning ? <span className="bg-background ring-foreground/25 absolute top-1/2 left-1/2 size-[22%] -translate-x-1/2 -translate-y-1/2 rounded-full ring-1" /> : null}
     </div>
   )
 }

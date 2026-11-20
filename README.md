@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.30
+
+**A song playing now is a spinning disc.** `Picture` takes `disc` (square ratio): the picture is round with a hole in the middle and spins three times, slowing to a stop (`--motion-duration-disc`, 4.8 s: one run under five seconds, WCAG 2.2.2, then still; still from the start under `prefers-reduced-motion`). `PictureRows` rows take `live`: the picture is a disc and the aside, in full text colour with the pulsing `LiveDot`, is what says it («Spilles nå»): the motion is never the only signal.
+
 ## 8.29
 
 **`Rows`: `trailing` is optional.** When no row has one, the value column is not drawn (nor its screen-reader header), so a long title has the whole width. Put the time or the count in the body's own line instead, as the pull request lists of the start page now do.

@@ -18,6 +18,7 @@
   --motion-duration-slow: 400ms; /* a large movement, across a good part of the screen */
   --motion-duration-data: 700ms; /* a bar growing, a number counting up */
   --motion-duration-live: 2400ms; /* one beat of a live pulse; it beats twice */
+  --motion-duration-disc: 4800ms; /* a record spinning up and slowing to a stop: under five seconds, then still */
   --motion-duration-base: var(--motion-duration-enter); /* the old name, kept for the apps */
 
   /* Easings. `enter` decelerates into place, `exit` accelerates away, `standard` moves within the page. */
@@ -48,6 +49,7 @@
     --motion-duration-slow: 0.01ms;
     --motion-duration-data: 0.01ms;
     --motion-duration-live: 0.01ms;
+    --motion-duration-disc: 0.01ms;
     --motion-stagger: 0ms;
   }
 }
@@ -68,6 +70,12 @@
 @keyframes motion-pulse {
   50% {
     opacity: 0.35;
+  }
+}
+
+@keyframes motion-spin {
+  to {
+    rotate: 1080deg;
   }
 }
 
@@ -102,6 +110,11 @@
   /* The pulse of something live: two beats, under five seconds (WCAG 2.2.2), then still. Say «live» in words beside it. */
   .motion-live {
     animation: motion-pulse var(--motion-duration-live) var(--motion-ease-in-out) 2;
+  }
+
+  /* A record that spins three times and slows to a stop (`Picture disc`): one run under five seconds (WCAG 2.2.2), then still. Say «playing now» in words beside it. */
+  .motion-disc {
+    animation: motion-spin var(--motion-duration-disc) var(--motion-ease-enter) 1;
   }
 
   /* A container that is refetching: dimmed while `aria-busy`, back when it settles. A page on its way (`main[aria-busy]`) too. */
@@ -204,7 +217,8 @@
   .motion-reveal,
   .motion-stagger > *,
   .motion-grow,
-  .motion-live {
+  .motion-live,
+  .motion-disc {
     animation: none;
   }
 
