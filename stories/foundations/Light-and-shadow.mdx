@@ -44,6 +44,9 @@ The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromT
 - **One tilt button, once.** Put a `TiltButton` by the main picture, where the page leads with one; on an iPhone it asks to let the light follow how it is held, and nowhere else shows it. The answer is kept in the
   browser (`localStorage`, `ds-light-tilt`: `on` or `denied`), so a reader is asked once and not at every visit: a yes is listened to at once the next time, and if iOS has forgotten it, the next tap on the page asks
   again (a permission can only be asked in a tap); a no is not asked again. Where storage is blocked, nothing is kept and the reader is asked again, which is all that is lost.
+- **The head of a page of a thing is composed, not stacked.** `DetailHeader` puts the main picture and the name together (the picture beside the name on a phone, never above it with a gap of page around it) on a stage whose ground is
+  four colours **taken from the picture** and drawn in WebGL, that move with the light. Only colours are taken, never the picture, so it is safe for sources that forbid altering their pictures. It is drawn when the light changes
+  and at no other time: nothing loops, nothing needs a pause, and it costs no battery at rest. It is the page's `<h1>`: the page leaves out its own title.
 - **Not a row.** The 40 px picture of a row is not lit, and a page with many pictures does not light them all.
 
 ## 4. Rules

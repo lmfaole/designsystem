@@ -41,6 +41,7 @@ function tick(now: number): void {
   const root = document.documentElement
   root.style.setProperty("--light-x", lightStore.current.x.toFixed(3))
   root.style.setProperty("--light-y", lightStore.current.y.toFixed(3))
+  for (const listener of lightStore.listeners) listener()
   if (!settled(lightStore.current, lightStore.target)) frame = requestAnimationFrame(tick)
 }
 

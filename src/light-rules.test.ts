@@ -33,3 +33,19 @@ test("the guide says where the light goes", () => {
   const guide = readFileSync(join(import.meta.dirname, "..", "stories", "foundations", "Light-and-shadow.mdx"), "utf8")
   assert.match(guide, /## \d+\. Where the light goes/)
 })
+
+test("the head of a page of a thing is the page's h1 with the lit main picture and a backdrop that draws only when the light changes", () => {
+  const header = source("detail-header.tsx")
+  assert.match(header, /<Heading level=\{1\}/)
+  assert.match(header, /size="hero"/)
+  assert.match(header, /<AmbientBackdrop/)
+  const backdrop = source("ambient-backdrop.tsx")
+  assert.match(backdrop, /lightStore\.listeners\.add/)
+  assert.equal(backdrop.match(/requestAnimationFrame\(/g)?.length, 1, "the one frame it asks for is the draw the light asked for, and the draw asks for no other: nothing loops")
+})
+
+test("the backdrop's strength in the component is the one the contrast test measured", async () => {
+  const { BACKDROP_OPACITY } = await import("./lib/palette.ts")
+  const backdrop = source("ambient-backdrop.tsx")
+  assert.ok(backdrop.includes(`opacity-${Math.round(BACKDROP_OPACITY.light * 100)} dark:opacity-${Math.round(BACKDROP_OPACITY.dark * 100)}`))
+})

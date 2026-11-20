@@ -50,7 +50,7 @@ export const lightAngle = (light: Light): number => Math.atan2(light.y, light.x)
 export const settled = (a: Light, b: Light): boolean => Math.abs(a.x - b.x) < 0.002 && Math.abs(a.y - b.y) < 0.002
 
 /**
- * The light every part of a page shares: `target` is where the sources (pointer, tilt) want it and `current` where it is, smoothed. `LightSource` moves them; the CSS
+ * The light every part of a page shares: `target` is where the sources (pointer, tilt) want it and `current` where it is, smoothed. `lib/light-input.ts` moves them, and calls the `listeners` each time it has; the CSS
  * variables and the WebGL discs read `current`. One per bundle, so an island of its own sees the same light as the rest of the page.
  */
 export const lightStore: { target: Light; current: Light; listeners: Set<() => void> } = { target: DEFAULT_LIGHT, current: DEFAULT_LIGHT, listeners: new Set() }
