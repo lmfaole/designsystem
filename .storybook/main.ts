@@ -18,8 +18,8 @@ const config: StorybookConfig = {
     // every guide, as data an agent can read from the published Storybook (the skills point at it).
     componentsManifest: true,
   },
-  // react-docgen (the default) reads the props and their JSDoc for the props tables, the controls and the manifest. react-docgen-typescript
-  // would see more, but it needs TypeScript's JavaScript API, which TypeScript 7 (this repository's) no longer has.
+  // react-docgen (the default; an explicit devDependency since Storybook 11 made it optional) reads the props and their JSDoc for the props tables, the controls and the manifest. react-docgen-typescript
+  // gave the same answer here, so it is not used: it would need the `typescript` package, which is TypeScript 6 (side by side with the TypeScript 7 that `tsc` runs; Storybook 11 asks for both).
   tags: {
     // A component on its way in or out: in the sidebar's tag filter, hidden by default, and kept out of the manifest (`!manifest` on it).
     experimental: { defaultFilterSelection: "exclude" },
