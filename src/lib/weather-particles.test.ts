@@ -7,21 +7,23 @@ test("every kind of weather has particles that show it", () => {
   for (const code of ["clearsky_day", "clearsky_night", "partlycloudy_day", "cloudy", "fog", "rain", "heavyrain", "lightsleet", "snow", "rainandthunder"]) {
     assert.ok(particlesOf(code).length > 0, code)
   }
-  assert.equal(particlesOf("rain")[0]?.shape, "streak")
-  assert.equal(particlesOf("heavysnow")[0]?.shape, "flake")
+  const shapes = (code: string) => particlesOf(code).map((spec) => spec.shape)
+  assert.ok(shapes("rain").includes("streak") && shapes("rain").includes("cloud"))
+  assert.ok(shapes("heavysnow").includes("flake"))
+  assert.ok(shapes("clearsky_day").includes("sun") && !shapes("clearsky_night").includes("sun"))
   assert.equal(particlesOf("clearsky_night")[0]?.shape, "star")
 })
 
 test("a heavier weather has more particles, and the count follows the surface", () => {
-  const [rain] = particlesOf("rain")
-  const [thunder] = particlesOf("rainandthunder")
+  const rain = particlesOf("rain").at(-1)
+  const thunder = particlesOf("rainandthunder").at(-1)
   assert.ok(rain && thunder)
   assert.ok(countOf(thunder, 1000, 800) > countOf(rain, 1000, 800))
   assert.ok(countOf(rain, 2000, 800) > countOf(rain, 1000, 800))
 })
 
 test("a particle that falls out at the foot comes in again at the top, and stays on the surface", () => {
-  const [rain] = particlesOf("rain")
+  const rain = particlesOf("rain").at(-1)
   assert.ok(rain)
   let particle = { x: 500, y: 790, seed: 0.5 }
   for (let step = 0; step < 600; step++) {

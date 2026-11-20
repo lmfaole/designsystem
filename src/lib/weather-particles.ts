@@ -1,7 +1,7 @@
 import { readSymbol, type WeatherKind, type WeatherPeriod } from "./weather-mood.ts"
 
 /** What a weather looks like as moving things: streaks of rain, flakes of snow, drifting mist, slow cloud, stars. Pure, so a test pins it. */
-export type ParticleShape = "streak" | "flake" | "mist" | "mote" | "star"
+export type ParticleShape = "streak" | "flake" | "mist" | "cloud" | "mote" | "star" | "sun"
 
 export interface ParticleSpec {
   shape: ParticleShape
@@ -15,12 +15,24 @@ export interface ParticleSpec {
   size: readonly [number, number]
   /** Strength of one particle, 0 to 1. */
   alpha: number
+  /** A fixed number instead of one by the surface's size. */
+  count?: number
 }
 
-const RAIN: ParticleSpec = { shape: "streak", density: 28, fall: [700, 1000], wind: -120, size: [14, 26], alpha: 0.55 }
-const SNOW: ParticleSpec = { shape: "flake", density: 22, fall: [30, 80], wind: 14, size: [1.5, 3.5], alpha: 0.9 }
+/** The sun's glow: a warm light, drawn from its own colour and not the text's, in the corner of the surface. */
+export const SUN_GLOW = "oklch(0.88 0.14 85)"
+export const SUN_ANCHOR = { x: 0.82, y: 0.1 } as const
 
-/** The particles of a weather. */
+const RAIN_FAR: ParticleSpec = { shape: "streak", density: 14, fall: [450, 650], wind: -70, size: [8, 14], alpha: 0.35 }
+const RAIN_NEAR: ParticleSpec = { shape: "streak", density: 14, fall: [900, 1200], wind: -160, size: [22, 34], alpha: 0.6 }
+const SNOW_FAR: ParticleSpec = { shape: "flake", density: 18, fall: [20, 45], wind: 8, size: [1, 2], alpha: 0.6 }
+const SNOW_NEAR: ParticleSpec = { shape: "flake", density: 8, fall: [60, 110], wind: 18, size: [2.5, 4.5], alpha: 0.9 }
+const RAIN = [RAIN_FAR, RAIN_NEAR]
+const SNOW = [SNOW_FAR, SNOW_NEAR]
+const CLOUD: ParticleSpec = { shape: "cloud", density: 0.7, fall: [0, 0], wind: 9, size: [90, 170], alpha: 0.12 }
+const SUN: ParticleSpec = { shape: "sun", density: 0, count: 1, fall: [0, 0], wind: 0, size: [300, 300], alpha: 0.3 }
+
+/** The particles of a weather: the far and the near of the rain and the snow, clouds that drift, a sun in the corner, stars. */
 export function particlesOf(code: string): ParticleSpec[] {
   const { kind, period } = readSymbol(code)
   return specOf(kind, period)
@@ -29,23 +41,23 @@ export function particlesOf(code: string): ParticleSpec[] {
 function specOf(kind: WeatherKind, period: WeatherPeriod): ParticleSpec[] {
   switch (kind) {
     case "rain":
-      return [RAIN]
+      return [CLOUD, ...RAIN]
     case "thunder":
-      return [{ ...RAIN, density: 40, fall: [900, 1200], wind: -180 }]
+      return [{ ...CLOUD, density: 1, alpha: 0.16 }, ...RAIN.map((spec) => ({ ...spec, density: spec.density * 1.5, wind: spec.wind * 1.3 }))]
     case "sleet":
-      return [{ ...RAIN, density: 16, size: [8, 14] }, { ...SNOW, density: 12, fall: [120, 200] }]
+      return [CLOUD, { ...RAIN_NEAR, density: 12, size: [8, 14] }, { ...SNOW_NEAR, density: 10, fall: [120, 200] }]
     case "snow":
-      return [SNOW]
+      return [CLOUD, ...SNOW]
     case "fog":
       return [{ shape: "mist", density: 1.6, fall: [0, 0], wind: 12, size: [160, 300], alpha: 0.12 }]
     case "cloudy":
-      return [{ shape: "mist", density: 1, fall: [0, 0], wind: 8, size: [200, 340], alpha: 0.1 }]
+      return [{ ...CLOUD, density: 1.1 }]
     case "partly":
-      return [{ shape: "mist", density: 0.6, fall: [0, 0], wind: 8, size: [200, 340], alpha: 0.1 }]
+      return period === "night" ? [{ ...CLOUD, density: 0.6 }] : [SUN, { ...CLOUD, density: 0.6 }]
     case "clear":
       return period === "night"
         ? [{ shape: "star", density: 7, fall: [0, 0], wind: 0, size: [0.8, 1.8], alpha: 0.9 }]
-        : [{ shape: "mote", density: 3, fall: [-14, -6], wind: 4, size: [1.5, 3], alpha: 0.7 }]
+        : [SUN, { shape: "mote", density: 3, fall: [-14, -6], wind: 4, size: [1.5, 3], alpha: 0.7 }]
   }
 }
 
@@ -56,7 +68,7 @@ export interface Particle {
   seed: number
 }
 
-export const countOf = (spec: ParticleSpec, width: number, height: number): number => Math.round((spec.density * width * height) / 100_000)
+export const countOf = (spec: ParticleSpec, width: number, height: number): number => spec.count ?? Math.round((spec.density * width * height) / 100_000)
 
 const lerp = (range: readonly [number, number], t: number): number => range[0] + (range[1] - range[0]) * t
 
@@ -68,7 +80,7 @@ export function advance(particle: Particle, spec: ParticleSpec, seconds: number,
   const sway = spec.shape === "flake" || spec.shape === "mote" ? Math.sin(particle.y / 60 + particle.seed * 6.28) * 10 : 0
   let x = particle.x + (spec.wind * (0.6 + particle.seed * 0.8) + sway) * seconds
   let y = particle.y + speed * seconds
-  const margin = spec.shape === "mist" ? spec.size[1] : spec.size[1] * 2
+  const margin = spec.shape === "mist" || spec.shape === "cloud" ? spec.size[1] : spec.size[1] * 2
   if (y > height + margin) y -= height + margin * 2
   else if (y < -margin) y += height + margin * 2
   if (x > width + margin) x -= width + margin * 2

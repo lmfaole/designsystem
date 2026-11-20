@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from "react"
 
-import { advance, countOf, scatter, particlesOf, sizeOf, type Particle, type ParticleSpec } from "../lib/weather-particles"
+import { advance, countOf, scatter, particlesOf, sizeOf, SUN_ANCHOR, SUN_GLOW, type Particle, type ParticleSpec } from "../lib/weather-particles"
 import { cn } from "../lib/utils"
+
+/** The puffs of a cloud: offset sideways and up, in units of its size, and a share of it. */
+const PUFFS = [[-0.9, 0.15, 0.55], [-0.4, -0.1, 0.75], [0.2, -0.2, 0.9], [0.8, 0, 0.7], [1.2, 0.2, 0.5]] as const
 
 function draw(context: CanvasRenderingContext2D, spec: ParticleSpec, particles: Particle[], color: string, time: number) {
   context.fillStyle = color
@@ -17,6 +20,30 @@ function draw(context: CanvasRenderingContext2D, spec: ParticleSpec, particles: 
       context.moveTo(particle.x, particle.y)
       context.lineTo(particle.x - spec.wind * (size / 1000) * 3, particle.y - size)
       context.stroke()
+    } else if (spec.shape === "sun") {
+      const x = context.canvas.width * SUN_ANCHOR.x
+      const y = context.canvas.height * SUN_ANCHOR.y
+      const glow = context.createRadialGradient(x, y, 0, x, y, size)
+      glow.addColorStop(0, SUN_GLOW)
+      glow.addColorStop(1, "transparent")
+      context.globalAlpha = spec.alpha
+      context.fillStyle = glow
+      context.fillRect(x - size, y - size, size * 2, size * 2)
+      context.fillStyle = color
+    } else if (spec.shape === "cloud") {
+      // A cloud is a few soft puffs side by side, the middle one the largest.
+      context.globalAlpha = spec.alpha
+      for (const [dx, dy, scale] of PUFFS) {
+        const r = size * scale
+        const px = particle.x + dx * size
+        const py = particle.y + dy * size
+        const puff = context.createRadialGradient(px, py, 0, px, py, r)
+        puff.addColorStop(0, color)
+        puff.addColorStop(1, "transparent")
+        context.fillStyle = puff
+        context.fillRect(px - r, py - r, r * 2, r * 2)
+      }
+      context.fillStyle = color
     } else if (spec.shape === "mist") {
       const gradient = context.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, size)
       gradient.addColorStop(0, color)

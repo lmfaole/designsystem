@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.42
+
+**The weather's atmosphere, deeper.** Rain and snow are in two layers, far (short, slow, weak) and near (long, fast, strong), and rain falls behind drifting clouds; clouds are soft puffs side by side that drift slowly; a clear or partly cloudy day has a warm sun glow in the upper right corner (`SUN_GLOW`, weak enough that muted text keeps its contrast in both themes); a clear night keeps its stars. There is no flash for thunder (WCAG 2.3.1).
+
 ## 8.41
 
 **The weather as particles.** `WeatherStage` (card and `page`) now shows the weather moving on a 2D canvas (`WeatherParticles`): rain and thunder as streaks falling aslant, snow as drifting flakes, sleet as both, fog and cloud as slow mist, a clear night as twinkling stars, a clear day as a few rising motes. In the text colour at low strength, behind the content, never following the pointer. It is drawn once and still under `prefers-reduced-motion`, and does not run in a hidden tab. Unlike the rest of the light, it moves for as long as the page is open: it is the weather's own picture, and it is decoration, hidden from assistive technology.
