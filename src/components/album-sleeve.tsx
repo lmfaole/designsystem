@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import { effectsEnabled } from "../lib/effects"
 import { acquireGlSlot } from "../lib/gl-budget"
 import { lightStore } from "../lib/light"
 import { acquireLightInput } from "../lib/light-input"
@@ -44,7 +45,7 @@ export function AlbumSleeve({ src, sources }: { src?: string | null; sources?: r
 
   useEffect(() => {
     const target = canvas.current
-    if (shown === undefined || target === null || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (shown === undefined || target === null || !effectsEnabled(target) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const slot = acquireGlSlot()
     if (slot === null) return
     const release = acquireLightInput()

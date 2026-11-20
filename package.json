@@ -1,6 +1,6 @@
 {
   "name": "@lmfaole/designsystem",
-  "version": "8.48.0",
+  "version": "8.49.0",
   "private": true,
   "type": "module",
   "description": "The design system: the theme (tokens, fonts, motion), the building blocks a page is put together from, and the components built on them. React and Tailwind, shipped as source.",
@@ -22,6 +22,7 @@
     "./motion.css": "./src/motion.css",
     "./shell.css": "./src/shell.css",
     "./overlay.css": "./src/overlay.css",
+    "./first-run.css": "./src/first-run.css",
     "./components/button": "./src/components/ui/button.tsx",
     "./components/button-group": "./src/components/ui/button-group.tsx",
     "./components/card": "./src/components/ui/card.tsx",

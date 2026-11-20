@@ -50,6 +50,22 @@
       calc(var(--light-x) * -7px) calc(var(--light-y) * -7px) 16px var(--shadow-color);
   }
 
+  /* Where the light is, drawn: a soft pool of it on a surface and a small sun at its place, for a preview of the light (`TiltPreview`). Both follow `--light-x` and `--light-y`. */
+  .light-spot {
+    background: radial-gradient(
+      circle at calc(50% + var(--light-x) * 45%) calc(50% + var(--light-y) * 45%),
+      color-mix(in oklch, var(--foreground) 16%, transparent),
+      transparent 60%
+    );
+  }
+
+  .light-dot {
+    position: absolute;
+    inset-inline-start: calc(50% + var(--light-x) * (50% - 1.5rem));
+    inset-block-start: calc(50% + var(--light-y) * (50% - 1.5rem));
+    translate: -50% -50%;
+  }
+
   .elevation-3 {
     box-shadow: calc(var(--light-x) * -12px) calc(var(--light-y) * -12px) 28px var(--shadow-color);
   }

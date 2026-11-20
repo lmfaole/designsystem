@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 
-import { readTiltPreference, TILT_KEY, writeTiltPreference } from "./light-preference.ts"
+import { readTiltPreference, resolveTiltPreference, TILT_KEY, writeTiltPreference } from "./light-preference.ts"
 
 const memory = () => {
   const data = new Map<string, string>()
@@ -27,4 +27,14 @@ test("storage that is missing or throws loses the answer and breaks nothing", ()
   assert.equal(readTiltPreference(broken), null)
   assert.doesNotThrow(() => writeTiltPreference(broken, "on"))
   assert.doesNotThrow(() => writeTiltPreference(null, "on"))
+})
+
+test("the page's data-tilt comes before what the browser kept, and without it the kept answer counts", () => {
+  const storage = memory()
+  writeTiltPreference(storage, "denied")
+  assert.equal(resolveTiltPreference("on", storage), "on")
+  writeTiltPreference(storage, "on")
+  assert.equal(resolveTiltPreference("off", storage), "denied")
+  assert.equal(resolveTiltPreference(undefined, storage), "on")
+  assert.equal(resolveTiltPreference("maybe", null), null)
 })

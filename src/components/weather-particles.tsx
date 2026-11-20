@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 
+import { effectsEnabled } from "../lib/effects"
 import { advance, countOf, scatter, particlesOf, sizeOf, SUN_ANCHOR, SUN_GLOW, type Particle, type ParticleSpec } from "../lib/weather-particles"
 import { cn } from "../lib/utils"
 
@@ -65,7 +66,7 @@ function draw(context: CanvasRenderingContext2D, spec: ParticleSpec, particles: 
 
 /**
  * What the weather looks like, as particles on a canvas (2D, no library): rain and thunder as streaks falling aslant, snow as flakes drifting down, sleet as both, fog and cloud as slow mist, a clear night as twinkling stars
- * and a clear day as a few rising motes. In the text colour at low strength, behind the content, and not part of the page for assistive technology. Under `prefers-reduced-motion` it is drawn once and still; it does not run in a
+ * and a clear day as a few rising motes. In the text colour at low strength, behind the content, and not part of the page for assistive technology. Under `prefers-reduced-motion`, and where the visitor turned the effects off (`data-effects="off"`), it is drawn once and still; it does not run in a
  * tab that is hidden, and it does not follow the pointer.
  */
 export function WeatherParticles({ symbol, page = false }: { /** Yr's `symbol_code`. */ symbol: string; /** Fixed to the screen, behind the whole page, instead of filling its parent. */ page?: boolean }) {
@@ -82,7 +83,8 @@ export function WeatherParticles({ symbol, page = false }: { /** Yr's `symbol_co
     let last = 0
     let color = "currentColor"
     // The visual tests ask for a still picture (`data-still` on the page), so the reference is the same every time.
-    const still = document.documentElement.hasAttribute("data-still")
+    // A visitor who turned the effects off (`data-effects="off"`) gets them still too, as under reduced motion.
+    const still = document.documentElement.hasAttribute("data-still") || !effectsEnabled(target)
 
     const build = () => {
       const width = target.clientWidth

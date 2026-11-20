@@ -1,0 +1,109 @@
+/*
+ * The first visit's introduction (`FirstRun`): the whole screen, the page's own ground, a calm column in the middle, a bar at the top with the title and
+ * the progress, and the buttons at the foot, both staying while the step scrolls. Without JavaScript every step stands under the other; with
+ * `FirstRunEnhancer` (`data-enhanced`) one step at a time, moving in from the side it comes from: forward from the end, back from the start.
+ * Entrances move and never fade, on the `--motion-*` tokens, so they land at once under reduced motion (motion.css).
+ */
+dialog[data-first-run] {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  inline-size: 100%;
+  block-size: 100dvh;
+  max-inline-size: none;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--background);
+  color: var(--foreground);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+dialog[data-first-run]:not([open]) {
+  display: none;
+}
+
+/* Over the whole page and opaque: nothing of the page shows round it, and the page does not scroll under it. */
+dialog[data-first-run]::backdrop {
+  background: var(--background);
+}
+
+html:has(dialog[data-first-run]:modal) {
+  overflow: hidden;
+}
+
+[data-first-run-form] {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-block-size: 100%;
+}
+
+[data-first-run-column] {
+  inline-size: min(100% - 2rem, 36rem);
+  margin-inline: auto;
+}
+
+[data-first-run-header],
+[data-first-run-footer] {
+  position: sticky;
+  z-index: 1;
+  background: color-mix(in oklch, var(--background) 90%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+[data-first-run-header] {
+  inset-block-start: 0;
+  padding-block: calc(0.75rem + var(--safe-top)) 0.75rem;
+  border-block-end: 1px solid var(--border);
+}
+
+[data-first-run-footer] {
+  inset-block-end: 0;
+  padding-block: 0.75rem calc(0.5rem + var(--safe-bottom));
+  border-block-start: 1px solid var(--border);
+}
+
+[data-first-run-steps] {
+  display: grid;
+  gap: 3rem;
+  align-content: start;
+  padding-block: 2.5rem 3rem;
+}
+
+/* Without JavaScript: every step, one after the other, divided by a line. */
+dialog[data-first-run]:not([data-enhanced]) [data-step] + [data-step] {
+  padding-block-start: 3rem;
+  border-block-start: 1px solid var(--border);
+}
+
+/* One step at a time, in the middle of the screen where it is short. */
+dialog[data-first-run][data-enhanced] [data-first-run-steps] {
+  align-content: safe center;
+}
+
+dialog[data-first-run][data-enhanced] [data-step]:not([hidden]) {
+  animation: first-run-forward var(--motion-duration-slow) var(--motion-ease-enter) both;
+}
+
+dialog[data-first-run][data-enhanced][data-direction='back'] [data-step]:not([hidden]) {
+  animation-name: first-run-back;
+}
+
+dialog[data-first-run][data-enhanced][data-direction='none'] [data-step]:not([hidden]) {
+  animation-name: motion-rise;
+  animation-duration: var(--motion-duration-reveal);
+}
+
+@keyframes first-run-forward {
+  from {
+    transform: translateX(3rem);
+  }
+}
+
+@keyframes first-run-back {
+  from {
+    transform: translateX(-3rem);
+  }
+}

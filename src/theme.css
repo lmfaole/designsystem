@@ -6,6 +6,7 @@
 @import "./shell.css";
 @import "./icon.css";
 @import "./overlay.css";
+@import "./first-run.css";
 
 /*
  * Tailwind's automatic content detection skips anything under `node_modules`, which is where a project that uses
@@ -203,8 +204,9 @@
 }
 
 /* The same dark theme, forced by `data-theme="dark"` on the root or on any element: for Storybook's theme toolbar («Begge» draws a story in
-   light and in dark side by side) and the tests. An app does not set it: its theme follows the device (rule 6). `data-theme="light"`
-   forces light the same way (the light block above takes it too). */
+   light and in dark side by side) and the tests. An app sets it only from a visitor's own choice (`lib/preferences`, `htmlAttributes`, on
+   `<html>` on the server so nothing flashes); without one, its theme follows the device (rule 6). `data-theme="light"` forces light the
+   same way (the light block above takes it too). */
 [data-theme="dark"] {
     color-scheme: dark;
     --background: oklch(0.145 0 0);

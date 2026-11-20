@@ -13,7 +13,7 @@ const meta = {
 
 a page leads with a lit picture (\`Picture size="hero"\`, \`NowPlayingCard\`) and should let the reader of an iPhone have the light follow how the phone is held. iOS wants the reader to say yes first, in a tap: this is that tap. Put one by the main picture. \`NowPlayingCard\` carries its own.
 
-It shows only on a phone or a tablet that asks first, that has not been answered, and not under \`prefers-reduced-motion\`: on a desktop, or on a phone that needs no asking, it draws nothing, so it can sit on every page with a lit picture. The answer is kept in the browser (\`localStorage\`, key \`ds-light-tilt\`: \`on\` or \`denied\`), so the reader is asked once and not at every visit.
+It shows only on a phone or a tablet that asks first, that has not been answered, and not under \`prefers-reduced-motion\`: on a desktop, or on a phone that needs no asking, it draws nothing, so it can sit on every page with a lit picture. The answer is kept in the browser (\`localStorage\`, key \`ds-light-tilt\`: \`on\` or \`denied\`), so the reader is asked once and not at every visit. Where the app has put the visitor's own choice on \`<html>\` (\`data-tilt="on"\` or \`"off"\`, from \`lib/preferences\`), that choice counts first and the button is not shown: the settings ask instead (\`TiltPreview\`).
 
 ### Do not use it when
 

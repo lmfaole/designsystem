@@ -29,6 +29,16 @@ export function writeTiltPreference(storage: Writing | null, value: TiltPreferen
   }
 }
 
+/**
+ * The answer that counts: what the app has put on `<html>` from the visitor's choice (`data-tilt`, from the `prefs` cookie, `lib/preferences`) comes first, `on` as a yes and `off` as a no; where it
+ * says nothing, what the browser has kept.
+ */
+export function resolveTiltPreference(attribute: string | null | undefined, storage: Reading | null): TiltPreference {
+  if (attribute === "on") return "on"
+  if (attribute === "off") return "denied"
+  return readTiltPreference(storage)
+}
+
 /** The browser's local storage, or `null` where there is none or touching it throws. */
 export function browserStorage(): Storage | null {
   try {

@@ -43,7 +43,7 @@ fits, the markup becomes a component in the design system, named for what it is,
   `series-*` colours. No hex, no `rgb()`, no `bg-white`. A test fails on a raw colour.
 - **`destructive` is for what stops something**, not for emphasis. There is no green: good is plain; a good state is told by a
   symbol and words. Colour is never the only signal (see **designsystem-accessibility**).
-- Light and dark follow `prefers-color-scheme`; both are checked in Storybook.
+- Light and dark follow `prefers-color-scheme`; both are checked in Storybook. An app sets `data-theme` (and `data-effects`, `data-tilt`) on `<html>` only from the visitor's own choice, with `htmlAttributes` from `lib/preferences`.
 
 ## Charts
 

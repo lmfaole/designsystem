@@ -1,4 +1,4 @@
-import { Icon } from "./icon"
+import { FieldError } from "./field-error"
 import { Text } from "./text"
 
 const TYPES = ["text", "search", "email", "url", "number"] as const
@@ -16,7 +16,7 @@ export function TextField({ label, name, type = "text", hint, error, optional = 
   const errorId = `${name}-error`
   const described = [hint === undefined ? null : hintId, error === undefined ? null : errorId].filter((id) => id !== null).join(" ")
   return (
-    <div className="grid gap-1">
+    <div className="grid gap-1" data-field="">
       <label htmlFor={name} className="text-sm font-medium">
         {label}
         {optional ? <span className="text-muted-foreground font-normal"> (valgfritt)</span> : null}
@@ -26,15 +26,7 @@ export function TextField({ label, name, type = "text", hint, error, optional = 
           {hint}
         </Text>
       )}
-      {error === undefined ? null : (
-        <p id={errorId} className="text-destructive flex items-start gap-1 text-sm font-medium">
-          <Icon name="warning" size="sm" tone="destructive" />
-          <span>
-            <span className="sr-only">Feil: </span>
-            {error}
-          </span>
-        </p>
-      )}
+      {error === undefined ? null : <FieldError id={errorId}>{error}</FieldError>}
       <input
         id={name}
         name={name}

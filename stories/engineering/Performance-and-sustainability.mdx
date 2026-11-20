@@ -90,7 +90,9 @@ It is an estimate that errs high on purpose, from bytes alone: good for «is thi
 ## 9. Myths
 
 - **«Dark mode saves energy»**: only on OLED screens at high brightness (about 40 % of the display's power at 100 %, 3–9 % at the usual
-  30–50 %), and nothing on LCD. The theme follows the device for comfort and choice; it is not a carbon measure and is never forced.
+  30–50 %), and nothing on LCD. The theme follows the device for comfort and choice; it is not a carbon measure and is never forced on a
+  visitor: an app sets another only when the visitor chooses one (`lib/preferences`). A visitor can also turn the WebGL effects off
+  (`data-effects="off"`), and then no page makes a GL context.
 - **«Green hosting makes the site green»**: the device is the larger part.
 - **`prefers-reduced-data`** is in no browser yet, and `Save-Data` only in Chromium: an app may use them as an extra, never rely on them.
 

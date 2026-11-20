@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import { effectsEnabled } from "../lib/effects"
 import { acquireGlSlot } from "../lib/gl-budget"
 import { createAmbientRenderer, type AmbientRenderer } from "../lib/ambient-shader"
 import { DEFAULT_LIGHT, lightStore } from "../lib/light"
@@ -29,7 +30,8 @@ export function AmbientBackdrop({ src, sources, palette, page = false }: { src?:
   // The surface: a renderer for as long as the component is there, and the light it draws by.
   useEffect(() => {
     const target = canvas.current
-    if (target === null) return
+    // The visitor turned the effects off (`data-effects="off"`): the plain tinted ground, and no context.
+    if (target === null || !effectsEnabled(target)) return
     const slot = acquireGlSlot()
     if (slot === null) return
     // A given palette (the weather) holds still: it does not follow the pointer or the tilt.

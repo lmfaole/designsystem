@@ -1,10 +1,12 @@
-import { approach, lightFromPointer, lightFromTilt, lightStore, settled } from "./light"
-import { browserStorage, readTiltPreference, writeTiltPreference } from "./light-preference"
+import { approach, lightFromPointer, lightFromTilt, lightStore, settled, type Light } from "./light"
+import { browserStorage, resolveTiltPreference, writeTiltPreference } from "./light-preference"
 
 /**
  * What moves the page's light, once for the whole page however many parts ask (`LightSource`, `TiltButton`, every lit `Picture`): the pointer, and the tilt of a phone. The light is smoothed in a
  * loop that runs only while it is still moving, and written as `--light-x` and `--light-y` on the root. Under `prefers-reduced-motion` nothing moves it. On a phone that asks first (iOS) a tilt
  * the reader has already allowed is listened to without asking again; if nothing arrives (iOS forgets), the next tap anywhere asks, since that is what the browser wants a permission asked in.
+ * The visitor's choice on `<html>` (`data-tilt="on|off"`, `lib/preferences`) comes before what the browser has kept: with `off` the tilt is not listened to at all, not even where no one is asked
+ * (Android).
  */
 
 type Permission = { requestPermission?: () => Promise<"granted" | "denied"> }
@@ -18,7 +20,12 @@ const permissionCall = (): Ask | null => {
 /** True on a phone or a tablet that must be asked before it tells how it is held, and has not been answered yet: where a button for it is worth showing. */
 export function tiltIsAskable(): boolean {
   if (typeof window === "undefined" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false
-  return permissionCall() !== null && window.matchMedia("(pointer: coarse)").matches && readTiltPreference(browserStorage()) === null
+  return permissionCall() !== null && window.matchMedia("(pointer: coarse)").matches && tiltPreference() === null
+}
+
+/** The answer that counts now: the page's `data-tilt` first, then what the browser has kept. */
+function tiltPreference() {
+  return resolveTiltPreference(document.documentElement.dataset.tilt, browserStorage())
 }
 
 let users = 0
@@ -64,6 +71,24 @@ function listenToTilt(): void {
   window.addEventListener("deviceorientation", onTilt, { passive: true })
 }
 
+/**
+ * What this device can do with its tilt: `ask` (it must ask first, iOS), `free` (a phone that tells without asking, Android), `none` (a desktop, or no sensor), `still` (`prefers-reduced-motion`:
+ * nothing moves the light). For a control that offers it (`TiltPreview`).
+ */
+export function tiltSupport(): "ask" | "free" | "none" | "still" {
+  if (typeof window === "undefined") return "none"
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "still"
+  if (!("DeviceOrientationEvent" in window) || !window.matchMedia("(pointer: coarse)").matches) return "none"
+  return permissionCall() === null ? "free" : "ask"
+}
+
+/** Puts the light at a place for a while, as a pointer would (a preview that shows how it moves). Nothing under `prefers-reduced-motion`, and nothing while a tilt is moving it. */
+export function aimLight(light: Light): void {
+  if (tilted || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+  lightStore.target = light
+  wake()
+}
+
 /** Asks the reader's phone for how it is held, and keeps the answer. Call it from a tap: that is the only place the browser lets it be asked. */
 export async function requestTilt(): Promise<boolean> {
   const ask = permissionCall()
@@ -88,8 +113,10 @@ function start(): () => void {
     window.removeEventListener("pointerdown", regrant)
     void requestTilt()
   }
-  const preference = readTiltPreference(browserStorage())
-  if (permissionCall() === null) listenToTilt()
+  const preference = tiltPreference()
+  if (document.documentElement.dataset.tilt === "off") {
+    // The visitor said no in the app's settings: the pointer moves the light, the phone does not.
+  } else if (permissionCall() === null) listenToTilt()
   else if (preference === "on") {
     listenToTilt()
     // Allowed before: if nothing comes, the browser has forgotten, and the next tap (a gesture) asks again.

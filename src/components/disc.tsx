@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import { createDiscRenderer, type DiscRenderer } from "../lib/disc-shader"
+import { effectsEnabled } from "../lib/effects"
 import { acquireGlSlot } from "../lib/gl-budget"
 import { FULL, measure, nextQuality, START, type Meter, type Quality } from "../lib/gl-quality"
 import { coverTraits, NEUTRAL_TRAITS } from "../lib/palette"
@@ -60,7 +61,8 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
   useEffect(() => {
     const target = canvas.current
     // Read here, not from state: the state is set in an effect of its own, after this one has run once.
-    if (reduced || shown === undefined || target === null || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    // Effects off (`data-effects="off"`): the CSS disc, and no context.
+    if (reduced || shown === undefined || target === null || !effectsEnabled(target) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
     const slot = acquireGlSlot()
     if (slot === null) return
     let renderer: DiscRenderer | null = null

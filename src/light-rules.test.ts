@@ -25,8 +25,18 @@ test("the main picture is lit on its frame, outside the picture: nothing of the 
 test("the card of what plays now offers the tilt once, and the answer is kept so a reader is not asked at every visit", () => {
   assert.match(source("now-playing-card.tsx"), /<TiltButton \/>/)
   const input = readFileSync(join(import.meta.dirname, "lib", "light-input.ts"), "utf8")
-  assert.match(input, /readTiltPreference/)
+  assert.match(input, /resolveTiltPreference/, "the page's data-tilt first, then what the browser kept")
   assert.match(input, /writeTiltPreference/)
+})
+
+test("a visitor who turned the effects off gets no WebGL context: every part that takes a slot asks first", () => {
+  const takers = files.filter((name) => /acquireGlSlot\(\)/.test(source(name)))
+  assert.ok(takers.length >= 3)
+  for (const name of takers) {
+    const text = source(name)
+    const asks = text.indexOf("effectsEnabled(")
+    assert.ok(asks !== -1 && asks < text.indexOf("acquireGlSlot()"), `${name} asks effectsEnabled() before it takes a GL slot`)
+  }
 })
 
 test("the guide says where the light goes", () => {
