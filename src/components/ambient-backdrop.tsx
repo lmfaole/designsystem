@@ -38,23 +38,27 @@ export function AmbientBackdrop({ src, sources }: { src?: string | null; sources
     }
     const image = new Image()
     image.crossOrigin = "anonymous"
-    image.onload = () => {
-      if (cancelled) return
-      try {
-        const small = document.createElement("canvas")
-        small.width = 16
-        small.height = 16
-        const context = small.getContext("2d", { willReadFrequently: true })
-        if (context === null) return
-        context.drawImage(image, 0, 0, 16, 16)
-        renderer = createAmbientRenderer(target, paletteOf(context.getImageData(0, 0, 16, 16).data, 16))
-      } catch {
-        return
-      }
-      if (renderer === null) return
-      draw()
-      setReady(true)
-    }
+    image.addEventListener(
+      "load",
+      () => {
+          if (cancelled) return
+          try {
+            const small = document.createElement("canvas")
+            small.width = 16
+            small.height = 16
+            const context = small.getContext("2d", { willReadFrequently: true })
+            if (context === null) return
+            context.drawImage(image, 0, 0, 16, 16)
+            renderer = createAmbientRenderer(target, paletteOf(context.getImageData(0, 0, 16, 16).data, 16))
+          } catch {
+            return
+          }
+          if (renderer === null) return
+          draw()
+          setReady(true)
+      },
+      { once: true },
+    )
     image.src = shown
     lightStore.listeners.add(schedule)
     const observer = new ResizeObserver(schedule)

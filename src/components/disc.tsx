@@ -40,7 +40,7 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
   const [paused, setPaused] = useState(false)
   const [reduced, setReduced] = useState(false)
   const [lit, setLit] = useState(false)
-  const frame = useRef<HTMLElement>(null)
+  const frame = useRef<HTMLElement | null>(null)
   const canvas = useRef<HTMLCanvasElement>(null)
   const pausedNow = useRef(false)
   pausedNow.current = paused
@@ -87,13 +87,17 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
     }
     const image = new Image()
     image.crossOrigin = "anonymous"
-    image.onload = () => {
-      if (cancelled) return
-      renderer = createDiscRenderer(target, image, traitsOf(image))
-      if (renderer === null) return
-      setLit(true)
-      start()
-    }
+    image.addEventListener(
+      "load",
+      () => {
+        if (cancelled) return
+        renderer = createDiscRenderer(target, image, traitsOf(image))
+        if (renderer === null) return
+        setLit(true)
+        start()
+      },
+      { once: true },
+    )
     image.src = shown
     const observer = new IntersectionObserver((entries) => {
       onScreen = entries.some((entry) => entry.isIntersecting)
@@ -134,13 +138,13 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
   const shape = cn("relative shrink-0 overflow-hidden rounded-full bg-muted", FRAMES.square[size], size === "hero" && "lit-frame")
   if (reduced) {
     return (
-      <span ref={frame} aria-hidden="true" className={shape}>
+      <span ref={(node) => { frame.current = node }} aria-hidden="true" className={shape}>
         {body}
       </span>
     )
   }
   return (
-    <button ref={frame as React.RefObject<HTMLButtonElement>} type="button" aria-label={paused ? "Start snurringen" : "Stopp snurringen"} onClick={() => setPaused((now) => !now)} className={cn(shape, "focus-visible:ring-ring cursor-pointer p-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none")}>
+    <button ref={(node) => { frame.current = node }} type="button" aria-label={paused ? "Start snurringen" : "Stopp snurringen"} onClick={() => setPaused((now) => !now)} className={cn(shape, "focus-visible:ring-ring cursor-pointer p-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none")}>
       {body}
     </button>
   )

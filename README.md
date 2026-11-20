@@ -100,7 +100,7 @@ npm install
 npm run verify      # typecheck, lint and the tests
 ```
 
-A change is released by bumping `version` in `package.json` and pushing to `main`: CI checks it (`tsc`, the tests), Storybook is published, and the workflow `tag.yml` tags the commit `v<version>` when that version has no tag yet. A project then runs **`npx designsystem-bump`** (the latest `main`, or a commit or `v<version>` as its argument): it pins the same commit in every `package.json` of the repository, brings the lockfile in step, installs the skills again and checks them, so the project never follows the rules of an older version without anyone seeing it. `--dry-run` says what would change.
+A change is released by bumping `version` in `package.json` and pushing to `main`: CI checks it (`tsc`, the tests), Storybook is published (on GitHub Pages and on **https://design.lmfaole.party**, a Worker with only the files, `wrangler.jsonc`; the workflow deploys it when the repository has the secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, and `npm run deploy` does the same by hand), and the workflow `tag.yml` tags the commit `v<version>` when that version has no tag yet. A project then runs **`npx designsystem-bump`** (the latest `main`, or a commit or `v<version>` as its argument): it pins the same commit in every `package.json` of the repository, brings the lockfile in step, installs the skills again and checks them, so the project never follows the rules of an older version without anyone seeing it. `--dry-run` says what would change.
 
 ## Grouping sections
 

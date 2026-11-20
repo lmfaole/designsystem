@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "designsystem",
+  "compatibility_date": "2026-11-01",
+  // Only the files of Storybook (`npm run build-storybook`): no script, so a request is a file or a 404.
+  "assets": { "directory": "./storybook-static" },
+  // Only the custom domain: no workers.dev or preview address, so the design system's Storybook has one address.
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "design.lmfaole.party", "custom_domain": true }]
+}
