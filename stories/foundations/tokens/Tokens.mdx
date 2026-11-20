@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Foundations/Tokens/Overview" />
+
+# Tokens
+
+The tokens are the custom properties of `src/theme.css` (colour, radius, the fonts) and `src/motion.css` (durations and easings), in a light
+and a dark set. A page uses them through the components and never writes a colour, a radius or a duration of its own. This page says what each
+is for and how it measures; the live swatches are in the other pages of **Tokens**.
+
+The contrast ratios are **calculated from the values in `theme.css`** (WCAG relative luminance, the colour converted from oklch; a value with transparency is laid over the surface
+behind it, mixed in encoded sRGB the way a browser does). `src/theme-contrast.test.ts` works them out on every `npm test` and fails when a text pair is under 4.5:1 or a mark that carries meaning is under 3:1, so the numbers below are checked, not just written.
+
+## 1. Colour roles
+
+The interface is monochrome: the one colour in it is `destructive`, and what a state means is told with a symbol and words, never with colour
+alone. The six `series-*` hues exist for a chart that asks for colours of its own and carry no meaning.
+
+| Token | For | Light on page | Dark on page |
+| --- | --- | --- | --- |
+| `background`, `foreground` | The page and its text | 19.8 | 19.0 |
+| `card`, `card-foreground` | A card and its text (a card is one self-contained item) | 19.8 | 17.2 |
+| `popover`, `popover-foreground` | A dialog or popover and its text | same as card | same as card |
+| `primary`, `primary-foreground` | The one strong action, and text on it | 17.2 | 14.2 |
+| `secondary`, `secondary-foreground` | A quiet surface and text on it | 16.4 | 14.5 |
+| `accent`, `accent-foreground` | A hovered or selected surface and text on it | 16.4 | 14.5 |
+| `muted` | A quiet surface (a code box, a skeleton) | — | — |
+| `muted-foreground` | Secondary text | 6.0 | 7.6 |
+| `destructive` | What stops something and is for you to fix | 5.6 | 6.8 |
+| `border` | Lines between parts | 1.3 | 1.3 |
+| `input` | A decorative line at the edge of a field | 1.3 | 1.5 |
+| `ring` | The focus ring | 4.7 | 4.2 |
+| `logo-plate` | The light plate under a dark logo | — | — |
+
+How to read the numbers: text needs **4.5:1**, and the parts of a control or a mark that carry meaning need **3:1** (WCAG 1.4.3 and 1.4.11).
+
+- **Secondary text** (`muted-foreground`) is 6.0:1 on the page and 5.5:1 on a `muted` surface in light, and 7.6:1 and 5.8:1 in dark, so it can be used for
+  small text on both. (It was 4.3:1 on a `muted` surface in light until 8.8, which is why the value was darkened.)
+- **`border` and `input` are for a line between parts, not for the edge of something the reader must find.** They are 1.3:1 in light and 1.3 and 1.5:1 in dark (they are
+  translucent, so they also change with what is behind them), so they never mark a control on its own: a field takes its edge from `muted-foreground` (`TextField`, `SearchField`) and a button has a fill or a visible edge of its own.
+- **Check a pair on `card` as well as on the page.** `muted-foreground` is 6.0:1 on both in light and 7.6 and 6.9:1 in dark; `destructive` is 5.6:1 on both in light and 6.8 and 6.2:1 in dark, 5.2:1 on `muted`, and 4.7:1 on its own 10 % tint (the destructive button and badge), which the test checks since the stories' axe run found it at 4.0:1.
+- **The focus ring** is 4.7:1 on the page in light and 4.2:1 in dark, so it can always be seen. It is never removed.
+- Pair a surface only with its own `-foreground`: `primary` with `primary-foreground`, never with `foreground`.
+
+## 2. Charts
+
+| Token | Value | For |
+| --- | --- | --- |
+| Default series (`StackedColumnChart`) | `foreground` at 100, 66 and 44 %, then `series-4` and on | The series of a chart that is not given colours, first series strongest |
+| Default lines (`LineChart`) | `foreground` at 100, 72, 52 and 44 %, told apart by dash | Up to four lines |
+| `chart-1` to `chart-5` | A grey ramp, the same in light and dark | The grey steps for marks that are not given a colour |
+| `series-1` to `series-6` | Six hues, one lightness: 0.5 in light and 0.78 in dark | A chart a page gives colours of its own (`colors`, `DonutChart` `color`) |
+
+What this means for a chart, measured on the page background:
+
+- The default steps keep **3:1 on the page and on the card in light and dark**: 100, 66 and 44 % of the foreground are 19.8, 6.6 and 3.1:1 in light (19.0, 8.4 and 4.2 in dark), and the line steps 100, 72, 52 and 44 % are as strong. A test checks it. **The steps that used to be the defaults, 36 and 24 %, are
+  2.4 and 1.7:1 in light** (3.2 and 2.0 in dark) and are not used: a mark told apart only by a step that light is not enough. (Until 8.13 this page gave 2.7 and 1.9, which was worked out with the colours blended in linear light; a browser blends in encoded sRGB, as `theme-contrast.test.ts` does.) A chart still names its series on the chart and keeps the gap between parts (guide «Data visualisation»).
+- `chart-1` is 1.5:1 on a light page and `chart-3` to `chart-5` are 2.5, 1.9 and 1.3:1 on a dark one, because the ramp is the same in both modes. Do not
+  rely on a `chart-*` step alone for a mark that carries meaning.
+- The `series-*` colours are six that differ in **lightness as well as hue**, so they can be told apart without colour vision. They are 3.3 to 12.0:1 on a light page and 4.9 to 15.6:1 on a dark one (4.5 to 14.1 on a dark card),
+  and they sit inside the sRGB gamut, so a browser shows them as written. Measured with the simulations of Machado et al. (2009), no two of them are closer than 16 in oklab distance (times 100; 8 is plainly different) in normal vision, protanopia, deuteranopia or
+  tritanopia. Before 8.11 they were six hues of one lightness, and two pairs were 1.2 and 0.6 apart for deuteranopia. They carry no meaning and a chart that uses them still names its series, because colour is never the only signal. They are never used for a state.
+
+## 3. Radius
+
+`--radius` is 0.625 rem. The steps are multiples of it: `sm` 0.6, `md` 0.8, `lg` 1, `xl` 1.4, `2xl` 1.8, `3xl` 2.2 and `4xl` 2.6. A component picks its
+step; a page does not. Things of one kind have one radius, and a nested box has a smaller radius than the one around it.
+
+## 4. Fonts
+
+**Geist** is the body and the interface; **JetBrains Mono** is the headings (`h1` to `h6` get `font-heading`), identifiers and code. Both are shipped with the package
+(Fontsource), so a page works without the network. Figures that line up (a column, a counter) use tabular numbers (`Text numeric`).
+
+## 5. Motion
+
+Durations and easings are tokens too: see the guide **Motion**. Under `prefers-reduced-motion` every duration is 0.01 ms.
+
+## 6. Adding or changing a token
+
+1. A new colour is a new **role** in the table above, with its pair, its two values and the contrast measured; never a literal in a component.
+2. Change a value in `theme.css` only with the contrast in view: the pairs in the table must stay at 4.5:1 (text) and 3:1 (marks and edges).
+3. Add the swatch to the story of its group.

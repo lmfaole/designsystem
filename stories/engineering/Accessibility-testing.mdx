@@ -1,0 +1,37 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Engineering/Accessibility testing" />
+
+# Accessibility testing
+
+The target is WCAG 2.2 AA. Tools help and are not enough: the GOV.UK service manual says automated tools such as axe and WAVE miss issues, so
+every page is also checked by hand.
+
+## 1. In the order of cost
+
+1. **The Storybook Accessibility panel**: no violations in light and dark.
+2. **Keyboard.** Tab through. Every control is reached in a sensible order, focus is always visible, nothing traps it.
+3. **Screen reader.** Read one list and one detail page. Do rows read as «kind, name, status, date»? Does a link out say it leaves?
+4. **Zoom.** 200 % and 400 px wide: nothing is cut off, nothing scrolls sideways except a table in its own box.
+5. **Greyscale.** Every state is still told apart.
+6. **Reduced motion.** On: nothing moves.
+
+## 2. What the tools cannot find
+
+Reading order; whether a name means something out of context («Les mer»); alt text that says what the picture is for; where focus lands after a
+page change, a dialog or a delete; whether the wording of a live region makes sense when read; whether a chart has a table; whether an error says how
+to fix it.
+
+## 3. Targets
+
+WCAG 2.5.8 asks for 24 × 24 CSS px, with these exceptions: spacing (a 24 px circle centred on the target overlaps no other target), an
+equivalent control, an inline link in a sentence, a control the browser draws, and what is essential. Our controls are larger on touch.
+
+## 4. Before you call it done
+
+Run **designsystem-review**. It covers UX, UI, accessibility and content, and reports concrete findings.
+
+## Sources
+
+[GOV.UK, testing for accessibility](https://www.gov.uk/service-manual/helping-people-to-use-your-service/testing-for-accessibility),
+[WCAG 2.2, target size (minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html).

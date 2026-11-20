@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Stack } from "../../src/components/layout"
+import { FactList } from "../../src/components/fact-list"
+import { PageSection } from "../../src/components/page-section"
+import { Text } from "../../src/components/text"
+
+<Meta title="Foundations/Grouping and spacing" />
+
+# Grouping and spacing
+
+**Space is the grouping.** Things that are close to each other are read as related; things further apart are read as separate (proximity, NN/G). So a page
+is grouped with gaps, and a line or a box is only for what a gap cannot do. The rules are from NN/G (visual hierarchy, proximity, cards, progressive disclosure),
+Carbon and Atlassian (spacing) and GOV.UK (summary list, layout), in our terms.
+
+## 1. Three steps of space
+
+Our gaps are `xs` 4 px, `sm` 8, `md` 16, `lg` 24 and `xl` 32. Use them in three steps, each visibly larger than the one inside it, and never the same gap at two levels
+(Carbon: more space around reads as more important; Atlassian: small steps inside a component, large between sections):
+
+| Step | Between | Gap |
+| --- | --- | --- |
+| Inside an item | A name and its muted lines, an icon and its text | `xs`, `sm` |
+| Between items of one group | The rows of a list, the facts of a set | `sm`, `md` |
+| Between groups | The sections of a page, the subsections of a group | `lg`, `xl` |
+
+A heading is **closer to its own content than to what is above it** (NN/G): the gap above a section is larger than the gap under its title.
+`PageSection` and `SectionGroup` already do this; do not put a `Stack` with a bigger gap than the section's own inside one, because then the content looks like two groups.
+
+## 2. When a gap is not enough
+
+First a gap. If that does not separate the parts, a thin line between them (a `Separator`). If that is not enough, a box (a `Card`). Use **one** of these for one level,
+never a line and a box for the same grouping, and not nested (NN/G: borders and backgrounds reinforce grouping «sparingly»; GOV.UK: the default section break is only margin).
+
+## 3. A card, a list, a fact list
+
+- **One set of facts about one thing is a `FactList`**, not a card (GOV.UK: «don't use cards for a small amount of related information»).
+- **Several of the same kind, each with a title and its own actions, are cards** (NN/G: cards suit browsing and short linked entry points, and are worse for scanning, comparing and ranking).
+- **Things to scan and compare are rows**, in one column.
+
+<div className="sb-unstyled">
+<PageSection id="example" title="Fakta">
+  <FactList facts={[["Gren", "tema → main"], ["Størrelse", "+637 −258 · 44 filer"], ["Venter på review fra", ["zenabii", "Stormoen"]]]} />
+</PageSection>
+</div>
+
+## 4. Depth
+
+- **Grouping goes two levels deep**: a `SectionGroup` and its `SubSection`s. A third level is a page of its own.
+- **Disclosure goes two levels deep** (NN/G): what the reader needs first, then a link («Se alle 14») to the rest. A third level means the page is simplified or cut up. The label says what is behind it.
+
+## 5. What goes first, and what gets room
+
+- The most important thing is first and has **room around it**; packed tight, three important things read as one (Carbon). A dense part of a page is fine, a crowded page is not.
+- **A row starts with what tells it apart.** A list where every row begins «Pull request #123 …» is skipped over (NN/G, F-pattern: readers bypass what repeats). Put what is the same in the icon or the section title.
+- **A heading starts with its meaning**, a noun phrase, not a sentence (NN/G: headings are what readers scan).
+- **Do not mark everything**: if everything is bold, red or boxed, nothing stands out (NN/G).
+
+## 6. Patterns
+
+- **Summary, then detail.** `SummaryBar` first (counts that link), then the few sections that need the reader, each with «Se alle», then the detail on its own page: the title and status first, a `FactList`, then the history.
+- **A group of related facts.** One `SubSection` with a `FactList`: one term for each fact, several values stacked under one term, no card around a single set.
+- **A list of one kind.** `Rows` with one structure, the distinguishing words first, the metadata muted, the date at the end.
+
+## 7. Check it
+
+1. **Squint.** Do the groups still show as groups? Are there more than three kinds of weight?
+2. **Change the gap.** Make every gap the same: does the grouping disappear? Then the gaps were carrying it, which is right.
+3. **Cover the headings.** Is it clear what each group is?
+4. **Count the boxes.** Is there a box or a line where a gap would do?
+
+## Sources
+
+[NN/G, visual hierarchy](https://www.nngroup.com/articles/visual-hierarchy-ux-definition/),
+[NN/G, proximity](https://www.nngroup.com/articles/gestalt-proximity/),
+[NN/G, cards](https://www.nngroup.com/articles/cards-component/),
+[NN/G, progressive disclosure](https://www.nngroup.com/articles/progressive-disclosure/),
+[NN/G, F-shaped reading](https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/),
+[Carbon spacing](https://carbondesignsystem.com/elements/spacing/overview/),
+[Atlassian spacing](https://atlassian.design/foundations/spacing),
+[GOV.UK summary list](https://design-system.service.gov.uk/components/summary-list/),
+[GOV.UK layout](https://design-system.service.gov.uk/styles/layout/).

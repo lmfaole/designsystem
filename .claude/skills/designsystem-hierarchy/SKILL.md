@@ -5,7 +5,7 @@ description: Use when laying out a page or a list with the design system, or dec
 
 # Reading and hierarchy
 
-The rules are README rule 7 and «Reading and hierarchy», and Storybook **Guides / Reading and hierarchy**. The principle: **one
+The rules are README rule 7 and «Reading and hierarchy», and Storybook **Patterns / Reading and hierarchy**. The principle: **one
 reading direction, down.** What is read stands under each other, in one column, in the order it matters.
 
 ## 1. One column for everything that is read

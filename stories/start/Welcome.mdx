@@ -1,0 +1,58 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Start/Welcome" summary="What the design system is, how a project gets it, how to read this Storybook, and where an agent finds the same thing as data." />
+
+# lmfaole designsystem
+
+The design system of lmfaole's apps: the **tokens** (colours, radius, fonts, motion), the **building blocks** a page is put together from,
+and the **components** built on them. React 19 and Tailwind 4, shipped as source. The text a reader sees is Norwegian bokmål.
+
+## Use it in a project
+
+```jsonc
+// package.json: pinned to a commit or a version tag
+"@lmfaole/designsystem": "github:lmfaole/designsystem#v8.19.0"
+```
+
+```css
+/* the project's stylesheet */
+@import "@lmfaole/designsystem/theme.css";
+```
+
+`npx designsystem-bump` moves a project to a newer version and installs the **skills** (`designsystem-ux`, `-ui`, `-hierarchy`,
+`-accessibility`, `-content`, `-components`, `-review`): the same rules as these pages, for Claude Code.
+
+## Read this Storybook
+
+The sidebar has five parts, in the order you need them:
+
+- **Start**: this page, and how the system is kept (status, contributing, versions).
+- **Foundations**: the tokens (colour, type, radius, motion), the icons, and the guides on typography, colour and state, grouping and
+  spacing, and motion.
+- **Components**, by what they are for: layout, text, links, actions, navigation, lists, tables, charts, media, forms, status, states,
+  overlays and motion. [**Overview**](?path=/docs/components-overview--docs) says which one for what.
+- **Patterns**: how a page is put together from them (three levels, the front page as a digest, links and navigation), reading and
+  hierarchy, wide screens, lists and tables, states and messages, forms, charts, and the error pages.
+- **Engineering** (closed until opened): server rendering, charts on the server, fresh data and offline, installed apps, performance and
+  sustainability, and how accessibility is tested.
+
+- Every **component** has a page: what it is for (**Use it when**, **Do not use it when**), **Accessibility**, **Content** and **Related**,
+  then its props (required first) and its stories. Some rules have a **Dont…** story («Ikke:») and a **Do…** story («Gjør:») after it.
+- The toolbar:
+  - **Tema**: as the device, light, dark, or **Begge**: light and dark side by side.
+  - **Skjermlesertekst**: «Synlig» draws what only a screen reader hears, dashed, where it stands.
+  - **Viewport**: the five width classes, compact (400) to extra-large (2560).
+- The **Accessibility** panel checks the story with axe against WCAG 2.2 AA. The same check runs on every story, in light and in dark, in CI,
+  and a violation fails it.
+- Tags in the sidebar's filter: `experimental` and `deprecated` are hidden unless you ask for them.
+
+## For an agent
+
+- The catalogue as data: [`manifests/components.json`](./manifests/components.json) (every component, its props and the code of its stories)
+  and [`manifests/docs.json`](./manifests/docs.json) (these guides).
+- In the repository, with Storybook running, the `storybook` MCP server (`http://localhost:6006/mcp`) lists, previews and tests stories.
+
+## Elsewhere
+
+The rules every project follows (no styling of its own, closed props, tokens only) and the changes of each version are in the
+[README](https://github.com/lmfaole/designsystem#readme).

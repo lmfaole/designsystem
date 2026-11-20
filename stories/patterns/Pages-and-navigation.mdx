@@ -1,0 +1,153 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Breadcrumbs } from "../../src/components/breadcrumbs"
+import { SubPages } from "../../src/components/sub-pages"
+import { FactList } from "../../src/components/fact-list"
+import { LinkButton } from "../../src/components/link-button"
+import { NavBar } from "../../src/components/nav-bar"
+import { PageSection } from "../../src/components/page-section"
+import { StatusLine } from "../../src/components/status-line"
+import { SummaryBar } from "../../src/components/summary-bar"
+import { Rows } from "../../src/components/rows"
+
+<Meta title="Patterns/Pages and navigation" />
+
+# Pages and navigation
+
+How a place with a lot in it is built so that none of it is in the way. The rules come from a few things that hold for any
+page that is **scanned and operated** rather than read from top to bottom: the summary goes before the detail; state is told in
+form (a symbol and words), not only in colour; structure carries information; and what matters is on the page at rest,
+never behind a click that only reveals it.
+
+## 1. Three levels, no more
+
+**Front page → list → detail.**
+
+- **Front page**: a **digest**: the state in counts, then the few things that need you most. It answers *«Må jeg gjøre noe nå?»*
+- **List**: **everything** of one kind, complete, in groups by what needs you most. It answers *«Hva er det som finnes?»*
+- **Detail**: **one thing**, with enough to decide what to do without leaving. It answers *«Hva er dette, og hva gjør jeg?»*
+
+A fourth level means the structure is wrong: make it a section on the detail page, or a list of its own.
+
+## 2. The front page is a digest
+
+1. **Summary first.** A `SummaryBar` of counts, each a link to what it counts, before any list.
+2. **A few, by need, not by time.** Each section shows the three to five items that need the reader most (blocked before waiting,
+   the oldest review before the newest), then `more` («Se alle 14»). Never the whole list: that is the list page's job.
+3. **One screen of what matters, two at most on a phone.** A section with nothing for the reader leaves out its list: one quiet
+   line («Ingen å se på») or nothing, never an empty box.
+4. **Complete at rest.** What matters is visible without a click. «Se alle» is *navigation* to a page, never a «vis mer» that
+   opens a drawer in place.
+5. **State in form.** A symbol and words, and `destructive` only for what stops something and is the reader's to fix.
+6. **Things that belong together are one group** (`SectionGroup`), with an icon in front of its title.
+
+<div className="sb-unstyled">
+<SummaryBar label="Oversikt" items={[
+  { key: "b", label: "blokkert", count: 2, href: "#", icon: "warning", tone: "destructive" },
+  { key: "r", label: "klar til merge", count: 1, href: "#", icon: "merge" },
+  { key: "v", label: "venter på din review", count: 14, href: "#", icon: "view" },
+]} />
+
+<PageSection id="d-pulls" title="Pull requests" icon="pull-request" more={{ href: "#", label: "Se alle 14" }}>
+  <Rows lead="icon" rows={[
+    { key: "1", icon: "pull-request", iconTone: "destructive", iconLabel: "Pull request", body: "Fiks tidssone i værmeldingen", trailing: "i dag" },
+    { key: "2", icon: "pull-request", iconLabel: "Pull request", body: "Ny Tiles-komponent", trailing: "13. nov." },
+  ]} />
+</PageSection>
+</div>
+
+## 3. Lists
+
+- One page per kind (`Pull requests`, `Issues`), with **all** of it, in the same groups as the digest, most urgent first.
+- Reached from the tabs and from every «Se alle».
+- A row is: the kind as an icon, a **name that links to the detail page**, one line of where it is from, a `StatusLine`, and
+  when it last moved at the end.
+- A very long group is cut at ten with a count of the rest and a way to the rest, not scrolled for ever.
+
+## 4. Detail pages
+
+**When:** the thing has more to say than a row can (a description, a history, a set of checks) *and* the reader needs it to
+decide. A thing that is a line (an hour of the forecast) has no detail page.
+
+**Anatomy, in this order:**
+
+1. `Breadcrumbs` (on a phone the parent alone, naming the list).
+2. `PageHeader`: the title, and one line of where it is from and when.
+3. `StatusLine`: how it stands.
+4. What it is: its text (`Markdown`, cut), and the facts as a `FactList`: one term each, several values stacked under it.
+5. What happened last: the latest few items of its history.
+6. The actions, and **last, the link out** («Åpne på GitHub»).
+
+A detail page has an address of its own (`/pull-requests/owner/repo/12`), so it can be linked to, reloaded and opened from a
+notification. It never lives only in a dialog.
+
+<div className="sb-unstyled">
+<Breadcrumbs items={[{ label: "Startside", href: "#" }, { label: "Pull requests", href: "#pulls" }, { label: "Fiks tidssone", href: "#pr" }]} />
+
+<StatusLine items={[{ text: "Tester feilet", icon: "failure", tone: "destructive" }, { text: "Endringer ønskes", icon: "changes", tone: "destructive" }, { text: "Stille i 3 dager", icon: "time", tone: "muted" }]} />
+
+<p><LinkButton href="https://github.com" external>Åpne på GitHub</LinkButton></p>
+</div>
+
+## 5. Links
+
+1. **Internal first.** A name in a row links to the app's **own** page for it when there is one. Leaving is a choice the reader
+   makes on the detail page, not what a tap on a row does.
+2. **A link out is marked and says where.** `ExternalLink` and `LinkButton external` carry the external symbol and are read as
+   external, and the text names the place: «Åpne på GitHub», never «Les mer» or «Klikk her».
+3. **A link out comes last** on a page, once for each place it goes to.
+4. **Where there is no page of our own,** an `ExternalLink` in running text is right: a credit such as «Værdata fra Yr».
+5. **Links say what they open.** «Se alle pull requests», «Pull requests», never «Mer».
+6. **Same tab.** An installed app has no tabs; a link out opens in the same window and is marked, so the reader knows.
+
+## 6. Navigation
+
+Under the hub there are three levels: the app's front page → a page → a subpage or a detail. One model for every app:
+
+- **An app's top-level pages** are in the **`NavBar`**, given to `PageLayout` as `nav`: a bar at the foot of the screen on a phone (an icon
+  over a one-word label, in the reach of the thumb) and a rail down the left side from tablet width. At most five, the same order on
+  every page, the current one marked. A detail page marks the section it belongs to.
+- **Every page that has a parent** (a subpage, a detail, and the pages of an app that belongs to a group) has **`Breadcrumbs`** at the top: the whole trail from tablet width, and only the parent, as a way
+  back, on a phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading.
+- **A page that has subpages** shows them with **`SubPages`** under the title: a list in one column (an icon, the name, one line of
+  what is on the page). Not cards, not buttons, not a second menu.
+- **Moving between apps:** the first crumb is the group («Hjem», «Medier») and links to the page that lists its apps.
+- **It is navigation, not tabs.** Tabs switch views of the *same content on one page*; navigation goes to *another page*. GOV.UK
+  separates them the same way (tabs «switch views within a page», service navigation «links across a service»), and Material 3 uses a
+  navigation bar and a rail for top-level places and keeps tabs for secondary content. The design system hides no content in tabs.
+- A count in `SummaryBar` is a link to what it counts.
+
+<div className="sb-unstyled">
+<Breadcrumbs items={[{ label: "Hjem", href: "#" }, { label: "AdGuard", href: "#a" }, { label: "Enheter", href: "#e" }]} />
+<SubPages label="Sider i AdGuard" pages={[
+  { href: "#e", label: "Enheter", icon: "settings", description: "Hver enhet som bruker AdGuard." },
+  { href: "#h", label: "Historikk", icon: "calendar", description: "Hva som ble blokkert, en dag om gangen." },
+]} />
+</div>
+
+## 7. Words
+
+Short noun titles; counts as numbers; «Se alle 14»; errors say what went wrong and what to do. Write from the reader's side of
+the screen: name things by what they recognise («Venter på din review»), not by how the system is built.
+
+## Don't
+
+- Don't show the whole list on the front page and again on the list page.
+- Don't hide what matters behind «vis mer».
+- Don't make a tap on a row leave the app when the app has a page for it.
+- Don't put a modal where a page with an address would do.
+- Don't mark everything urgent: `destructive` is for what stops something.
+
+## Facts about one thing
+
+Facts about one thing are a **description list** (`FactList`): a term, written once, and under it its value or **several values, each
+on its own line**. Several things of one kind (reviewers, labels, assignees) are several values of one term, never `a, b, c` in one
+line. A term with nothing under it is left out.
+
+<div className="sb-unstyled">
+<FactList facts={[
+  ["Gren", "refactor/textarea-forenkling → main"],
+  ["Venter på review fra", ["zenabii", "kristianulv23", "Stormoen"]],
+  ["Reviews", ["copilot: kommenterte", "piofinn: godkjent"]],
+]} />
+</div>

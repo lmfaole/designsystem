@@ -1,0 +1,158 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Components/Overview" summary="Every component by what it is for, in the order of the sidebar: find the group, then the line that says what you need." />
+
+# Components
+
+Grouped by what they are for, in the order a page is built: its frame, its words and links, what a person does, then the kinds of
+content. Find what you need on the left and follow the name. Whole pages made of these are under **Patterns**; tokens and icons under
+**Foundations**.
+
+If the thing is not here, add a component to the design system; do not style it in the app.
+
+## Layout
+
+The frame of a page and how its parts stand: one reading column, sections under each other, columns only for what is looked at.
+
+| You need | Use |
+| --- | --- |
+| The page frame and its title | [`PageLayout`](?path=/docs/components-layout-pagelayout--docs), [`PageColumn`](?path=/docs/components-layout-pagecolumn--docs), [`PageHeader`](?path=/docs/components-layout-pageheader--docs) |
+| A titled part of a page; parts that belong together | [`PageSection`](?path=/docs/components-layout-pagesection--docs), [`SectionGroup`](?path=/docs/components-layout-sectiongroup--docs) |
+| Things under each other; short things in a line | [`Stack`](?path=/docs/components-layout-stack--docs), [`Inline`](?path=/docs/components-layout-inline--docs) |
+| Things looked at in columns; a pane beside the main content | [`Grid`](?path=/docs/components-layout-grid--docs), [`Split`](?path=/docs/components-layout-split--docs) |
+| A box around one thing; a line between | [`Card`](?path=/docs/components-layout-card--docs), [`Separator`](?path=/docs/components-layout-separator--docs) |
+
+## Text
+
+Words in the few forms the system has: a size, a tone, a weight, never a class.
+
+| You need | Use |
+| --- | --- |
+| A heading, a paragraph | [`Heading`](?path=/docs/components-text-heading--docs), [`Text`](?path=/docs/components-text-text--docs) |
+| A few lines that belong together; code | [`Lines`](?path=/docs/components-text-lines--docs), [`Code`](?path=/docs/components-text-code--docs) |
+| Text written in Markdown (a description, a comment) | [`Markdown`](?path=/docs/components-text-markdown--docs) |
+| A time, relative when recent | [`Time`](?path=/docs/components-text-time--docs) |
+
+## Links
+
+The way to another page: in text, out of the site, as a whole card, or several on a line.
+
+| You need | Use |
+| --- | --- |
+| A link in text; out to another site | [`TextLink`](?path=/docs/components-links-textlink--docs), [`ExternalLink`](?path=/docs/components-links-externallink--docs) |
+| A card that is one link | [`CardLink`](?path=/docs/components-links-cardlink--docs) |
+| Links on a line; headlines from other sites | [`LinkList`](?path=/docs/components-links-linklist--docs), [`HeadlineList`](?path=/docs/components-links-headlinelist--docs) |
+
+## Actions
+
+What a person does on the page, not where they go.
+
+| You need | Use |
+| --- | --- |
+| An action; several that belong together | [`Button`](?path=/docs/components-actions-button--docs), [`ButtonGroup`](?path=/docs/components-actions-buttongroup--docs) |
+| A link that looks like the main action | [`LinkButton`](?path=/docs/components-actions-linkbutton--docs) |
+| A value to copy; a command that opens an overlay | [`CopyButton`](?path=/docs/components-actions-copybutton--docs), [`CommandButton`](?path=/docs/components-actions-commandbutton--docs) |
+
+## Navigation
+
+Between pages and within a long list: where you are, the way back, the pages under this one.
+
+| You need | Use |
+| --- | --- |
+| Where you are and the way back; the pages under this page | [`Breadcrumbs`](?path=/docs/components-navigation-breadcrumbs--docs), [`SubPages`](?path=/docs/components-navigation-subpages--docs) |
+| The top-level pages of an app | [`NavBar`](?path=/docs/components-navigation-navbar--docs) |
+| Pages of a long list; narrowing it | [`Pagination`](?path=/docs/components-navigation-pagination--docs), [`FilterChips`](?path=/docs/components-navigation-filterchips--docs) |
+| A switch of view; a switch of period | [`SegmentedToggle`](?path=/docs/components-navigation-segmentedtoggle--docs), [`PeriodPicker`](?path=/docs/components-navigation-periodpicker--docs) |
+| Counts that each lead to their list | [`SummaryBar`](?path=/docs/components-navigation-summarybar--docs) |
+
+## Lists
+
+Many things of one kind, each a row that leads to its own page.
+
+| You need | Use |
+| --- | --- |
+| Rows with an icon, a rank or a picture in front | [`Rows`](?path=/docs/components-lists-rows--docs), [`EntityRows`](?path=/docs/components-lists-entityrows--docs), [`PictureRows`](?path=/docs/components-lists-picturerows--docs) |
+| Terms and their values; a long list folded | [`FactList`](?path=/docs/components-lists-factlist--docs), [`FoldList`](?path=/docs/components-lists-foldlist--docs) |
+| A status under a title | [`StatusLine`](?path=/docs/components-lists-statusline--docs) |
+| Stories from other sites; things looked at in a grid | [`StoryList`](?path=/docs/components-lists-storylist--docs), [`Tiles`](?path=/docs/components-lists-tiles--docs) |
+| Dated entries (a CV, a history) | [`EntrySection`](?path=/docs/components-lists-entrysection--docs) |
+
+## Tables
+
+Values compared across columns, when a list is not enough.
+
+| You need | Use |
+| --- | --- |
+| The table; its cells | [`Table`](?path=/docs/components-tables-table--docs), [`DataCell`](?path=/docs/components-tables-datacell--docs), [`NumberCell`](?path=/docs/components-tables-numbercell--docs) |
+| A column that sorts; a heading for a screen reader only | [`SortHeader`](?path=/docs/components-tables-sortheader--docs), [`SrTableHead`](?path=/docs/components-tables-srtablehead--docs) |
+| Links out with their day | [`DatedLinkTable`](?path=/docs/components-tables-datedlinktable--docs) |
+
+## Charts
+
+A number's shape: over time, by rank, as parts, as a spread or a relation. Every chart has its table and its sentence.
+
+| You need | Use |
+| --- | --- |
+| A card around a chart | [`ChartCard`](?path=/docs/components-charts-chartcard--docs) |
+| Over time | [`AreaChart`](?path=/docs/components-charts-areachart--docs), [`LineChart`](?path=/docs/components-charts-linechart--docs), [`ColumnChart`](?path=/docs/components-charts-columnchart--docs), [`StackedColumnChart`](?path=/docs/components-charts-stackedcolumnchart--docs), [`Sparkline`](?path=/docs/components-charts-sparkline--docs) |
+| By rank; as parts of a whole | [`RankedBarChart`](?path=/docs/components-charts-rankedbarchart--docs), [`DonutChart`](?path=/docs/components-charts-donutchart--docs) |
+| Days and rhythms | [`CalendarHeatmap`](?path=/docs/components-charts-calendarheatmap--docs), [`Heatmap`](?path=/docs/components-charts-heatmap--docs) |
+| Distribution, spread, relation, change | [`Histogram`](?path=/docs/components-charts-histogram--docs), [`BoxPlot`](?path=/docs/components-charts-boxplot--docs), [`ScatterChart`](?path=/docs/components-charts-scatterchart--docs), [`DumbbellChart`](?path=/docs/components-charts-dumbbellchart--docs) |
+
+## Media
+
+Pictures, logos and people.
+
+| You need | Use |
+| --- | --- |
+| A picture; a card with one behind | [`Picture`](?path=/docs/components-media-picture--docs), [`PictureCard`](?path=/docs/components-media-picturecard--docs) |
+| A picture opened large | [`ImageLightbox`](?path=/docs/components-media-imagelightbox--docs) |
+| A maker's or source's logo | [`Logo`](?path=/docs/components-media-logo--docs), [`Logos`](?path=/docs/components-media-logos--docs) |
+| A person named, with their picture | [`Person`](?path=/docs/components-media-person--docs) |
+
+## Forms
+
+Rare here: a field, a search, a choice from a list, and what went wrong.
+
+| You need | Use |
+| --- | --- |
+| A field; a search | [`TextField`](?path=/docs/components-forms-textfield--docs), [`SearchField`](?path=/docs/components-forms-searchfield--docs) |
+| A choice from a list | [`NativeSelect`](?path=/docs/components-forms-nativeselect--docs) |
+| What must be fixed before sending | [`FormErrorSummary`](?path=/docs/components-forms-formerrorsummary--docs) |
+
+## Status
+
+The state of a thing, beside it or over the page.
+
+| You need | Use |
+| --- | --- |
+| A word next to a name; something live | [`Badge`](?path=/docs/components-status-badge--docs), [`LiveDot`](?path=/docs/components-status-livedot--docs) |
+| When it was made, and when it is old | [`Freshness`](?path=/docs/components-status-freshness--docs) |
+| A value against a goal | [`Progress`](?path=/docs/components-status-progress--docs) |
+| A message about the page; the connection | [`Banner`](?path=/docs/components-status-banner--docs), [`ConnectionBanner`](?path=/docs/components-status-connectionbanner--docs) |
+
+## States
+
+What a section shows while it loads, when it is empty and when it failed.
+
+| You need | Use |
+| --- | --- |
+| Nothing to show; a failed query | [`EmptyState`](?path=/docs/components-states-emptystate--docs), [`ErrorMessage`](?path=/docs/components-states-errormessage--docs) |
+| Loading | [`Skeleton`](?path=/docs/components-states-skeleton--docs), [`SectionSkeleton`](?path=/docs/components-states-sectionskeleton--docs), [`StreamedSection`](?path=/docs/components-states-streamedsection--docs) |
+
+## Overlays
+
+Over the page or folded into it.
+
+| You need | Use |
+| --- | --- |
+| A dialog, a sheet, a popover | [`Overlay`](?path=/docs/components-overlays-overlay--docs) |
+| Long content out of the way | [`Disclosure`](?path=/docs/components-overlays-disclosure--docs) |
+
+## Motion
+
+Movement from the motion tokens, off under reduced motion.
+
+| You need | Use |
+| --- | --- |
+| A number counting up; things entering | [`CountUp`](?path=/docs/components-motion-countup--docs), [`Reveal`](?path=/docs/components-motion-reveal--docs), [`Stagger`](?path=/docs/components-motion-stagger--docs) |

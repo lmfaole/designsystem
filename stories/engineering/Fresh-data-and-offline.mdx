@@ -1,0 +1,69 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Banner } from "../../src/components/banner"
+import { ErrorMessage } from "../../src/components/error-message"
+
+<Meta title="Engineering/Fresh data and offline" />
+
+# Fresh data and offline
+
+A dashboard is judged on the moments its data is old, partly missing or unreachable. The research found no published threshold for calling data stale, and nothing on offline in the
+design systems of GOV.UK, Carbon, Atlassian or Primer, so the thresholds here are **our own decisions**, marked as such. The rest is from MDN, web.dev, NN/G, Primer and the AWS Builders' Library.
+
+## 1. Say how fresh it is
+
+The page's lead says when the data was made: `Freshness` («Oppdatert 19:27»). A page that renews itself gets a new time each time; if renewal stops, the time stays and the line turns into a warning
+(«Oppdatert 19:27 · dataene kan være gamle»), so a failed renewal shows without anything having to detect it. **Our own threshold:** set `staleAfterSeconds` to about three renewals for a page, and to about twice a source's own
+cadence for a single source. Check them against the real cadence of each source.
+
+## 2. Renewing a page that shows content
+
+- **Keep what is on screen.** No skeleton, never empty, and nothing at all if it takes under a second (NN/G: feedback above 1 s). *(our rule)*
+- **Pause when the window is hidden** and catch up when it comes back (MDN, Page Visibility: `visibilitychange`; `blur` and `focus` are poor proxies). Renew again when a page is restored from the back/forward cache (`pageshow` with `persisted`, web.dev).
+- **Timeouts and backoff.** Every call has a timeout; retries use capped exponential backoff with jitter and a limit, only for server errors, at one layer only (AWS Builders' Library).
+- **The reader can stop it.** Content that updates by itself next to other content needs a way to pause, stop or hide it, or to control the rate, unless it is essential (WCAG 2.2.2, level A). An app that renews itself by timer offers one, or says why it is essential.
+
+## 3. A part that failed
+
+- A source that fails shows its own error **in its own part**; the rest of the page works (Primer: render the page without a failed secondary part, replace the content in place, say «utilgjengelig», not an empty state, so no one thinks data was lost).
+- **Name the source** and say whether old data is kept. Where there is old data, keep the rows and put a warning line above them; where there is none, the error stands in the part.
+- Never disable a control because a source is down. About five outage messages on a page is the most that can be read (Primer).
+- **A retry** is justified when the reader cannot reach the result in any other way (an installed app has no reload button). It is a button in the failed part, «Prøv igjen», and says «Henter …» while it runs, with `aria-busy`. *(our rule, from Primer: a retry button if the reader can retry)*
+
+<ErrorMessage error={new Error("GitHub svarte 502")}>Kunne ikke hente pull requests</ErrorMessage>
+
+## 4. Offline
+
+Offline is a state, not an error. `navigator.onLine` is only a hint: `true` means a network exists, not that a source can be reached, and it can lag (MDN), so it is **never a gate** for a renewal or a control. What decides is whether the request worked.
+`ConnectionBanner` says «Du er frakoblet» in a live region that is always on the page, once, politely, and goes when the device is back, without a message.
+
+<Banner tone="warning" title="Du er frakoblet">Det du ser er fra sist siden ble hentet. Alt kan leses som før.</Banner>
+
+## 5. Announcing
+
+- A live region **exists before** it changes, and is `polite` for a status (MDN). A page that renews itself every minute does **not** announce each renewal; it announces a change the reader needs (offline, back, a failure), once.
+- At most **one banner** on a page (GOV.UK). `role="alert"` is for what stops something.
+
+## 6. The words
+
+| It is | Write |
+| --- | --- |
+| A source failed, old data kept | «Henting fra Yr feilet. Viser vær fra 19:27.» |
+| A source failed, no data | «Kunne ikke hente værmeldingen fra Yr. Prøv igjen.» |
+| Offline | «Du er frakoblet. Det du ser er fra sist siden ble hentet.» |
+| Back online | Nothing: the notice goes |
+| Retry | «Prøv igjen», and «Henter …» while it runs |
+
+No «Beklager», «Ups» or «Noe gikk galt». Say what happened, then what to do.
+
+## Sources
+
+[MDN, navigator.onLine](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/onLine),
+[MDN, ARIA live regions](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Guides/Live_regions),
+[MDN, Page Visibility](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API),
+[web.dev, back/forward cache](https://web.dev/articles/bfcache),
+[WCAG 2.2, 2.2.2 pause, stop, hide](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html),
+[NN/G, response times](https://www.nngroup.com/articles/response-times-3-important-limits/),
+[Primer, degraded experiences](https://primer.style/product/ui-patterns/degraded-experiences/),
+[Primer, loading](https://primer.style/product/ui-patterns/loading/),
+[AWS Builders' Library, timeouts, retries and backoff with jitter](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/).

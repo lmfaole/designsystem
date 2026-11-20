@@ -131,6 +131,6 @@ test("the lightest steps that used to be defaults, and the chart ramp, are known
   assert.ok(contrast(onto({ ...token(light, "foreground"), a: 0.36 }, behind), behind) < 3)
   assert.ok(ratio(light, "chart-1", "background") < 3)
   assert.ok(ratio(dark, "chart-5", "background") < 3)
-  const tokensMdx = readFileSync(join(import.meta.dirname, "..", "stories", "tokens", "Tokens.mdx"), "utf8")
+  const tokensMdx = readFileSync(join(import.meta.dirname, "..", "stories", "foundations", "tokens", "Tokens.mdx"), "utf8")
   assert.match(tokensMdx, /36 and 24 %/)
 })

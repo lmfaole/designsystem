@@ -1,0 +1,80 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Engineering/Installed apps (PWA)" />
+
+# Installed apps (PWA)
+
+Our apps are installed on the home screen and run without the browser around them: no address bar, no tabs, no back button. That changes what a page owes the
+reader. The rules are from web.dev, MDN, the WebKit blog and the W3C manifest spec; where a source did not say it, it says «our rule».
+
+## 1. The manifest
+
+- **Identity.** Set `id` explicitly, equal to the start address, and **never change it**: without an `id`, a changed `start_url` makes the browser treat the app as a new one (web.dev, MDN).
+- **Scope** is a prefix on a string and **ends with a slash**: `/start` would also be `/startfoo`. `start_url` is inside the scope; a page outside it opens with browser chrome (MDN).
+- **Colours** are opaque hex, with no variables and no transparency; the manifest has one `theme_color`, and a colour per scheme is a `<meta name="theme-color" media="(prefers-color-scheme: dark)">`. Safari and iOS ignore `background_color` (web.dev, MDN).
+  The system's dark colours are the `background` token in dark (`#0a0a0a`); the manifest follows the dark theme.
+- **Icons:** 192 and 512 pixels, an `any` icon that is opaque and a separate `maskable` icon with the artwork inside a circle of 40 % of the width. Never `"any maskable"` in one entry (web.dev).
+- `short_name` is under 12 characters; the manifest is linked on every page; `lang` is `nb`.
+- `webManifest()` in `lib/manifest.ts` builds one and refuses what is wrong: a scope without a closing slash, a start outside the scope, a transparent colour, a missing icon.
+
+## 2. Installing is the browser's own
+
+There is **no install button** (our rule). Chrome offers installing when the manifest is right and the page is served over HTTPS (web.dev install criteria); on iOS the reader uses
+Share and «Legg til på Hjem-skjerm», and no install prompt exists there. A change to the manifest reaches an installed copy on Android when the app is opened and on iOS only when it is installed again.
+
+## 3. The service worker
+
+| What | Strategy (web.dev, MDN, Workbox) |
+| --- | --- |
+| A page (HTML) | Network first; the last good copy when there is no network; our own offline page when there is none |
+| A file with a hash in its name | Cache first |
+| Data that may be a little old | Stale while revalidate |
+| Data an old answer would mislead | Network only |
+
+Cache only `ok` responses, never a `POST`, clone a response before keeping it, give the caches a name of the app, and delete the old ones when a new worker activates.
+Keep a page by its address **with the query**, or two pages collide. A page behind a login (our apps sit behind Cloudflare Access) may be a redirect to the login: do not keep that as the page, and
+clear what was kept when the reader leaves (our rule; no fetched source covers it, so check it in your own app).
+
+## 4. Updates
+
+A worker whose bytes differ installs and waits. `skipWaiting` is discouraged because old pages can then be served by the new worker (web.dev); if you use it, tell the reader that a new
+version is ready. Old caches are not deleted for you, and renaming the worker file does not remove the old one.
+
+## 5. Standalone layout
+
+- The page has `viewport-fit=cover`, so content may sit under the notch and the home bar. The system gives the insets as tokens (`--safe-top`, `--safe-right`, `--safe-bottom`, `--safe-left`, from `env(safe-area-inset-*)`) and `PageLayout` and `NavBar` use them; a page does not read `env()` itself (WebKit: combine with `max()` against the normal margin).
+- A pull past the end of the page must not drag the shell or reload it: the system sets `overscroll-behavior-y: none` on the body (MDN: `contain` and `none` stop bounce and pull-to-refresh).
+- There is no back button in an installed app on iOS and the system gesture on Android varies, so **every page below the top has a visible way up**: `Breadcrumbs` (our rule).
+- **Links stay in the window.** A link out leaves the app, so it is marked (`ExternalLink`) and is the last action on a page.
+- `@media (display-mode: standalone)` is the way to tell an installed app in CSS (web.dev).
+
+## 6. Offline
+
+Offline is a state with a time and an action, not an error. Show the page that was last fetched, say so (`ConnectionBanner`, `Freshness`) and never disable anything. See the guide **Fresh data and offline**.
+
+## 7. Push
+
+Ask for permission **from a tap**, never on load, with a pre-prompt of your own where declining leaves the browser's permission open, and always offer a way to unsubscribe. On iOS, web push works only for an app on the home screen (iOS 16.4 and later), and
+users manage notifications for each app (WebKit).
+
+## 8. Checklist
+
+1. `id`, `scope` (closing slash) and `start_url` are right and will not change.
+2. `any` and `maskable` icons, 192 and 512.
+3. Dark colours, opaque; a `theme-color` meta for each scheme.
+4. Pages: network first with an offline page; files: cache first; no login page kept as a page; caches named and cleaned.
+5. An update path: a notice, not a silent swap.
+6. Insets from the tokens; a way up on every page; links stay in the window.
+7. Tested in DevTools (Application) **and on a real phone**, installed.
+
+## Sources
+
+[web.dev, installable](https://web.dev/articles/install-criteria),
+[web.dev, web app manifest](https://web.dev/learn/pwa/web-app-manifest),
+[web.dev, maskable icons](https://web.dev/articles/maskable-icon),
+[web.dev, updates](https://web.dev/learn/pwa/update),
+[MDN, id](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/id),
+[MDN, scope](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/scope),
+[MDN, overscroll-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior),
+[WebKit, safe areas](https://webkit.org/blog/7929/designing-websites-for-iphone-x/),
+[WebKit, web push on iOS](https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/).

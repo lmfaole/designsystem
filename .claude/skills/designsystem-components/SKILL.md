@@ -61,7 +61,11 @@ If the thing is not here, **add a component**; do not style in the project.
 ## Add or change a component
 
 1. Make it in `src/components/<name>.tsx`; export it (`exports` in `package.json` already maps `./components/*`).
-2. Add a story in `stories/<group>/<name>.stories.tsx` and, if it is a new idea, mention it in the right **Guide**. A story file:
+2. Add a story in `stories/components/<group>/<name>.stories.tsx`, titled `Components/<Group>/<Name>`, in the group of what it is FOR
+   (Layout, Text, Links, Actions, Navigation, Lists, Tables, Charts, Media, Forms, Status, States, Overlays, Motion), never a group of how
+   it is made. Give it its place in `storySort` in `.storybook/preview.tsx` (most used first in its group) and its line in
+   `stories/components/Overview.mdx` (`src/stories.test.ts` fails on either missing). If it is a new idea, mention it in the right guide
+   (**Foundations**, **Patterns** or **Engineering**). A story file:
    - CSF 3 with `satisfies Meta<typeof X>`, `args` on the meta for the default, the story Default first, then **one story per variant and per state**
      a page meets (Empty, Loading, Error, a long text, ShowTable), named for what it shows;
    - the description in the template: **Use it when**, **Do not use it when**, **Accessibility**, **Content**, **Related**;

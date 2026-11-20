@@ -1,0 +1,45 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Start/Status and contributing" />
+
+# Status and contributing
+
+How a component enters the system, what its status means and how it leaves. Small on purpose: the system has a handful of readers.
+
+## 1. A component is added when
+
+1. Two pages need it, or a page needs it and a rule says how it must look.
+2. It has **closed props** (README, rule 1): no `className`, no `style`.
+3. It has a story in the documentation template (use, not use, accessibility, content, related), a test where there is logic, and a README row.
+4. It is named for what it is, never for the project.
+
+If nothing fits, add a component here and a minor version, then use it. Do not write styling in the project.
+
+## 2. Status
+
+| Status | Means |
+| --- | --- |
+| Stable | Used by pages; changes only in a minor version without breaking, or in a major version with a migration note |
+| Experimental | Used, but its props may still change in a minor version |
+| Deprecated | Will go in the next major version; the story names what to use instead |
+
+No component carries a status label yet; a story gets one (a line at the top of its description) when it is `Experimental` or `Deprecated`, and a component without one is `Stable`.
+
+A deprecated component stays for one minor version before a major version removes it. A breaking change is always a major version and gets a
+«Migrating to N» section in the README.
+
+## 3. Tokens
+
+Names go from intent to detail (as in Spectrum: `accent-background-color-hover`). Components use semantic tokens only; the raw
+values are the two `:root` blocks of the theme, light and dark. A new colour is a new role in the table of «Colour and state», not a new
+literal in a component.
+
+## 4. Releases
+
+Each release is a version in `package.json`, a commit on `main` and a line in the README where a page has to change. Tags exist for the
+versions that can be pushed; consumers pin a commit.
+
+## Sources
+
+[Spectrum, design tokens](https://spectrum.adobe.com/page/design-tokens/),
+[Aksel, components](https://aksel.nav.no/komponenter).

@@ -5,7 +5,7 @@ description: Use when deciding how a page or a set of pages is structured with t
 
 # UX with the design system
 
-The rules are in the README («Pages and navigation», rule 11) and in Storybook (**Guides / Pages and navigation**). This is the
+The rules are in the README («Pages and navigation», rule 11) and in Storybook (**Patterns / Pages and navigation**). This is the
 working version: decide the structure first, then build it from the components named here.
 
 ## 1. Decide the levels first

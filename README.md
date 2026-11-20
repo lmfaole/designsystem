@@ -122,7 +122,7 @@ The group's title is an `<h2>`, the subsections' `<h3>`s. A section or group tha
 
 ## Reading and hierarchy
 
-The full guide, with examples, is in Storybook (**Guides / Reading and hierarchy**). The rules:
+The full guide, with examples, is in Storybook (**Patterns / Reading and hierarchy**). The rules:
 
 1. **One direction: down.** Everything that is read stands under each other in one column (`width="reading"`, 48rem, centred).
    Extra width is margin. Columns only for what is *looked at*: pictures, charts, cards of equal weight, a few figures, a
@@ -165,7 +165,7 @@ commit the result) and keep them current with `npx designsystem-skills --check` 
 
 ## Pages and navigation
 
-The full guide, with live examples, is in Storybook (**Guides / Pages and navigation**). The rules:
+The full guide, with live examples, is in Storybook (**Patterns / Pages and navigation**). The rules:
 
 **Three levels, no more.** Front page → list → detail. A fourth level means the structure is wrong.
 
@@ -316,7 +316,7 @@ import { StatusLine } from "@lmfaole/designsystem/components/status-line"
 
 ## States and messages (8.4)
 
-What a page says when it has nothing, is old, is loading or has failed. Researched against the documentation of GOV.UK, Primer, Carbon and Atlassian; the rules are in the `designsystem-ux` (§5), `designsystem-content` and `designsystem-components` skills and in Storybook, **Guides / States and messages**.
+What a page says when it has nothing, is old, is loading or has failed. Researched against the documentation of GOV.UK, Primer, Carbon and Atlassian; the rules are in the `designsystem-ux` (§5), `designsystem-content` and `designsystem-components` skills and in Storybook, **Patterns / States and messages**.
 
 | Component | For |
 | --- | --- |
@@ -335,6 +335,22 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.24
+
+**Storybook is organised by what a reader needs**, not by how a part is made: five roots in the order you need them.
+
+- **Start** (Welcome, status and contributing), **Foundations** (tokens, icons, typography, colour and state, grouping and spacing,
+  motion), **Components** by purpose (Layout, Text, Links, Actions, Navigation, Lists, Tables, Charts, Media, Forms, Status, States,
+  Overlays, Motion), **Patterns** (how pages are built, and the error pages) and **Engineering** (closed until opened).
+- Inside a group the most used comes first, not the alphabet. «Primitives» (how shadcn made a part) and «Feedback» (status, empty and
+  loading states and whole pages in one heap) are gone: each part stands with what it is for.
+- **Components / Overview**: every component by what you need, one table per group, each name a link to its page.
+- The files follow the sidebar (`stories/components/<group>/…`, `stories/foundations`, `stories/patterns`, `stories/engineering`), and the
+  reference pictures moved with them. `src/stories.test.ts` fails on a title with no place in `storySort`, a component missing from the
+  overview, a file outside its root's folder, and a link between docs pages that leads nowhere.
+- The addresses of the pages changed with their titles (`?path=/docs/components-lists-rows--docs`, was `lists-rows`): a bookmark to an
+  old one opens Storybook's start.
 
 ## 8.23
 

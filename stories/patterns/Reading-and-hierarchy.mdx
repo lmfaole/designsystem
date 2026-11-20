@@ -1,0 +1,104 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { Heading, Text } from "../../src/components/text"
+import { Rows } from "../../src/components/rows"
+import { PageSection } from "../../src/components/page-section"
+import { Stack } from "../../src/components/layout"
+import { StatusLine } from "../../src/components/status-line"
+
+<Meta title="Patterns/Reading and hierarchy" />
+
+# Reading and hierarchy
+
+A page is read, not looked at. Most of what the design system shows is **text in a list**: names, states, dates. The reader's
+job is to find what matters and act. Everything here is about making that job as short as possible.
+
+## One direction: down
+
+What is read stands **under each other, in one column**. Not in a grid.
+
+A grid of equal columns makes the reader read **across, then down, then across again**. That has three costs:
+
+1. **The order is in doubt.** Is the second item to the right of the first, or under it? The reader has to work out the order
+   before reading, and may get it wrong.
+2. **What comes first is hidden.** In a column the first thing is at the top and the reader knows it is first. In a grid the first
+   thing is one of several things in the top row.
+3. **The eye does more.** It crosses the width of the page for every row, and a wide screen makes it worse.
+
+So the design system has **one reading column** (`PageLayout width="reading"`, the default): 48rem, centred. On a wide screen the
+rest is **margin, not more columns**: that is not wasted space, it is what keeps the line short enough to follow. A page with something to
+look up beside what is read (a cover and its facts) puts it in a pane instead: `PageLayout width="pane"` and `Split` (guide «Wide screens»).
+
+**Columns are for what is looked at, not read:** pictures (`Tiles`), charts, cards of equal weight, a few figures or chips, and
+a `Split` rail of *reference* (a cover and its facts) beside the main content. A page that is mostly such things is
+`width="wide"`.
+
+## Order is priority
+
+Top to bottom is **most to least important**, the same on a phone and on a desktop. The layout never reorders by convenience.
+If two things matter equally, one still goes first.
+
+The **first thing the eye lands on** is the one that matters most on the screen. Not two.
+
+## Three levels, visibly different
+
+Page title, section title, item. Each differs from the next in size, weight or case, so the structure can be seen without reading.
+Do not add a fourth level of emphasis: `destructive` and bold are for what **stops** something, and the more they are used, the less
+they say.
+
+<div className="sb-unstyled">
+<Stack gap="lg">
+<Heading level={1}>Pull requests</Heading>
+<PageSection id="h-blocked" title="Blokkert, krever deg" icon="warning">
+  <Rows lead="icon" rows={[
+    { key: "1", icon: "pull-request", iconTone: "destructive", iconLabel: "Pull request", body: <Stack gap="xs"><Text>Fiks tidssone i værmeldingen</Text><StatusLine items={[{ text: "Tester feilet", icon: "failure", tone: "destructive" }]} /></Stack>, trailing: "17. nov." },
+    { key: "2", icon: "pull-request", iconLabel: "Pull request", body: <Stack gap="xs"><Text>Dropp installer-knapp</Text><StatusLine items={[{ text: "Endringer ønskes", icon: "changes", tone: "destructive" }]} /></Stack>, trailing: "15. nov." },
+  ]} />
+</PageSection>
+<PageSection id="h-ready" title="Klar til merge" icon="merge">
+  <Rows lead="icon" rows={[
+    { key: "3", icon: "pull-request", iconLabel: "Pull request", body: <Stack gap="xs"><Text>Ny Tiles-komponent</Text><StatusLine items={[{ text: "Godkjent", icon: "success" }]} /></Stack>, trailing: "13. nov." },
+  ]} />
+</PageSection>
+</Stack>
+</div>
+
+## Space groups; lines and boxes do not
+
+Things that belong together are **close** (`xs`, `sm`); groups are **further apart** (`lg`, `xl`). The space between two sections
+is always larger than the space inside one, so a group is seen as a group without a line round it. Rules and cards are for the rare
+thing that must be set apart.
+
+## One left edge, a short eye path
+
+Everything starts at the same left edge, so the eye can run down it. A row's date or count is at the end of the **same row**, and
+the row is no wider than 48rem, so the eye does not have to cross a whole screen from a name to its date. Prose is 45–75
+characters wide (`max-w-prose`).
+
+## Rows are scanned down the left
+
+Each row starts with the same thing (the kind, then the name). The **name is the strongest part** of a row; what else is on it is
+`muted` and small. All rows of a list have the same structure, so the reader learns it once.
+
+## Do not make the reader choose a path
+
+One column is one path. Do not put two lists side by side to be compared (that is a table), and do not hide the rest behind tabs
+when it fits under. A reader who has to choose where to start has already spent attention.
+
+## Short before long
+
+A summary and the few that matter come first; the long list comes after, or on a page of its own (see **Pages and navigation**).
+
+## Checking
+
+1. Look at the page at **400, 1440 and 2560 px**. At every width the reader must be able to read straight down.
+2. Cover everything but the first screen. Is it clear what matters most?
+3. Squint. Can the three levels still be told apart? Is anything shouting that should not be?
+4. Follow the left edge with your eye. Does it say what each row is?
+
+## Don't
+
+- Don't use `Grid` for text, lists or the sections of a page (it is for what is looked at).
+- Don't put a rail beside the main content to carry a second list.
+- Don't centre text or lists inside the column; the left edge is the guide.
+- Don't use bold, red or a box to make something stand out unless it stops something.

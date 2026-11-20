@@ -1,0 +1,64 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+import { TextField } from "../../src/components/text-field"
+import { SearchField } from "../../src/components/search-field"
+import { FormErrorSummary } from "../../src/components/form-error-summary"
+
+<Meta title="Patterns/Forms" />
+
+# Forms
+
+Forms are rare in a read-mostly app, and so they are small: one column, a few fields, native controls. The rules are from GOV.UK
+(validation, error summary, date input), Carbon (forms pattern), Atlassian (form) and Primer (toggle switch), put into our terms.
+
+## 1. One column, label above
+
+<TextField label="E-postadresse" name="epost" hint="For eksempel ola@eksempel.no." />
+
+- The label is above the field and always visible. A placeholder is never the label.
+- The hint says the format and stays visible; so does the error. There is no tooltip.
+- Mark only the minority: «(valgfritt)» when most fields are required.
+- Read-only is shown as text in a `FactList`. Avoid `disabled`: say why the value cannot be changed instead.
+
+## 2. Validate when the form is sent
+
+On submit, not while typing (GOV.UK). Carbon validates when the reader leaves a field; we follow GOV.UK because it keeps one rule for the whole form. Validate on the server as well. Do not use the HTML `required` attribute: use `novalidate` and say what is
+needed in words.
+
+When there are errors:
+
+1. Show a `FormErrorSummary` at the top of the page and move focus to it.
+2. List every error as a link to its field, in the same words as beside the field.
+3. Keep what the reader wrote in the fields.
+4. Start the page title with «Feil:».
+
+<FormErrorSummary errors={[{ field: "epost", message: "Skriv en e-postadresse med @." }]} />
+
+## 3. Words
+
+Say what is wrong and how to fix it: «Skriv en e-postadresse med @, for eksempel ola@eksempel.no.» Never «Vennligst», «Beklager», «Ups»,
+«ugyldig» or «du glemte». An error that is not about a field (no access, the service is down) is not a field error: it is a `Banner` or
+an `ErrorMessage` for the part that failed.
+
+## 4. Search and choice
+
+<SearchField label="Søk i pull requests" action="#" />
+
+A search is a GET form that goes to the same page with `?q=`, so the result has an address. It stands above the list with its label
+visible, not behind an icon. Few known values are `FilterChips`; a known list is a `NativeSelect`. A calendar popover and an
+autocomplete draw a menu in the page and are not part of the system; a date is a native date field, or three fields (day, month, year) when the reader knows it by heart.
+
+## 5. Saving
+
+A switch takes effect at once and the label names the setting, not the state. A checkbox needs an explicit save. Use one save pattern in a form.
+The button names the verb («Lagre», «Opprett»). After saving, say it in the page («Lagret», a `Banner` or a line next to the form),
+never in a toast, and take the reader to what they made.
+
+## Sources
+
+[GOV.UK validation](https://design-system.service.gov.uk/patterns/validation/),
+[GOV.UK error summary](https://design-system.service.gov.uk/components/error-summary/),
+[GOV.UK date input](https://design-system.service.gov.uk/components/date-input/),
+[Carbon forms](https://carbondesignsystem.com/patterns/forms-pattern/),
+[Atlassian form](https://atlassian.design/components/form/examples),
+[Primer toggle switch](https://primer.style/product/components/toggle-switch/guidelines/).

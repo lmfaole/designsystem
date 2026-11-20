@@ -1,0 +1,53 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Patterns/Accessible charts" />
+
+# Accessible charts
+
+A chart is a picture of numbers, so the numbers are the accessible version. For a read-mostly dashboard that means **a title, a text that says what the chart shows, and the data as a table**, with the chart itself as an image. It is
+what the W3C asks for complex images, and it is what Chartability calls critical: no table (C1) and content that is only visual (P2) are its two worst findings.
+
+## 1. The structure we use
+
+1. **The chart is an image with a label** (`ariaLabel`: the library draws an `svg` with `role="img"`). It takes no keyboard focus: a tab stop on every mark, or on a static chart, is a failure in Chartability (O6).
+2. **A short description** is the label and the title; **a long description** is the `summary`, visible under the chart, because a long description is for everyone (W3C WAI, complex images).
+3. **The data is a table** next to the chart (`ChartTable`), invisible by default and a table anyone can open with `showTable` («Vis tallene»). A table also reaches the slices and bars that are too small to point at (Carbon).
+4. **A tooltip is never the only way to a value.** It repeats the table for a pointer. WCAG 1.4.13 asks that content shown on hover or focus can be dismissed, can be hovered and stays until it is dismissed.
+
+An interactive chart that the reader moves through point by point is justified only where the reader explores; for five to twenty-four categories the table is the better keyboard route and costs nothing. (Our verdict, from Chartability O6 and O3, not a rule from one source.)
+
+## 2. Writing the description
+
+Datawrapper's formula: the type of chart (optional), the data using the axis labels, and why it matters; accurate, concise, not the title again, not the source. `summariseSeries()` produces this, in Norwegian:
+
+> Linjediagram. Avspillinger, 12 verdier. Høyest mar (402), lavest des (210). Økte fra 210 til 380.
+
+Say «omtrent uendret» when it is, and never «viser en graf». Where the chart has an insight that the numbers do not state, write the sentence yourself and pass it as `summary`. *(The Norwegian wording is our own proposal on that formula.)*
+
+## 3. Colour, dash and direct labels
+
+Marks meet 3:1 and text 4.5:1; lines use different strokes and markers; name the series on the chart; a legend is the fallback (Primer). Colour never carries a state, and a pair that is only told apart by colour needs another cue (WCAG 1.4.1; failure F13 is colour-only information
+missing from the text alternative). See **Data visualisation** and **Tokens / Overview**.
+
+## 4. Forced colours and reduced motion
+
+In forced colours the browser drops background images and gradients. A mark that is only a fill (the ring of a donut, a legend key) is marked `data-chart-mark` and keeps its colours, and the legend beside it says what each is; the bars and lines follow the system colours.
+The chart library respects `prefers-reduced-motion` by default, and the system's own durations are zero under it. Animate meaningful change only, and nothing longer than two seconds without a control (Chartability U6, F2).
+
+## 5. Check it
+
+1. Read the title, the summary and the table with a screen reader: does it say what the picture says?
+2. Tab through the page: the chart is not a stop.
+3. Turn off the pointer: can every value be reached?
+4. Forced colours and 200 % zoom: is anything lost?
+5. The Chartability workbook (POUR-CAF) as a checklist for a new kind of chart.
+
+## Sources
+
+[W3C WAI, complex images](https://www.w3.org/WAI/tutorials/images/complex/),
+[WCAG 2.2, non-text content](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html),
+[WCAG 2.2, content on hover or focus](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html),
+[Chartability](https://chartability.github.io/POUR-CAF/),
+[Datawrapper, alternative descriptions](https://www.datawrapper.de/academy/how-to-write-good-alternative-descriptions-for-your-data-visualization),
+[Carbon, chart anatomy](https://carbondesignsystem.com/data-visualization/chart-anatomy/),
+[Primer, data visualization](https://primer.style/product/ui-patterns/data-visualization/).
