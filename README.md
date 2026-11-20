@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.39
+
+**`WeatherStage`: the weather's own colours as the ground.** A `Stage` whose backdrop is four colours of the weather (clear and warm, grey cloud, dark blue rain, pale snow, a night sky after dark) in place of a picture's, drawn in WebGL and moving with the page's light (`lib/weather-mood.ts`, from Yr's `symbol_code`; `AmbientBackdrop` and `Stage` take a `palette`). Every colour keeps its lightness in the band a picture's do, and a test measures 4.5:1 for the text on every weather in both themes. The colours go over to a new weather's in one move; nothing loops.
+
 ## 8.38
 
 **The record playing now is a real object.** The disc (`Picture disc`, `NowPlayingCard`) is now a 3D mesh with a thickness (a face, an edge and the wall of its hole, `lib/disc-geometry.ts`), seen a little from above and tilted a little toward the light so that its edge shows, and it reflects its surroundings: a studio (the light itself, a soft box, a cool sky over a dark floor) with more reflection at a glancing angle, and the round grooves' spectrum in two bands that move with the light and the angle (anisotropic). The cover still shapes it (its hue, vividness and lightness), and the frame is transparent where the disc is, so the hole shows what is behind. Same API; the CSS version is unchanged.

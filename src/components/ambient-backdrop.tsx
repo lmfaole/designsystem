@@ -19,7 +19,7 @@ type Palette = readonly [Rgb, Rgb, Rgb, Rgb]
  * has a few WebGL surfaces at most (`lib/gl-budget.ts`); a context the browser takes away is made again when it is given back. Where WebGL is not there, or the picture may not be read (no CORS), the stage has
  * its plain tinted ground. It is decoration, hidden from assistive technology.
  */
-export function AmbientBackdrop({ src, sources }: { src?: string | null; sources?: readonly PictureSource[] }) {
+export function AmbientBackdrop({ src, sources, palette }: { src?: string | null; sources?: readonly PictureSource[]; /** Four colours to draw as they are, instead of taking them from a picture (`WeatherStage`). */ palette?: Palette }) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const [ready, setReady] = useState(false)
   const apply = useRef<((palette: Palette) => void) | null>(null)
@@ -66,19 +66,19 @@ export function AmbientBackdrop({ src, sources }: { src?: string | null; sources
         setReady(true)
       }
     }
-    apply.current = (palette) => {
+    apply.current = (next) => {
       if (current === null) {
-        current = palette
+        current = next
         build()
         return
       }
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        current = palette
+        current = next
         from = null
         to = null
       } else {
         from = current
-        to = palette
+        to = next
         started = performance.now()
       }
       schedule()
@@ -107,9 +107,17 @@ export function AmbientBackdrop({ src, sources }: { src?: string | null; sources
     }
   }, [])
 
+  // Colours given as they are (the weather's): handed to the surface the same way, and gone over to when they change.
+  const given = palette === undefined ? null : palette.flat().join(",")
+  useEffect(() => {
+    if (palette !== undefined) apply.current?.(palette)
+    // `given` is the colours' own value: a new array with the same colours is no change.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [given])
+
   // The picture: its four colours, handed to the surface (a first time it is made from them, after that the colours go over).
   useEffect(() => {
-    if (shown === undefined) return
+    if (shown === undefined || given !== null) return
     let cancelled = false
     const image = new Image()
     image.crossOrigin = "anonymous"
@@ -135,7 +143,7 @@ export function AmbientBackdrop({ src, sources }: { src?: string | null; sources
     return () => {
       cancelled = true
     }
-  }, [shown])
+  }, [shown, given])
 
   return <canvas ref={canvas} aria-hidden="true" className={cn("absolute inset-0 -z-10 size-full [mask-image:linear-gradient(to_bottom,black_60%,transparent)] opacity-0 transition-opacity", ready && "opacity-50 dark:opacity-40")} />
 }

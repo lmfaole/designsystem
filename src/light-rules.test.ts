@@ -41,6 +41,7 @@ test("the head of a page of a thing is the page's h1 with the lit main picture a
   assert.match(header, /<Stage /)
   assert.match(source("stage.tsx"), /<AmbientBackdrop/)
   assert.match(source("now-playing-card.tsx"), /<Stage /)
+  assert.match(source("weather-stage.tsx"), /<Stage /)
   const backdrop = source("ambient-backdrop.tsx")
   assert.match(backdrop, /lightStore\.listeners\.add/)
   // One frame for a change of light, and one that goes on only while the colours go over to a new picture's (`from !== null`): nothing else asks for a frame, so at rest nothing loops.
