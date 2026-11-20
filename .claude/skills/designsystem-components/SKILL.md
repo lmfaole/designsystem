@@ -22,7 +22,7 @@ description: Use when choosing which design system component to use for somethin
 | A titled part of a page | `PageSection`; a set that belongs together `SectionGroup` + `SubSection`; a link to all of it: `more` |
 | Text, a heading, a link | `Text`, `Heading`, `TextLink`; out to another site `ExternalLink`, `LinkButton external` |
 | Text written in Markdown (a description, a comment) | `Markdown`, never HTML inserted; `size="sm"` for a comment |
-| A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
+| A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `RankedRows` (a top list: place, picture, change, bar), `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
 | Terms and their values (facts about one thing) | `FactList`: one value or several stacked under one term; links on a line `LinkList` |
 | A status | `StatusLine` (under a title), `Badge` (next to a name in a row); a count that links `SummaryBar` |
 | A message about a page or section | `Banner`; a failed query `ErrorMessage`; nothing to show `EmptyState` |

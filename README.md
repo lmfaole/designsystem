@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.28
+
+**`RankedRows`: a top list.** The place of each thing (counted by the list, so the order is the data's), an optional picture in a `corners` shape, the name with the whole width, under it how the place moved since the list before (`change`: `up`, `down`, `same`, `new`, always in words, the arrow only a hint) and the score in words at the end of the line, with a thin bar for how far each is from the first (`amount`; each bar is a share of the largest). A table for a screen reader, which hears the place, the name and the score of a row together. No design system we looked at (Carbon, Material, Shopify's, the GOV.UK family) has a ranking component: they say an ordered list for ranked things, the place as real text, and a change that never rests on colour alone; that is what it does.
+
 ## 8.27.1
 
 `Picture corners="soft"` has corners of 30 % of its width, not 22 %: at the size of a row the soft tile and the sharp plate were hard to tell apart.
