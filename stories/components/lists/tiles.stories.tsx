@@ -10,7 +10,7 @@ const meta = {
   args: { tiles: Array.from({ length: 10 }, (_, i) => ({ key: String(i), href: i === 3 ? null : `#item-${i}`, title: `Title ${i + 1}`, picture: poster(i * 36, String(i + 1)), ratio: "poster" as const, detail: "Director", lines: ["★ 4"] })) },
   parameters: { docs: { description: { component: `### Use it when
 
-pictures are looked at in a gallery: a poster wall, album covers.
+pictures are looked at in a gallery: a poster wall, album covers. Give \`corners\` the shape of the kind of thing (a record's cover \`sharp\`) and \`sources\` its widths, as for \`Picture\`.
 
 ### Do not use it when
 
@@ -48,3 +48,16 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 /** Square pictures, as for albums. */
 export const Squares: Story = { args: { tiles: Array.from({ length: 6 }, (_, i) => ({ key: String(i), href: `#album-${i}`, title: `Album ${i + 1}`, picture: square(i * 50, String(i + 1)), ratio: "square" as const, detail: "Artist" })) } }
+/** An artist's albums by when they came out, oldest first: sharp covers (`corners="sharp"`), the year and the plays under the title; the last has no cover yet, and its frame stays. */
+export const Albums: Story = {
+  args: {
+    tiles: [
+      ["Melody A.M.", 2001, "12 340 avspillinger"],
+      ["The Understanding", 2005, "8 112 avspillinger"],
+      ["Junior", 2009, "5 020 avspillinger"],
+      ["Senior", 2010, null],
+      ["The Inevitable End", 2014, "1 204 avspillinger"],
+      ["Profound Mysteries", 2022, null],
+    ].map(([title, year, plays], i) => ({ key: String(i), href: i === 3 ? null : `#album-${i}`, title: String(title), picture: i === 5 ? null : square(i * 50, String(i + 1)), ratio: "square" as const, corners: "sharp" as const, detail: String(year), lines: plays === null ? [] : [String(plays)] })),
+  },
+}

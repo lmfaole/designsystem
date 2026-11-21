@@ -350,6 +350,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.55.0
+
+**A gallery of covers in the shape of what they are.** `Tile` takes `corners` (`PictureCorners`: a record's cover `sharp`, a person `round`) and `sources` (the widths the picture's source offers, as for `Picture`), so a grid of album covers has the same shape as the covers in rows and on the album's own page, and a tile fetches no larger a file than it draws. Story `Albums`: an artist's albums by when they came out, the year and the plays under each title, one without a cover.
+
 ## 8.54.0
 
 **A head whose picture is its face, and the few numbers that matter in it.** `DetailHeader` takes `size="large"`: the picture is the page's face (an artist's or a person's portrait), `Picture size="feature"` (new: as wide as its cell, lit on its frame like `hero`; `LIT_SIZES` in `lib/picture-frames` says which sizes are the main picture). On a phone the name goes first, the width of the head, and the portrait under it, half the head wide, beside the figures, so a long name does not wrap in a narrow column and the picture is never alone; from a wide head (`@3xl`) the portrait is beside the name at 16rem (20rem from `@5xl`, against 14rem for the hero) with the name, the figures and `children` centred on it. And `figures` (`DetailFigure`: `{ value, label }`): two or three numbers that say most about the thing to the reader («10 903 avspillinger», «22 % av alt du har hørt»), large under the name in a `<dl>`, in either size; each is said there and not again in the page's facts. Stories `WithFigures`, `Large`, `LargeOnPhone`, `LargeWithoutFigures`; «Light and shadow» and the `DetailHeader` docs say so.

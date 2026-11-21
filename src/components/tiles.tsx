@@ -1,4 +1,5 @@
-import { Picture } from "./picture"
+import type { PictureSource } from "../lib/picture-sources"
+import { Picture, type PictureCorners } from "./picture"
 
 /** One tile of a gallery: its picture, its name and the lines under it. */
 export interface Tile {
@@ -7,7 +8,11 @@ export interface Tile {
   href: string | null
   title: string
   picture: string | null | undefined
+  /** The same picture in the widths its source offers: the browser takes the smallest that is sharp in the tile. */
+  sources?: readonly PictureSource[] | undefined
   ratio: "poster" | "square"
+  /** What kind of thing it is, as a shape (see `PictureCorners`): a record's cover is `sharp`, a person `round`. */
+  corners?: PictureCorners | undefined
   /** Under the title, muted: who made it, what it is. */
   detail?: string | null | undefined
   /** More lines, each on a line of its own: a status, a rating, a day. */
@@ -26,7 +31,7 @@ export function Tiles({ tiles }: { tiles: readonly Tile[] }) {
       {tiles.map((tile) => {
         const content = (
           <>
-            <Picture size="fill" ratio={tile.ratio} src={tile.picture} />
+            <Picture size="fill" ratio={tile.ratio} src={tile.picture} {...(tile.sources === undefined ? {} : { sources: tile.sources })} {...(tile.corners === undefined ? {} : { corners: tile.corners })} />
             <span className="grid gap-0.5 text-xs">
               <span className="line-clamp-2 text-sm font-medium [overflow-wrap:anywhere] group-hover:underline">{tile.title}</span>
               {tile.detail ? <span className="line-clamp-1 text-muted-foreground">{tile.detail}</span> : null}
