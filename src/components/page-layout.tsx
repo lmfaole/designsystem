@@ -7,8 +7,11 @@ export const MAIN_ID = "main-content"
 
 const FOOT = { none: PAGE_PADDING_Y, bar: "pt-10 pb-[calc(--spacing(24)+var(--safe-bottom))]" } as const
 
-/** With a `NavBar`: room at the foot for the bar on a phone, and room at the left for the rail from tablet width up. */
-const WITH_NAV = "pt-10 pb-[calc(--spacing(24)+var(--safe-bottom))] md:pb-10 md:pl-60"
+/**
+ * With a `NavBar`: room at the foot for the bar on a phone, and room at the left for the rail from tablet width up: the rail's
+ * 14rem plus the column's gutter. `2xl:pl-66` is needed because `PAGE_COLUMN`'s `2xl:px-10` would otherwise win over `md:pl-60`.
+ */
+const WITH_NAV = "pt-10 pb-[calc(--spacing(24)+var(--safe-bottom))] md:pb-10 md:pl-60 2xl:pl-66"
 
 /**
  * The frame of a page: the skip link, and the page in `<main>`, in the one column every page stands in. It has no
