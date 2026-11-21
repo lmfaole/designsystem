@@ -16,10 +16,10 @@ export interface SubPage {
  * page shows its subpages: not as cards, not as buttons, not in a second menu. One column, in the order they matter (`ICONS` and
  * `Rows` have the same look), so the reader chooses from a list they can read, not a grid they have to scan.
  *
- * It stands WITH WHAT IT CONTINUES: at the foot of the section whose content the subpage has more of (the history under «Siste
- * avspillinger», the week's summary under «Mest spilt»), so the reader meets the way on where they want more. Never all of a page's
- * subpages gathered at the top. Only a page that is nothing but its subpages (a settings overview, «Innstillinger») has the list
- * straight under its title, each row with its `value`, what is chosen there now, so the reader sees the settings without opening them.
+ * It is for a page that is nothing but its subpages (a settings overview, «Innstillinger»): the list straight under its title, each
+ * row with its `value`, what is chosen there now, so the reader sees the settings without opening them; and for several subpages
+ * that belong together. ONE subpage that continues a section (the history under «Siste avspillinger») is not a `SubPages`: it is
+ * the section's own foot, `PageSection` with `continues`, a card with one link to the subpage at its foot.
  */
 export function SubPages({ label, pages }: { label: string; pages: readonly SubPage[] }) {
   if (pages.length === 0) return null

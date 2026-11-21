@@ -1,7 +1,6 @@
 import { Meta } from "@storybook/addon-docs/blocks"
 
 import { Breadcrumbs } from "../../src/components/breadcrumbs"
-import { SubPages } from "../../src/components/sub-pages"
 import { FactList } from "../../src/components/fact-list"
 import { LinkButton } from "../../src/components/link-button"
 import { NavBar } from "../../src/components/nav-bar"
@@ -109,10 +108,19 @@ Under the hub there are three levels: the app's front page → a page → a subp
   every page, the current one marked. A detail page marks the section it belongs to.
 - **Every page below a place in the `NavBar`** (a subpage, a detail) has **`Breadcrumbs`** at the top: the whole trail from tablet width, and only the parent, as a way
   back, on a phone. **A place in the `NavBar` itself** (the front page, «Musikk», «Innstillinger») has none: the bar already marks where the reader is. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading.
-- **A page that has subpages** links them with **`SubPages`**: a list in one column (an icon, the name, one line of what is on the
-  page). Not cards, not buttons, not a second menu. **Each link stands with the content it continues**: at the foot of the section the
-  subpage has more of («Historikk» under «Siste avspillinger», «Wrapped» under «Mest spilt»), never all of them gathered at the top.
-  Only a page that is nothing but its subpages (a settings overview) has the list straight under its title.
+- **A section that is an excerpt of a subpage is a card** (`PageSection` with `continues`): the title, the first few of what the subpage
+  has (the five latest plays of «Historikk»), and at its foot, inside the card under a line, one link the width of the card to the
+  subpage. **Each way on stands with the content it continues** («Historikk» at the foot of «Siste avspillinger», «Wrapped» at the foot
+  of «Mest spilt»), never all of them gathered at the top. The rules:
+  - The link **names where it goes**: «Se hele historikken», «Se månedens Wrapped», never «Se alle» or «Mer» alone. A count, when it
+    helps, says what it counts («1 248 avspillinger») and is read with the link.
+  - The **whole foot is the link**, at least 48 px high; its text stands in the rows' text column (give it the subpage's `icon` when
+    the rows have icons) and it ends with a chevron.
+  - The **rows keep their own links**: the card is never one big link, and the foot is a plain link, not a `nav` of its own.
+  - It **replaces `more`**: a section has one way to its subpage, not a «Se alle» in the title as well.
+- **A page that is nothing but its subpages** (a settings overview) lists them with **`SubPages`** straight under its title: a list in
+  one column (an icon, the name, what is chosen there now). Not cards, not buttons, not a second menu. `SubPages` is also for several
+  subpages that belong together; one subpage that continues a section is that section's foot.
 - **Moving between apps:** the first crumb is the group («Hjem», «Medier») and links to the page that lists its apps.
 - **It is navigation, not tabs.** Tabs switch views of the *same content on one page*; navigation goes to *another page*. GOV.UK
   separates them the same way (tabs «switch views within a page», service navigation «links across a service»), and Material 3 uses a
@@ -122,13 +130,10 @@ Under the hub there are three levels: the app's front page → a page → a subp
 <div className="sb-unstyled">
 <Breadcrumbs items={[{ label: "Hjem", href: "#" }, { label: "AdGuard", href: "#a" }, { label: "Enheter", href: "#e" }]} />
 
-<PageSection id="n-blocked" title="Blokkert i dag" icon="shield">
+<PageSection id="n-blocked" title="Blokkert i dag" icon="shield" continues={{ href: "#h", label: "Se hele blokkeringshistorikken", count: "1 412 i dag" }}>
   <Rows lead="icon" rows={[
     { key: "1", icon: "shield", iconLabel: "Blokkert", body: "ads.example.com", trailing: "142" },
     { key: "2", icon: "shield", iconLabel: "Blokkert", body: "tracker.example.net", trailing: "87" },
-  ]} />
-  <SubPages label="Mer om blokkeringene" pages={[
-    { href: "#h", label: "Historikk", icon: "calendar", description: "Hva som ble blokkert, en dag om gangen." },
   ]} />
 </PageSection>
 </div>
@@ -142,6 +147,9 @@ the screen: name things by what they recognise («Venter på din review»), not 
 
 - Don't show the whole list on the front page and again on the list page.
 - Don't gather the links to a page's subpages, or its counts, at the top: each stands with what it is about.
+- Don't put a one-item `SubPages` under a section's list to reach the page it is an excerpt of: it reads as a new section, out of
+  line with the rows. Make the section a card with `continues`, and don't keep a `more` in its title as well.
+- Don't make a section card one big link around rows that have links of their own, and don't label its foot «Se alle» or «Mer».
 - Don't hide what matters behind «vis mer».
 - Don't make a tap on a row leave the app when the app has a page for it.
 - Don't put a modal where a page with an address would do.

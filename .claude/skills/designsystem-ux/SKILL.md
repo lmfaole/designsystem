@@ -57,8 +57,12 @@ that to decide. A thing that is one line (an hour of the forecast) has none. A d
 - **Breadcrumbs on every page that has a parent** (`Breadcrumbs`; a subpage, a detail, a page of an app in a group): the whole trail from tablet width, the parent alone as a way back on a
   phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading. The first crumb is the group
   (`Hjem`, `Medier`) and links to the page that lists its apps: that is how the reader moves between apps.
-- **A page with subpages shows them with `SubPages`** under the title: a list in ONE column (icon, name, one line of what is on it), never
-  cards, buttons or a second menu. Top-level pages are in the `NavBar` (five or so); everything else is a subpage or a detail.
+- **A page that is nothing but its subpages shows them with `SubPages`** under the title: a list in ONE column (icon, name, one line of what is on it), never
+  cards, buttons or a second menu.
+- **A section that is an excerpt of a subpage is a card**: `PageSection` with `continues={{ href, label, icon?, count? }}`. The title, the first
+  few rows (with their own links), and at the foot one full-width link to the subpage that names where it goes («Se hele historikken»,
+  «Se månedens Wrapped», never «Se alle» or «Mer» alone). Each way on stands at the foot of what it continues, never gathered at the top;
+  no `more` as well, and no one-item `SubPages` under the list. Top-level pages are in the `NavBar` (five or so); everything else is a subpage or a detail.
 - A count in `SummaryBar` is a link to what it counts.
 
 ## 5. States

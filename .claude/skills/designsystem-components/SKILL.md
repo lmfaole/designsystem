@@ -19,7 +19,7 @@ description: Use when choosing which design system component to use for somethin
 | Things under each other (text, lists, sections) | `Stack`; short things in a line `Inline` |
 | Things that are LOOKED AT in columns | `Grid` (`tiles`, `cards`, `charts`, a count), `Tiles`; a pane beside the main content `Split` (`position` start or end) in a `PageLayout width="pane"` |
 | The page frame, its title | `PageLayout`, `PageColumn`, `PageHeader` |
-| A titled part of a page | `PageSection`; a set that belongs together `SectionGroup` + `SubSection`; a link to all of it: `more` |
+| A titled part of a page | `PageSection`; a set that belongs together `SectionGroup` + `SubSection`; a link to all of it: `more`; an excerpt of a subpage (the five latest plays of «Historikk»): `continues`, a card with one full-width link to the subpage at its foot («Se hele historikken»), instead of `more` |
 | Text, a heading, a link | `Text`, `Heading`, `TextLink`; out to another site `ExternalLink`, `LinkButton external` |
 | Text written in Markdown (a description, a comment) | `Markdown`, never HTML inserted; `size="sm"` for a comment |
 | A list of things | `Rows` (icon / rank / poster lead), `PictureRows`, `RankedRows` (a top list: place, picture, change, bar), `EntityRows`, `Tiles`, `HeadlineList`, `StoryList`, `DatedLinkTable` |
@@ -37,7 +37,7 @@ description: Use when choosing which design system component to use for somethin
 | Departures from a stop (Entur) | `DepartureBoard`: a card per stop, a row per line with the next times, a time strip, the walk, delays and cancellations; a line alone `LineBadge` |
 | A history of a thing (a pull request, an issue, a discussion, what was played) | `Timeline`: comments in full and events as one line on a rail, noisy runs folded, a heading per day; the steps it went through at the top `StateSteps`; how long each state lasted `DurationBars` |
 | A value against a goal | `Progress`; pages of a long list with addresses `Pagination` |
-| The way between pages | top-level pages `NavBar` (bar at the foot on a phone, scrolling sideways when there are more than fit, rail from tablet width; given to `PageLayout` as `nav`; «Innstillinger» last); where you are and the way back `Breadcrumbs`; the pages under this page `SubPages`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
+| The way between pages | top-level pages `NavBar` (bar at the foot on a phone, scrolling sideways when there are more than fit, rail from tablet width; given to `PageLayout` as `nav`; «Innstillinger» last); where you are and the way back `Breadcrumbs`; the pages under a page that is nothing but its subpages (a settings overview) `SubPages`, and one subpage that continues a section `PageSection continues`; narrowing a list `FilterChips`; a view switch `SegmentedToggle` |
 | An icon | `Icon` (a meaning from `ICONS` in `src/lib/icons.ts`) |
 | A picture | `Picture`, `PictureCard`, `ImageLightbox`, `Logo`, `Logos`; its shape says what kind of thing it is (`corners`: `round` a person or band, `sharp` a record, `soft` a single, `normal` a poster): one shape for each kind, everywhere that kind shows |
 | A person named (reviewers, authors, who wrote last) | `Person`: the name with their round picture beside it |

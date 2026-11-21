@@ -53,7 +53,10 @@ Colour is not the code: a chart in the grey palette is told apart by direct labe
 
 A card (`Card`) is only for **one self-contained item** that is comparable with its siblings or clickable as a whole,
 or a frame around a chart. It needs real content of its own and at least two of its kind. Everything else is a `PageSection`
-with a list, a table, a `dl` or `Text`. Cards are not nested (rule 8).
+with a list, a table, a `dl` or `Text`. The one other card is a section that is an excerpt of a subpage:
+`PageSection` with `continues` (`{ href, label, icon?, count? }`) draws the section as a card with the link to the subpage at its
+foot, under a line, the whole width. Never a one-item `SubPages` under the list for it, never a `more` as well, never the whole card as one
+link (the rows keep theirs). Cards are not nested (rule 8).
 
 ## Colour rules
 

@@ -81,7 +81,7 @@ repository does (`scripts/design-tokens.ts` there).
    **Cards.** A card (`Card`, `Panel`) is only for one self-contained item that is comparable with its siblings of the same kind
    or clickable as a whole, or a frame around a chart. It needs real content of its own (a picture, figures, facts, a chart)
    and at least two of its kind on the page, or the page's one chart. Everything else is a `PageSection` (a short noun title)
-   with a list, a table, a `dl` or `Text`. Cards are not nested. A title is a short noun phrase, not a sentence.
+   with a list, a table, a `dl` or `Text`. The one other card is a section that is an excerpt of a subpage (`PageSection` with `continues`): the card is the section, and its foot is the link to the subpage. Cards are not nested. A title is a short noun phrase, not a sentence.
 9. English for code and comments; on-screen text in a component is Norwegian (bokmål).
 10. **Use icons where they carry meaning, and use them freely there.** A section's title, the kind of a row, a status, an
     action on a button, a page to go to: each is found and understood faster with a symbol beside its words, and the
@@ -218,7 +218,8 @@ a subpage or a detail.
 | --- | --- |
 | An app's top-level pages (front page, Status, AdGuard …) | `NavBar` (bar at the foot on a phone, rail from tablet width); five or so, «Innstillinger» last |
 | Every page that has a parent (a subpage, a detail, and a page of an app that belongs to a group) | `Breadcrumbs` at the top: the whole trail from tablet width, the parent alone as a way back on a phone. A page with nothing above it (a standalone app's front page) has none |
-| A page that has subpages | `SubPages` under the title: a list in ONE column (icon, name, one line of what is on it), never cards or buttons |
+| A page that has subpages | `SubPages` under the title of a page that is nothing but its subpages (a settings overview): a list in ONE column (icon, name, one line of what is on it), never cards or buttons |
+| A section that is an excerpt of a subpage | `PageSection` with `continues`: a card, the first few rows, and one full-width link to the subpage at its foot («Se hele historikken») |
 | Moving between apps | The first crumb is the group (`Hjem`, `Medier`) and links to the page that lists its apps |
 
 The breadcrumbs say *where*, the title says *what*: do not repeat a page's title in a second heading. There is no side menu and no
@@ -229,7 +230,8 @@ grid of cards for pages.
 | `SummaryBar` | The state of a place in counts that are links; first on a front page |
 | `NavBar` | The way between the top-level places: a bar at the foot on a phone, a rail at the left from tablet width |
 | `Breadcrumbs` | Where the page is, on every page below the top level; the parent alone as a way back on a phone |
-| `SubPages` | The pages under this page, as a list (icon, name, one line) under the title |
+| `SubPages` | The pages under this page, as a list (icon, name, one line) under the title of a settings overview |
+| `continues` on `PageSection` | A section as a card with one link to the subpage it is an excerpt of at its foot |
 | `Person` | A person's name with their round picture beside it: in a list of facts (several reviewers), a comment, a row |
 | `more` on `PageSection`, `SubSection`, `SectionGroup` | «Se alle 14» in a section's title row |
 | `LinkButton` | An action that goes somewhere; `external` for a link out |
@@ -347,6 +349,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 | `Pagination` | The way between pages of a long list that has an address for each page: real links, «Forrige» and «Neste», the current page marked |
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
+
+## 8.53.0
+
+**A section that previews a subpage is a card, and its foot is the link.** `PageSection` takes `continues` (`{ href, label, icon?, count? }`, the type `Continuation`): the section becomes a card (`bg-card`, `border`, `rounded-2xl`) holding the title, the excerpt (the five latest plays) and, at its foot under a line, one link the width of the card to the subpage, at least 48 px high, its text in the rows' text column (with `icon`, in line with `Rows lead="icon"`), a quiet `count` («1 248 avspillinger») and a chevron at the end. The rows keep their own links, so the card is not one link, and the foot is not a `nav` of its own. It replaces `more` (the types allow one or the other). A one-item `SubPages` under a section's list, which read as a new section and stood out of line with the rows, is now this foot; `SubPages` stays for a settings overview and several subpages together. «Pages and navigation», `SubPages`, `PageSection` and the skills say so, with a Don't.
 
 ## 8.52.3
 
