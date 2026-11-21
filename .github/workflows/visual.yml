@@ -1,9 +1,10 @@
 name: Visual
 
 # Every story's picture against the reference CI keeps in `stories/**/__screenshots__` (`npm run test:visual`, `.storybook/visual.setup.ts`).
-# The references are made here and only here: a new story gets its picture from the push to main that adds it (committed by the bot),
-# and changed pictures from a run by hand with «update» on (Actions → Visual → Run workflow). A picture from another machine differs by a
-# few pixels of font rendering. A failed run keeps the actual pictures and the differences as an artifact.
+# The references are drawn in this Linux: a new story gets its picture from the push to main that adds it (committed by the bot), and
+# changed pictures from a run by hand with «update» on (Actions → Visual → Run workflow), or before the push with
+# `npm run test:visual:docker -- --update`, which draws them in Playwright's image as here (a picture from a Mac itself differs by a few
+# pixels of font rendering). A failed run keeps the actual pictures and the differences as an artifact.
 on:
   push:
     branches: [main]

@@ -15,7 +15,9 @@
     "build-storybook": "storybook build -o storybook-static",
     "deploy": "npm run build-storybook && wrangler deploy",
     "test:stories": "vitest run --project=\"storybook-*\"",
-    "test:visual": "vitest run --project=visual"
+    "test:visual": "vitest run --project=visual",
+    "test:visual:docker": "node scripts/visual-docker.mjs",
+    "hooks": "git config core.hooksPath .githooks"
   },
   "exports": {
     "./theme.css": "./src/theme.css",

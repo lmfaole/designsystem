@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Before a push: every story's picture against its reference, in CI's Linux and Chromium (`npm run test:visual:docker`), so a picture that
+# changed is found here and not in the Visual workflow after the push. Only when the push changes what is drawn (src, stories, .storybook,
+# the lockfile). Without Docker it warns and lets the push go. `SKIP_VISUAL=1 git push` or `git push --no-verify` skips it.
+# Turned on once per clone with `npm run hooks`.
+set -euo pipefail
+
+[ "${SKIP_VISUAL:-}" = 1 ] && exit 0
+
+zero=0000000000000000000000000000000000000000
+changed=""
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+  [ "$local_sha" = "$zero" ] && continue
+  if [ "$remote_sha" = "$zero" ]; then range="$local_sha"; else range="$remote_sha..$local_sha"; fi
+  changed+="$(git diff --name-only "$range" -- src stories .storybook package-lock.json vitest.config.ts ':!stories/**/__screenshots__/**' 2>/dev/null || true)"
+done
+[ -z "$changed" ] && exit 0
+
+if ! docker info >/dev/null 2>&1; then
+  echo "pre-push: Docker kjører ikke, så de visuelle testene ble hoppet over (start Docker Desktop eller \`colima start\`)." >&2
+  exit 0
+fi
+
+echo "pre-push: sammenligner storyene med referansebildene i CIs Linux (npm run test:visual:docker) …" >&2
+log="${TMPDIR:-/tmp}/designsystem-visual.log"
+refs() { git ls-files --others --exclude-standard 'stories/**/__screenshots__/**' | grep '\.png$' | sort || true; }
+before=$(refs)
+made() { comm -13 <(echo "$before") <(refs) | grep -c . || true; }
+# A story without a reference fails the first pass even as it makes the picture (as in CI): compare once more only then.
+ok=0
+if npm run -s test:visual:docker -- --update=new >"$log" 2>&1; then ok=1
+elif [ "$(made)" -gt 0 ] && npm run -s test:visual:docker >"$log" 2>&1; then ok=1
+fi
+if [ "$ok" = 1 ]; then
+  n=$(made)
+  if [ "$n" -gt 0 ]; then echo "pre-push: $n nye referansebilder for nye stories ligger i __screenshots__ (CI lager de samme om du ikke committer dem)." >&2; fi
+  exit 0
+fi
+
+grep -E "×|Screenshot does not match|Expected image" "$log" | awk '!seen[$0]++' | head -20 >&2
+cat >&2 <<EOF
+
+pre-push: Bildene over skiller seg fra referansene (hele loggen: $log, forskjellene i .vitest-attachments/).
+  Ikke ment?  Rett koden og push igjen.
+  Ment?       npm run test:visual:docker -- --update   og commit de nye bildene i __screenshots__ sammen med endringen.
+EOF
+exit 1

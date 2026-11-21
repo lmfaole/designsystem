@@ -97,8 +97,20 @@ repository does (`scripts/design-tokens.ts` there).
 
 ```sh
 npm install
+npm run hooks       # once per clone: the visual test before every push that changes what is drawn
 npm run verify      # typecheck, lint and the tests
+npm run test:visual:docker               # every story's picture against its reference, in CI's Linux and Chromium
+npm run test:visual:docker -- --update   # new references for a change that is meant: commit them with it
 ```
+
+**Visual tests before a push.** The references in `__screenshots__` are drawn in Linux, and a Mac draws a few pixels of every font
+differently, so `npm run test:visual` on a Mac always differs. `npm run test:visual:docker` runs it in Playwright's own image at the
+lockfile's version, as `linux/amd64` like CI (Rosetta on Apple silicon), and draws the same pictures: a changed story is found before the
+push, and a change that is meant brings its new references in the same commit, so the Visual workflow passes without a run by hand.
+It needs Docker (Docker Desktop, or `colima start --vm-type vz --vz-rosetta`); the first run installs the packages into a volume
+and takes a few minutes, later runs one or two. The pre-push hook (`.githooks/pre-push`, on with `npm run hooks`) runs it when the push
+changes `src`, `stories`, `.storybook` or the lockfile, lets the push go with a warning when Docker is not running, and is skipped with
+`SKIP_VISUAL=1 git push`. It tests the working tree, so commit or stash what is not to be pushed.
 
 A change is released by bumping `version` in `package.json` and pushing to `main`: CI checks it (`tsc`, the tests), Storybook is published (on GitHub Pages and on **https://design.lmfaole.party**, a Worker with only the files, `wrangler.jsonc`; the workflow deploys it when the repository has the secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, and `npm run deploy` does the same by hand), and the workflow `tag.yml` tags the commit `v<version>` when that version has no tag yet. A project then runs **`npx designsystem-bump`** (the latest `main`, or a commit or `v<version>` as its argument): it pins the same commit in every `package.json` of the repository, brings the lockfile in step, installs the skills again and checks them, so the project never follows the rules of an older version without anyone seeing it. `--dry-run` says what would change.
 
@@ -546,7 +558,8 @@ Web Design Model v4, GOV.UK and W3C COGA (guide **Performance and sustainability
   on the page: `CardTitle` is no heading, `TextLink external`, `DatedLinkTable` and `StoryList` do not say a link leaves, `Logo` has no
   decorative mode, `PeriodPicker` changes the page on a choice, `PageSection`'s title is always an `h2`.
 - **Visual regression in CI**: `npm run test:visual` compares every story's picture with the reference kept in `__screenshots__`; the
-  Visual workflow makes the references, and only there: a new story's on the push that adds it, a changed one by hand with «update».
+  Visual workflow makes the references: a new story's on the push that adds it, a changed one by hand with «update» (or, since 8.52.2,
+  before the push with `npm run test:visual:docker -- --update`).
 - `CalendarHeatmap` and `Heatmap` take `unit` as `{ one, many }`, so a count of one reads «1 visning».
 
 ## 8.20
