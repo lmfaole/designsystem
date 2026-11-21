@@ -21,14 +21,34 @@ export function lightFromPointer(clientX: number, clientY: number, width: number
   return { x: clamp((clientX / width) * 2 - 1), y: clamp((clientY / height) * 2 - 1) }
 }
 
+/** How a phone is held when it is held still: `beta` forward, `gamma` to the sides, in degrees. The tilt moves the light from here. */
+export interface TiltRest {
+  beta: number
+  gamma: number
+}
+
+/** A phone held as it is read, before the first reading says how this one is held. */
+export const READING_REST: TiltRest = { beta: 45, gamma: 0 }
+
 /**
- * The light from how a phone is held (`deviceorientation`): `gamma` is the tilt to the sides and `beta` the tilt forward, both in degrees. The phone held as it is read
- * (about 45° forward) gives the default's height; tilting it moves the light across the screen, as light that stays where it is would move across a tilted surface.
- * A reading that is not a number (a desktop browser sends nulls) gives the default.
+ * Where the phone rests, after a reading: it follows the readings slowly (half the way in `halfLifeMs`), so a hand that holds the phone
+ * upright, or lying down, or a little to the side soon is the rest, and only a move away from it moves the light. The first reading, and
+ * one after a pause (`staleMs` without a reading: the page was hidden, the phone put down), is the rest at once.
  */
-export function lightFromTilt(beta: number | null, gamma: number | null): Light {
+export function restFrom(rest: TiltRest | null, beta: number, gamma: number, elapsedMs: number, halfLifeMs = 3000, staleMs = 1000): TiltRest {
+  if (rest === null || !(elapsedMs >= 0) || elapsedMs > staleMs) return { beta, gamma }
+  const share = 1 - Math.pow(0.5, elapsedMs / halfLifeMs)
+  return { beta: rest.beta + (beta - rest.beta) * share, gamma: rest.gamma + (gamma - rest.gamma) * share }
+}
+
+/**
+ * The light from how a phone is held (`deviceorientation`): `gamma` is the tilt to the sides and `beta` the tilt forward, both in degrees. The phone at its
+ * `rest` (how it is held, `restFrom`) gives the light a little above the middle, at the default's height; tilting it from there moves the light across
+ * the screen, as light that stays where it is would move across a tilted surface. A reading that is not a number (a desktop browser sends nulls) gives the default.
+ */
+export function lightFromTilt(beta: number | null, gamma: number | null, rest: TiltRest = READING_REST): Light {
   if (beta === null || gamma === null || !Number.isFinite(beta) || !Number.isFinite(gamma)) return DEFAULT_LIGHT
-  return { x: clamp(0 - gamma / 35), y: clamp((beta - 45) / -35 - 0.35) }
+  return { x: clamp((rest.gamma - gamma) / 35), y: clamp((rest.beta - beta) / 35 - 0.35) }
 }
 
 /** A step of the light towards where it should be, at a pace that does not depend on the frame rate: it covers half the distance in `halfLifeMs`. */

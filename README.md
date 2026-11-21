@@ -348,6 +348,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.52.3
+
+**The tilt starts from how the phone is held.** The light, and with it `AlbumSleeve`'s turn, the shadows and the shine, moved from a fixed rest of 45° forward: a phone held upright in the hand, or lying in bed, had the light at the edge and the sleeve turned as far as it goes. The rest is now learned from the readings (`restFrom` in `lib/light`: it follows them slowly, half the way in three seconds, and the first reading is the rest at once), so the phone held still in any way lights the page as the default does, and only a move from it moves the light.
+
 ## 8.52.2
 
 **Links and counts stand with what they are about.** `SubPages` goes at the foot of the section whose content the subpage has more of («Historikk» under «Siste avspillinger»), not all of a page's subpages gathered at the top; only a page that is nothing but its subpages (a settings overview) has the list under its title. `SummaryBar` stands under the title of the section it counts, not first on the page. `SubPages` has no margin of its own any more: the `Stack` or section around it spaces it.

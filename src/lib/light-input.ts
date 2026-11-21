@@ -1,4 +1,4 @@
-import { approach, lightFromPointer, lightFromTilt, lightStore, settled, type Light } from "./light"
+import { approach, lightFromPointer, lightFromTilt, lightStore, restFrom, settled, type Light, type TiltRest } from "./light"
 import { browserStorage, resolveTiltPreference, writeTiltPreference } from "./light-preference"
 
 /**
@@ -33,6 +33,9 @@ let stop: (() => void) | null = null
 let frame = 0
 let last = 0
 let tilted = false
+// How the phone is held, learned from the readings: the light moves with a tilt away from it, not with the angle the hand happens to hold.
+let rest: TiltRest | null = null
+let lastTilt = 0
 let listening = false
 
 function wake(): void {
@@ -61,7 +64,9 @@ function onPointer(event: PointerEvent): void {
 function onTilt(event: DeviceOrientationEvent): void {
   if (event.beta === null || event.gamma === null) return
   tilted = true
-  lightStore.target = lightFromTilt(event.beta, event.gamma)
+  rest = restFrom(rest, event.beta, event.gamma, event.timeStamp - lastTilt)
+  lastTilt = event.timeStamp
+  lightStore.target = lightFromTilt(event.beta, event.gamma, rest)
   wake()
 }
 
@@ -131,6 +136,7 @@ function start(): () => void {
     window.removeEventListener("deviceorientation", onTilt)
     listening = false
     tilted = false
+    rest = null
     if (frame !== 0) cancelAnimationFrame(frame)
     frame = 0
   }
