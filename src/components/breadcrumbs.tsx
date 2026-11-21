@@ -7,9 +7,9 @@ export interface Crumb {
 
 /**
  * Where the page is in the app, from the top: the group (`Hjem`, `Medier`), the app, the page, and the page the reader is on last.
- * It is on EVERY page that has a parent: a subpage, a detail page, and the pages of an app that belongs to a group (the group is the first
- * crumb, which is how the reader reaches the other apps). The `NavBar` is the way between an app's own top-level pages; a page with
- * nothing above it (a standalone app's front page) has no breadcrumbs. The last item is the page itself (`aria-current="page"`, not a link). The first item is the group, and links to the page that
+ * It is on EVERY page below a place in the `NavBar`: a subpage and a detail page (in an app that belongs to a group, the group is the first
+ * crumb, which is how the reader reaches the other apps). A page that IS a place in the `NavBar` (the front page, «Musikk», «Innstillinger»)
+ * has no breadcrumbs: the bar marks where the reader is, and «Medier › Innstillinger» would only say it again. The last item is the page itself (`aria-current="page"`, not a link). The first item is the group, and links to the page that
  * lists the apps of it: that is how the reader moves between apps. Do not repeat the page's title in a second heading to say where
  * you are: the breadcrumbs say where, the title says what.
  *

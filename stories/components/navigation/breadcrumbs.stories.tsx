@@ -10,11 +10,11 @@ const meta = {
   args: { items: [{ label: "Hjem", href: "#" }, { label: "AdGuard", href: "#adguard" }, { label: "Enheter", href: "#enheter" }] },
   parameters: { docs: { description: { component: `### Use it when
 
-every page that has a parent: the trail from the group to the page.
+every page below a place in the \`NavBar\` (a subpage, a detail): the trail from the app (or its group) to the page.
 
 ### Do not use it when
 
-a top-level page (it has nothing above it) or between sibling pages (\`NavBar\`).
+a page that is a place in the \`NavBar\` (the front page, «Musikk», «Innstillinger»): the bar marks where the reader is. Nor between sibling pages (\`NavBar\`).
 
 ### Accessibility
 

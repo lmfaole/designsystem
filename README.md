@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.52.1
+
+**Breadcrumbs start below the menu.** The rule is now said the same way everywhere (`Breadcrumbs`, «Pages and navigation»): a page that is a place in the `NavBar` (the front page, «Musikk», «Innstillinger») has no breadcrumbs, since the bar marks where the reader is; every page below one (a subpage, a detail) has them.
+
 ## 8.52
 
 **Where the data comes from, with each source's mark.** `SourceList` (`components/source-list`; `{ sources: { name, brand?, href, description, credit? }[] }`) is a description list of an app's sources, said once at the foot of «Innstillinger» rather than on every page: the source's mark (`BrandIcon`, decorative) beside its name, the name an `ExternalLink` to it, what the app gets from it, and the credit its terms ask for. `BrandIcon` has the marks of Last.fm (`lastfm`), Trakt, TMDB (`tmdb`), Yr, OpenStreetMap (from Simple Icons, CC0) and Entur (its own «EN» icon from `@entur/icons`, EUPL-1.2).

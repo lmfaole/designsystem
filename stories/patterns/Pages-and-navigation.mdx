@@ -107,8 +107,8 @@ Under the hub there are three levels: the app's front page → a page → a subp
 - **An app's top-level pages** are in the **`NavBar`**, given to `PageLayout` as `nav`: a bar at the foot of the screen on a phone (an icon
   over a one-word label, in the reach of the thumb) and a rail down the left side from tablet width. Five or so (more scroll sideways on a phone), «Innstillinger» last, the same order on
   every page, the current one marked. A detail page marks the section it belongs to.
-- **Every page that has a parent** (a subpage, a detail, and the pages of an app that belongs to a group) has **`Breadcrumbs`** at the top: the whole trail from tablet width, and only the parent, as a way
-  back, on a phone. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading.
+- **Every page below a place in the `NavBar`** (a subpage, a detail) has **`Breadcrumbs`** at the top: the whole trail from tablet width, and only the parent, as a way
+  back, on a phone. **A place in the `NavBar` itself** (the front page, «Musikk», «Innstillinger») has none: the bar already marks where the reader is. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading.
 - **A page that has subpages** shows them with **`SubPages`** under the title: a list in one column (an icon, the name, one line of
   what is on the page). Not cards, not buttons, not a second menu.
 - **Moving between apps:** the first crumb is the group («Hjem», «Medier») and links to the page that lists its apps.
