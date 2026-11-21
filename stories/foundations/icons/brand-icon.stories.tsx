@@ -11,7 +11,7 @@ const meta = {
   tags: ["autodocs"],
   parameters: { docs: { description: { component: `### Use it when
 
-A link goes to a service a reader knows by its mark: GitHub, Spotify, Bluesky, Mastodon, Steam, PlayStation.
+A link goes to a service a reader knows by its mark: GitHub, Spotify, Bluesky, Mastodon, Steam, PlayStation, Last.fm, Trakt, TMDB, Yr, Entur, OpenStreetMap; or a source is named with its mark (\`SourceList\`).
 
 ### Do not use it when
 

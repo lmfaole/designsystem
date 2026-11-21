@@ -336,6 +336,10 @@ What a page says when it has nothing, is old, is loading or has failed. Research
 
 There is **no toast** and no tooltip: a toast disappears before it can be read, and a tooltip hides words from touch and keyboard. Say it in a `Banner` or next to what it is about, and put the words beside the icon.
 
+## 8.52
+
+**Where the data comes from, with each source's mark.** `SourceList` (`components/source-list`; `{ sources: { name, brand?, href, description, credit? }[] }`) is a description list of an app's sources, said once at the foot of «Innstillinger» rather than on every page: the source's mark (`BrandIcon`, decorative) beside its name, the name an `ExternalLink` to it, what the app gets from it, and the credit its terms ask for. `BrandIcon` has the marks of Last.fm (`lastfm`), Trakt, TMDB (`tmdb`), Yr, OpenStreetMap (from Simple Icons, CC0) and Entur (its own «EN» icon from `@entur/icons`, EUPL-1.2).
+
 ## 8.51.1
 
 **The rail no longer covers the page on a wide screen.** On a screen from 1536 px, `PAGE_COLUMN`'s `2xl:px-10` won over `PageLayout`'s room for the `NavBar` rail (`md:pl-60`), so the page started under the rail. The room is now `2xl:pl-66` there: the rail's 14rem plus the gutter.
