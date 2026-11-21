@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { PageColumn } from "../../../src/components/layout"
 import { PageHeader } from "../../../src/components/page-header"
+import { PageSection } from "../../../src/components/page-section"
+import { Rows } from "../../../src/components/rows"
 import { SubPages } from "../../../src/components/sub-pages"
 import { Button } from "../../../src/components/ui/button"
 
@@ -19,11 +21,11 @@ const meta = {
   },
   parameters: { docs: { description: { component: `### Use it when
 
-a page has subpages: a list in one column under the title (icon, name, one line).
+a page has subpages: a list in one column (icon, name, one line) at the foot of the section whose content the subpage has more of. Straight under the title only on a page that is nothing but its subpages (a settings overview).
 
 ### Do not use it when
 
-top-level places (\`NavBar\`), or as cards or buttons.
+top-level places (\`NavBar\`), as cards or buttons, or to gather all of a page's subpages at the top, away from what they continue.
 
 ### Accessibility
 
@@ -56,13 +58,26 @@ type Story = StoryObj<typeof meta>
 /** The pages under this page, in one column: an icon, the name, and one line of what is on it. Not cards, not buttons. */
 export const Default: Story = {}
 
-/** Straight under the page's title, where the list goes on a real page. */
-export const UnderATitle: Story = {
+/** With what it continues: the history at the foot of the section it has more of, so the way on is where the reader wants more. */
+export const InASection: Story = {
+  args: {
+    label: "Mer om avspillingene",
+    pages: [{ href: "#historikk", label: "Historikk", icon: "history", description: "Alt du har hørt på, dag for dag, og hvor lenge du lyttet." }],
+  },
   render: (args) => (
-    <>
-      <PageHeader title="AdGuard" lead="Hva som blokkeres i nettet hjemme." />
-      <SubPages {...args} />
-    </>
+    <PageColumn>
+      <PageHeader title="Musikk" lead="De siste avspillingene, fra Last.fm." />
+      <PageSection id="siste" title="Siste avspillinger">
+        <Rows
+          lead="icon"
+          rows={[
+            { key: "1", icon: "music", iconLabel: "Låt", body: "Kate Bush – Running Up That Hill", trailing: "12:04" },
+            { key: "2", icon: "music", iconLabel: "Låt", body: "Robyn – Dancing On My Own", trailing: "11:58" },
+          ]}
+        />
+        <SubPages {...args} />
+      </PageSection>
+    </PageColumn>
   ),
 }
 

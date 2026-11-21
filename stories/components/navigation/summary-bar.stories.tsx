@@ -17,11 +17,11 @@ const meta = {
   },
   parameters: { docs: { description: { component: `### Use it when
 
-the state of a place in counts that each link to what they count: first on a front page.
+the state of one kind of thing in counts that each link to what they count: under the title of the section it counts (the pull requests' counts in «Pull requests»).
 
 ### Do not use it when
 
-a count that links nowhere, or figures to compare (\`FactList\`).
+a count that links nowhere, figures to compare (\`FactList\`), or all of a page's counts gathered at the top, away from what they count.
 
 ### Accessibility
 

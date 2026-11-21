@@ -12,16 +12,19 @@ export interface SubPage {
 }
 
 /**
- * The pages under this page, as a list under the title: an icon, the name as a link, and one line of what is on it. It is the
- * ONE way a page with subpages shows them: not as cards, not as buttons, not in a second menu. One column, in the order they matter
- * (`ICONS` and `Rows` have the same look), so the reader chooses from a list they can read, not a grid they have to scan. The page
- * itself shows what is on it below the list; the list only says where else to go. On a settings overview («Innstillinger») each row is a subpage with its `value`, what is
- * chosen there now, so the reader sees the settings without opening them.
+ * Links to the pages under this page, as a list: an icon, the name as a link, and one line of what is on it. It is the ONE way a
+ * page shows its subpages: not as cards, not as buttons, not in a second menu. One column, in the order they matter (`ICONS` and
+ * `Rows` have the same look), so the reader chooses from a list they can read, not a grid they have to scan.
+ *
+ * It stands WITH WHAT IT CONTINUES: at the foot of the section whose content the subpage has more of (the history under «Siste
+ * avspillinger», the week's summary under «Mest spilt»), so the reader meets the way on where they want more. Never all of a page's
+ * subpages gathered at the top. Only a page that is nothing but its subpages (a settings overview, «Innstillinger») has the list
+ * straight under its title, each row with its `value`, what is chosen there now, so the reader sees the settings without opening them.
  */
 export function SubPages({ label, pages }: { label: string; pages: readonly SubPage[] }) {
   if (pages.length === 0) return null
   return (
-    <nav aria-label={label} className="mb-6">
+    <nav aria-label={label}>
       <ul className="grid gap-1">
         {pages.map((page) => (
           <li key={page.href}>

@@ -16,9 +16,10 @@ export interface SummaryItem {
 const TONES = { default: "", destructive: "border-destructive/40 text-destructive font-medium" } as const
 
 /**
- * The state of a whole place in a line of counts, each a link to the page that lists them: «2 blokkert · 1 klar til merge ·
- * 14 venter på din review». It goes first on a front page, before any list: the reader sees what needs them, then reads the
- * detail only where it does. Leave out the counts that are zero.
+ * The state of one kind of thing in a line of counts, each a link to the page that lists them: «2 blokkert · 1 klar til merge ·
+ * 14 venter på din review». It stands with what it counts, under the title of its section (the pull requests' counts in «Pull
+ * requests»), never all of a page's counts gathered at the top: the reader meets the counts where they read the detail. Leave out
+ * the counts that are zero.
  */
 export function SummaryBar({ label, items }: { label: string; items: readonly SummaryItem[] }) {
   if (items.length === 0) return null

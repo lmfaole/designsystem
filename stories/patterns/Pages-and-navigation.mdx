@@ -23,7 +23,7 @@ never behind a click that only reveals it.
 
 **Front page → list → detail.**
 
-- **Front page**: a **digest**: the state in counts, then the few things that need you most. It answers *«Må jeg gjøre noe nå?»*
+- **Front page**: a **digest**: the few things that need you most, each kind with its counts. It answers *«Må jeg gjøre noe nå?»*
 - **List**: **everything** of one kind, complete, in groups by what needs you most. It answers *«Hva er det som finnes?»*
 - **Detail**: **one thing**, with enough to decide what to do without leaving. It answers *«Hva er dette, og hva gjør jeg?»*
 
@@ -31,7 +31,8 @@ A fourth level means the structure is wrong: make it a section on the detail pag
 
 ## 2. The front page is a digest
 
-1. **Summary first.** A `SummaryBar` of counts, each a link to what it counts, before any list.
+1. **Counts with what they count.** Each section starts with its own `SummaryBar` (each count a link to what it counts), under its
+   title: the pull requests' counts in «Pull requests», not all counts gathered at the top of the page.
 2. **A few, by need, not by time.** Each section shows the three to five items that need the reader most (blocked before waiting,
    the oldest review before the newest), then `more` («Se alle 14»). Never the whole list: that is the list page's job.
 3. **One screen of what matters, two at most on a phone.** A section with nothing for the reader leaves out its list: one quiet
@@ -42,13 +43,12 @@ A fourth level means the structure is wrong: make it a section on the detail pag
 6. **Things that belong together are one group** (`SectionGroup`), with an icon in front of its title.
 
 <div className="sb-unstyled">
-<SummaryBar label="Oversikt" items={[
-  { key: "b", label: "blokkert", count: 2, href: "#", icon: "warning", tone: "destructive" },
-  { key: "r", label: "klar til merge", count: 1, href: "#", icon: "merge" },
-  { key: "v", label: "venter på din review", count: 14, href: "#", icon: "view" },
-]} />
-
 <PageSection id="d-pulls" title="Pull requests" icon="pull-request" more={{ href: "#", label: "Se alle 14" }}>
+  <SummaryBar label="Pull requests i tall" items={[
+    { key: "b", label: "blokkert", count: 2, href: "#", icon: "warning", tone: "destructive" },
+    { key: "r", label: "klar til merge", count: 1, href: "#", icon: "merge" },
+    { key: "v", label: "venter på din review", count: 14, href: "#", icon: "view" },
+  ]} />
   <Rows lead="icon" rows={[
     { key: "1", icon: "pull-request", iconTone: "destructive", iconLabel: "Pull request", body: "Fiks tidssone i værmeldingen", trailing: "i dag" },
     { key: "2", icon: "pull-request", iconLabel: "Pull request", body: "Ny Tiles-komponent", trailing: "13. nov." },
@@ -109,8 +109,10 @@ Under the hub there are three levels: the app's front page → a page → a subp
   every page, the current one marked. A detail page marks the section it belongs to.
 - **Every page below a place in the `NavBar`** (a subpage, a detail) has **`Breadcrumbs`** at the top: the whole trail from tablet width, and only the parent, as a way
   back, on a phone. **A place in the `NavBar` itself** (the front page, «Musikk», «Innstillinger») has none: the bar already marks where the reader is. The breadcrumbs say *where*, the title says *what*: never repeat the title in a second heading.
-- **A page that has subpages** shows them with **`SubPages`** under the title: a list in one column (an icon, the name, one line of
-  what is on the page). Not cards, not buttons, not a second menu.
+- **A page that has subpages** links them with **`SubPages`**: a list in one column (an icon, the name, one line of what is on the
+  page). Not cards, not buttons, not a second menu. **Each link stands with the content it continues**: at the foot of the section the
+  subpage has more of («Historikk» under «Siste avspillinger», «Wrapped» under «Mest spilt»), never all of them gathered at the top.
+  Only a page that is nothing but its subpages (a settings overview) has the list straight under its title.
 - **Moving between apps:** the first crumb is the group («Hjem», «Medier») and links to the page that lists its apps.
 - **It is navigation, not tabs.** Tabs switch views of the *same content on one page*; navigation goes to *another page*. GOV.UK
   separates them the same way (tabs «switch views within a page», service navigation «links across a service»), and Material 3 uses a
@@ -119,10 +121,16 @@ Under the hub there are three levels: the app's front page → a page → a subp
 
 <div className="sb-unstyled">
 <Breadcrumbs items={[{ label: "Hjem", href: "#" }, { label: "AdGuard", href: "#a" }, { label: "Enheter", href: "#e" }]} />
-<SubPages label="Sider i AdGuard" pages={[
-  { href: "#e", label: "Enheter", icon: "settings", description: "Hver enhet som bruker AdGuard." },
-  { href: "#h", label: "Historikk", icon: "calendar", description: "Hva som ble blokkert, en dag om gangen." },
-]} />
+
+<PageSection id="n-blocked" title="Blokkert i dag" icon="shield">
+  <Rows lead="icon" rows={[
+    { key: "1", icon: "shield", iconLabel: "Blokkert", body: "ads.example.com", trailing: "142" },
+    { key: "2", icon: "shield", iconLabel: "Blokkert", body: "tracker.example.net", trailing: "87" },
+  ]} />
+  <SubPages label="Mer om blokkeringene" pages={[
+    { href: "#h", label: "Historikk", icon: "calendar", description: "Hva som ble blokkert, en dag om gangen." },
+  ]} />
+</PageSection>
 </div>
 
 ## 7. Words
@@ -133,6 +141,7 @@ the screen: name things by what they recognise («Venter på din review»), not 
 ## Don't
 
 - Don't show the whole list on the front page and again on the list page.
+- Don't gather the links to a page's subpages, or its counts, at the top: each stands with what it is about.
 - Don't hide what matters behind «vis mer».
 - Don't make a tap on a row leave the app when the app has a page for it.
 - Don't put a modal where a page with an address would do.
