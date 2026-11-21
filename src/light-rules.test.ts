@@ -9,7 +9,8 @@ const files = readdirSync(components).filter((name) => name.endsWith(".tsx"))
 
 test("the page's main picture is lit, and carries the light's source with it (Foundations / Light and shadow, «Where the light goes»)", () => {
   const picture = source("picture.tsx")
-  assert.match(picture, /size === 'hero' && 'lit-frame'/)
+  assert.match(picture, /lit && 'lit-frame'/)
+  assert.match(picture, /const lit = LIT_SIZES\.includes\(size\)/)
   assert.match(picture, /<LightSource \/>/)
 })
 

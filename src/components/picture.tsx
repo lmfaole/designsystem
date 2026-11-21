@@ -1,7 +1,7 @@
 import { fallbackOf, srcSetOf, type PictureSource } from '../lib/picture-sources'
 import { Disc } from './disc'
 import { LightSource } from './light-source'
-import { CORNERS, DRAWN, FRAMES, type PictureCorners, type Ratio, SIZES, type Size } from '../lib/picture-frames'
+import { CORNERS, DRAWN, FRAMES, LIT_SIZES, type PictureCorners, type Ratio, SIZES, type Size } from '../lib/picture-frames'
 import { cn } from '../lib/utils'
 
 export { type PictureCorners } from '../lib/picture-frames'
@@ -29,9 +29,10 @@ export function Picture({ src, sources, priority = false, ratio = 'poster', size
   const set = srcSetOf(sources, drawn)
   const shown = src ?? (sources === undefined ? undefined : fallbackOf(sources, drawn)?.src)
   const shape = corners === 'round' && ratio === 'poster' ? 'soft' : corners
+  const lit = LIT_SIZES.includes(size)
   if (disc && ratio === 'square') return <Disc src={src} {...(sources === undefined ? {} : { sources })} size={size} />
   const frame = (
-    <div aria-hidden="true" className={cn('shrink-0 overflow-hidden bg-muted', CORNERS[shape], FRAMES[ratio][size], size === 'hero' && 'lit-frame')}>
+    <div aria-hidden="true" className={cn('shrink-0 overflow-hidden bg-muted', CORNERS[shape], FRAMES[ratio][size], lit && 'lit-frame')}>
       {shown ? (
         <img
           src={shown}
@@ -48,7 +49,7 @@ export function Picture({ src, sources, priority = false, ratio = 'poster', size
     </div>
   )
   // The page's main picture is lit, and carries the light's source with it: a page needs nothing of its own for the light to follow the pointer.
-  return size === 'hero' ? (
+  return lit ? (
     <>
       {frame}
       <LightSource />

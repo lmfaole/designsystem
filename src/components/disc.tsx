@@ -9,7 +9,7 @@ import { FULL, measure, nextQuality, START, type Meter, type Quality } from "../
 import { coverTraits, NEUTRAL_TRAITS } from "../lib/palette"
 import { lightStore } from "../lib/light"
 import { acquireLightInput } from "../lib/light-input"
-import { DRAWN, FRAMES, type Size } from "../lib/picture-frames"
+import { DRAWN, FRAMES, LIT_SIZES, type Size } from "../lib/picture-frames"
 import { fallbackOf, srcSetOf, type PictureSource } from "../lib/picture-sources"
 import { cn } from "../lib/utils"
 
@@ -160,7 +160,7 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
       <canvas ref={canvas} aria-hidden="true" className={cn("absolute inset-0 size-full", !lit && "hidden")} />
     </>
   )
-  const shape = cn("relative shrink-0 overflow-hidden rounded-full", !lit && "bg-muted", FRAMES.square[size], size === "hero" && "lit-frame")
+  const shape = cn("relative shrink-0 overflow-hidden rounded-full", !lit && "bg-muted", FRAMES.square[size], LIT_SIZES.includes(size) && "lit-frame")
   if (reduced) {
     return (
       <span ref={(node) => { frame.current = node }} aria-hidden="true" className={shape}>
@@ -175,4 +175,4 @@ export function Disc({ src, sources, size = "row" }: { src: string | null | unde
   )
 }
 
-const SIZES_PX = { row: 40, hero: 112, fill: 200 } as const
+const SIZES_PX = { row: 40, hero: 112, feature: 320, fill: 200 } as const

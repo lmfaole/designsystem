@@ -35,7 +35,7 @@ The maths is `lib/light.ts` (pure, with a test): `lightFromPointer`, `lightFromT
 
 | The main picture is | It is lit by | How |
 | --- | --- | --- |
-| any `Picture size="hero"` (a poster, a portrait, a cover on a page of its own) | **its frame**, automatically (`lit-frame`) | a shadow that falls away from the light and a thin rim of light on the side that faces it: both **outside** the picture, nothing painted over it |
+| any `Picture size="hero"` or `size="feature"` (a poster, a portrait, a cover on a page of its own; `feature` is the larger portrait of `DetailHeader size="large"`) | **its frame**, automatically (`lit-frame`) | a shadow that falls away from the light and a thin rim of light on the side that faces it: both **outside** the picture, nothing painted over it |
 | the record of what plays now (`NowPlayingCard`, `Picture disc`) | **its surface** as well | reflections on the disc, in WebGL, that follow the light |
 
 - **Frame by default.** A hero `Picture` carries the light's source with it (`LightSource`), so a page needs nothing of its own for the light to follow the pointer. Do not add a shadow of your own to a hero.
